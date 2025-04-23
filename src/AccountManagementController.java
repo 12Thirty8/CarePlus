@@ -94,34 +94,44 @@ public class AccountManagementController implements Initializable {
     }
 
     private void setupRowContextMenu() {
-        // Create a row factory to customize each row
-        AccountManagmentTableView.setRowFactory(tv -> {
+        AccountManagmentTableView.setRowFactory(_ -> {
             TableRow<EmployeeModel> row = new TableRow<>();
             ContextMenu contextMenu = new ContextMenu();
 
-            // Create menu items
             MenuItem updateItem = new MenuItem("Update");
             MenuItem deleteItem = new MenuItem("Delete");
 
-            // Set actions for menu items
-            updateItem.setOnAction(event -> {
+            updateItem.setOnAction(_ -> {
                 EmployeeModel selectedItem = row.getItem();
                 if (selectedItem != null) {
-                    // updateRow(selectedItem); // need fxml
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("COH_UpdateAccount.fxml"));
+                        Parent root = loader.load();
+
+                        // Get the controller and pass the employee ID
+                        UpdateAccountController controller = loader.getController();
+                        controller.loadEmployeeData(selectedItem.getId());
+
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(root));
+                        stage.setTitle("Update Account");
+                        stage.show();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        showAlert("Error", "Failed to open update form: " + e.getMessage());
+                    }
                 }
             });
 
-            deleteItem.setOnAction(event -> {
+            deleteItem.setOnAction(_ -> {
                 EmployeeModel selectedItem = row.getItem();
                 if (selectedItem != null) {
                     deleteRow(selectedItem);
                 }
             });
 
-            // Add items to context menu
             contextMenu.getItems().addAll(updateItem, deleteItem);
-
-            // Only show context menu for non-empty rows
             row.contextMenuProperty().bind(
                     Bindings.when(row.emptyProperty())
                             .then((ContextMenu) null)
