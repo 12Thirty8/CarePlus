@@ -4,12 +4,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
+import javafx.scene.control.Alert;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -20,6 +24,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -73,6 +78,7 @@ public class AccountManagementController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setupTableColumns();
         refreshEmployeeTable();
+        setupRowContextMenu();
     }
 
     private void setupTableColumns() {
@@ -85,6 +91,75 @@ public class AccountManagementController implements Initializable {
         depcol.setCellValueFactory(new PropertyValueFactory<>("dep"));
         shiftcol.setCellValueFactory(new PropertyValueFactory<>("shift"));
         offcol.setCellValueFactory(new PropertyValueFactory<>("dayoff"));
+    }
+
+    private void setupRowContextMenu() {
+        // Create a row factory to customize each row
+        AccountManagmentTableView.setRowFactory(tv -> {
+            TableRow<EmployeeModel> row = new TableRow<>();
+            ContextMenu contextMenu = new ContextMenu();
+
+            // Create menu items
+            MenuItem updateItem = new MenuItem("Update");
+            MenuItem deleteItem = new MenuItem("Delete");
+
+            // Set actions for menu items
+            updateItem.setOnAction(event -> {
+                EmployeeModel selectedItem = row.getItem();
+                if (selectedItem != null) {
+                    // updateRow(selectedItem); // need fxml
+                }
+            });
+
+            deleteItem.setOnAction(event -> {
+                EmployeeModel selectedItem = row.getItem();
+                if (selectedItem != null) {
+                    deleteRow(selectedItem);
+                }
+            });
+
+            // Add items to context menu
+            contextMenu.getItems().addAll(updateItem, deleteItem);
+
+            // Only show context menu for non-empty rows
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(contextMenu));
+
+            return row;
+        });
+    }
+
+    private void deleteRow(EmployeeModel item) {
+        // Show confirmation dialog before deleting
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Deletion");
+        alert.setHeaderText("Delete this record?");
+        alert.setContentText("Are you sure you want to delete: " + item + "?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                try {
+                    deleteAccount(item.getId()); // Pass the employee ID
+                    AccountManagmentTableView.getItems().remove(item); // Remove from TableView
+                    showAlert("Success", "Employee deleted successfully");
+                } catch (SQLException e) {
+                    showAlert("Error", "Failed to delete employee: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void deleteAccount(int id) throws SQLException {
+        try (Connection conn = dbConnect.connect();
+                PreparedStatement pstmt = conn.prepareStatement(
+                        "DELETE FROM employee WHERE employee_id = ?")) {
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } // Resources will be auto-closed
     }
 
     private void refreshEmployeeTable() {
@@ -117,6 +192,14 @@ public class AccountManagementController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML

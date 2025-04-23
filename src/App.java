@@ -10,7 +10,7 @@ public class App extends Application {
         Parent root;
         try {
 
-            root = FXMLLoader.load(getClass().getResource("COH_AccountManagement.fxml"));
+            root = FXMLLoader.load(getClass().getResource("COH_Dashboard.fxml"));
             Scene scene = new Scene(root);
 
             primaryStage.setTitle("COH");
