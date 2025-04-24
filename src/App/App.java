@@ -12,10 +12,10 @@ public class App extends Application {
         Parent root;
         try {
 
-            root = FXMLLoader.load(getClass().getResource("COH_Dashboard.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
             Scene scene = new Scene(root);
 
-            primaryStage.setTitle("COH");
+            primaryStage.setTitle("Login");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
