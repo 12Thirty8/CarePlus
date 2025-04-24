@@ -1,6 +1,5 @@
 package Controllers;
 
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -24,7 +23,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import Utils.DatabaseConnect;
+import db.DatabaseConnect;
 
 public class AddAccountController implements Initializable {
 

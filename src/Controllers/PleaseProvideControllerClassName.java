@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import Models.ClassModel;
-import Utils.DatabaseConnect;
+import db.DatabaseConnect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

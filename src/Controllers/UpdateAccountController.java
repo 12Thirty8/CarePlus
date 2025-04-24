@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
-import Utils.DatabaseConnect;
+import db.DatabaseConnect;
 
 public class UpdateAccountController implements Initializable {
 
