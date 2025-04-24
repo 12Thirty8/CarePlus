@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 import Models.EmployeeModel;
-import Utils.DatabaseConnect;
+import db.DatabaseConnect;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
