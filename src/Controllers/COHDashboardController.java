@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 public class COHDashboardController {
@@ -18,7 +19,22 @@ public class COHDashboardController {
     private Button AccountMenuBttn;
 
     @FXML
-    private Button StkInMenuBttn;
+    private Button DashboardBttn;
+
+    @FXML
+    private Button HamburgerMenuBttn;
+
+    @FXML
+    private Button PharmacyBttn;
+
+    @FXML
+    private Button ScheduleBttn;
+
+    @FXML
+    private Button ScheduleMenuBttn;
+
+    @FXML
+    private TableView<?> StkInTableView;
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
@@ -45,7 +61,27 @@ public class COHDashboardController {
     }
 
     @FXML
-    void StockInMenuActionBttn(ActionEvent event) {
+    void DashboardActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void HamburgerMenuActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void PharmacyActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ScheduleActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ScheduleuActionBttn(ActionEvent event) {
 
     }
 

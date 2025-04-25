@@ -38,6 +38,16 @@ public class AddAccountController implements Initializable {
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
     @FXML
+    private Button DashboardBttn;
+    @FXML
+    private Button HamburgerMenuBttn;
+    @FXML
+    private Button PharmacyBttn;
+    @FXML
+    private Button ScheduleBttn;
+    @FXML
+    private Button ScheduleMenuBttn;
+    @FXML
     private Button addaccbtn;
     @FXML
     private DatePicker dob;
@@ -217,5 +227,74 @@ public class AddAccountController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    void AccountMenuActionBttn(ActionEvent event) {
+        // Get the current stage (window) from the button's scene
+        Stage currentStage = (Stage) addaccbtn.getScene().getWindow();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Account Management");
+
+            // Close the current stage after the new one is ready
+            currentStage.close();
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @FXML
+    void DashboardActionBttn(ActionEvent event) {
+        // Get the current stage (window) from the button's scene
+        Stage currentStage = (Stage) DashboardBttn.getScene().getWindow();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Account Management");
+
+            // Close the current stage after the new one is ready
+            currentStage.close();
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    @FXML
+    void HamburgerMenuActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void PharmacyActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ScheduleActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ScheduleuActionBttn(ActionEvent event) {
+
     }
 }

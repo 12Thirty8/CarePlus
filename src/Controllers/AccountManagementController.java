@@ -41,10 +41,28 @@ public class AccountManagementController implements Initializable {
     private TableView<EmployeeModel> AccountManagmentTableView;
 
     @FXML
-    private Button AddAccountBtn;
+    private Button AccountMenuBttn;
+
+    @FXML
+    private Button AddAccountBttn;
+
+    @FXML
+    private Button DashboardBttn;
 
     @FXML
     private Button FilterBttn;
+
+    @FXML
+    private Button HamburgerMenuBttn;
+
+    @FXML
+    private Button PharmacyBttn;
+
+    @FXML
+    private Button ScheduleBttn;
+
+    @FXML
+    private Button ScheduleMenuBttn;
 
     @FXML
     private TextField TFsearch;
@@ -115,6 +133,9 @@ public class AccountManagementController implements Initializable {
                         // Get the controller and pass the employee ID
                         UpdateAccountController controller = loader.getController();
                         controller.loadEmployeeData(selectedItem.getId());
+
+                        Stage currentStage = (Stage) FilterBttn.getScene().getWindow();
+                        currentStage.close();
 
                         Stage stage = new Stage();
                         stage.setScene(new Scene(root));
@@ -218,7 +239,7 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     void AddAccountMove(ActionEvent event) {
-        Stage currentStage = (Stage) AddAccountBtn.getScene().getWindow();
+        Stage currentStage = (Stage) AddAccountBttn.getScene().getWindow();
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AddAccount.fxml"));
@@ -257,5 +278,73 @@ public class AccountManagementController implements Initializable {
             }
             AccountManagmentTableView.setItems(filteredList);
         }
+    }
+
+    @FXML
+    void AccountMenuActionBttn(ActionEvent event) {
+        // Get the current stage (window) from the button's scene
+        Stage currentStage = (Stage) DashboardBttn.getScene().getWindow();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Account Management");
+
+            // Close the current stage after the new one is ready
+            currentStage.close();
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @FXML
+    void DashboardActionBttn(ActionEvent event) {
+        // Get the current stage (window) from the button's scene
+        Stage currentStage = (Stage) DashboardBttn.getScene().getWindow();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Account Management");
+
+            // Close the current stage after the new one is ready
+            currentStage.close();
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @FXML
+    void HamburgerMenuActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void PharmacyActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ScheduleActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ScheduleuActionBttn(ActionEvent event) {
+
     }
 }
