@@ -1,6 +1,5 @@
 package Controllers;
 
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -12,19 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import Utils.DatabaseConnect;
+import db.DatabaseConnect;
 
 public class AddAccountController implements Initializable {
 
@@ -93,6 +98,25 @@ public class AddAccountController implements Initializable {
 
             showAlert("Success", "Account created successfully");
             clearForm();
+
+            Stage currentStage = (Stage) fnametf.getScene().getWindow();
+            currentStage.close();
+
+            // Open the dashboard
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Dashboard");
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
 
         } catch (SQLException e) {
             showAlert("Database Error", "Failed to create account: " + e.getMessage());

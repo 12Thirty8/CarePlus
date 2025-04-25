@@ -26,7 +26,7 @@ public class COHDashboardController {
         Stage currentStage = (Stage) AccountMenuBttn.getScene().getWindow();
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("COH_AccountManagement.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();

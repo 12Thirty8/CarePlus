@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
-import Utils.DatabaseConnect;
+import db.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -86,7 +86,7 @@ public class LoginPageController {
 
                 // Open the dashboard
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("COH_Dashboard.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
                     Parent root = loader.load();
 
                     Stage stage = new Stage();
