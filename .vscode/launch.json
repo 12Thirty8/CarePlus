@@ -6,8 +6,17 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "vmArgs": "--module-path \"D:/Soft Eng/javafx-sdk-24.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
+            "mainClass": "App.App",
+            "projectName": "CarePlus_b4aa8159"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
+            "vmArgs": "--module-path \"D:/Soft Eng/javafx-sdk-24.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
             "mainClass": "Main",
             "projectName": "CarePlus_b4aa8159"
         },
@@ -15,6 +24,7 @@
             "type": "java",
             "name": "DatabaseConnect",
             "request": "launch",
+            "vmArgs": "--module-path \"D:/Soft Eng/javafx-sdk-24.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
             "mainClass": "DatabaseConnect",
             "projectName": "CarePlus_b4aa8159"
         },
@@ -22,6 +32,7 @@
             "type": "java",
             "name": "Current File",
             "request": "launch",
+            "vmArgs": "--module-path \"D:/Soft Eng/javafx-sdk-24.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
             "mainClass": "${file}"
         },
         {

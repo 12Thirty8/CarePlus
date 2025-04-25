@@ -109,7 +109,7 @@ public class AccountManagementController implements Initializable {
                 EmployeeModel selectedItem = row.getItem();
                 if (selectedItem != null) {
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("COH_UpdateAccount.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_UpdateAccount.fxml"));
                         Parent root = loader.load();
 
                         // Get the controller and pass the employee ID
@@ -221,7 +221,7 @@ public class AccountManagementController implements Initializable {
         Stage currentStage = (Stage) AddAccountBtn.getScene().getWindow();
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("COH_AddAccount.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AddAccount.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();

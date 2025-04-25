@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddAccountController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddAccountController">
    <children>
       <AnchorPane layoutX="114.0" layoutY="41.0" prefHeight="614.0" prefWidth="813.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 12;" AnchorPane.bottomAnchor="14.600000000000023" AnchorPane.leftAnchor="113.79999999999995" AnchorPane.rightAnchor="13.399999999999977" AnchorPane.topAnchor="41.200000000000045">
          <children>
