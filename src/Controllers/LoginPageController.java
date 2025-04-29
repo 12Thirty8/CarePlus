@@ -11,6 +11,7 @@ import db.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -46,12 +47,12 @@ public class LoginPageController {
     @FXML
     private PasswordField psfield;
 
-    @FXML
-    void onPressed(ActionEvent event) {
-        getUserId();
-    }
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
-    public void getUserId() {
+    @FXML
+    public void onPressed(ActionEvent event) throws IOException {
         String username = empIDTf.getText().trim();
         String password = new String(psfield.getText());
 
@@ -80,25 +81,14 @@ public class LoginPageController {
             if (rs.next()) {
                 userid = rs.getInt("employee_id"); // Changed from "user_id" to match your query
 
-                // Close the current login window
-                Stage currentStage = (Stage) empIDTf.getScene().getWindow();
-                currentStage.close();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
+                root = loader.load();
 
-                // Open the dashboard
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-                    Parent root = loader.load();
-
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root));
-                    stage.setTitle("Dashboard");
-                    stage.show();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
 
             } else {
                 JOptionPane.showMessageDialog(null, "Username or Password is incorrect.", "Error",

@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,21 +37,21 @@ public class COHDashboardController {
     @FXML
     private TableView<?> StkInTableView;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
-        // Get the current stage (window) from the button's scene
-        Stage currentStage = (Stage) AccountMenuBttn.getScene().getWindow();
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-            Parent root = loader.load();
+            root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Account Management");
-
-            // Close the current stage after the new one is ready
-            currentStage.close();
+            root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
             stage.show();
 
         } catch (IOException e) {

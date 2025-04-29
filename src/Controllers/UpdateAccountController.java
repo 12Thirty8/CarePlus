@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -46,6 +47,9 @@ public class UpdateAccountController implements Initializable {
     private TextField fnametf, lnametf, numbertf, emailtf;
     @FXML
     private PasswordField psfield;
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -133,17 +137,14 @@ public class UpdateAccountController implements Initializable {
 
             showAlert("Success", "Account updated successfully");
 
-            Stage currentStage = (Stage) fnametf.getScene().getWindow();
-            currentStage.close();
-
-            // Open the dashboard
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-                Parent root = loader.load();
+                root = loader.load();
 
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.setTitle("Dashboard");
+                root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
                 stage.show();
 
             } catch (IOException e) {

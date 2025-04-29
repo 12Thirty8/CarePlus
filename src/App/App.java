@@ -9,15 +9,12 @@ import javafx.stage.Stage;
 
 public class App extends Application {
     public void start(Stage primaryStage) {
-        Parent root;
         try {
-
-            root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
             Scene scene = new Scene(root);
-
-            primaryStage.setTitle("Login");
             primaryStage.setScene(scene);
             primaryStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

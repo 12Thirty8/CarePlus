@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -55,6 +56,9 @@ public class AddAccountController implements Initializable {
     private TextField fnametf, lnametf, numbertf, emailtf;
     @FXML
     private PasswordField psfield;
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -109,17 +113,14 @@ public class AddAccountController implements Initializable {
             showAlert("Success", "Account created successfully");
             clearForm();
 
-            Stage currentStage = (Stage) fnametf.getScene().getWindow();
-            currentStage.close();
-
-            // Open the dashboard
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-                Parent root = loader.load();
+                root = loader.load();
 
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.setTitle("Dashboard");
+                root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
                 stage.show();
 
             } catch (IOException e) {
@@ -231,19 +232,14 @@ public class AddAccountController implements Initializable {
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
-        // Get the current stage (window) from the button's scene
-        Stage currentStage = (Stage) addaccbtn.getScene().getWindow();
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-            Parent root = loader.load();
+            root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Account Management");
-
-            // Close the current stage after the new one is ready
-            currentStage.close();
+            root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
             stage.show();
 
         } catch (IOException e) {
@@ -255,19 +251,14 @@ public class AddAccountController implements Initializable {
 
     @FXML
     void DashboardActionBttn(ActionEvent event) {
-        // Get the current stage (window) from the button's scene
-        Stage currentStage = (Stage) DashboardBttn.getScene().getWindow();
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-            Parent root = loader.load();
+            root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Account Management");
-
-            // Close the current stage after the new one is ready
-            currentStage.close();
+            root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
             stage.show();
 
         } catch (IOException e) {
