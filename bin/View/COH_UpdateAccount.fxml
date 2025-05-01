@@ -18,7 +18,7 @@
                <children>
                   <Label layoutX="21.0" layoutY="14.0" text="Personal Information">
                      <font>
-                        <Font name="Gordita-Bold" size="21.0" />
+                        <Font name="Gordita-Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label layoutX="21.0" layoutY="55.0" text="First Name*:" />
@@ -72,12 +72,12 @@
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <PasswordField fx:id="psfield" layoutX="19.0" layoutY="229.0" prefHeight="25.0" prefWidth="197.0" promptText="Password" />
+                  <PasswordField fx:id="psfield" layoutX="22.0" layoutY="230.0" prefHeight="25.0" prefWidth="197.0" promptText="Password" />
                </children>
             </Pane>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" prefHeight="44.0" prefWidth="505.0" text="Edit">
                <font>
-                  <Font name="Gordita-Bold" size="34.0" />
+                  <Font name="Gordita-Bold" size="21.0" />
                </font>
             </Label>
          </children>

@@ -8,7 +8,7 @@
             "type": "java",
             "name": "App",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-24.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path \"${env:JAVA_FX_LIB}\" --add-modules javafx.controls,javafx.fxml",
             "mainClass": "App.App",
             "projectName": "CarePlus-1_ba0995e7"
         },
@@ -16,7 +16,15 @@
             "type": "java",
             "name": "App",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-24.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path \"${env:JAVA_FX_LIB}\" --add-modules javafx.controls,javafx.fxml",
+            "mainClass": "App.App",
+            "projectName": "CarePlus_9a5ae1a5"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "vmArgs": "--module-path \"${env:JAVA_FX_LIB}\" --add-modules javafx.controls,javafx.fxml",
             "mainClass": "App.App",
             "projectName": "CarePlus_b4aa8159"
         },
@@ -24,7 +32,7 @@
             "type": "java",
             "name": "Main",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-24.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path \"${env:JAVA_FX_LIB}\" --add-modules javafx.controls,javafx.fxml",
             "mainClass": "Main",
             "projectName": "CarePlus_b4aa8159"
         },
@@ -32,7 +40,7 @@
             "type": "java",
             "name": "DatabaseConnect",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-24.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path \"${env:JAVA_FX_LIB}\" --add-modules javafx.controls,javafx.fxml",
             "mainClass": "DatabaseConnect",
             "projectName": "CarePlus_b4aa8159"
         },
@@ -40,7 +48,7 @@
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-24.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path \"${env:JAVA_FX_LIB}\" --add-modules javafx.controls,javafx.fxml",
             "mainClass": "${file}"
         },
         {
@@ -49,7 +57,7 @@
             "request": "launch",
             "mainClass": "App",
             "projectName": "CarePlus_b4aa8159",
-            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-24.0.1/lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"${env:JAVA_FX_LIB}\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }

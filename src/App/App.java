@@ -6,18 +6,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class App extends Application {
     public void start(Stage primaryStage) {
-        Parent root;
+        System.setProperty("prism.lcdtext", "false");
         try {
-
-            root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
             Scene scene = new Scene(root);
-
-            primaryStage.setTitle("Login");
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();
+            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
