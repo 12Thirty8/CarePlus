@@ -1,6 +1,5 @@
 package Controllers;
 
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -12,19 +11,26 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import Utils.DatabaseConnect;
+import db.DatabaseConnect;
 
 public class AddAccountController implements Initializable {
 
@@ -33,6 +39,16 @@ public class AddAccountController implements Initializable {
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
     @FXML
+    private Button DashboardBttn;
+    @FXML
+    private Button HamburgerMenuBttn;
+    @FXML
+    private Button PharmacyBttn;
+    @FXML
+    private Button ScheduleBttn;
+    @FXML
+    private Button ScheduleMenuBttn;
+    @FXML
     private Button addaccbtn;
     @FXML
     private DatePicker dob;
@@ -40,6 +56,9 @@ public class AddAccountController implements Initializable {
     private TextField fnametf, lnametf, numbertf, emailtf;
     @FXML
     private PasswordField psfield;
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -93,6 +112,22 @@ public class AddAccountController implements Initializable {
 
             showAlert("Success", "Account created successfully");
             clearForm();
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
+                root = loader.load();
+
+                root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
 
         } catch (SQLException e) {
             showAlert("Database Error", "Failed to create account: " + e.getMessage());
@@ -193,5 +228,64 @@ public class AddAccountController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    void AccountMenuActionBttn(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            root = loader.load();
+
+            root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @FXML
+    void DashboardActionBttn(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
+            root = loader.load();
+
+            root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    @FXML
+    void HamburgerMenuActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void PharmacyActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ScheduleActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ScheduleuActionBttn(ActionEvent event) {
+
     }
 }

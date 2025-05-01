@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,8 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="535.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="535.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.UpdateAccountController">
    <children>
       <Pane layoutX="13.0" layoutY="14.0" prefHeight="590.0" prefWidth="509.0" style="-fx-background-color: White; -fx-background-radius: 12;">
          <children>
@@ -24,48 +24,47 @@
                      </font>
                   </Label>
                   <Label layoutX="21.0" layoutY="55.0" text="First Name*:" />
-                  <TextField fx:id="TFfname" layoutX="21.0" layoutY="81.0" prefHeight="26.0" prefWidth="197.0" promptText="First Name" style="-fx-background-radius: 5;" />
+                  <TextField fx:id="fnametf" layoutX="21.0" layoutY="81.0" prefHeight="26.0" prefWidth="197.0" promptText="First Name" style="-fx-background-radius: 5;" />
                   <Label layoutX="271.0" layoutY="56.0" text="Last Name*:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="TFlname" layoutX="271.0" layoutY="81.0" prefHeight="26.0" prefWidth="197.0" promptText="Last Name" style="-fx-background-radius: 5;" />
+                  <TextField fx:id="lnametf" layoutX="271.0" layoutY="81.0" prefHeight="26.0" prefWidth="197.0" promptText="Last Name" style="-fx-background-radius: 5;" />
                   <Label layoutX="20.0" layoutY="129.0" text="Email Address*:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="TFaddress" layoutX="19.0" layoutY="156.0" prefHeight="26.0" prefWidth="197.0" promptText="Email Address" style="-fx-background-radius: 5;" />
+                  <TextField fx:id="emailtf" layoutX="19.0" layoutY="156.0" prefHeight="26.0" prefWidth="197.0" promptText="Email Address" style="-fx-background-radius: 5;" />
                   <Label layoutX="271.0" layoutY="129.0" text="Contact Number*:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="TFnumber" layoutX="270.0" layoutY="156.0" prefHeight="26.0" prefWidth="197.0" promptText="Contact number" style="-fx-background-radius: 5;" />
+                  <TextField fx:id="numbertf" layoutX="270.0" layoutY="156.0" prefHeight="26.0" prefWidth="197.0" promptText="Contact number" style="-fx-background-radius: 5;" />
                   <Label layoutX="22.0" layoutY="207.0" text="Password*:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="TFpassword" layoutX="21.0" layoutY="229.0" prefHeight="26.0" prefWidth="197.0" promptText="Password" style="-fx-background-radius: 5;" />
                   <Label layoutX="270.0" layoutY="207.0" text="Select Birth Date*: ">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="TFbirthdate" layoutX="271.0" layoutY="229.0" prefHeight="26.0" prefWidth="197.0" promptText="Select birth date" style="-fx-background-radius: 5;" />
+                  <DatePicker fx:id="dob" layoutX="271.0" layoutY="229.0" prefHeight="26.0" prefWidth="197.0" promptText="Select birth date" style="-fx-background-radius: 5;" />
                   <Label layoutX="21.0" layoutY="288.0" prefHeight="17.0" prefWidth="88.0" text="Department*:" />
-                  <ComboBox fx:id="CBdept" layoutX="21.0" layoutY="308.0" prefHeight="25.0" prefWidth="197.0" style="-fx-background-color: white;" />
+                  <ComboBox fx:id="depcb" layoutX="21.0" layoutY="308.0" prefHeight="25.0" prefWidth="197.0" style="-fx-background-color: white;" />
                   <Label layoutX="271.0" layoutY="289.0" prefHeight="15.0" prefWidth="68.0" text="Shift*:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="CBshift" layoutX="269.0" layoutY="308.0" prefHeight="25.0" prefWidth="197.0" style="-fx-background-color: white;" />
+                  <ComboBox fx:id="shiftcb" layoutX="269.0" layoutY="308.0" prefHeight="25.0" prefWidth="197.0" style="-fx-background-color: white;" />
                   <Label layoutX="19.0" layoutY="350.0" text="Day Off*:" />
-                  <ComboBox fx:id="CBdayoff" layoutX="19.0" layoutY="375.0" prefHeight="25.0" prefWidth="197.0" style="-fx-background-color: white;" />
-                  <Button layoutX="269.0" layoutY="461.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="197.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Save Changes" textFill="WHITE">
+                  <ComboBox fx:id="dayoffcb" layoutX="19.0" layoutY="375.0" prefHeight="25.0" prefWidth="197.0" style="-fx-background-color: white;" />
+                  <Button fx:id="savebtn" layoutX="269.0" layoutY="461.0" mnemonicParsing="false" onAction="#SaveChangesAction" prefHeight="34.0" prefWidth="197.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Save Changes" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
@@ -75,6 +74,7 @@
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
+                  <PasswordField fx:id="psfield" layoutX="22.0" layoutY="230.0" prefHeight="25.0" prefWidth="197.0" promptText="Password" />
                </children>
             </Pane>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="14.0" prefHeight="44.0" prefWidth="368.0" text="Edit">

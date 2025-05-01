@@ -3,6 +3,7 @@ package Controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,7 +28,7 @@ import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 import Models.EmployeeModel;
-import Utils.DatabaseConnect;
+import db.DatabaseConnect;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,10 +42,28 @@ public class AccountManagementController implements Initializable {
     private TableView<EmployeeModel> AccountManagmentTableView;
 
     @FXML
-    private Button AddAccountBtn;
+    private Button AccountMenuBttn;
+
+    @FXML
+    private Button AddAccountBttn;
+
+    @FXML
+    private Button DashboardBttn;
 
     @FXML
     private Button FilterBttn;
+
+    @FXML
+    private Button HamburgerMenuBttn;
+
+    @FXML
+    private Button PharmacyBttn;
+
+    @FXML
+    private Button ScheduleBttn;
+
+    @FXML
+    private Button ScheduleMenuBttn;
 
     @FXML
     private TextField TFsearch;
@@ -78,6 +97,10 @@ public class AccountManagementController implements Initializable {
 
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setupTableColumns();
@@ -109,18 +132,15 @@ public class AccountManagementController implements Initializable {
                 EmployeeModel selectedItem = row.getItem();
                 if (selectedItem != null) {
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("COH_UpdateAccount.fxml"));
-                        Parent root = loader.load();
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_UpdateAccount.fxml"));
+                        root = loader.load();
 
-                        // Get the controller and pass the employee ID
                         UpdateAccountController controller = loader.getController();
                         controller.loadEmployeeData(selectedItem.getId());
 
-                        Stage stage = new Stage();
+                        stage = (Stage) row.getScene().getWindow();
                         stage.setScene(new Scene(root));
-                        stage.setTitle("Update Account");
                         stage.show();
-
                     } catch (IOException e) {
                         e.printStackTrace();
                         showAlert("Error", "Failed to open update form: " + e.getMessage());
@@ -218,18 +238,15 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     void AddAccountMove(ActionEvent event) {
-        Stage currentStage = (Stage) AddAccountBtn.getScene().getWindow();
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("COH_AddAccount.fxml"));
-            Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AddAccount.fxml"));
+            root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Add Account");
-
-            // Close the current stage after the new one is ready
-            currentStage.close();
+            root = FXMLLoader.load(getClass().getResource("/View/COH_AddAccount.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
             stage.show();
 
         } catch (IOException e) {
@@ -257,5 +274,65 @@ public class AccountManagementController implements Initializable {
             }
             AccountManagmentTableView.setItems(filteredList);
         }
+    }
+
+    @FXML
+    void AccountMenuActionBttn(ActionEvent event) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            root = loader.load();
+
+            root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @FXML
+    void DashboardActionBttn(ActionEvent event) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
+            root = loader.load();
+
+            root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @FXML
+    void HamburgerMenuActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void PharmacyActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ScheduleActionBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ScheduleuActionBttn(ActionEvent event) {
+
     }
 }
