@@ -80,6 +80,15 @@ public class AddAccountController implements Initializable {
         }
     }
 
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        return email.matches(emailRegex);
+    }
+
+    private boolean isValidPhoneNumber(String phone) {
+        return phone.matches("^\\d{11}$");
+    }
+
     @FXML
     void AddAccBtnPress(ActionEvent event) {
         // Validate inputs
@@ -91,6 +100,16 @@ public class AddAccountController implements Initializable {
                 dayoffcb.getSelectionModel().isEmpty()) {
 
             showAlert("Input Error", "Please fill in all fields");
+            return;
+        }
+        // Email format validation
+        if (!isValidEmail(emailtf.getText().trim())) {
+            showAlert("Invalid Email", "Please enter a valid email address.");
+            return;
+        }
+        // ✅ Phone number format validation
+        if (!isValidPhoneNumber(numbertf.getText().trim())) {
+            showAlert("Invalid Phone Number", "Contact number must be exactly 11 digits.");
             return;
         }
 
