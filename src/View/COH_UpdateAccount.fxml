@@ -5,6 +5,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -68,18 +70,27 @@
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="28.0" layoutY="461.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="197.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Cancel" textFill="#9c9c9c">
+                  <Button fx:id="cancelbtn" layoutX="28.0" layoutY="461.0" mnemonicParsing="false" onAction="#CancelButtonAction" prefHeight="34.0" prefWidth="197.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Cancel" textFill="#9c9c9c">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
                </children>
             </Pane>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" prefHeight="44.0" prefWidth="505.0" text="Edit">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="14.0" prefHeight="44.0" prefWidth="368.0" text="Edit">
                <font>
                   <Font name="Gordita-Bold" size="21.0" />
                </font>
             </Label>
+            <Button fx:id="BackBttn" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#BackBttnAction" prefHeight="44.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-padding: 10;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../ICONS/Back%20Arrow.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </Pane>
    </children>
