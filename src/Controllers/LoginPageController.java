@@ -8,6 +8,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 import db.DatabaseConnect;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -84,9 +85,14 @@ public class LoginPageController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
                 root = loader.load();
 
-                root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
+
+                Platform.runLater(() -> {
+                stage.setFullScreenExitHint(""); // ✅ Hides the "Press ESC" message
+                stage.setFullScreen(true);
+                    });
+
                 stage.setScene(scene);
                 stage.show();
 
