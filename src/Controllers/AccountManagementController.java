@@ -31,7 +31,6 @@ import javax.swing.JOptionPane;
 
 import Models.EmployeeModel;
 import db.DatabaseConnect;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -307,33 +306,7 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     void DashboardActionBttn(ActionEvent event) {
-
-        try {
-        // Load the FXML
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-        Parent root = loader.load();
-
-        // Get the current stage
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        // Set the scene
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-
-        // Alternative to fullScreen: maximize and manually resize to screen bounds
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX(screenBounds.getMinX());
-        stage.setY(screenBounds.getMinY());
-        stage.setWidth(screenBounds.getWidth());
-        stage.setHeight(screenBounds.getHeight());
-        stage.setMaximized(true); // optional
-        stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        switchToSceneFullScreen("/View/COH_Dashboard.fxml", event);
     }
 
     @FXML
@@ -354,5 +327,32 @@ public class AccountManagementController implements Initializable {
     @FXML
     void ScheduleuActionBttn(ActionEvent event) {
 
+    }
+
+    private void switchToSceneFullScreen(String fxmlPath, ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+    
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+    
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX(screenBounds.getMinX());
+            stage.setY(screenBounds.getMinY());
+            stage.setWidth(screenBounds.getWidth());
+            stage.setHeight(screenBounds.getHeight());
+            stage.setMaximized(true);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error loading page:\n" + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 }
