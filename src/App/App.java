@@ -18,7 +18,6 @@ public class App extends Application {
             primaryStage.setResizable(false);
             primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();
-            
 
         } catch (IOException e) {
             e.printStackTrace();
