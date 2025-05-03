@@ -3,6 +3,7 @@ package Controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import java.io.IOException;
@@ -277,6 +279,12 @@ public class AccountManagementController implements Initializable {
     }
 
     @FXML
+    void LogOutActionBttn(ActionEvent event) {
+
+    }
+
+
+    @FXML
     void AccountMenuActionBttn(ActionEvent event) {
 
         try {
@@ -298,22 +306,7 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     void DashboardActionBttn(ActionEvent event) {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-            root = loader.load();
-
-            root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        switchToSceneFullScreen("/View/COH_Dashboard.fxml", event);
     }
 
     @FXML
@@ -334,5 +327,32 @@ public class AccountManagementController implements Initializable {
     @FXML
     void ScheduleuActionBttn(ActionEvent event) {
 
+    }
+
+    private void switchToSceneFullScreen(String fxmlPath, ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+    
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+    
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX(screenBounds.getMinX());
+            stage.setY(screenBounds.getMinY());
+            stage.setWidth(screenBounds.getWidth());
+            stage.setHeight(screenBounds.getHeight());
+            stage.setMaximized(true);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error loading page:\n" + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 }
