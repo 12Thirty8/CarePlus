@@ -1,11 +1,11 @@
 #loginBtn {
     -fx-border-color:  white;
-    -fx-background-color:  #54B62C;
+    -fx-background-color:  #0B69B9;
     -fx-border-radius: 8;
     -fx-border-width:  0;
 }
 
 #loginBtn:hover {
-    -fx-background-color: #3F8F21; /* Darker green on hover */
+    -fx-background-color:  #1e507b; /* Darker green on hover */
     -fx-cursor: hand;
 }

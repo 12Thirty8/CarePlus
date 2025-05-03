@@ -40,7 +40,7 @@ public class UpdateAccountController implements Initializable {
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
     @FXML
-    private Button cancelbtn, savebtn;
+    private Button cancelbtn, savebtn, BackBttn;
     @FXML
     private DatePicker dob;
     @FXML
@@ -102,6 +102,11 @@ public class UpdateAccountController implements Initializable {
             showAlert("Database Error", "Failed to load employee data: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void BackBttnAction(ActionEvent event) {
+
     }
 
     @FXML
