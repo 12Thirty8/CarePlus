@@ -64,8 +64,8 @@ public class LoginPageController {
         }
 
         // Check if the password length is between 8 and 40 characters
-        if (password.length() < 2 || password.length() > 40) {
-            JOptionPane.showMessageDialog(null, "Password must be between 8 and 40 characters.", "Error",
+        if (password.length() < 6 || password.length() > 20) {
+            JOptionPane.showMessageDialog(null, "Password must be between 6 and 20 characters.", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -79,10 +79,7 @@ public class LoginPageController {
             ResultSet rs = stm.executeQuery(sql);
 
             if (rs.next()) {
-                userid = rs.getInt("employee_id"); // Changed from "user_id" to match your query
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-                root = loader.load();
+                userid = rs.getInt("employee_id");
 
                 root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
