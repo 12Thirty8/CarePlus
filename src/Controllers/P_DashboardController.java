@@ -70,27 +70,24 @@ public class P_DashboardController implements Initializable {
     private Separator separator;
 
     @FXML
-    private TableColumn<EmployeeModel, Integer> idcol;
+    private TableColumn<RequestModel, Integer> idcol;
 
     @FXML
-    private TableColumn<EmployeeModel, Integer> listcol;
+    private TableColumn<RequestModel, Integer> recordcol;
 
     @FXML
-    private TableColumn<EmployeeModel, String> patientcol;
+    private TableColumn<RequestModel, Integer> listcol;
 
     @FXML
-    private TableColumn<EmployeeModel, String> doctorcol;
+    private TableColumn<RequestModel, String> encbycol;
 
     @FXML
-    private TableColumn<EmployeeModel, String> nursecol;
+    private TableColumn<RequestModel, String> reqcol;
 
     @FXML
-    private TableColumn<EmployeeModel, String> reqcol;
+    private TableColumn<RequestModel, Boolean> statcol;
 
-    @FXML
-    private TableColumn<EmployeeModel, Boolean> statcol;
-
-    private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
+    private ObservableList<RequestModel> EmployeeList = FXCollections.observableArrayList();
 
     private Stage stage;
     private Scene scene;
@@ -103,11 +100,10 @@ public class P_DashboardController implements Initializable {
     }
 
     private void setupTableColumns() {
-        idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idcol.setCellValueFactory(new PropertyValueFactory<>("reqid"));
         listcol.setCellValueFactory(new PropertyValueFactory<>("requestListId"));
-        patientcol.setCellValueFactory(new PropertyValueFactory<>("patientName"));
-        doctorcol.setCellValueFactory(new PropertyValueFactory<>("doctorName"));
-        nursecol.setCellValueFactory(new PropertyValueFactory<>("nurseName"));
+        recordcol.setCellValueFactory(new PropertyValueFactory<>("recId"));
+        encbycol.setCellValueFactory(new PropertyValueFactory<>("nurseName"));
         reqcol.setCellValueFactory(new PropertyValueFactory<>("requestDate"));
         statcol.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
@@ -121,31 +117,21 @@ public class P_DashboardController implements Initializable {
             Connection conn = dbConnect.connect();
             String query = """
                     SELECT
-                        e.employee_id, e.f_name, e.l_name, e.dob, e.contact_no, e.email,
-                        d.dep_name AS depName,
-                        e.password_hash,
-                        s.timeslot AS shiftName,
-                        do.dotw_name AS dayoffName
-                    FROM employee e
-                    LEFT JOIN department d ON e.dep_id = d.dep_id
-                    LEFT JOIN shift s ON e.shift_id = s.shift_id
-                    LEFT JOIN dotweek do ON e.dayoff_id = do.dotw_id
+                        r.request_id, r.record_id, r.requestlist_id, e.f_name AS encodedBy, r.request_date, r.status
+                    FROM request r
+                    LEFT JOIN employee e ON r.encoded_by = e.employee_id
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                EmployeeList.add(new EmployeeModel(
-                        rs.getInt("employee_id"),
-                        rs.getString("f_name"),
-                        rs.getString("l_name"),
-                        rs.getDate("dob"),
-                        rs.getString("contact_no"),
-                        rs.getString("email"),
-                        rs.getString("depName"),
-                        rs.getString("password_hash"), // Assuming you store hashed passwords
-                        rs.getString("shiftName"),
-                        rs.getString("dayoffName")));
+                EmployeeList.add(new RequestModel(
+                        rs.getInt("request_id"),
+                        rs.getInt("record_id"),
+                        rs.getInt("requestlist_id"),
+                        rs.getString("encodedBy"),
+                        rs.getDate("request_date"),
+                        rs.getBoolean("status")));
             }
 
             StkInTableView.setItems(EmployeeList);

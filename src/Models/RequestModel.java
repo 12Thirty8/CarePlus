@@ -3,55 +3,45 @@ package Models;
 import java.sql.Date;
 
 public class RequestModel {
-    int id;
-    String requestListId;
-    String patientName;
-    String doctorName;
+    int reqid;
+    int recId;
+    int requestListId;
     String nurseName;
     Date requestDate;
     boolean status;
 
-    public RequestModel(int id, String requestListId, String patientName, String doctorName, String nurseName,
+    public RequestModel(int reqid, int recId, int requestListId, String nurseName,
             Date requestDate, boolean status) {
-        this.id = id;
+        this.reqid = reqid;
+        this.recId = recId;
         this.requestListId = requestListId;
-        this.patientName = patientName;
-        this.doctorName = doctorName;
         this.nurseName = nurseName;
         this.requestDate = requestDate;
         this.status = status;
     }
 
-    public int getId() {
-        return id;
+    public int getReqid() {
+        return reqid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setReqid(int reqid) {
+        this.reqid = reqid;
     }
 
-    public String getRequestListId() {
+    public int getRecId() {
+        return recId;
+    }
+
+    public void setRecId(int recId) {
+        this.recId = recId;
+    }
+
+    public int getRequestListId() {
         return requestListId;
     }
 
-    public void setRequestListId(String requestListId) {
+    public void setRequestListId(int requestListId) {
         this.requestListId = requestListId;
-    }
-
-    public String getPatientName() {
-        return patientName;
-    }
-
-    public void setPatientName(String patientName) {
-        this.patientName = patientName;
-    }
-
-    public String getDoctorName() {
-        return doctorName;
-    }
-
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
     }
 
     public String getNurseName() {
