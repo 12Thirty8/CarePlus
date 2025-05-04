@@ -51,6 +51,22 @@ public class UpdateAccountController implements Initializable {
     private Scene scene;
     private Parent root;
 
+    private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
+        String query = "SELECT COUNT(*) AS count FROM employee " +
+                "WHERE dep_id = (SELECT dep_id FROM department WHERE dep_name = 'COH') " +
+                "AND employee_id != ?";
+
+        try (Connection conn = dbConnect.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, currentEmployeeId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count") >= 1; // Already one assigned
+            }
+        }
+        return false;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -129,6 +145,20 @@ public class UpdateAccountController implements Initializable {
 
             showAlert("Input Error", "Please fill in all fields");
             return;
+        }
+
+        // Check COH constraint
+        if ("COH".equalsIgnoreCase(depcb.getValue())) {
+            try {
+                if (isCOHDepartmentFull(currentEmployeeId)) {
+                    showAlert("Department Constraint", "Only one employee is allowed in the COH department.");
+                    return;
+                }
+            } catch (SQLException e) {
+                showAlert("Database Error", "Failed to validate COH department rule: " + e.getMessage());
+                e.printStackTrace();
+                return;
+            }
         }
 
         try {
