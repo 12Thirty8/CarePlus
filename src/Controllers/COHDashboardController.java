@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+//import javafx.stage.StageStyle;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 
@@ -59,23 +59,18 @@ public class COHDashboardController {
     @FXML
     private Button LogOutBttn;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    // private Stage stage;
+    // private Scene scene;
+    // private Parent root;
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-            root = loader.load();
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
+            stage.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
@@ -92,12 +87,21 @@ public class COHDashboardController {
     void LogOutActionBttn(ActionEvent event) {
         showAlert("Confirm Logout", "Are you sure you want to log out?");
         try {
-            root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
+            // Load the login page
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
+            Parent root = loader.load();
+    
+            // Create a new stage for the login page
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Login");
+            loginStage.setScene(new Scene(root));
+            loginStage.setResizable(false); // Optional: prevent resizing
+            loginStage.show();
+    
+            // Close the current stage
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+    
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
@@ -120,10 +124,6 @@ public class COHDashboardController {
 
     }
 
-    @FXML
-    void ScheduleuActionBttn(ActionEvent event) {
-
-    }
 
     @FXML
     public void initialize() {

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AccountManagementController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AccountManagementController">
    <children>
       <AnchorPane layoutX="113.0" layoutY="40.0" prefHeight="614.0" prefWidth="813.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="14.199999999999932" AnchorPane.topAnchor="40.0">
          <children>
@@ -66,7 +66,7 @@
       </AnchorPane>
       <AnchorPane layoutX="14.0" layoutY="40.0" prefHeight="1024.0" prefWidth="90.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 8;" AnchorPane.bottomAnchor="17.0" AnchorPane.topAnchor="39.200000000000045">
          <children>
-            <Button fx:id="HamburgerMenuBttn" layoutX="25.0" layoutY="31.0" mnemonicParsing="false" onAction="#HamburgerMenuActionBttn" prefHeight="38.0" prefWidth="40.0" style="-fx-background-color: FFFFF;">
+            <Button fx:id="HamburgerMenuBttn" layoutX="25.0" layoutY="31.0" mnemonicParsing="false" onAction="#HamburgerMenuActionBttn" prefHeight="38.0" prefWidth="40.0" style="-fx-background-color: transparent;">
                <font>
                   <Font name="Gordita-Bold" size="12.0" />
                </font>

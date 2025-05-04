@@ -20,6 +20,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+//import javafx.stage.StageStyle;
 
 public class LoginPageController {
     public static int dep_id;
@@ -101,7 +102,9 @@ public class LoginPageController {
                         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         stage.setScene(scene);
+                        stage.setMaximized(true);
                         stage.show();
+                    
                         break;
                 }
 
