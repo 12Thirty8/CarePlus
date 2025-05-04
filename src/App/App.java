@@ -6,17 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+// import javafx.stage.StageStyle;
 
 public class App extends Application {
     public void start(Stage primaryStage) {
         System.setProperty("prism.lcdtext", "false");
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/PharmacistDashboard.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
-            primaryStage.initStyle(StageStyle.UNDECORATED);
+            // primaryStage.setResizable(false);
             primaryStage.show();
             
 
