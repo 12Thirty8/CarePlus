@@ -94,6 +94,26 @@ public class AddAccountController implements Initializable {
             return;
         }
 
+        if (!fnametf.getText().matches("[a-zA-Z]+") || !lnametf.getText().matches("[a-zA-Z]+")) {
+            showAlert("Input Error", "Names can only contain letters");
+            return;
+        }
+
+        if (!isValidEmail(emailtf.getText())) {
+            showAlert("Invalid Email", "Please enter a valid email (e.g., user@example.com)");
+            return;
+        }
+
+        if (!numbertf.getText().matches("09\\d{9}")) {
+            showAlert("Input Error", "Phone number must start with 09 and have 11 digits");
+            return;
+        }
+
+        if (psfield.getText().length() < 6) {
+            showAlert("Input Error", "Password must be at least 6 characters long");
+            return;
+        }
+
         try {
             // Convert LocalDate to SQL Date
             LocalDate localDate = dob.getValue();
@@ -228,6 +248,11 @@ public class AddAccountController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public static boolean isValidEmail(String email) {
+        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(regex);
     }
 
     @FXML
