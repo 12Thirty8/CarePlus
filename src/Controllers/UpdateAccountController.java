@@ -104,7 +104,18 @@ public class UpdateAccountController implements Initializable {
 
     @FXML
     void BackBttnAction(ActionEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @FXML
