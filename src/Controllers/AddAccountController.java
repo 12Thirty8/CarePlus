@@ -35,6 +35,7 @@ import db.DatabaseConnect;
 public class AddAccountController implements Initializable {
 
     private DatabaseConnect dbConnect = new DatabaseConnect();
+    private int currentEmployeeId;
 
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
@@ -112,6 +113,19 @@ public class AddAccountController implements Initializable {
         if (psfield.getText().length() < 6) {
             showAlert("Input Error", "Password must be at least 6 characters long");
             return;
+        }
+        // Check COH constraint
+        if ("COH".equalsIgnoreCase(depcb.getValue())) {
+            try {
+                if (isCOHDepartmentFull(currentEmployeeId)) {
+                    showAlert("Department Constraint", "Only one employee is allowed in the COH department.");
+                    return;
+                }
+            } catch (SQLException e) {
+                showAlert("Department Constraint", "Only one employee is allowed in the COH department.");
+                e.printStackTrace();
+                return;
+            }
         }
 
         try {
@@ -253,6 +267,21 @@ public class AddAccountController implements Initializable {
     public static boolean isValidEmail(String email) {
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(regex);
+    }
+
+    private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
+        String query = "SELECT COUNT(*) AS count FROM employee " +
+                "WHERE dep_id = (SELECT dep_id FROM department WHERE dep_name = 'COH')";
+
+        try (Connection conn = dbConnect.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, currentEmployeeId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count") >= 1; // Already one assigned
+            }
+        }
+        return false;
     }
 
     @FXML
