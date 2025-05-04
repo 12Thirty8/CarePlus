@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -31,7 +32,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="homeBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
+                              <Button fx:id="homeBtn" alignment="TOP_LEFT" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -39,35 +40,34 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
-                              </Button>
-                              <Button fx:id="homehighlightBtn" layoutX="75.0" layoutY="13.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="6.0" style="-fx-background-color: white;" visible="false" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="16.0">
                                  <font>
-                                    <Font name="Gordita-Bold" size="12.0" />
+                                    <Font name="Gordita-Bold" size="15.0" />
                                  </font>
                               </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="crossBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="10.0" maxWidth="54.0" minHeight="62.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
+                              <Button fx:id="crossBtn" alignment="TOP_LEFT" graphicTextGap="43.0" layoutX="28.0" layoutY="17.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <graphic>
-                                    <ImageView fitHeight="54.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../ICONS/Hospital.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
-                              </Button>
-                              <Button fx:id="crosshighlightBtn" layoutX="76.0" layoutY="10.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="16.0" style="-fx-background-color: white;" visible="false" AnchorPane.leftAnchor="76.0" AnchorPane.rightAnchor="15.0">
                                  <font>
-                                    <Font name="Gordita-Bold" size="12.0" />
+                                    <Font name="Gordita-Bold" size="15.0" />
                                  </font>
+                                 <padding>
+                                    <Insets left="7.0" top="4.0" />
+                                 </padding>
                               </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="clipboardBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
+                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -75,10 +75,11 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
-                              </Button>
-                              <Button fx:id="clipboardhiglightBtn" layoutX="76.0" layoutY="13.0" maxHeight="54.0" minHeight="54.0" mnemonicParsing="false" prefWidth="6.0" style="-fx-background-color: white;" visible="false" AnchorPane.leftAnchor="76.0" AnchorPane.rightAnchor="15.0">
+                                 <padding>
+                                    <Insets left="11.0" top="5.0" />
+                                 </padding>
                                  <font>
-                                    <Font name="Gordita-Bold" size="12.0" />
+                                    <Font name="Gordita-Bold" size="15.0" />
                                  </font>
                               </Button>
                            </children>

@@ -15,7 +15,7 @@ public class App extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("/View/PharmacistDashboard.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            // primaryStage.setResizable(false);
+            primaryStage.setResizable(false);
             primaryStage.show();
             
 

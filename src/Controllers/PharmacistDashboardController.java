@@ -56,25 +56,13 @@ public class PharmacistDashboardController {
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
     
-            timeline.setOnFinished(event -> {
-                homehighlightBtn.setVisible(false);
-                crosshighlightBtn.setVisible(false);
-                clipboardhiglightBtn.setVisible(false);
-            });
+           
         } else {
             // Expand the hamburger menu
             KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 300); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
     
-            homehighlightBtn.setVisible(true);
-            homehighlightBtn.setText("Home");
-
-            crosshighlightBtn.setVisible(true);
-            crosshighlightBtn.setText("Cross");
-
-            clipboardhiglightBtn.setVisible(true);
-            clipboardhiglightBtn.setText("Clipboard");
             
             
         }
