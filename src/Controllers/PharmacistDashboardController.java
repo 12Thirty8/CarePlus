@@ -55,16 +55,12 @@ public class PharmacistDashboardController {
             KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
-    
            
         } else {
             // Expand the hamburger menu
             KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 300); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
-    
-            
-            
         }
     
         timeline.play();
