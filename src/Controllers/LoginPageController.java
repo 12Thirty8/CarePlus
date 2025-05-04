@@ -113,8 +113,7 @@ public class LoginPageController {
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Database error occurred", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Database error occurred", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
