@@ -92,7 +92,7 @@ public class COHDashboardController {
     void LogOutActionBttn(ActionEvent event) {
         showAlert("Confirm Logout", "Are you sure you want to log out?");
         try {
-            root = FXMLLoader.load(getClass().getResource("/View/COH_Login.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
