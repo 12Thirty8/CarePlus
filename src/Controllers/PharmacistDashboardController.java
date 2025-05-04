@@ -35,9 +35,6 @@ public class PharmacistDashboardController {
     @FXML
     private AnchorPane mainPane;
 
-    @FXML
-    private Button testButton;
-
     private boolean isHamburgerPaneExtended = false;
 
     @FXML

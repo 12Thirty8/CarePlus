@@ -11,51 +11,48 @@ import javafx.util.Duration;
 public class PharmacistStocksController {
 
     @FXML
-    private Button clipboardBtnStocks;
+    private Button clipboardBtn;
 
     @FXML
-    private Button crossBtnStocks;
+    private Button crossBtn;
 
     @FXML
-    private AnchorPane hamburgerPaneStocks;
+    private AnchorPane hamburgerPane;
 
     @FXML
-    private Button hamburgermenuBtnStocks;
+    private Button hamburgermenuBtn;
 
     @FXML
-    private Button homeBtnStocks;
+    private Button homeBtn;
 
     @FXML
-    private AnchorPane mainPaneStocks;
+    private AnchorPane mainPane;
 
     private boolean isHamburgerPaneExtended = false;
 
-     @FXML
+    @FXML
     public void initialize() {
-        hamburgerPaneStocks.setPrefWidth(107); 
-        hamburgermenuBtnStocks.setOnAction(event -> toggleHamburgerMenu());
+        hamburgerPane.setPrefWidth(107); 
+        hamburgermenuBtn.setOnAction(event -> toggleHamburgerMenu());
     }
 
     @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
-    
+
         if (isHamburgerPaneExtended) {
             // Collapse the hamburger menu
-            KeyValue keyValue = new KeyValue(hamburgerPaneStocks.prefWidthProperty(), 107); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
-           
         } else {
             // Expand the hamburger menu
-            KeyValue keyValue = new KeyValue(hamburgerPaneStocks.prefWidthProperty(), 300); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 250); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         }
-    
+
         timeline.play();
         isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
-    
-
 }
