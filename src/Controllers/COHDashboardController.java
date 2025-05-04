@@ -24,9 +24,7 @@ import javafx.stage.Stage;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
-import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.util.Duration;
 
@@ -67,10 +65,6 @@ public class COHDashboardController {
 
     @FXML
     private Button LogOutBttn;
-
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
