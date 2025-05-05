@@ -1,14 +1,35 @@
 package Controllers;
 
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+import Models.RequestModel;
+import Models.StocksModel;
+import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-public class PharmacistStocksController {
+public class PharmacistStocksController implements Initializable {
+
+    private DatabaseConnect dbConnect = new DatabaseConnect();
+
+    @FXML
+    private TableView<StocksModel> StockTable;
 
     @FXML
     private Button clipboardBtnStocks;
@@ -28,34 +49,101 @@ public class PharmacistStocksController {
     @FXML
     private AnchorPane mainPaneStocks;
 
+    @FXML
+    private TableColumn<StocksModel, Integer> idcol;
+
+    @FXML
+    private TableColumn<StocksModel, String> namecol;
+
+    @FXML
+    private TableColumn<StocksModel, String> catcol;
+
+    @FXML
+    private TableColumn<StocksModel, Integer> stockcol;
+
+    @FXML
+    private TableColumn<StocksModel, String> expcol;
+
+    @FXML
+    private TableColumn<StocksModel, String> sincol;
+
+    private ObservableList<StocksModel> EmployeeList = FXCollections.observableArrayList();
+
     private boolean isHamburgerPaneExtended = false;
 
-     @FXML
-    public void initialize() {
-        hamburgerPaneStocks.setPrefWidth(107); 
-        hamburgermenuBtnStocks.setOnAction(event -> toggleHamburgerMenu());
+    @FXML
+    public void initialize(URL url, ResourceBundle rb) {
+        hamburgerPaneStocks.setPrefWidth(107);
+        hamburgermenuBtnStocks.setOnAction(_ -> toggleHamburgerMenu());
+        setupTableColumns();
+        refreshEmployeeTable();
+        setupRowContextMenu();
+    }
+
+    private void setupTableColumns() {
+        idcol.setCellValueFactory(new PropertyValueFactory<>("medId"));
+        namecol.setCellValueFactory(new PropertyValueFactory<>("medName"));
+        stockcol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        expcol.setCellValueFactory(new PropertyValueFactory<>("expDate"));
+        catcol.setCellValueFactory(new PropertyValueFactory<>("category"));
+        sincol.setCellValueFactory(new PropertyValueFactory<>("inBy"));
+    }
+
+    private void setupRowContextMenu() {
+    }
+
+    private void refreshEmployeeTable() {
+        EmployeeList.clear();
+        try {
+            Connection conn = dbConnect.connect();
+            String query = """
+                    SELECT
+                        m.med_id, m.med_name, m.med_stock, m.med_exp, m.med_cat, e.f_name AS stockinBy
+                    FROM medicine m
+                    LEFT JOIN employee e ON m.stockin_by = e.employee_id
+                    """;
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                EmployeeList.add(new StocksModel(
+                        rs.getInt("med_id"),
+                        rs.getString("med_name"),
+                        rs.getInt("med_stock"),
+                        rs.getDate("med_exp"),
+                        rs.getString("med_cat"),
+                        rs.getString("stockinBy")));
+            }
+
+            StockTable.setItems(EmployeeList);
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
-    
+
         if (isHamburgerPaneExtended) {
             // Collapse the hamburger menu
-            KeyValue keyValue = new KeyValue(hamburgerPaneStocks.prefWidthProperty(), 107); 
+            KeyValue keyValue = new KeyValue(hamburgerPaneStocks.prefWidthProperty(), 107);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
-           
+
         } else {
             // Expand the hamburger menu
-            KeyValue keyValue = new KeyValue(hamburgerPaneStocks.prefWidthProperty(), 300); 
+            KeyValue keyValue = new KeyValue(hamburgerPaneStocks.prefWidthProperty(), 300);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         }
-    
+
         timeline.play();
         isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
-    
 
 }
