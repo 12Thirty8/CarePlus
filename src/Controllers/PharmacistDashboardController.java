@@ -39,7 +39,7 @@ public class PharmacistDashboardController {
 
     @FXML
     public void initialize() {
-        hamburgerPane.setPrefWidth(107); 
+        hamburgerPane.setPrefWidth(230); 
         hamburgermenuBtn.setOnAction(event -> toggleHamburgerMenu());
     }
 
@@ -48,14 +48,13 @@ public class PharmacistDashboardController {
         Timeline timeline = new Timeline();
     
         if (isHamburgerPaneExtended) {
-            // Collapse the hamburger menu
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
-           
+
         } else {
-            // Expand the hamburger menu
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 300); 
+            
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         }
