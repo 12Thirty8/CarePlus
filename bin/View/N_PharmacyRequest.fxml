@@ -14,70 +14,58 @@
    <children>
       <AnchorPane layoutX="113.0" layoutY="41.0" prefHeight="614.0" prefWidth="813.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;">
          <children>
-            <AnchorPane layoutX="11.0" layoutY="12.0" prefHeight="590.0" prefWidth="792.0" style="-fx-background-radius: 15; -fx-background-color: #EFF1FF;">
+            <AnchorPane layoutX="27.0" layoutY="41.0" prefHeight="100.0" prefWidth="778.0" style="-fx-background-radius: 15; -fx-background-color: F3F6FF;" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="20.0">
                <children>
-                  <AnchorPane layoutX="16.0" layoutY="29.0" prefHeight="100.0" prefWidth="778.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="20.0">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="28.0" prefHeight="44.0" prefWidth="363.0" text="Pharmacy Request" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="396.0" AnchorPane.topAnchor="28.0">
-                           <font>
-                              <Font name="Gordita-Bold" size="34.0" />
-                           </font>
-                        </Label>
-                        <DatePicker layoutX="562.0" layoutY="37.0" promptText="MM/DD/YYYY" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="18.0" layoutY="139.0" prefHeight="437.0" prefWidth="756.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF;">
-                     <children>
-                        <AnchorPane layoutX="414.0" layoutY="31.0" prefHeight="356.0" prefWidth="263.0" style="-fx-background-radius: 15; -fx-background-color: #ECEFF6;">
-                           <children>
-                              <Label layoutX="7.0" layoutY="5.0" prefHeight="19.0" prefWidth="210.0" text="List of Requested Medicines*:">
-                                 <font>
-                                    <Font name="Gordita-Regular" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextArea layoutX="10.0" layoutY="29.0" prefHeight="277.0" prefWidth="245.0" />
-                              <Button fx:id="EncodeBttn" layoutX="23.0" layoutY="312.0" mnemonicParsing="false" onAction="#EncodeActionBttn" style="-fx-background-color: #4749D9;" text="Request" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="100.0" layoutY="31.0" prefHeight="356.0" prefWidth="263.0" style="-fx-background-radius: 15; -fx-background-color: #ECEFF6;">
-                           <children>
-                              <Label layoutX="14.0" layoutY="21.0" text="Nurse ID*:">
-                                 <font>
-                                    <Font name="Gordita-Regular" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField floatText="Patient ID" layoutX="14.0" layoutY="40.0" opacity="0.56" prefHeight="35.0" prefWidth="203.0" />
-                              <Label layoutX="14.0" layoutY="98.0" text="Quantity*:">
-                                 <font>
-                                    <Font name="Gordita-Regular" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField floatText="Doctor ID" layoutX="14.0" layoutY="117.0" opacity="0.56" prefHeight="35.0" prefWidth="203.0" />
-                              <Label layoutX="14.0" layoutY="168.0" text="Medicine*:">
-                                 <font>
-                                    <Font name="Gordita-Regular" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField floatText="Doctor ID" layoutX="14.0" layoutY="184.0" opacity="0.56" prefHeight="35.0" prefWidth="203.0" />
-                              <Label layoutX="14.0" layoutY="239.0" text="Record ID*:">
-                                 <font>
-                                    <Font name="Gordita-Regular" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField floatText="Doctor ID" layoutX="14.0" layoutY="258.0" opacity="0.56" prefHeight="35.0" prefWidth="203.0" />
-                              <Button fx:id="EncodeBttn1" layoutX="15.0" layoutY="312.0" mnemonicParsing="false" onAction="#EncodeActionBttn" style="-fx-background-color: #4749D9;" text="Add to List" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="28.0" prefHeight="44.0" prefWidth="363.0" text="Pharmacy Request" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="396.0" AnchorPane.topAnchor="28.0">
+                     <font>
+                        <Font name="Gordita-Bold" size="34.0" />
+                     </font>
+                  </Label>
+                  <DatePicker layoutX="562.0" layoutY="37.0" promptText="MM/DD/YYYY" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="18.0" layoutY="152.0" prefHeight="437.0" prefWidth="777.0" style="-fx-background-radius: 15; -fx-background-color: F3F6FF;">
+               <children>
+                  <Label layoutX="421.0" layoutY="36.0" prefHeight="19.0" prefWidth="210.0" text="List of Requested Medicines*:">
+                     <font>
+                        <Font name="Gordita-Regular" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextArea layoutX="424.0" layoutY="60.0" prefHeight="277.0" prefWidth="245.0" />
+                  <Button fx:id="EncodeBttn" layoutX="437.0" layoutY="343.0" mnemonicParsing="false" onAction="#EncodeActionBttn" style="-fx-background-color: #4749D9;" text="Request" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="114.0" layoutY="52.0" text="Nurse ID*:">
+                     <font>
+                        <Font name="Gordita-Regular" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField floatText="Patient ID" layoutX="114.0" layoutY="71.0" opacity="0.56" prefHeight="35.0" prefWidth="203.0" style="-fx-background-color: FFFFFF;" />
+                  <Label layoutX="114.0" layoutY="129.0" text="Quantity*:">
+                     <font>
+                        <Font name="Gordita-Regular" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField floatText="Doctor ID" layoutX="114.0" layoutY="148.0" opacity="0.56" prefHeight="35.0" prefWidth="203.0" style="-fx-background-color: FFFFFF;" />
+                  <Label layoutX="114.0" layoutY="199.0" text="Medicine*:">
+                     <font>
+                        <Font name="Gordita-Regular" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField floatText="Doctor ID" layoutX="114.0" layoutY="215.0" opacity="0.56" prefHeight="35.0" prefWidth="203.0" style="-fx-background-color: FFFFFF;" />
+                  <Label layoutX="114.0" layoutY="270.0" text="Record ID*:">
+                     <font>
+                        <Font name="Gordita-Regular" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField floatText="Doctor ID" layoutX="114.0" layoutY="289.0" opacity="0.56" prefHeight="35.0" prefWidth="203.0" style="-fx-background-color: FFFFFF;" />
+                  <Button fx:id="EncodeBttn1" layoutX="115.0" layoutY="343.0" mnemonicParsing="false" onAction="#EncodeActionBttn" style="-fx-background-color: #4749D9;" text="Add to List" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>
