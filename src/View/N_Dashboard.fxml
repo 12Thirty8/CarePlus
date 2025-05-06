@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="N_PatientData">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_DashboardController">
    <children>
       <AnchorPane layoutX="113.0" layoutY="41.0" prefHeight="614.0" prefWidth="813.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;">
          <children>
@@ -52,7 +52,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../Downloads/ICONS/Menu.png" />
+                        <Image url="@../ICONS/Menu.png" />
                      </image>
                   </ImageView>
                </graphic>
