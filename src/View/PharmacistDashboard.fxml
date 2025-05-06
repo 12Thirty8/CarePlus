@@ -97,7 +97,7 @@
                <children>
                   <StackPane layoutX="257.0" layoutY="24.0" AnchorPane.leftAnchor="257.0" AnchorPane.rightAnchor="257.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" wrappingWidth="177.58200073242188">
                            <font>
                               <Font name="Gordita-Bold" size="34.0" />
                            </font>
@@ -108,12 +108,12 @@
                      <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
                            <children>
-                              <Text layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Louie Anton Alupay">
+                              <Text layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                                  <font>
                                     <Font name="Gordita-Regular" size="24.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacist">
+                              <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
@@ -124,7 +124,7 @@
                   </StackPane>
                   <StackPane layoutX="16.0" layoutY="233.0">
                      <children>
-                        <TextField prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20;" />
+                        <TextField prefHeight="25.0" prefWidth="192.0" promptText="Search Requests" style="-fx-background-radius: 20;" />
                      </children>
                   </StackPane>
                   <TableView layoutX="16.0" layoutY="270.0" prefHeight="345.0" prefWidth="659.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="270.0">

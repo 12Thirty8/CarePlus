@@ -41,12 +41,12 @@ public class PharmacistStocksController {
         Timeline timeline = new Timeline();
 
         if (isHamburgerPaneExtended) {
-            // Collapse the hamburger menu
+            
             KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         } else {
-            // Expand the hamburger menu
+            
             KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 250); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
