@@ -4,7 +4,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<<<<<<< HEAD
 <?import javafx.scene.control.TextField?>
+=======
+>>>>>>> origin/Budiao_TestMine
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,6 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<<<<<<< HEAD
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PharmacistDashboardController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
@@ -25,6 +29,19 @@
                         <AnchorPane prefHeight="80.0" prefWidth="107.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                            <children>
                               <Button fx:id="hamburgermenuBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="12.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
+=======
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PharmacistStocksController">
+   <children>
+      <HBox layoutY="36.0" prefHeight="628.0" prefWidth="860.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
+         <children>
+            <AnchorPane fx:id="hamburgerPaneStocks" prefWidth="107.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+               <children>
+                  <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="26.0" prefHeight="628.0" prefWidth="107.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                           <children>
+                              <Button fx:id="hamburgermenuBtnStocks" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="12.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
+>>>>>>> origin/Budiao_TestMine
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -37,7 +54,11 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
+<<<<<<< HEAD
                               <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+=======
+                              <Button fx:id="homeBtnStocks" alignment="TOP_LEFT" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+>>>>>>> origin/Budiao_TestMine
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -53,7 +74,11 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
+<<<<<<< HEAD
                               <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="17.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+=======
+                              <Button fx:id="crossBtnStocks" alignment="TOP_LEFT" graphicTextGap="43.0" layoutX="28.0" layoutY="17.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+>>>>>>> origin/Budiao_TestMine
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -72,7 +97,11 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
+<<<<<<< HEAD
                               <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+=======
+                              <Button fx:id="clipboardBtnStocks" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+>>>>>>> origin/Budiao_TestMine
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -93,6 +122,7 @@
                   </VBox>
                </children>
             </AnchorPane>
+<<<<<<< HEAD
             <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
                   <StackPane layoutX="257.0" layoutY="19.0" AnchorPane.leftAnchor="257.0" AnchorPane.rightAnchor="257.0">
@@ -100,10 +130,20 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stocks" wrappingWidth="113.58200073242188">
                            <font>
                               <Font name="Gordita-Bold" size="34.0" />
+=======
+            <AnchorPane fx:id="mainPaneStocks" prefHeight="628.0" prefWidth="784.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <children>
+                  <StackPane layoutX="308.0" layoutY="33.0" prefHeight="54.0" prefWidth="213.0" AnchorPane.leftAnchor="308.0" AnchorPane.rightAnchor="294.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stocks">
+                           <font>
+                              <Font name="Gordita-Bold" size="64.0" />
+>>>>>>> origin/Budiao_TestMine
                            </font>
                         </Text>
                      </children>
                   </StackPane>
+<<<<<<< HEAD
                   <StackPane layoutX="16.0" layoutY="92.0" prefHeight="115.0" prefWidth="659.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
                      <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
@@ -135,6 +175,23 @@
                   </TableView>
                </children>
             </AnchorPane>
+=======
+                  <StackPane layoutX="39.2" layoutY="268.0" prefHeight="287.0" prefWidth="740.0" style="-fx-background-color: grey;" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="36.0">
+                     <children>
+                        <TableView fx:id="StockTable" prefHeight="287.0" prefWidth="479.0">
+                          <columns>
+                            <TableColumn fx:id="idcol" prefWidth="110.4000244140625" text="Medicine ID" />
+                            <TableColumn fx:id="namecol" prefWidth="153.59986877441406" text="Medicine Name" />
+                              <TableColumn fx:id="stockcol" prefWidth="96.00006103515625" text="Stock" />
+                              <TableColumn fx:id="expcol" prefWidth="152.79995727539062" text="Expiry Date" />
+                              <TableColumn fx:id="catcol" prefWidth="128.7999267578125" text="Category" />
+                              <TableColumn fx:id="sincol" prefWidth="98.40001982450485" text="Stock In By" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </StackPane>
+               </children></AnchorPane>
+>>>>>>> origin/Budiao_TestMine
          </children>
       </HBox>
    </children>

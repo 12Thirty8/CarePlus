@@ -73,7 +73,7 @@
       </AnchorPane>
       <AnchorPane layoutX="14.0" layoutY="42.0" prefHeight="614.0" prefWidth="90.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 8;" AnchorPane.bottomAnchor="13.600000000000023" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="42.0">
          <children>
-            <Button fx:id="HamburgerMenuBttn" layoutX="25.0" layoutY="31.0" mnemonicParsing="false" onAction="#HamburgerMenuActionBttn" prefHeight="38.0" prefWidth="40.0" style="-fx-background-color: FFFFF;">
+            <Button fx:id="HamburgerMenuBttn" layoutX="25.0" layoutY="31.0" mnemonicParsing="false" onAction="#HamburgerMenuActionBttn" prefHeight="38.0" prefWidth="40.0" style="-fx-background-color: transparent;">
                <font>
                   <Font name="Gordita-Bold" size="12.0" />
                </font>

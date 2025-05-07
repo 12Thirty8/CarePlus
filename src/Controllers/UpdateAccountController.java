@@ -35,12 +35,12 @@ import db.DatabaseConnect;
 public class UpdateAccountController implements Initializable {
 
     private DatabaseConnect dbConnect = new DatabaseConnect();
-    private int currentEmployeeId; // To store the ID of the employee being updated
+    private int currentEmployeeId;
 
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
     @FXML
-    private Button cancelbtn, savebtn;
+    private Button cancelbtn, savebtn, BackBttn;
     @FXML
     private DatePicker dob;
     @FXML
@@ -51,15 +51,29 @@ public class UpdateAccountController implements Initializable {
     private Scene scene;
     private Parent root;
 
+    private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
+        String query = "SELECT COUNT(*) AS count FROM employee " +
+                "WHERE dep_id = (SELECT dep_id FROM department WHERE dep_name = 'COH') " +
+                "AND employee_id != ?";
+
+        try (Connection conn = dbConnect.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, currentEmployeeId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count") >= 1; // Already one assigned
+            }
+        }
+        return false;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            // Set prompt texts
             depcb.setPromptText("Select Department");
             shiftcb.setPromptText("Select Shift");
             dayoffcb.setPromptText("Select Day Off");
 
-            // Populate comboboxes
             depcb.getItems().addAll(getDep());
             shiftcb.getItems().addAll(getShift());
             dayoffcb.getItems().addAll(getOff());
@@ -105,8 +119,23 @@ public class UpdateAccountController implements Initializable {
     }
 
     @FXML
+    void BackBttnAction(ActionEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @FXML
     void SaveChangesAction(ActionEvent event) {
-        // Validate inputs
         if (fnametf.getText().isEmpty() || lnametf.getText().isEmpty() ||
                 dob.getValue() == null || numbertf.getText().isEmpty() ||
                 emailtf.getText().isEmpty() || psfield.getText().isEmpty() ||
@@ -118,8 +147,21 @@ public class UpdateAccountController implements Initializable {
             return;
         }
 
+        // Check COH constraint
+        if ("COH".equalsIgnoreCase(depcb.getValue())) {
+            try {
+                if (isCOHDepartmentFull(currentEmployeeId)) {
+                    showAlert("Department Constraint", "Only one employee is allowed in the COH department.");
+                    return;
+                }
+            } catch (SQLException e) {
+                showAlert("Database Error", "Failed to validate COH department rule: " + e.getMessage());
+                e.printStackTrace();
+                return;
+            }
+        }
+
         try {
-            // Convert LocalDate to SQL Date
             LocalDate localDate = dob.getValue();
             Date sqlDate = Date.valueOf(localDate);
 
@@ -138,9 +180,6 @@ public class UpdateAccountController implements Initializable {
             showAlert("Success", "Account updated successfully");
 
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-                root = loader.load();
-
                 root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
@@ -161,9 +200,7 @@ public class UpdateAccountController implements Initializable {
 
     @FXML
     void CancelButtonAction(ActionEvent event) {
-        // Clear the form or close the window
         clearForm();
-        // You might want to add code to close the window here
     }
 
     private List<String> getDep() throws SQLException {

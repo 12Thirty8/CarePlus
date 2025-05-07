@@ -46,7 +46,7 @@
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Button>
-            <TableView fx:id="AccountManagmentTableView" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 0px;" stylesheets="@styleshet.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
+            <TableView fx:id="AccountManagmentTableView" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 0px;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
                <columns>
                   <TableColumn fx:id="emp_idcol" prefWidth="92.80001527070999" text="Employee ID" />
                   <TableColumn fx:id="f_namecol" prefWidth="80.00001525878906" text="First Name" />
