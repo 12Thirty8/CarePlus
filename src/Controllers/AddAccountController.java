@@ -283,11 +283,6 @@ public class AddAccountController implements Initializable {
         alert.showAndWait();
     }
 
-    public static boolean isValidEmail(String email) {
-        String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        return email.matches(regex);
-    }
-
     private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
         String query = "SELECT COUNT(*) AS count FROM employee " +
                 "WHERE dep_id = (SELECT dep_id FROM department WHERE dep_name = 'COH')";
