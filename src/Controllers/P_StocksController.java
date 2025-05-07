@@ -24,7 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-public class PharmacistStocksController implements Initializable {
+public class P_StocksController implements Initializable {
 
     private DatabaseConnect dbConnect = new DatabaseConnect();
 
@@ -32,40 +32,40 @@ public class PharmacistStocksController implements Initializable {
     private TableView<StocksModel> StockTable;
 
     @FXML
-    private Button clipboardBtnStocks;
-
-    @FXML
-    private Button crossBtnStocks;
-
-    @FXML
-    private AnchorPane hamburgerPaneStocks;
-
-    @FXML
-    private Button hamburgermenuBtnStocks;
-
-    @FXML
-    private Button homeBtnStocks;
-
-    @FXML
-    private AnchorPane mainPaneStocks;
-
-    @FXML
-    private TableColumn<StocksModel, Integer> idcol;
-
-    @FXML
-    private TableColumn<StocksModel, String> namecol;
-
-    @FXML
     private TableColumn<StocksModel, String> catcol;
 
     @FXML
-    private TableColumn<StocksModel, Integer> stockcol;
+    private Button clipboardBtn;
+
+    @FXML
+    private Button crossBtn;
 
     @FXML
     private TableColumn<StocksModel, String> expcol;
 
     @FXML
+    private AnchorPane hamburgerPane;
+
+    @FXML
+    private Button hamburgermenuBtn;
+
+    @FXML
+    private Button homeBtn;
+
+    @FXML
+    private TableColumn<StocksModel, Integer> idcol;
+
+    @FXML
+    private AnchorPane mainPane;
+
+    @FXML
+    private TableColumn<StocksModel, String> namecol;
+
+    @FXML
     private TableColumn<StocksModel, String> sincol;
+
+    @FXML
+    private TableColumn<StocksModel, Integer> stockcol;
 
     private ObservableList<StocksModel> EmployeeList = FXCollections.observableArrayList();
 
@@ -73,8 +73,8 @@ public class PharmacistStocksController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
-        hamburgerPaneStocks.setPrefWidth(107);
-        hamburgermenuBtnStocks.setOnAction(_ -> toggleHamburgerMenu());
+        hamburgerPane.setPrefWidth(230); 
+        hamburgermenuBtn.setOnAction(event -> toggleHamburgerMenu());
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
@@ -126,24 +126,21 @@ public class PharmacistStocksController implements Initializable {
     }
 
     @FXML
-    private void toggleHamburgerMenu() {
+     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
-
+    
         if (isHamburgerPaneExtended) {
-            // Collapse the hamburger menu
-            KeyValue keyValue = new KeyValue(hamburgerPaneStocks.prefWidthProperty(), 107);
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
 
         } else {
-            // Expand the hamburger menu
-            KeyValue keyValue = new KeyValue(hamburgerPaneStocks.prefWidthProperty(), 300);
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         }
-
+    
         timeline.play();
         isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
-
 }
