@@ -4,13 +4,15 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="941.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="rootPane" prefHeight="794.0" prefWidth="1202.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoadingPageController">
    <children>
-      <ImageView fitHeight="502.0" fitWidth="513.0" layoutX="220.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Care++.gif" />
-         </image>
-      </ImageView>
+      <AnchorPane layoutX="313.0" layoutY="53.0" prefHeight="747.0" prefWidth="1134.0" AnchorPane.bottomAnchor="-6.600000000000023" AnchorPane.leftAnchor="313.0" AnchorPane.rightAnchor="14.199999999999818" AnchorPane.topAnchor="53.0">
+         <children>
+            <ImageView fitHeight="762.0" fitWidth="714.0" layoutX="105.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ICONS/Care++.gif" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
    </children>
 </AnchorPane>

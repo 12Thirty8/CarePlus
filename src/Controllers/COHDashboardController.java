@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 //import javafx.stage.StageStyle;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
@@ -93,8 +94,8 @@ public class COHDashboardController {
     
             // Create a new stage for the login page
             Stage loginStage = new Stage();
-            loginStage.setTitle("Login");
             loginStage.setScene(new Scene(root));
+            loginStage.initStyle(StageStyle.UNDECORATED);
             loginStage.setResizable(false); // Optional: prevent resizing
             loginStage.show();
     

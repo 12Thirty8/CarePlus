@@ -90,12 +90,13 @@ public void onPressed(ActionEvent event) throws IOException {
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene loadingScene = new Scene(loadingPageRoot);
             currentStage.setScene(loadingScene);
+            currentStage.setMaximized(true);
             currentStage.show();
 
             // Create a fade transition for the loading page
             FadeTransition fadeOut = new FadeTransition(Duration.seconds(5), loadingPageRoot);
             fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.0);
+            fadeOut.setToValue(1.0);
 
             // Set the action after the fade-out transition completes
             fadeOut.setOnFinished(e -> {
@@ -113,9 +114,10 @@ public void onPressed(ActionEvent event) throws IOException {
                             root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
                             break;
                     }
-                    Scene dashboardScene = new Scene(root);
-                    currentStage.setScene(dashboardScene);
-                    currentStage.show();
+                    
+                    currentStage.setMaximized(true);
+                    currentStage.getScene().setRoot(root);
+
                 } catch (IOException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error", JOptionPane.ERROR_MESSAGE);
