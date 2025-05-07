@@ -91,7 +91,7 @@ public class LoginPageController {
                         break;
 
                     case 2:
-                        root = FXMLLoader.load(getClass().getResource("/View/PharmacistStocks.fxml"));
+                        root = FXMLLoader.load(getClass().getResource("/View/P_Dashboard.fxml"));
                         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         stage.setScene(scene);

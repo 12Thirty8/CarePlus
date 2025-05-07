@@ -7,7 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import Models.EmployeeModel;
 import Models.RequestModel;
 import db.DatabaseConnect;
@@ -37,49 +43,37 @@ public class P_DashboardController implements Initializable {
     private DatabaseConnect dbConnect = new DatabaseConnect();
 
     @FXML
-    private Button FilterBttn;
-
-    @FXML
-    private TextField SearchButton;
-
-    @FXML
     private TableView<RequestModel> StkInTableView;
 
     @FXML
-    private AnchorPane anchorPane;
+    private Button clipboardBtn;
 
     @FXML
-    private Label dashboardLabel;
+    private Button crossBtn;
+
+    @FXML
+    private TableColumn<RequestModel, String> encbycol;
 
     @FXML
     private AnchorPane hamburgerPane;
 
     @FXML
-    private AnchorPane mainPane;
+    private Button hamburgermenuBtn;
 
     @FXML
-    private Label nameLabel;
-
-    @FXML
-    private AnchorPane namePane;
-
-    @FXML
-    private Label nametitleLabel;
-
-    @FXML
-    private Separator separator;
+    private Button homeBtn;
 
     @FXML
     private TableColumn<RequestModel, Integer> idcol;
 
     @FXML
-    private TableColumn<RequestModel, Integer> recordcol;
-
-    @FXML
     private TableColumn<RequestModel, Integer> listcol;
 
     @FXML
-    private TableColumn<RequestModel, String> encbycol;
+    private AnchorPane mainPane;
+
+    @FXML
+    private TableColumn<RequestModel, Integer> recordcol;
 
     @FXML
     private TableColumn<RequestModel, String> reqcol;
@@ -89,14 +83,35 @@ public class P_DashboardController implements Initializable {
 
     private ObservableList<RequestModel> EmployeeList = FXCollections.observableArrayList();
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    private boolean isHamburgerPaneExtended = false;
 
+    @FXML
     public void initialize(URL url, ResourceBundle rb) {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+
+        hamburgerPane.setPrefWidth(230); 
+        hamburgermenuBtn.setOnAction(event -> toggleHamburgerMenu());
+    }
+
+    @FXML
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+    
+        if (isHamburgerPaneExtended) {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+
+        } else {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+        }
+    
+        timeline.play();
+        isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
 
     private void setupTableColumns() {
