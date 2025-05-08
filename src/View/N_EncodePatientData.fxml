@@ -14,77 +14,53 @@
    <children>
       <AnchorPane layoutX="113.0" layoutY="41.0" prefHeight="614.0" prefWidth="813.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;">
          <children>
-            <AnchorPane layoutX="11.0" layoutY="12.0" prefHeight="590.0" prefWidth="792.0" style="-fx-background-radius: 15; -fx-background-color: #EFF1FF;">
+            <AnchorPane layoutX="27.0" layoutY="41.0" prefHeight="100.0" prefWidth="778.0" style="-fx-background-radius: 15; -fx-background-color: F3F6FF;" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="20.0">
                <children>
-                  <AnchorPane layoutX="16.0" layoutY="29.0" prefHeight="100.0" prefWidth="778.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="20.0">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="28.0" prefHeight="44.0" prefWidth="363.0" text="Encode Patient Data" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="396.0" AnchorPane.topAnchor="28.0">
-                           <font>
-                              <Font name="Gordita-Bold" size="34.0" />
-                           </font>
-                        </Label>
-                        <DatePicker layoutX="562.0" layoutY="37.0" promptText="MM/DD/YYYY" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="18.0" layoutY="139.0" prefHeight="437.0" prefWidth="756.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF;">
-                     <children>
-                        <AnchorPane layoutX="69.0" layoutY="47.0" prefHeight="65.0" prefWidth="275.0" style="-fx-background-radius: 15; -fx-background-color: #ECEFF6;">
-                           <children>
-                              <Label layoutX="7.0" layoutY="5.0" text="First Name*:">
-                                 <font>
-                                    <Font name="Gordita-Regular" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField floatText="First Name" layoutX="7.0" layoutY="24.0" opacity="0.56" prefHeight="35.0" prefWidth="262.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="69.0" layoutY="136.0" prefHeight="65.0" prefWidth="275.0" style="-fx-background-radius: 15; -fx-background-color: #ECEFF6;">
-                           <children>
-                              <Label layoutX="7.0" layoutY="5.0" text="Complete Address*:">
-                                 <font>
-                                    <Font name="Gordita-Regular" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField floatText="Complete Address" layoutX="7.0" layoutY="24.0" opacity="0.56" prefHeight="35.0" prefWidth="262.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="430.0" layoutY="47.0" prefHeight="65.0" prefWidth="275.0" style="-fx-background-radius: 15; -fx-background-color: #ECEFF6;">
-                           <children>
-                              <Label layoutX="7.0" layoutY="5.0" text="Last Name*:">
-                                 <font>
-                                    <Font name="Gordita-Regular" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField floatText="Last Name" layoutX="7.0" layoutY="24.0" opacity="0.56" prefHeight="35.0" prefWidth="262.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="430.0" layoutY="136.0" prefHeight="65.0" prefWidth="275.0" style="-fx-background-radius: 15; -fx-background-color: #ECEFF6;">
-                           <children>
-                              <Label layoutX="7.0" layoutY="5.0" text="Contact Number*:">
-                                 <font>
-                                    <Font name="Gordita-Regular" size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField floatText="Contact Number" layoutX="7.0" layoutY="24.0" opacity="0.56" prefHeight="35.0" prefWidth="262.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="69.0" layoutY="226.0" prefHeight="65.0" prefWidth="275.0" style="-fx-background-radius: 15; -fx-background-color: #ECEFF6;">
-                           <children>
-                              <Label layoutX="7.0" layoutY="5.0" text="Patient's Rank of Service*:">
-                                 <font>
-                                    <Font name="Gordita-Regular" size="15.0" />
-                                 </font>
-                              </Label>
-                              <ComboBox layoutX="7.0" layoutY="29.0" prefHeight="25.0" prefWidth="262.0" />
-                           </children>
-                        </AnchorPane>
-                        <Button fx:id="EncodeBttn" layoutX="78.0" layoutY="331.0" mnemonicParsing="false" onAction="#EncodeActionBttn" style="-fx-background-color: #5271CE;" text="+Encode" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="28.0" prefHeight="44.0" prefWidth="363.0" text="Encode Patient Data" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="396.0" AnchorPane.topAnchor="28.0">
+                     <font>
+                        <Font name="Gordita-Bold" size="34.0" />
+                     </font>
+                  </Label>
+                  <DatePicker layoutX="562.0" layoutY="37.0" promptText="MM/DD/YYYY" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="18.0" layoutY="151.0" prefHeight="437.0" prefWidth="777.0" style="-fx-background-radius: 15; -fx-background-color: F3F6FF;">
+               <children>
+                  <Label layoutX="76.0" layoutY="52.0" text="First Name*:">
+                     <font>
+                        <Font name="Gordita-Regular" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField floatText="First Name" layoutX="76.0" layoutY="71.0" opacity="0.56" prefHeight="35.0" prefWidth="262.0" style="-fx-background-color: FFFFFF;" />
+                  <Label layoutX="76.0" layoutY="141.0" text="Complete Address*:">
+                     <font>
+                        <Font name="Gordita-Regular" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField floatText="Complete Address" layoutX="76.0" layoutY="160.0" opacity="0.56" prefHeight="35.0" prefWidth="262.0" style="-fx-background-color: FFFFFF;" />
+                  <Label layoutX="437.0" layoutY="52.0" text="Last Name*:">
+                     <font>
+                        <Font name="Gordita-Regular" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField floatText="Last Name" layoutX="437.0" layoutY="71.0" opacity="0.56" prefHeight="35.0" prefWidth="262.0" style="-fx-background-color: FFFFFF;" />
+                  <Label layoutX="437.0" layoutY="141.0" text="Contact Number*:">
+                     <font>
+                        <Font name="Gordita-Regular" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField floatText="Contact Number" layoutX="437.0" layoutY="160.0" opacity="0.56" prefHeight="35.0" prefWidth="262.0" style="-fx-background-color: FFFFFF;" />
+                  <Label layoutX="76.0" layoutY="231.0" text="Patient's Rank of Service*:">
+                     <font>
+                        <Font name="Gordita-Regular" size="15.0" />
+                     </font>
+                  </Label>
+                  <ComboBox layoutX="76.0" layoutY="255.0" prefHeight="25.0" prefWidth="262.0" />
+                  <Button fx:id="EncodeBttn" layoutX="78.0" layoutY="331.0" mnemonicParsing="false" onAction="#EncodeActionBttn" style="-fx-background-color: #5271CE;" text="+Encode" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

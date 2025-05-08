@@ -113,6 +113,39 @@ public class AddAccountController implements Initializable {
             return;
         }
 
+        if (!fnametf.getText().matches("[a-zA-Z]+") || !lnametf.getText().matches("[a-zA-Z]+")) {
+            showAlert("Input Error", "Names can only contain letters");
+            return;
+        }
+
+        if (!isValidEmail(emailtf.getText())) {
+            showAlert("Invalid Email", "Please enter a valid email (e.g., user@example.com)");
+            return;
+        }
+
+        if (!numbertf.getText().matches("09\\d{9}")) {
+            showAlert("Input Error", "Phone number must start with 09 and have 11 digits");
+            return;
+        }
+
+        if (psfield.getText().length() < 6) {
+            showAlert("Input Error", "Password must be at least 6 characters long");
+            return;
+        }
+        // Check COH constraint
+        if ("COH".equalsIgnoreCase(depcb.getValue())) {
+            try {
+                if (isCOHDepartmentFull(currentEmployeeId)) {
+                    showAlert("Department Constraint", "Only one employee is allowed in the COH department.");
+                    return;
+                }
+            } catch (SQLException e) {
+                showAlert("Department Constraint", "Only one employee is allowed in the COH department.");
+                e.printStackTrace();
+                return;
+            }
+        }
+
         try {
             // Convert LocalDate to SQL Date
             LocalDate localDate = dob.getValue();
@@ -247,6 +280,21 @@ public class AddAccountController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
+        String query = "SELECT COUNT(*) AS count FROM employee " +
+                "WHERE dep_id = (SELECT dep_id FROM department WHERE dep_name = 'COH')";
+
+        try (Connection conn = dbConnect.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, currentEmployeeId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count") >= 1; // Already one assigned
+            }
+        }
+        return false;
     }
 
     @FXML

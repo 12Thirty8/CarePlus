@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_StocksController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
@@ -76,7 +76,7 @@
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../ICONS/Clipboard.png" />
+                                          <Image url="@../ICONS/Calendar.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -95,9 +95,9 @@
             </AnchorPane>
             <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
-                  <StackPane layoutX="257.0" layoutY="24.0" AnchorPane.leftAnchor="257.0" AnchorPane.rightAnchor="257.0">
+                  <StackPane layoutX="289.0" layoutY="18.0" prefHeight="43.0" prefWidth="115.0" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="293.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" wrappingWidth="177.58200073242188">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stocks" wrappingWidth="114.58200073242188">
                            <font>
                               <Font name="Gordita-Bold" size="34.0" />
                            </font>
@@ -127,20 +127,18 @@
                         <TextField prefHeight="25.0" prefWidth="192.0" promptText="Search Requests" style="-fx-background-radius: 20;" />
                      </children>
                   </StackPane>
-                  <TableView fx:id="StkInTableView" layoutX="16.0" layoutY="266.0" prefHeight="348.0" prefWidth="659.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="266.0">
+                  <TableView fx:id="StockTable" layoutX="14.0" layoutY="271.0" prefHeight="342.0" prefWidth="664.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0">
                      <columns>
-                        <TableColumn fx:id="idcol" editable="false" maxWidth="80.0" minWidth="80.0" text="Request ID" />
-                        <TableColumn fx:id="recordcol" editable="false" maxWidth="164.80003356933594" minWidth="85.0" prefWidth="151.1999969482422" text="Record ID" />
-                        <TableColumn fx:id="listcol" editable="false" maxWidth="164.0" minWidth="84.0" prefWidth="132.0" text="Request List ID" />
-                        <TableColumn fx:id="encbycol" editable="false" maxWidth="268.0" minWidth="116.0" prefWidth="116.0" text="Encoded By" />
-                        <TableColumn fx:id="reqcol" editable="false" maxWidth="277.60015869140625" minWidth="137.60003662109375" prefWidth="137.60003662109375" text="Request Date" />
-                        <TableColumn fx:id="statcol" editable="false" maxWidth="146.39993896484373" minWidth="75.0" prefWidth="96.7998046875" text="Status" />
+                        <TableColumn fx:id="idcol" prefWidth="110.4000244140625" text="Medicine ID" />
+                        <TableColumn fx:id="namecol" prefWidth="115.0" text="Medicine Name" />
+                        <TableColumn fx:id="stockcol" prefWidth="61.0" text="Stock" />
+                        <TableColumn fx:id="expcol" prefWidth="115.0" text="Expiry Date" />
+                        <TableColumn fx:id="catcol" minWidth="0.0" prefWidth="111.0" text="Category" />
+                        <TableColumn fx:id="sincol" prefWidth="149.0" text="Stock In By" />
                      </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
                   </TableView>
-               </children></AnchorPane>
+               </children>
+            </AnchorPane>
          </children>
       </HBox>
    </children>
