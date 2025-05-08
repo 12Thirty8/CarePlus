@@ -35,8 +35,7 @@ public class P_ScheduleController {
 
 
      @FXML
-    public void initialize(URL url, ResourceBundle rb) {
-
+    public void initialize() {
         hamburgerPane.setPrefWidth(230);
         hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
     }
