@@ -9,7 +9,7 @@ public class DatabaseConnect {
     String url = "jdbc:mysql://localhost:3306/careplus";
     String user = "root";
     String password = "";
-
+    
     public Connection connect() {
         Connection con = null;
         try {
