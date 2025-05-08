@@ -25,11 +25,11 @@
                   <DatePicker layoutX="575.0" layoutY="38.0" promptText="MM/DD/YYYY" />
                </children>
             </AnchorPane>
-            <TableView fx:id="StkInTableView" editable="true" layoutX="55.0" layoutY="238.0" prefHeight="324.0" prefWidth="705.0">
+            <TableView fx:id="NurseModelTableView" editable="true" layoutX="55.0" layoutY="238.0" prefHeight="324.0" prefWidth="705.0">
                <columns>
-                  <TableColumn prefWidth="162.4000671505928" text="Taken From" />
-                  <TableColumn prefWidth="440.79994201660156" text="Activity" />
-                  <TableColumn minWidth="8.79998779296875" prefWidth="155.2000732421875" text="Time" />
+                  <TableColumn fx:id="takenFrom" prefWidth="162.4000671505928" text="Taken From" />
+                  <TableColumn fx:id="activity" prefWidth="440.79994201660156" text="Activity" />
+                  <TableColumn fx:id="dateTime" minWidth="8.79998779296875" prefWidth="155.2000732421875" text="Time" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
