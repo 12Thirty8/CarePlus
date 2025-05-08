@@ -9,7 +9,8 @@ import javafx.util.Duration;
 
 import javax.swing.JOptionPane;
 
-import db.DatabaseConnect;
+import db.DatabaseHelper;
+import db.DatabaseHelper;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +29,7 @@ import javafx.stage.Stage;
 public class LoginPageController {
     public static int dep_id;
 
-    private DatabaseConnect dbConnect = new DatabaseConnect();
+    private DatabaseHelper dbConnect = new DatabaseHelper();
 
     @FXML
     private Label careLabel;

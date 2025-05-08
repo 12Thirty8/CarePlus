@@ -30,11 +30,11 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import db.DatabaseConnect;
+import db.DatabaseHelper;
 
 public class UpdateAccountController implements Initializable {
 
-    private DatabaseConnect dbConnect = new DatabaseConnect();
+    private DatabaseHelper dbConnect = new DatabaseHelper();
     private int currentEmployeeId;
 
     @FXML
