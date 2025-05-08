@@ -21,11 +21,11 @@
                      <children>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                            <children>
-                              <Button fx:id="hamburgermenuBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="12.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@Java/CarePlus/src/Styles/pharmacistDashboard.css" text="Button">
+                              <Button fx:id="hamburgermenuBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="12.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@Java/CarePlus/src/ICONS/Menu.png" />
+                                          <Image url="@../ICONS/Menu.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -34,11 +34,11 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="@Java/CarePlus/src/Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@Java/CarePlus/src/ICONS/Home.png" />
+                                          <Image url="@../ICONS/Home.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -50,11 +50,11 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="17.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="@Java/CarePlus/src/Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="17.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@Java/CarePlus/src/ICONS/Hospital.png" />
+                                          <Image url="@../ICONS/Hospital.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -69,11 +69,11 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@Java/CarePlus/src/Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@Java/CarePlus/src/ICONS/Clipboard.png" />
+                                          <Image url="@../ICONS/Calendar.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
