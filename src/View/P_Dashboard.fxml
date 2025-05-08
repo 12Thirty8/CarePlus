@@ -76,7 +76,7 @@
                                  <graphic>
                                     <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../ICONS/Clipboard.png" />
+                                          <Image url="@../ICONS/Calendar.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
