@@ -1,32 +1,18 @@
 package Models;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class NurseModel {
     private int activityId;
     private int employeeId;
     private String takenFrom;
     private String activity;
-    private Date dateTime;
+    private LocalDateTime dateTime;
 
-    public NurseModel(String takenFrom, String activity, Date dateTime) {
+    public NurseModel(String takenFrom, String activity, LocalDateTime dateTime) {
         this.takenFrom = takenFrom;
         this.activity = activity;
         this.dateTime = dateTime;
-    }
-
-    public NurseModel(int employeeId, String takenFrom, String activity, Date dateTime) {
-        this.employeeId = employeeId;
-        this.takenFrom = takenFrom;
-        this.activity = activity;
-    }
-
-    // Constructor with activityId (for retrieving from database)
-    public NurseModel(int activityId, int employeeId, String takenFrom, String activity, Date dateTime) {
-        this.activityId = activityId;
-        this.employeeId = employeeId;
-        this.takenFrom = takenFrom;
-        this.activity = activity;
     }
 
     // Getters and Setters
@@ -62,11 +48,11 @@ public class NurseModel {
         this.activity = activity;
     }
 
-    public Date getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 

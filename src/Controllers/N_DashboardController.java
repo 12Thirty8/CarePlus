@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import Models.NurseModel;
 import db.DatabaseConnect;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,7 +40,7 @@ public class N_DashboardController {
     private Button ScheduleMenuBttn;
 
     @FXML
-    private TableView<NurseModel> StkInTableView;
+    private TableView<NurseModel> NurseDashboardTableView;
 
     @FXML
     private TableColumn<NurseModel, String> takenFrColumn;
@@ -56,6 +58,8 @@ public class N_DashboardController {
 
     @FXML
     public void initialize() {
+
+        nurseModelObservableList = FXCollections.observableArrayList();
         setupTableColumns();
         refreshEmployeeTable();
         int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
@@ -76,22 +80,23 @@ public class N_DashboardController {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        n.taken_from, n.activity, n.datetime_logged
-                    FROM nurse_activity_log n
-                    LEFT JOIN employee e ON n.employee_id = e.employee_id
+                        taken_from, activity, datetime_logged
+                    FROM nurse_activity_log
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
+                System.out.println("Loaded rows: " + nurseModelObservableList.size());
+                Timestamp ts = rs.getTimestamp("datetime_logged");
                 nurseModelObservableList.add(new NurseModel(
                         rs.getString("taken_from"),
                         rs.getString("activity"),
-                        rs.getDate("datetime_logged")));
+                        ts.toLocalDateTime()));
 
             }
 
-            StkInTableView.setItems(nurseModelObservableList);
+            NurseDashboardTableView.setItems(nurseModelObservableList);
 
             rs.close();
             pstmt.close();

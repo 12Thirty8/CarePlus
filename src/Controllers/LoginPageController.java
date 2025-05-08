@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.util.Duration;
+import util.GetCurrentEmployeeID;
 
 import javax.swing.JOptionPane;
 
@@ -77,6 +78,11 @@ public class LoginPageController {
             ResultSet rs = stm.executeQuery(sql);
 
             if (rs.next()) {
+                // Added by JC. Used to get the current user's employee_id.
+                int loggedId = rs.getInt("employee_id");
+                System.out.println("Successfully logged in with ID: " + loggedId);
+                GetCurrentEmployeeID.getInstance().setEmployeeId(loggedId);
+                //
                 dep_id = rs.getInt("dep_id");
 
                 // Load the loading page scene first
