@@ -10,7 +10,6 @@ import javafx.util.Duration;
 
 public class PharmacistDashboardController {
 
-
     @FXML
     private Button clipboardBtn;
 
@@ -39,32 +38,28 @@ public class PharmacistDashboardController {
 
     @FXML
     public void initialize() {
-        hamburgerPane.setPrefWidth(230); 
-        hamburgermenuBtn.setOnAction(event -> toggleHamburgerMenu());
+        hamburgerPane.setPrefWidth(230);
+        hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
     }
 
     @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
-    
+
         if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
 
         } else {
-            
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         }
-    
+
         timeline.play();
         isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
-    
 
 }
-
-
-

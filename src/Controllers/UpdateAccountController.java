@@ -33,8 +33,6 @@ import javax.swing.JOptionPane;
 import db.DatabaseConnect;
 
 public class UpdateAccountController implements Initializable {
-
-    private DatabaseConnect dbConnect = new DatabaseConnect();
     private int currentEmployeeId;
 
     @FXML
@@ -56,7 +54,7 @@ public class UpdateAccountController implements Initializable {
                 "WHERE dep_id = (SELECT dep_id FROM department WHERE dep_name = 'COH') " +
                 "AND employee_id != ?";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, currentEmployeeId);
             ResultSet rs = pstmt.executeQuery();
@@ -93,7 +91,7 @@ public class UpdateAccountController implements Initializable {
                 "LEFT JOIN dotweek dw ON e.dayoff_id = dw.dotw_id " +
                 "WHERE e.employee_id = ?";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setInt(1, employeeId);
@@ -207,7 +205,7 @@ public class UpdateAccountController implements Initializable {
         List<String> depList = new ArrayList<>();
         String query = "SELECT dep_name FROM department";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -222,7 +220,7 @@ public class UpdateAccountController implements Initializable {
         List<String> shiftList = new ArrayList<>();
         String query = "SELECT timeslot FROM shift";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -237,7 +235,7 @@ public class UpdateAccountController implements Initializable {
         List<String> offList = new ArrayList<>();
         String query = "SELECT dotw_name FROM dotweek";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -257,7 +255,7 @@ public class UpdateAccountController implements Initializable {
                 "dayoff_id = (SELECT dotw_id FROM dotweek WHERE dotw_name = ?) " +
                 "WHERE employee_id = ?";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, fname);

@@ -1,16 +1,12 @@
 package Controllers;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Observable;
-
 import Models.NurseModel;
 import db.DatabaseConnect;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,8 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 
 public class N_DashboardController {
-
-    private DatabaseConnect dbConnect = new DatabaseConnect();
 
     @FXML
     private Button AccountMenuBttn;
@@ -76,10 +70,10 @@ public class N_DashboardController {
         dateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
     }
 
-   private void refreshEmployeeTable() {
+    private void refreshEmployeeTable() {
         nurseModelObservableList.clear();
         try {
-            Connection conn = dbConnect.connect();
+            Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
                         n.taken_from, n.activity, n.datetime_logged
@@ -91,11 +85,9 @@ public class N_DashboardController {
 
             while (rs.next()) {
                 nurseModelObservableList.add(new NurseModel(
-                    rs.getString("taken_from"),
-                    rs.getString("activity"),
-                    rs.getDate("datetime_logged")
-                )
-                );
+                        rs.getString("taken_from"),
+                        rs.getString("activity"),
+                        rs.getDate("datetime_logged")));
 
             }
 
@@ -107,7 +99,8 @@ public class N_DashboardController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        }
+    }
+
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
 
