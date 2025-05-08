@@ -3,6 +3,7 @@ package Controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import java.io.IOException;
@@ -69,7 +71,7 @@ public class AccountManagementController implements Initializable {
     private TextField TFsearch;
 
     @FXML
-    private TableColumn<EmployeeModel, Integer> depcol;
+    private TableColumn<EmployeeModel, String> depcol;
 
     @FXML
     private TableColumn<EmployeeModel, String> dobcol;
@@ -93,7 +95,7 @@ public class AccountManagementController implements Initializable {
     private TableColumn<EmployeeModel, String> offcol;
 
     @FXML
-    private TableColumn<EmployeeModel, Integer> shiftcol;
+    private TableColumn<EmployeeModel, String> shiftcol;
 
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
 
@@ -115,9 +117,9 @@ public class AccountManagementController implements Initializable {
         dobcol.setCellValueFactory(new PropertyValueFactory<>("dob"));
         numbercol.setCellValueFactory(new PropertyValueFactory<>("number"));
         emailcol.setCellValueFactory(new PropertyValueFactory<>("email"));
-        depcol.setCellValueFactory(new PropertyValueFactory<>("dep"));
-        shiftcol.setCellValueFactory(new PropertyValueFactory<>("shift"));
-        offcol.setCellValueFactory(new PropertyValueFactory<>("dayoff"));
+        depcol.setCellValueFactory(new PropertyValueFactory<>("depName"));
+        shiftcol.setCellValueFactory(new PropertyValueFactory<>("shiftName"));
+        offcol.setCellValueFactory(new PropertyValueFactory<>("dayoffName"));
     }
 
     private void setupRowContextMenu() {
@@ -200,7 +202,18 @@ public class AccountManagementController implements Initializable {
         EmployeeList.clear();
         try {
             Connection conn = dbConnect.connect();
-            String query = "SELECT * FROM employee"; // Adjust table name as needed
+            String query = """
+                    SELECT
+                        e.employee_id, e.f_name, e.l_name, e.dob, e.contact_no, e.email,
+                        d.dep_name AS depName,
+                        e.password_hash,
+                        s.timeslot AS shiftName,
+                        do.dotw_name AS dayoffName
+                    FROM employee e
+                    LEFT JOIN department d ON e.dep_id = d.dep_id
+                    LEFT JOIN shift s ON e.shift_id = s.shift_id
+                    LEFT JOIN dotweek do ON e.dayoff_id = do.dotw_id
+                    """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
@@ -212,10 +225,10 @@ public class AccountManagementController implements Initializable {
                         rs.getDate("dob"),
                         rs.getString("contact_no"),
                         rs.getString("email"),
-                        rs.getInt("dep_id"),
+                        rs.getString("depName"),
                         rs.getString("password_hash"), // Assuming you store hashed passwords
-                        rs.getInt("shift_id"),
-                        rs.getInt("dayoff_id")));
+                        rs.getString("shiftName"),
+                        rs.getString("dayoffName")));
             }
 
             AccountManagmentTableView.setItems(EmployeeList);
@@ -277,6 +290,12 @@ public class AccountManagementController implements Initializable {
     }
 
     @FXML
+    void LogOutActionBttn(ActionEvent event) {
+
+    }
+
+
+    @FXML
     void AccountMenuActionBttn(ActionEvent event) {
 
         try {
@@ -298,22 +317,7 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     void DashboardActionBttn(ActionEvent event) {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-            root = loader.load();
-
-            root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        switchToSceneFullScreen("/View/COH_Dashboard.fxml", event);
     }
 
     @FXML
@@ -334,5 +338,32 @@ public class AccountManagementController implements Initializable {
     @FXML
     void ScheduleuActionBttn(ActionEvent event) {
 
+    }
+
+    private void switchToSceneFullScreen(String fxmlPath, ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+    
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+    
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX(screenBounds.getMinX());
+            stage.setY(screenBounds.getMinY());
+            stage.setWidth(screenBounds.getWidth());
+            stage.setHeight(screenBounds.getHeight());
+            stage.setMaximized(true);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                null,
+                "Error loading page:\n" + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 }
