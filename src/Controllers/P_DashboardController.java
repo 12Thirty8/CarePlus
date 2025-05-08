@@ -12,7 +12,9 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
+import util.GetCurrentEmployeeID;
 import Models.RequestModel;
 import db.DatabaseConnect;
 import javafx.collections.FXCollections;
@@ -63,6 +65,9 @@ public class P_DashboardController implements Initializable {
     @FXML
     private TableColumn<RequestModel, Boolean> statcol;
 
+    @FXML
+    private Text nameLabel;
+
     private ObservableList<RequestModel> EmployeeList = FXCollections.observableArrayList();
 
     private boolean isHamburgerPaneExtended = false;
@@ -72,6 +77,10 @@ public class P_DashboardController implements Initializable {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+        // Added by JC. Used to get the current user's pharmacist name.
+        int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+        String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
+        nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
 
         hamburgerPane.setPrefWidth(230);
         hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());

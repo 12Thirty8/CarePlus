@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 
 import javax.swing.JOptionPane;
 
+import db.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,6 +48,8 @@ public class COHDashboardController {
 
     @FXML
     private Label TitleText;
+    @FXML
+    private Label nameLabel;
 
     @FXML
     private AreaChart<?, ?> AreaChartPanel;
@@ -91,18 +94,18 @@ public class COHDashboardController {
             // Load the login page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
             Parent root = loader.load();
-    
+
             // Create a new stage for the login page
             Stage loginStage = new Stage();
             loginStage.setScene(new Scene(root));
             loginStage.initStyle(StageStyle.UNDECORATED);
             loginStage.setResizable(false); // Optional: prevent resizing
             loginStage.show();
-    
+
             // Close the current stage
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-    
+
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
@@ -125,7 +128,6 @@ public class COHDashboardController {
 
     }
 
-
     @FXML
     public void initialize() {
         // Apply fade-in to all relevant nodes
@@ -134,6 +136,10 @@ public class COHDashboardController {
         fadeInNode(TotalRequestPanel, 200);
         fadeInNode(AreaChartPanel, 300);
         fadeInNode(StkInTableView, 400);
+
+        // Added by JC. Used to get the name of the COH
+        String cohName = DatabaseConnect.getCOHName();
+        nameLabel.setText(cohName != null ? cohName : "Name not found");
 
     }
 

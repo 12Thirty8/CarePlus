@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -96,6 +97,9 @@ public class AccountManagementController implements Initializable {
     @FXML
     private TableColumn<EmployeeModel, String> shiftcol;
 
+    @FXML
+    private Label nameLabel;
+
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
 
     private Stage stage;
@@ -107,6 +111,10 @@ public class AccountManagementController implements Initializable {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+
+        // Added by JC. Used to get the name of the COH
+        String cohName = DatabaseConnect.getCOHName();
+        nameLabel.setText(cohName != null ? cohName : "Name not found");
     }
 
     private void setupTableColumns() {
