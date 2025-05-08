@@ -9,23 +9,23 @@ public class EmployeeModel {
     Date dob;
     String number;
     String email;
-    int dep;
+    String depName;
     String password;
-    int shift;
-    int dayoff;
+    String shiftName;
+    String dayoffName;
 
-    public EmployeeModel(int id, String fname, String lname, Date dob, String number, String email, int dep,
-            String password, int shift, int dayoff) {
+    public EmployeeModel(int id, String fname, String lname, Date dob, String number, String email, String depName,
+            String password, String shiftName, String dayoffName) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
         this.dob = dob;
         this.number = number;
         this.email = email;
-        this.dep = dep;
+        this.depName = depName;
         this.password = password;
-        this.shift = shift;
-        this.dayoff = dayoff;
+        this.shiftName = shiftName;
+        this.dayoffName = dayoffName;
     }
 
     public int getId() {
@@ -52,20 +52,20 @@ public class EmployeeModel {
         return email;
     }
 
-    public int getDep() {
-        return dep;
+    public String getDepName() {
+        return depName;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public int getShift() {
-        return shift;
+    public String getShiftName() {
+        return shiftName;
     }
 
-    public int getDayoff() {
-        return dayoff;
+    public String getDayoffName() {
+        return dayoffName;
     }
 
     public void setFname(String fname) {
@@ -92,19 +92,19 @@ public class EmployeeModel {
         this.email = email;
     }
 
-    public void setDep(int dep) {
-        this.dep = dep;
+    public void setDepName(String depName) {
+        this.depName = depName;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setShift(int shift) {
-        this.shift = shift;
+    public void setShiftName(String shiftName) {
+        this.shiftName = shiftName;
     }
 
-    public void setDayoff(int dayoff) {
-        this.dayoff = dayoff;
+    public void setDayoffName(String dayoffName) {
+        this.dayoffName = dayoffName;
     }
 }

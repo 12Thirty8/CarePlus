@@ -34,7 +34,7 @@ import db.DatabaseConnect;
 
 public class AddAccountController implements Initializable {
 
-    private DatabaseConnect dbConnect = new DatabaseConnect();
+    private int currentEmployeeId;
 
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
@@ -80,6 +80,15 @@ public class AddAccountController implements Initializable {
         }
     }
 
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        return email.matches(emailRegex);
+    }
+
+    private boolean isValidPhoneNumber(String phone) {
+        return phone.matches("^\\d{11}$");
+    }
+
     @FXML
     void AddAccBtnPress(ActionEvent event) {
         // Validate inputs
@@ -92,6 +101,49 @@ public class AddAccountController implements Initializable {
 
             showAlert("Input Error", "Please fill in all fields");
             return;
+        }
+        // Email format validation
+        if (!isValidEmail(emailtf.getText().trim())) {
+            showAlert("Invalid Email", "Please enter a valid email address.");
+            return;
+        }
+        // ✅ Phone number format validation
+        if (!isValidPhoneNumber(numbertf.getText().trim())) {
+            showAlert("Invalid Phone Number", "Contact number must be exactly 11 digits.");
+            return;
+        }
+
+        if (!fnametf.getText().matches("[a-zA-Z]+") || !lnametf.getText().matches("[a-zA-Z]+")) {
+            showAlert("Input Error", "Names can only contain letters");
+            return;
+        }
+
+        if (!isValidEmail(emailtf.getText())) {
+            showAlert("Invalid Email", "Please enter a valid email (e.g., user@example.com)");
+            return;
+        }
+
+        if (!numbertf.getText().matches("09\\d{9}")) {
+            showAlert("Input Error", "Phone number must start with 09 and have 11 digits");
+            return;
+        }
+
+        if (psfield.getText().length() < 6) {
+            showAlert("Input Error", "Password must be at least 6 characters long");
+            return;
+        }
+        // Check COH constraint
+        if ("COH".equalsIgnoreCase(depcb.getValue())) {
+            try {
+                if (isCOHDepartmentFull(currentEmployeeId)) {
+                    showAlert("Department Constraint", "Only one employee is allowed in the COH department.");
+                    return;
+                }
+            } catch (SQLException e) {
+                showAlert("Department Constraint", "Only one employee is allowed in the COH department.");
+                e.printStackTrace();
+                return;
+            }
         }
 
         try {
@@ -139,7 +191,7 @@ public class AddAccountController implements Initializable {
         List<String> depList = new ArrayList<>();
         String query = "SELECT dep_name FROM department";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -154,7 +206,7 @@ public class AddAccountController implements Initializable {
         List<String> shiftList = new ArrayList<>();
         String query = "SELECT timeslot FROM shift";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -169,7 +221,7 @@ public class AddAccountController implements Initializable {
         List<String> offList = new ArrayList<>();
         String query = "SELECT dotw_name FROM dotweek";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -190,7 +242,7 @@ public class AddAccountController implements Initializable {
                 "(SELECT shift_id FROM shift WHERE timeslot = ?), " +
                 "(SELECT dotw_id FROM dotweek WHERE dotw_name = ?))";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, fname);
@@ -228,6 +280,21 @@ public class AddAccountController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
+        String query = "SELECT COUNT(*) AS count FROM employee " +
+                "WHERE dep_id = (SELECT dep_id FROM department WHERE dep_name = 'COH')";
+
+        try (Connection conn = DatabaseConnect.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, currentEmployeeId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count") >= 1; // Already one assigned
+            }
+        }
+        return false;
     }
 
     @FXML

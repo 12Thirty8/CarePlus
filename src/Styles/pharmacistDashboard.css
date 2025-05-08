@@ -1,0 +1,48 @@
+#hamburgermenuBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#hamburgermenuBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#homeBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#homeBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#crossBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#crossBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#clipboardBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#clipboardBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
