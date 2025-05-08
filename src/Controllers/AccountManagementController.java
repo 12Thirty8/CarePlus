@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 //import javafx.stage.Screen;
@@ -28,8 +29,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
 
 import Models.EmployeeModel;
 import db.DatabaseConnect;
@@ -105,6 +104,8 @@ public class AccountManagementController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    private Alert a = new Alert(AlertType.NONE);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -279,8 +280,10 @@ public class AccountManagementController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setHeaderText("Error loading page.");
+            a.setContentText("Please try again.");
+            a.show();
         }
     }
 
@@ -320,8 +323,10 @@ public class AccountManagementController implements Initializable {
             stage.getScene().setRoot(root);
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setHeaderText("Error loading page.");
+            a.setContentText("Please try again.");
+            a.show();
         }
 
     }
@@ -336,9 +341,10 @@ public class AccountManagementController implements Initializable {
             stage.getScene().setRoot(root);
 
         } catch (IOException e) {
-
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setHeaderText("Error loading page.");
+            a.setContentText("Please try again.");
+            a.show();
         }
     }
 

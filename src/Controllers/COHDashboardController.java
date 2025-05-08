@@ -2,9 +2,6 @@ package Controllers;
 
 import java.io.IOException;
 import javafx.scene.control.Label;
-
-import javax.swing.JOptionPane;
-
 import db.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +13,7 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -63,6 +61,8 @@ public class COHDashboardController {
     @FXML
     private Button LogOutBttn;
 
+    private Alert a = new Alert(AlertType.NONE);
+
     // private Stage stage;
     // private Scene scene;
     // private Parent root;
@@ -77,8 +77,10 @@ public class COHDashboardController {
             stage.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 
@@ -108,8 +110,10 @@ public class COHDashboardController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Login page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 

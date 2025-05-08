@@ -7,9 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-
 import Models.StocksModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
@@ -23,6 +20,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -75,6 +74,8 @@ public class P_StocksController implements Initializable {
     private ObservableList<StocksModel> EmployeeList = FXCollections.observableArrayList();
 
     private boolean isHamburgerPaneExtended = false;
+
+    private Alert a = new Alert(AlertType.NONE);
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
@@ -163,8 +164,10 @@ public class P_StocksController implements Initializable {
             stage.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 
@@ -177,8 +180,10 @@ public class P_StocksController implements Initializable {
             stage.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 }
