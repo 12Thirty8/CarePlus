@@ -3,21 +3,23 @@ package Controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Screen;
+import javafx.stage.Modality;
+//import javafx.stage.Screen;
 import javafx.stage.Stage;
+//import javafx.stage.StageStyle;
 import javafx.scene.control.Alert;
 import java.io.IOException;
 import java.net.URL;
@@ -37,8 +39,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 public class AccountManagementController implements Initializable {
-
-    private DatabaseConnect dbConnect = new DatabaseConnect();
 
     @FXML
     private TableView<EmployeeModel> AccountManagmentTableView;
@@ -71,7 +71,7 @@ public class AccountManagementController implements Initializable {
     private TextField TFsearch;
 
     @FXML
-    private TableColumn<EmployeeModel, Integer> depcol;
+    private TableColumn<EmployeeModel, String> depcol;
 
     @FXML
     private TableColumn<EmployeeModel, String> dobcol;
@@ -95,7 +95,10 @@ public class AccountManagementController implements Initializable {
     private TableColumn<EmployeeModel, String> offcol;
 
     @FXML
-    private TableColumn<EmployeeModel, Integer> shiftcol;
+    private TableColumn<EmployeeModel, String> shiftcol;
+
+    @FXML
+    private Label nameLabel;
 
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
 
@@ -108,6 +111,10 @@ public class AccountManagementController implements Initializable {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+
+        // Added by JC. Used to get the name of the COH
+        String cohName = DatabaseConnect.getCOHName();
+        nameLabel.setText(cohName != null ? cohName : "Name not found");
     }
 
     private void setupTableColumns() {
@@ -117,9 +124,9 @@ public class AccountManagementController implements Initializable {
         dobcol.setCellValueFactory(new PropertyValueFactory<>("dob"));
         numbercol.setCellValueFactory(new PropertyValueFactory<>("number"));
         emailcol.setCellValueFactory(new PropertyValueFactory<>("email"));
-        depcol.setCellValueFactory(new PropertyValueFactory<>("dep"));
-        shiftcol.setCellValueFactory(new PropertyValueFactory<>("shift"));
-        offcol.setCellValueFactory(new PropertyValueFactory<>("dayoff"));
+        depcol.setCellValueFactory(new PropertyValueFactory<>("depName"));
+        shiftcol.setCellValueFactory(new PropertyValueFactory<>("shiftName"));
+        offcol.setCellValueFactory(new PropertyValueFactory<>("dayoffName"));
     }
 
     private void setupRowContextMenu() {
@@ -135,14 +142,22 @@ public class AccountManagementController implements Initializable {
                 if (selectedItem != null) {
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_UpdateAccount.fxml"));
-                        root = loader.load();
+                        Parent root = loader.load();
 
+                        // Get the controller and pass the selected employee's data
                         UpdateAccountController controller = loader.getController();
                         controller.loadEmployeeData(selectedItem.getId());
 
-                        stage = (Stage) row.getScene().getWindow();
-                        stage.setScene(new Scene(root));
-                        stage.show();
+                        // Create a new pop-up stage
+                        Stage popupStage = new Stage();
+                        popupStage.setTitle("Update Account");
+                        popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+                        popupStage.initOwner(row.getScene().getWindow()); // Set owner window
+
+                        Scene scene = new Scene(root);
+                        popupStage.setScene(scene);
+                        popupStage.setResizable(false); // Optional: make it fixed size
+                        popupStage.showAndWait(); // Wait until this window is closed (optional)
                     } catch (IOException e) {
                         e.printStackTrace();
                         showAlert("Error", "Failed to open update form: " + e.getMessage());
@@ -189,7 +204,7 @@ public class AccountManagementController implements Initializable {
     }
 
     private void deleteAccount(int id) throws SQLException {
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement pstmt = conn.prepareStatement(
                         "DELETE FROM employee WHERE employee_id = ?")) {
 
@@ -201,8 +216,19 @@ public class AccountManagementController implements Initializable {
     private void refreshEmployeeTable() {
         EmployeeList.clear();
         try {
-            Connection conn = dbConnect.connect();
-            String query = "SELECT * FROM employee"; // Adjust table name as needed
+            Connection conn = DatabaseConnect.connect();
+            String query = """
+                    SELECT
+                        e.employee_id, e.f_name, e.l_name, e.dob, e.contact_no, e.email,
+                        d.dep_name AS depName,
+                        e.password_hash,
+                        s.timeslot AS shiftName,
+                        do.dotw_name AS dayoffName
+                    FROM employee e
+                    LEFT JOIN department d ON e.dep_id = d.dep_id
+                    LEFT JOIN shift s ON e.shift_id = s.shift_id
+                    LEFT JOIN dotweek do ON e.dayoff_id = do.dotw_id
+                    """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
@@ -214,10 +240,10 @@ public class AccountManagementController implements Initializable {
                         rs.getDate("dob"),
                         rs.getString("contact_no"),
                         rs.getString("email"),
-                        rs.getInt("dep_id"),
+                        rs.getString("depName"),
                         rs.getString("password_hash"), // Assuming you store hashed passwords
-                        rs.getInt("shift_id"),
-                        rs.getInt("dayoff_id")));
+                        rs.getString("shiftName"),
+                        rs.getString("dayoffName")));
             }
 
             AccountManagmentTableView.setItems(EmployeeList);
@@ -283,30 +309,37 @@ public class AccountManagementController implements Initializable {
 
     }
 
-
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
+        Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
             root = loader.load();
-
-            root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.getScene().setRoot(root);
 
         } catch (IOException e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
     @FXML
     void DashboardActionBttn(ActionEvent event) {
-        switchToSceneFullScreen("/View/COH_Dashboard.fxml", event);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.getScene().setRoot(root);
+
+        } catch (IOException e) {
+
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @FXML
@@ -329,30 +362,4 @@ public class AccountManagementController implements Initializable {
 
     }
 
-    private void switchToSceneFullScreen(String fxmlPath, ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-    
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-    
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            stage.setX(screenBounds.getMinX());
-            stage.setY(screenBounds.getMinY());
-            stage.setWidth(screenBounds.getWidth());
-            stage.setHeight(screenBounds.getHeight());
-            stage.setMaximized(true);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(
-                null,
-                "Error loading page:\n" + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-            );
-        }
-    }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="rootPane" prefHeight="794.0" prefWidth="1202.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoadingPageController">
+   <children>
+      <AnchorPane layoutX="313.0" layoutY="53.0" prefHeight="747.0" prefWidth="1134.0" AnchorPane.bottomAnchor="-6.600000000000023" AnchorPane.leftAnchor="313.0" AnchorPane.rightAnchor="14.199999999999818" AnchorPane.topAnchor="53.0">
+         <children>
+            <ImageView fitHeight="762.0" fitWidth="714.0" layoutX="105.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ICONS/Care++.gif" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

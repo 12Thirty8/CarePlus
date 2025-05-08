@@ -6,7 +6,7 @@
 }
 
 #hamburgermenuBtn:hover {
-    -fx-background-color:  grey; 
+    -fx-background-color:  rgb(198, 198, 198); 
     -fx-cursor: hand;
 }
 
@@ -18,7 +18,7 @@
 }
 
 #homeBtn:hover {
-    -fx-background-color:  grey; 
+    -fx-background-color:  rgb(198, 198, 198); 
     -fx-cursor: hand;
 }
 
@@ -30,7 +30,7 @@
 }
 
 #crossBtn:hover {
-    -fx-background-color:  grey; 
+    -fx-background-color:  rgb(198, 198, 198); 
     -fx-cursor: hand;
 }
 
@@ -42,7 +42,7 @@
 }
 
 #clipboardBtn:hover {
-    -fx-background-color:  grey; 
+    -fx-background-color:  rgb(198, 198, 198); 
     -fx-cursor: hand;
 }
 
