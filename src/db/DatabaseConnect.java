@@ -6,17 +6,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DatabaseHelper {
+public class DatabaseConnect {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/careplus";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String url = "jdbc:mysql://localhost:3306/careplus";
+    private static final String user = "root";
+    private static final String password = "";
 
     public static Connection connect() {
         Connection con = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(URL, USER, PASSWORD);
+            con = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
             System.err.println("MySQL JDBC driver not found.");

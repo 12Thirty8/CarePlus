@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Observable;
 
 import Models.NurseModel;
-import db.DatabaseHelper;
+import db.DatabaseConnect;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,7 +23,7 @@ import javafx.scene.control.TableColumn;
 
 public class N_DashboardController {
 
-    private DatabaseHelper dbConnect = new DatabaseHelper();
+    private DatabaseConnect dbConnect = new DatabaseConnect();
 
     @FXML
     private Button AccountMenuBttn;
@@ -65,7 +65,7 @@ public class N_DashboardController {
         setupTableColumns();
         refreshEmployeeTable();
         int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
-        String nurseName = DatabaseHelper.getNurseName(employeeId);
+        String nurseName = DatabaseConnect.getNurseName(employeeId);
         nameLabel.setText(nurseName + ", RN");
 
     }

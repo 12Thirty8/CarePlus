@@ -30,12 +30,13 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
-import db.DatabaseHelper;
+import db.DatabaseConnect;
 
 public class AddAccountController implements Initializable {
 
-    private DatabaseHelper dbConnect = new DatabaseHelper();
-
+    private DatabaseConnect dbConnect = new DatabaseConnect();
+    private int currentEmployeeId;
+    
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
     @FXML

@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 import Models.EmployeeModel;
-import db.DatabaseHelper;
+import db.DatabaseConnect;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,7 +39,7 @@ import javafx.event.ActionEvent;
 
 public class AccountManagementController implements Initializable {
 
-    private DatabaseHelper dbConnect = new DatabaseHelper();
+    private DatabaseConnect dbConnect = new DatabaseConnect();
 
     @FXML
     private TableView<EmployeeModel> AccountManagmentTableView;
