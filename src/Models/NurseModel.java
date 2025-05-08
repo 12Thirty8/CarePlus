@@ -59,11 +59,11 @@ public class NurseModel {
     public void setActivity(String activity) {
         this.activity = activity;
     }
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
+    // public Date getDateTime() {
+    //    // return dateTime;
+    // }
+    // public void setDateTime(Date dateTime) {
+    //    // this.dateTime = dateTime;
+    // }
     
 }
