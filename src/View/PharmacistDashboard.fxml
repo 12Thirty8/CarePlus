@@ -14,13 +14,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PharmacistDashboardController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
             <AnchorPane fx:id="hamburgerPane" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                <children>
-                  <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="26.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="26.0" prefWidth="107.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                            <children>
@@ -108,12 +108,12 @@
                      <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
                            <children>
-                              <Text fx:id="nameLabel" layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                              <Text layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                                  <font>
                                     <Font name="Gordita-Regular" size="24.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacist">
+                              <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
@@ -127,18 +127,11 @@
                         <TextField prefHeight="25.0" prefWidth="192.0" promptText="Search Requests" style="-fx-background-radius: 20;" />
                      </children>
                   </StackPane>
-                  <TableView fx:id="StkInTableView" layoutX="16.0" layoutY="266.0" prefHeight="348.0" prefWidth="659.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="266.0">
-                     <columns>
-                        <TableColumn fx:id="idcol" editable="false" maxWidth="80.0" minWidth="80.0" text="Request ID" />
-                        <TableColumn fx:id="recordcol" editable="false" maxWidth="164.80003356933594" minWidth="85.0" prefWidth="151.1999969482422" text="Record ID" />
-                        <TableColumn fx:id="listcol" editable="false" maxWidth="164.0" minWidth="84.0" prefWidth="132.0" text="Request List ID" />
-                        <TableColumn fx:id="encbycol" editable="false" maxWidth="268.0" minWidth="116.0" prefWidth="116.0" text="Encoded By" />
-                        <TableColumn fx:id="reqcol" editable="false" maxWidth="277.60015869140625" minWidth="137.60003662109375" prefWidth="137.60003662109375" text="Request Date" />
-                        <TableColumn fx:id="statcol" editable="false" maxWidth="146.39993896484373" minWidth="75.0" prefWidth="96.7998046875" text="Status" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
+                  <TableView layoutX="16.0" layoutY="270.0" prefHeight="345.0" prefWidth="659.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="270.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
                   </TableView>
                </children></AnchorPane>
          </children>
