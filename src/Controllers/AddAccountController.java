@@ -36,7 +36,7 @@ public class AddAccountController implements Initializable {
 
     private DatabaseConnect dbConnect = new DatabaseConnect();
     private int currentEmployeeId;
-
+    
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
     @FXML
