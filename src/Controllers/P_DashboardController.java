@@ -1,6 +1,5 @@
 package Controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,33 +13,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-import Models.EmployeeModel;
 import Models.RequestModel;
 import db.DatabaseConnect;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 
 public class P_DashboardController implements Initializable {
-
-    private DatabaseConnect dbConnect = new DatabaseConnect();
 
     @FXML
     private TableView<RequestModel> StkInTableView;
@@ -91,25 +73,25 @@ public class P_DashboardController implements Initializable {
         refreshEmployeeTable();
         setupRowContextMenu();
 
-        hamburgerPane.setPrefWidth(230); 
-        hamburgermenuBtn.setOnAction(event -> toggleHamburgerMenu());
+        hamburgerPane.setPrefWidth(230);
+        hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
     }
 
     @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
-    
+
         if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
 
         } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         }
-    
+
         timeline.play();
         isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
@@ -129,7 +111,7 @@ public class P_DashboardController implements Initializable {
     private void refreshEmployeeTable() {
         EmployeeList.clear();
         try {
-            Connection conn = dbConnect.connect();
+            Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
                         r.request_id, r.record_id, r.requestlist_id, e.f_name AS encodedBy, r.request_date, r.status

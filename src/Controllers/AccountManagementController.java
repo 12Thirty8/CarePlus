@@ -39,8 +39,6 @@ import javafx.event.ActionEvent;
 
 public class AccountManagementController implements Initializable {
 
-    private DatabaseConnect dbConnect = new DatabaseConnect();
-
     @FXML
     private TableView<EmployeeModel> AccountManagmentTableView;
 
@@ -131,33 +129,33 @@ public class AccountManagementController implements Initializable {
             MenuItem updateItem = new MenuItem("Update");
             MenuItem deleteItem = new MenuItem("Delete");
 
-           updateItem.setOnAction(_ -> {
-    EmployeeModel selectedItem = row.getItem();
-    if (selectedItem != null) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_UpdateAccount.fxml"));
-            Parent root = loader.load();
+            updateItem.setOnAction(_ -> {
+                EmployeeModel selectedItem = row.getItem();
+                if (selectedItem != null) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_UpdateAccount.fxml"));
+                        Parent root = loader.load();
 
-            // Get the controller and pass the selected employee's data
-            UpdateAccountController controller = loader.getController();
-            controller.loadEmployeeData(selectedItem.getId());
+                        // Get the controller and pass the selected employee's data
+                        UpdateAccountController controller = loader.getController();
+                        controller.loadEmployeeData(selectedItem.getId());
 
-            // Create a new pop-up stage
-            Stage popupStage = new Stage();
-            popupStage.setTitle("Update Account");
-            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
-            popupStage.initOwner(row.getScene().getWindow()); // Set owner window
+                        // Create a new pop-up stage
+                        Stage popupStage = new Stage();
+                        popupStage.setTitle("Update Account");
+                        popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+                        popupStage.initOwner(row.getScene().getWindow()); // Set owner window
 
-            Scene scene = new Scene(root);
-            popupStage.setScene(scene);
-            popupStage.setResizable(false); // Optional: make it fixed size
-            popupStage.showAndWait(); // Wait until this window is closed (optional)
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "Failed to open update form: " + e.getMessage());
-          }
-        }
-    });
+                        Scene scene = new Scene(root);
+                        popupStage.setScene(scene);
+                        popupStage.setResizable(false); // Optional: make it fixed size
+                        popupStage.showAndWait(); // Wait until this window is closed (optional)
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        showAlert("Error", "Failed to open update form: " + e.getMessage());
+                    }
+                }
+            });
 
             deleteItem.setOnAction(_ -> {
                 EmployeeModel selectedItem = row.getItem();
@@ -198,7 +196,7 @@ public class AccountManagementController implements Initializable {
     }
 
     private void deleteAccount(int id) throws SQLException {
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement pstmt = conn.prepareStatement(
                         "DELETE FROM employee WHERE employee_id = ?")) {
 
@@ -210,7 +208,7 @@ public class AccountManagementController implements Initializable {
     private void refreshEmployeeTable() {
         EmployeeList.clear();
         try {
-            Connection conn = dbConnect.connect();
+            Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
                         e.employee_id, e.f_name, e.l_name, e.dob, e.contact_no, e.email,
@@ -303,22 +301,21 @@ public class AccountManagementController implements Initializable {
 
     }
 
-
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-            Parent root;
-            try {
-                root = loader.load();
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.getScene().setRoot(root);
-    
-            } catch (IOException e) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.getScene().setRoot(root);
+
+        } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
         }
-    
+
     }
 
     @FXML
@@ -332,9 +329,9 @@ public class AccountManagementController implements Initializable {
 
         } catch (IOException e) {
 
-        JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
                     JOptionPane.ERROR_MESSAGE);
-    }
+        }
     }
 
     @FXML

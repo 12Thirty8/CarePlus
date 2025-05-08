@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import Models.RequestModel;
 import Models.StocksModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
@@ -25,8 +24,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 public class P_StocksController implements Initializable {
-
-    private DatabaseConnect dbConnect = new DatabaseConnect();
 
     @FXML
     private TableView<StocksModel> StockTable;
@@ -73,8 +70,8 @@ public class P_StocksController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
-        hamburgerPane.setPrefWidth(230); 
-        hamburgermenuBtn.setOnAction(event -> toggleHamburgerMenu());
+        hamburgerPane.setPrefWidth(230);
+        hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
@@ -95,7 +92,7 @@ public class P_StocksController implements Initializable {
     private void refreshEmployeeTable() {
         EmployeeList.clear();
         try {
-            Connection conn = dbConnect.connect();
+            Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
                         m.med_id, m.med_name, m.med_stock, m.med_exp, m.med_cat, e.f_name AS stockinBy
@@ -126,20 +123,20 @@ public class P_StocksController implements Initializable {
     }
 
     @FXML
-     private void toggleHamburgerMenu() {
+    private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
-    
+
         if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
 
         } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         }
-    
+
         timeline.play();
         isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
