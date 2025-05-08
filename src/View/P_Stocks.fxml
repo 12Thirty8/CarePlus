@@ -137,6 +137,7 @@
                         <TableColumn fx:id="sincol" prefWidth="149.0" text="Stock In By" />
                      </columns>
                   </TableView>
+                  <Button fx:id="addstockBtn" layoutX="607.0" layoutY="233.0" mnemonicParsing="false" onAction="#addstockBtnPressed" text="Add Stock" />
                </children>
             </AnchorPane>
          </children>

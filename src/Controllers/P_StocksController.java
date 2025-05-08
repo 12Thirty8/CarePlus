@@ -33,6 +33,9 @@ import javafx.util.Duration;
 public class P_StocksController implements Initializable {
 
     @FXML
+    private Button addstockBtn;
+
+    @FXML
     private TableView<StocksModel> StockTable;
 
     @FXML
@@ -175,6 +178,22 @@ public class P_StocksController implements Initializable {
     void homeBtnPressed(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/P_Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+    }
+
+    @FXML
+    void addstockBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_StockIn.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.getScene().setRoot(root);

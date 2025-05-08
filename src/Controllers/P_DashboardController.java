@@ -82,13 +82,14 @@ public class P_DashboardController implements Initializable {
 
     private Alert a = new Alert(AlertType.NONE);
 
+    public static int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
         // Added by JC. Used to get the current user's pharmacist name.
-        int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
 
