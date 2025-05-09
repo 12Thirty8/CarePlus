@@ -60,6 +60,12 @@ public class COHDashboardController {
 
     private boolean isHamburgerPaneExtended = false;
 
+    private Alert a = new Alert(AlertType.NONE);
+
+    // private Stage stage;
+    // private Scene scene;
+    // private Parent root;
+
     @FXML
     public void initialize() {
         fadeInNode(TitleText, 0);
@@ -95,14 +101,6 @@ public class COHDashboardController {
             e.printStackTrace();
         }
     }
-
-    private Button LogOutBttn;
-
-    private Alert a = new Alert(AlertType.NONE);
-
-    // private Stage stage;
-    // private Scene scene;
-    // private Parent root;
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
