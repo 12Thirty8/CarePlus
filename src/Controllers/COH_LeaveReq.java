@@ -15,7 +15,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class COH_ActivityReport {
+public class COH_LeaveReq {
+
+    @FXML
+    private TableView<?> AccountManagmentTableView;
 
     @FXML
     private Button FilterBttn;
@@ -25,9 +28,6 @@ public class COH_ActivityReport {
 
     @FXML
     private TextField SearchButton;
-
-    @FXML
-    private TableView<?> StkInTableView;
 
     @FXML
     private Button accountBtn;
@@ -85,12 +85,27 @@ public class COH_ActivityReport {
     }
 
     @FXML
+    void clipboardBtnAction(ActionEvent event) {
+
+    }
+
+    @FXML
     void closeAction(ActionEvent event) {
 
     }
 
     @FXML
+    void crossBtnAction(ActionEvent event) {
+
+    }
+    
+    @FXML
     void minimizeAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void recordsBtnAction(ActionEvent event) {
 
     }
 

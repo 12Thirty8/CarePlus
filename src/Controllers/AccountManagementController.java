@@ -371,18 +371,18 @@ public class AccountManagementController implements Initializable {
     }
 
     @FXML
-    void DashboardActionBttn(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-        Parent root;
+    void homeBtnAction(ActionEvent event) {
         try {
-            root = loader.load();
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
             stage.getScene().setRoot(root);
-
         } catch (IOException e) {
-
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 
