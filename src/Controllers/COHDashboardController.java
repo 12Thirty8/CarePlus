@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.scene.control.Label;
 
+import javax.swing.Action;
 import javax.swing.JOptionPane;
 
 import db.DatabaseConnect;
@@ -39,8 +40,12 @@ public class COHDashboardController {
 
     @FXML
     private Label TitleText;
+
     @FXML
     private Label nameLabel;
+
+    @FXML
+    private Button closeBtn;
 
     @FXML
     private AreaChart<?, ?> AreaChartPanel;
@@ -58,11 +63,6 @@ public class COHDashboardController {
 
     @FXML
     public void initialize() {
-
-        hamburgerPane.setPrefWidth(230);
-        hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
-
-       
         fadeInNode(TitleText, 0);
         fadeInNode(NamePanel, 200);
         fadeInNode(TotalRequestPanel, 200);
@@ -159,12 +159,24 @@ public class COHDashboardController {
         fade.setDelay(Duration.millis(delayMillis)); // Delay before it starts
         fade.play();
     }
-
+    @FXML
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML
+    private void closeAction(ActionEvent Action) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
+
+    @FXML
+    private void minimizeAction(ActionEvent event) {
+    // Get the current stage and minimize it
+    Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    currentStage.setIconified(true);
     }
 }
