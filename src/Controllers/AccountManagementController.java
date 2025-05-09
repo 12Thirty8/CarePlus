@@ -9,17 +9,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 //import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 //import javafx.stage.StageStyle;
 import javafx.scene.control.Alert;
 import java.io.IOException;
@@ -30,8 +31,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import Models.EmployeeModel;
 import db.DatabaseConnect;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,30 +48,19 @@ public class AccountManagementController implements Initializable {
     @FXML
     private TableView<EmployeeModel> AccountManagmentTableView;
 
+    
     @FXML
-    private Button AccountMenuBttn;
+    private Button hamburgermenuBtn, minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, HamburgerMenuBttn, PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
+
+    private boolean isHamburgerPaneExtended = false;
+    @FXML
+    private AnchorPane hamburgerPane;
 
     @FXML
     private Button AddAccountBttn;
 
     @FXML
-    private Button DashboardBttn;
-
-    @FXML
     private Button FilterBttn;
-
-    @FXML
-    private Button HamburgerMenuBttn;
-
-    @FXML
-    private Button PharmacyBttn;
-
-    @FXML
-    private Button ScheduleBttn;
-
-    @FXML
-    private Button ScheduleMenuBttn;
-
     @FXML
     private TextField TFsearch;
 
@@ -96,26 +91,44 @@ public class AccountManagementController implements Initializable {
     @FXML
     private TableColumn<EmployeeModel, String> shiftcol;
 
-    @FXML
-    private Label nameLabel;
-
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    private Alert a = new Alert(AlertType.NONE);
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        hamburgerPane.setPrefWidth(230);
+        hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
 
-        // Added by JC. Used to get the name of the COH
-        String cohName = DatabaseConnect.getCOHName();
-        nameLabel.setText(cohName != null ? cohName : "Name not found");
+
+    }
+
+   
+    @FXML
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+    
+        if (isHamburgerPaneExtended) {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+
+        } else {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+        }
+    
+        timeline.play();
+        isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
 
     private void setupTableColumns() {
@@ -280,10 +293,8 @@ public class AccountManagementController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setHeaderText("Error loading page.");
-            a.setContentText("Please try again.");
-            a.show();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -309,6 +320,28 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     void LogOutActionBttn(ActionEvent event) {
+        showAlert("Confirm Logout", "Are you sure you want to log out?");
+        try {
+            // Load the login page
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
+            Parent root = loader.load();
+    
+            // Create a new stage for the login page
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.initStyle(StageStyle.UNDECORATED);
+            loginStage.setResizable(false); // Optional: prevent resizing
+            loginStage.show();
+    
+            // Close the current stage
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+    
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 
@@ -323,10 +356,8 @@ public class AccountManagementController implements Initializable {
             stage.getScene().setRoot(root);
 
         } catch (IOException e) {
-            a.setAlertType(AlertType.ERROR);
-            a.setHeaderText("Error loading page.");
-            a.setContentText("Please try again.");
-            a.show();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -341,17 +372,12 @@ public class AccountManagementController implements Initializable {
             stage.getScene().setRoot(root);
 
         } catch (IOException e) {
-            a.setAlertType(AlertType.ERROR);
-            a.setHeaderText("Error loading page.");
-            a.setContentText("Please try again.");
-            a.show();
+
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    @FXML
-    void HamburgerMenuActionBttn(ActionEvent event) {
-
-    }
 
     @FXML
     void PharmacyActionBttn(ActionEvent event) {
@@ -367,5 +393,6 @@ public class AccountManagementController implements Initializable {
     void ScheduleuActionBttn(ActionEvent event) {
 
     }
+
 
 }
