@@ -48,9 +48,9 @@ public class AccountManagementController implements Initializable {
     @FXML
     private TableView<EmployeeModel> AccountManagmentTableView;
 
-    
     @FXML
-    private Button hamburgermenuBtn, minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, HamburgerMenuBttn, PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
+    private Button hamburgermenuBtn, minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, HamburgerMenuBttn,
+            PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
 
     private boolean isHamburgerPaneExtended = false;
     @FXML
@@ -97,8 +97,6 @@ public class AccountManagementController implements Initializable {
     private Scene scene;
     private Parent root;
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -108,25 +106,23 @@ public class AccountManagementController implements Initializable {
         refreshEmployeeTable();
         setupRowContextMenu();
 
-
     }
 
-   
     @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
-    
+
         if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
 
         } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         }
-    
+
         timeline.play();
         isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
@@ -161,6 +157,8 @@ public class AccountManagementController implements Initializable {
                         // Get the controller and pass the selected employee's data
                         UpdateAccountController controller = loader.getController();
                         controller.loadEmployeeData(selectedItem.getId());
+
+                        controller.setRefreshCallback(() -> refreshEmployeeTable());
 
                         // Create a new pop-up stage
                         Stage popupStage = new Stage();
@@ -325,18 +323,18 @@ public class AccountManagementController implements Initializable {
             // Load the login page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
             Parent root = loader.load();
-    
+
             // Create a new stage for the login page
             Stage loginStage = new Stage();
             loginStage.setScene(new Scene(root));
             loginStage.initStyle(StageStyle.UNDECORATED);
             loginStage.setResizable(false); // Optional: prevent resizing
             loginStage.show();
-    
+
             // Close the current stage
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-    
+
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
@@ -378,7 +376,6 @@ public class AccountManagementController implements Initializable {
         }
     }
 
-
     @FXML
     void PharmacyActionBttn(ActionEvent event) {
 
@@ -393,6 +390,5 @@ public class AccountManagementController implements Initializable {
     void ScheduleuActionBttn(ActionEvent event) {
 
     }
-
 
 }

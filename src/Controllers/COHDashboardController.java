@@ -1,12 +1,7 @@
 package Controllers;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.scene.control.Label;
-
-import javax.swing.JOptionPane;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,11 +13,10 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-//import javafx.stage.StageStyle;
-import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -34,7 +28,8 @@ public class COHDashboardController {
     private AnchorPane hamburgerPane;
 
     @FXML
-    private Button minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, hamburgermenuBtn, PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
+    private Button minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, hamburgermenuBtn, PharmacyBttn,
+            ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
 
     @FXML
     private TableView<?> StkInTableView;
@@ -56,9 +51,8 @@ public class COHDashboardController {
 
     private boolean isHamburgerPaneExtended = false;
 
-    // private Stage stage;
-    // private Scene scene;
-    // private Parent root;
+    private Alert a = new Alert(AlertType.NONE);
+
     @FXML
     public void initialize() {
 
@@ -69,27 +63,26 @@ public class COHDashboardController {
     @FXML
     private void toggleHamburgerMenu() {
         System.out.println("Hamburger menu button clicked");
-        try{
-        Timeline timeline = new Timeline();
-    
-        if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
+        try {
+            Timeline timeline = new Timeline();
 
-        } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
+            if (isHamburgerPaneExtended) {
+                KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
+                KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+                timeline.getKeyFrames().add(keyFrame);
+
+            } else {
+                KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
+                KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+                timeline.getKeyFrames().add(keyFrame);
+            }
+
+            timeline.play();
+            isHamburgerPaneExtended = !isHamburgerPaneExtended;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    
-        timeline.play();
-        isHamburgerPaneExtended = !isHamburgerPaneExtended;
-    }catch (Exception e) {
-        e.printStackTrace();
     }
-    }
-
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
@@ -101,8 +94,9 @@ public class COHDashboardController {
             stage.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
         }
     }
 
@@ -113,33 +107,74 @@ public class COHDashboardController {
             // Load the login page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
             Parent root = loader.load();
-    
+
             // Create a new stage for the login page
             Stage loginStage = new Stage();
             loginStage.setScene(new Scene(root));
             loginStage.initStyle(StageStyle.UNDECORATED);
             loginStage.setResizable(false); // Optional: prevent resizing
             loginStage.show();
-    
+
             // Close the current stage
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-    
+
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
         }
     }
 
     @FXML
-    void PharmacyActionBttn(ActionEvent event) {
+    void RecordsBtnPressed(ActionEvent event) {
 
     }
 
     @FXML
-    void ScheduleActionBttn(ActionEvent event) {
+    void clipboardBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_ManageShiftRequest.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
+        }
+    }
+
+    @FXML
+    void crossBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_StockInReport.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
+        }
+    }
+
+    @FXML
+    void homeBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
+        }
     }
 
     private void showAlert(String title, String message) {

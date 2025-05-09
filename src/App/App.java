@@ -12,7 +12,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         System.setProperty("prism.lcdtext", "false");
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/N_Dashboard.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
