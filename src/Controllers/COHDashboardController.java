@@ -1,7 +1,9 @@
 package Controllers;
 
 import java.io.IOException;
+
 import javafx.scene.control.Label;
+
 
 import javax.swing.JOptionPane;
 
@@ -19,37 +21,31 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-//import javafx.stage.StageStyle;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class COHDashboardController {
 
     @FXML
-    private Button AccountMenuBttn;
+    private AnchorPane hamburgerPane;
 
     @FXML
-    private Button DashboardBttn;
-
-    @FXML
-    private Button HamburgerMenuBttn;
-
-    @FXML
-    private Button PharmacyBttn;
-
-    @FXML
-    private Button ScheduleBttn;
-
-    @FXML
-    private Button ScheduleMenuBttn;
+    private Button minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, hamburgermenuBtn, PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
 
     @FXML
     private TableView<?> StkInTableView;
 
     @FXML
     private Label TitleText;
+
     @FXML
     private Label nameLabel;
+
+    @FXML
+    private Button closeBtn;
 
     @FXML
     private AreaChart<?, ?> AreaChartPanel;
@@ -58,14 +54,49 @@ public class COHDashboardController {
     private AnchorPane NamePanel;
 
     @FXML
-    private AnchorPane TotalRequestPanel;
+    private AnchorPane mainPane;
 
     @FXML
-    private Button LogOutBttn;
+    private AnchorPane TotalRequestPanel;
 
-    // private Stage stage;
-    // private Scene scene;
-    // private Parent root;
+    private boolean isHamburgerPaneExtended = false;
+
+    @FXML
+    public void initialize() {
+        fadeInNode(TitleText, 0);
+        fadeInNode(NamePanel, 200);
+        fadeInNode(TotalRequestPanel, 200);
+        fadeInNode(AreaChartPanel, 300);
+        fadeInNode(StkInTableView, 400);
+
+        // String cohName = DatabaseConnect.getCOHName();
+        // nameLabel.setText(cohName);
+
+    }
+
+    @FXML
+    private void toggleHamburgerMenu() {
+        try{
+        Timeline timeline = new Timeline();
+    
+        if (isHamburgerPaneExtended) {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+
+        } else {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+        }
+    
+        timeline.play();
+        isHamburgerPaneExtended = !isHamburgerPaneExtended;
+    }catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
+
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
@@ -80,11 +111,6 @@ public class COHDashboardController {
             JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    @FXML
-    void DashboardActionBttn(ActionEvent event) {
-
     }
 
     @FXML
@@ -114,11 +140,6 @@ public class COHDashboardController {
     }
 
     @FXML
-    void HamburgerMenuActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
     void PharmacyActionBttn(ActionEvent event) {
 
     }
@@ -129,22 +150,8 @@ public class COHDashboardController {
     }
 
     @FXML
-    public void initialize() {
-        // Apply fade-in to all relevant nodes
-        fadeInNode(TitleText, 0);
-        fadeInNode(NamePanel, 200);
-        fadeInNode(TotalRequestPanel, 200);
-        fadeInNode(AreaChartPanel, 300);
-        fadeInNode(StkInTableView, 400);
-
-        // Added by JC. Used to get the name of the COH
-        String cohName = DatabaseConnect.getCOHName();
-        nameLabel.setText(cohName != null ? cohName : "Name not found");
-
-    }
-
     private void fadeInNode(Node node, double delayMillis) {
-        node.setOpacity(0); // Start fully transparent
+        // node.setOpacity(0); // Start fully transparent
         FadeTransition fade = new FadeTransition(Duration.millis(800), node);
         fade.setFromValue(0.0);
         fade.setToValue(1.0);
@@ -152,7 +159,7 @@ public class COHDashboardController {
         fade.setDelay(Duration.millis(delayMillis)); // Delay before it starts
         fade.play();
     }
-
+    @FXML
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -160,5 +167,16 @@ public class COHDashboardController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    @FXML
+    private void closeAction(ActionEvent Action) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
 
+    @FXML
+    private void minimizeAction(ActionEvent event) {
+    // Get the current stage and minimize it
+    Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    currentStage.setIconified(true);
+    }
 }
