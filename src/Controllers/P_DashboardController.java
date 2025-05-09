@@ -163,7 +163,18 @@ public class P_DashboardController implements Initializable {
 
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_ProcessRequest.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
     }
 
     @FXML
