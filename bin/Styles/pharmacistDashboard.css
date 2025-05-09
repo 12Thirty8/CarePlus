@@ -46,14 +46,14 @@
     -fx-cursor: hand;
 }
 
-#RecordsBtn {
+#recordsBtn {
     -fx-border-color:  white;
     -fx-background-color:  white;
     -fx-border-radius: 8;
     -fx-border-width:  0;
 }
 
-#RecordsBtn:hover {
+#recordsBtn:hover {
     -fx-background-color:  rgb(198, 198, 198); 
     -fx-cursor: hand;
 }
@@ -81,3 +81,31 @@
     -fx-background-color:  rgb(198, 198, 198); 
     -fx-cursor: hand;
 }
+
+#closeBtn {
+   -fx-border-color:  #0B69B9;
+   -fx-background-color:  #0B69B9;
+   -fx-border-radius: 8;
+    
+}
+
+
+#closeBtn:hover {
+   -fx-border-color:  red;
+   -fx-background-color:  red;
+}
+
+#minimizeBtn {
+   -fx-border-color:  #0B69B9;
+   -fx-background-color:  #0B69B9;
+   -fx-border-radius: 8;
+    
+}
+
+
+#minimizeBtn:hover {
+   -fx-border-color:  rgb(198, 198, 198); 
+   -fx-background-color: rgb(198, 198, 198); 
+}
+
+

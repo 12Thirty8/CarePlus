@@ -93,6 +93,8 @@ public class AccountManagementController implements Initializable {
 
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
 
+    private Alert a = new Alert(AlertType.NONE);
+
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -105,6 +107,10 @@ public class AccountManagementController implements Initializable {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+
+        // Added by JC. Used to get the name of the COH
+        String cohName = DatabaseConnect.getCOHName();
+        nameLabel.setText(cohName != null ? cohName : "Name not found");
 
     }
 
@@ -337,8 +343,10 @@ public class AccountManagementController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setHeaderText("Error loading page.");
+            a.setContentText("Please try again.");
+            a.show();
         }
 
     }
