@@ -112,8 +112,8 @@ public class AccountManagementController implements Initializable {
         setupRowContextMenu();
 
         // Added by JC. Used to get the name of the COH
-        String cohName = DatabaseConnect.getCOHName();
-        nameLabel.setText(cohName != null ? cohName : "Name not found");
+        // String cohName = DatabaseConnect.getCOHName();
+        // nameLabel.setText(cohName != null ? cohName : "Name not found");
 
     }
 

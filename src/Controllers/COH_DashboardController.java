@@ -25,13 +25,13 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class COHDashboardController {
+public class COH_DashboardController {
 
     @FXML
     private AnchorPane hamburgerPane;
 
     @FXML
-    private Button minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, hamburgermenuBtn, PharmacyBttn,
+    private Button minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, hamburgermenuBtn,
             ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
 
     @FXML
@@ -104,7 +104,6 @@ public class COHDashboardController {
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
-
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -148,11 +147,6 @@ public class COHDashboardController {
     }
 
     @FXML
-    void PharmacyActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
     void ScheduleActionBttn(ActionEvent event) {
 
     }
@@ -188,5 +182,73 @@ public class COHDashboardController {
         // Get the current stage and minimize it
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.setIconified(true);
+    }
+
+    @FXML
+    void clipboardBtnAction(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_ManageShiftRequest.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+
+    }
+
+    @FXML
+    void crossBtnAction(ActionEvent event) {
+         try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_StockInReport.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+
+    }
+
+    @FXML
+    void homeBtnAction(ActionEvent event) {
+
+         try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+
+    }
+
+    @FXML
+    void recordsBtnAction(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_ActivityReports.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
     }
 }
