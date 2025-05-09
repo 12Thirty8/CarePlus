@@ -46,3 +46,38 @@
     -fx-cursor: hand;
 }
 
+#RecordsBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#RecordsBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#accountBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#accountBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#LogoutBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#LogoutBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
