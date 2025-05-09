@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -38,7 +39,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="58.0" prefWidth="230.0">
                            <children>
-                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
+                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="41.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
                                  <graphic>
                                     <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -70,7 +71,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="58.0" prefWidth="230.0">
                            <children>
-                              <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
+                              <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="46.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -86,7 +87,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="58.0" prefWidth="230.0">
                            <children>
-                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
+                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="47.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
                                  <graphic>
                                     <ImageView fitHeight="33.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -102,7 +103,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="58.0" prefWidth="230.0">
                            <children>
-                              <Button fx:id="accountBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" onAction="#AccountMenuActionBttn" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Accounts" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
+                              <Button fx:id="accountBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="49.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" onAction="#AccountMenuActionBttn" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Accounts" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
@@ -111,6 +112,9 @@
                                        <image>
                                           <Image url="@../ICONS/profile-user%201.png" />
                                        </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
                                     </ImageView>
                                  </graphic>
                               </Button>

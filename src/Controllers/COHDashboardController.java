@@ -69,14 +69,13 @@ public class COHDashboardController {
         fadeInNode(AreaChartPanel, 300);
         fadeInNode(StkInTableView, 400);
 
-        String cohName = DatabaseConnect.getCOHName();
-        nameLabel.setText(cohName != null ? cohName : "Name not found");
+        // String cohName = DatabaseConnect.getCOHName();
+        // nameLabel.setText(cohName);
 
     }
 
     @FXML
     private void toggleHamburgerMenu() {
-        System.out.println("Hamburger menu button clicked");
         try{
         Timeline timeline = new Timeline();
     
@@ -152,7 +151,7 @@ public class COHDashboardController {
 
     @FXML
     private void fadeInNode(Node node, double delayMillis) {
-        node.setOpacity(0); // Start fully transparent
+        // node.setOpacity(0); // Start fully transparent
         FadeTransition fade = new FadeTransition(Duration.millis(800), node);
         fade.setFromValue(0.0);
         fade.setToValue(1.0);
