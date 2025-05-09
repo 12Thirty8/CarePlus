@@ -1,6 +1,8 @@
 package Controllers;
 
 import java.io.IOException;
+
+import db.DatabaseConnect;
 import javafx.scene.control.Label;
 
 import javafx.event.ActionEvent;
@@ -15,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.animation.FadeTransition;
@@ -22,6 +25,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import util.GetCurrentEmployeeID;
 
 public class COH_DashboardController {
 
@@ -39,7 +43,7 @@ public class COH_DashboardController {
     private Label TitleText;
 
     @FXML
-    private Label nameLabel;
+    private Text nameLabel;
 
     @FXML
     private Button closeBtn;
@@ -60,10 +64,6 @@ public class COH_DashboardController {
 
     private Alert a = new Alert(AlertType.NONE);
 
-    // private Stage stage;
-    // private Scene scene;
-    // private Parent root;
-
     @FXML
     public void initialize() {
         fadeInNode(TitleText, 0);
@@ -72,8 +72,9 @@ public class COH_DashboardController {
         fadeInNode(AreaChartPanel, 300);
         fadeInNode(StkInTableView, 400);
 
-        // String cohName = DatabaseConnect.getCOHName();
-        // nameLabel.setText(cohName);
+        int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+        String COHName = DatabaseConnect.getCOHName(employeeId);
+        nameLabel.setText(COHName != null ? COHName : "Name not found");
 
     }
 
