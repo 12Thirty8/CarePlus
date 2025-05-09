@@ -22,18 +22,6 @@
          <children>
             <AnchorPane fx:id="hamburgerPane" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                <children>
-<<<<<<< HEAD
-                  <Label fx:id="nameLabel" layoutX="14.0" layoutY="42.0" text="Dr. Webber Luisito">
-                     <font>
-                        <Font name="Arial" size="21.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="24.0" layoutY="82.0" text="Chief of Hospital">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </Label>
-=======
                   <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="26.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane prefHeight="64.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;">
@@ -147,7 +135,6 @@
                         </AnchorPane>
                      </children>
                   </VBox>
->>>>>>> origin/main
                </children>
             </AnchorPane>
             <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
