@@ -9,11 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -31,8 +33,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 import Models.EmployeeModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
@@ -48,9 +48,9 @@ public class AccountManagementController implements Initializable {
     @FXML
     private TableView<EmployeeModel> AccountManagmentTableView;
 
-    
     @FXML
-    private Button hamburgermenuBtn, minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, HamburgerMenuBttn, PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
+    private Button hamburgermenuBtn, minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, HamburgerMenuBttn,
+            PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
 
     private boolean isHamburgerPaneExtended = false;
     @FXML
@@ -91,13 +91,16 @@ public class AccountManagementController implements Initializable {
     @FXML
     private TableColumn<EmployeeModel, String> shiftcol;
 
+    @FXML
+    private Label nameLabel;
+
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
+
+    private Alert a = new Alert(AlertType.NONE);
 
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -108,25 +111,27 @@ public class AccountManagementController implements Initializable {
         refreshEmployeeTable();
         setupRowContextMenu();
 
+        // Added by JC. Used to get the name of the COH
+        String cohName = DatabaseConnect.getCOHName();
+        nameLabel.setText(cohName != null ? cohName : "Name not found");
 
     }
 
-   
     @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
-    
+
         if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
 
         } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         }
-    
+
         timeline.play();
         isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
@@ -293,8 +298,10 @@ public class AccountManagementController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setHeaderText("Error loading page.");
+            a.setContentText("Please try again.");
+            a.show();
         }
     }
 
@@ -325,22 +332,24 @@ public class AccountManagementController implements Initializable {
             // Load the login page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
             Parent root = loader.load();
-    
+
             // Create a new stage for the login page
             Stage loginStage = new Stage();
             loginStage.setScene(new Scene(root));
             loginStage.initStyle(StageStyle.UNDECORATED);
             loginStage.setResizable(false); // Optional: prevent resizing
             loginStage.show();
-    
+
             // Close the current stage
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-    
+
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setHeaderText("Error loading page.");
+            a.setContentText("Please try again.");
+            a.show();
         }
 
     }
@@ -356,8 +365,10 @@ public class AccountManagementController implements Initializable {
             stage.getScene().setRoot(root);
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setHeaderText("Error loading page.");
+            a.setContentText("Please try again.");
+            a.show();
         }
 
     }
@@ -372,12 +383,12 @@ public class AccountManagementController implements Initializable {
             stage.getScene().setRoot(root);
 
         } catch (IOException e) {
-
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setHeaderText("Error loading page.");
+            a.setContentText("Please try again.");
+            a.show();
         }
     }
-
 
     @FXML
     void PharmacyActionBttn(ActionEvent event) {
@@ -393,6 +404,5 @@ public class AccountManagementController implements Initializable {
     void ScheduleuActionBttn(ActionEvent event) {
 
     }
-
 
 }

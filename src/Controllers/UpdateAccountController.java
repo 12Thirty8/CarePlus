@@ -22,14 +22,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-
 import db.DatabaseConnect;
 
 public class UpdateAccountController implements Initializable {
@@ -48,6 +46,7 @@ public class UpdateAccountController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private Alert a = new Alert(AlertType.NONE);
 
     private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
         String query = "SELECT COUNT(*) AS count FROM employee " +
@@ -127,8 +126,10 @@ public class UpdateAccountController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 
@@ -186,8 +187,10 @@ public class UpdateAccountController implements Initializable {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading Account Management page.");
+                a.setHeaderText("Error");
+                a.show();
             }
 
         } catch (SQLException e) {

@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.util.Duration;
-
-import javax.swing.JOptionPane;
-
+import util.GetCurrentEmployeeID;
 import db.DatabaseConnect;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -17,6 +15,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -49,6 +49,8 @@ public class LoginPageController {
     @FXML
     private PasswordField psfield;
 
+    private Alert a = new Alert(AlertType.NONE);
+
     @FXML
     public void onPressed(ActionEvent event) throws IOException {
         String username = empIDTf.getText().trim();
@@ -56,15 +58,21 @@ public class LoginPageController {
 
         // Check if the username length is between 6 and 16 characters
         if (username.length() < 1 || username.length() > 6) {
-            JOptionPane.showMessageDialog(null, "Incorrect Account ID Format", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setTitle("Error");
+            a.setHeaderText("Login Error");
+            a.setContentText("Username must be between 1 and 6 characters.");
+            a.show();
             return;
         }
 
         // Check if the password length is between 8 and 40 characters
         if (password.length() < 6 || password.length() > 20) {
-            JOptionPane.showMessageDialog(null, "Password must be between 6 and 20 characters.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setTitle("Error");
+            a.setHeaderText("Login Error");
+            a.setContentText("Password must be between 6 and 20 characters.");
+            a.show();
             return;
         }
 
@@ -77,6 +85,11 @@ public class LoginPageController {
             ResultSet rs = stm.executeQuery(sql);
 
             if (rs.next()) {
+                // Added by JC. Used to get the current user's employee_id.
+                int loggedId = rs.getInt("employee_id");
+                System.out.println("Successfully logged in with ID: " + loggedId);
+                GetCurrentEmployeeID.getInstance().setEmployeeId(loggedId);
+                //
                 dep_id = rs.getInt("dep_id");
 
                 // Load the loading page scene first
@@ -114,22 +127,32 @@ public class LoginPageController {
 
                     } catch (IOException ex) {
                         ex.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error",
-                                JOptionPane.ERROR_MESSAGE);
+                        a.setAlertType(AlertType.ERROR);
+                        a.setTitle("Error");
+                        a.setHeaderText("Loading Error");
+                        a.setContentText("Failed to load the dashboard page.");
+                        a.show();
                     }
                 });
 
                 // Start the fade transition
                 fadeOut.play();
             } else {
-                JOptionPane.showMessageDialog(null, "ID or Password is incorrect.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                a.setAlertType(AlertType.ERROR);
+                a.setTitle("Error");
+                a.setHeaderText("Login Error");
+                a.setContentText("Invalid username or password.");
+                a.show();
                 empIDTf.setText("");
                 psfield.setText("");
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Database error occurred", "Error", JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setTitle("Error");
+            a.setHeaderText("Database Error");
+            a.setContentText("Database connection error.");
+            a.show();
         }
     }
 
