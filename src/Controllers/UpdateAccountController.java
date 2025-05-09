@@ -47,6 +47,7 @@ public class UpdateAccountController implements Initializable {
     private Scene scene;
     private Parent root;
     private Alert a = new Alert(AlertType.NONE);
+    private Runnable refreshCallback;
 
     private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
         String query = "SELECT COUNT(*) AS count FROM employee " +
@@ -79,6 +80,10 @@ public class UpdateAccountController implements Initializable {
             showAlert("Database Error", "Failed to load dropdown data: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void setRefreshCallback(Runnable refreshCallback) {
+        this.refreshCallback = refreshCallback;
     }
 
     // Method to load employee data into the form
@@ -178,20 +183,12 @@ public class UpdateAccountController implements Initializable {
 
             showAlert("Success", "Account updated successfully");
 
-            try {
-                root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
-                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                a.setAlertType(AlertType.ERROR);
-                a.setContentText("Error loading Account Management page.");
-                a.setHeaderText("Error");
-                a.show();
+            if (refreshCallback != null) {
+                refreshCallback.run(); // Trigger the refresh
             }
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
 
         } catch (SQLException e) {
             showAlert("Database Error", "Failed to update account: " + e.getMessage());
