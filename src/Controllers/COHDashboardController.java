@@ -1,8 +1,6 @@
 package Controllers;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
 
@@ -22,7 +20,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-//import javafx.stage.StageStyle;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -59,14 +56,22 @@ public class COHDashboardController {
 
     private boolean isHamburgerPaneExtended = false;
 
-    // private Stage stage;
-    // private Scene scene;
-    // private Parent root;
     @FXML
     public void initialize() {
 
         hamburgerPane.setPrefWidth(230);
         hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
+
+       
+        fadeInNode(TitleText, 0);
+        fadeInNode(NamePanel, 200);
+        fadeInNode(TotalRequestPanel, 200);
+        fadeInNode(AreaChartPanel, 300);
+        fadeInNode(StkInTableView, 400);
+
+        String cohName = DatabaseConnect.getCOHName();
+        nameLabel.setText(cohName != null ? cohName : "Name not found");
+
     }
 
     @FXML
@@ -146,20 +151,6 @@ public class COHDashboardController {
     }
 
     @FXML
-    public void initialize() {
-        // Apply fade-in to all relevant nodes
-        fadeInNode(TitleText, 0);
-        fadeInNode(NamePanel, 200);
-        fadeInNode(TotalRequestPanel, 200);
-        fadeInNode(AreaChartPanel, 300);
-        fadeInNode(StkInTableView, 400);
-
-        // Added by JC. Used to get the name of the COH
-        String cohName = DatabaseConnect.getCOHName();
-        nameLabel.setText(cohName != null ? cohName : "Name not found");
-
-    }
-
     private void fadeInNode(Node node, double delayMillis) {
         node.setOpacity(0); // Start fully transparent
         FadeTransition fade = new FadeTransition(Duration.millis(800), node);
