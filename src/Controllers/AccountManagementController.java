@@ -9,13 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -25,6 +23,8 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 //import javafx.stage.StageStyle;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -32,6 +32,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
 
 import Models.EmployeeModel;
 import db.DatabaseConnect;
@@ -91,9 +93,6 @@ public class AccountManagementController implements Initializable {
     @FXML
     private TableColumn<EmployeeModel, String> shiftcol;
 
-    @FXML
-    private Label nameLabel;
-
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
 
     private Alert a = new Alert(AlertType.NONE);
@@ -112,8 +111,8 @@ public class AccountManagementController implements Initializable {
         setupRowContextMenu();
 
         // Added by JC. Used to get the name of the COH
-        String cohName = DatabaseConnect.getCOHName();
-        nameLabel.setText(cohName != null ? cohName : "Name not found");
+        // String cohName = DatabaseConnect.getCOHName();
+        // nameLabel.setText(cohName != null ? cohName : "Name not found");
 
     }
 
@@ -166,6 +165,8 @@ public class AccountManagementController implements Initializable {
                         // Get the controller and pass the selected employee's data
                         UpdateAccountController controller = loader.getController();
                         controller.loadEmployeeData(selectedItem.getId());
+
+                        controller.setRefreshCallback(() -> refreshEmployeeTable());
 
                         // Create a new pop-up stage
                         Stage popupStage = new Stage();
@@ -298,10 +299,8 @@ public class AccountManagementController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setHeaderText("Error loading page.");
-            a.setContentText("Please try again.");
-            a.show();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -365,10 +364,8 @@ public class AccountManagementController implements Initializable {
             stage.getScene().setRoot(root);
 
         } catch (IOException e) {
-            a.setAlertType(AlertType.ERROR);
-            a.setHeaderText("Error loading page.");
-            a.setContentText("Please try again.");
-            a.show();
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -383,10 +380,9 @@ public class AccountManagementController implements Initializable {
             stage.getScene().setRoot(root);
 
         } catch (IOException e) {
-            a.setAlertType(AlertType.ERROR);
-            a.setHeaderText("Error loading page.");
-            a.setContentText("Please try again.");
-            a.show();
+
+            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 

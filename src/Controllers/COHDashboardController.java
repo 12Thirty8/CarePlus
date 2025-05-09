@@ -1,10 +1,8 @@
 package Controllers;
 
 import java.io.IOException;
-
 import javafx.scene.control.Label;
 
-import db.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -113,8 +111,7 @@ public class COHDashboardController {
         } catch (IOException e) {
             e.printStackTrace();
             a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading Account Management page.");
-            a.setHeaderText("Error");
+            a.setContentText("Error loading page.");
             a.show();
         }
     }
@@ -141,14 +138,13 @@ public class COHDashboardController {
         } catch (IOException e) {
             e.printStackTrace();
             a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading Login page.");
-            a.setHeaderText("Error");
+            a.setContentText("Error loading page.");
             a.show();
         }
     }
 
     @FXML
-    void PharmacyActionBttn(ActionEvent event) {
+    void RecordsBtnPressed(ActionEvent event) {
 
     }
 
