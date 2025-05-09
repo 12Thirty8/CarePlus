@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AccountManagementController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
@@ -36,7 +36,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="58.0" prefWidth="230.0">
                            <children>
-                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
+                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" onAction="#DashboardActionBttn" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
                                  <graphic>
                                     <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>

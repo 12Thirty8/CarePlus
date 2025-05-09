@@ -50,7 +50,7 @@ public class AccountManagementController implements Initializable {
 
     
     @FXML
-    private Button minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, HamburgerMenuBttn, PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
+    private Button hamburgermenuBtn, minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, HamburgerMenuBttn, PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
 
     private boolean isHamburgerPaneExtended = false;
     @FXML
@@ -97,11 +97,38 @@ public class AccountManagementController implements Initializable {
     private Scene scene;
     private Parent root;
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        hamburgerPane.setPrefWidth(230);
+        hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+
+
+    }
+
+   
+    @FXML
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+    
+        if (isHamburgerPaneExtended) {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+
+        } else {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+        }
+    
+        timeline.play();
+        isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
 
     private void setupTableColumns() {
@@ -351,12 +378,6 @@ public class AccountManagementController implements Initializable {
         }
     }
 
-    
-
-    @FXML
-    void HamburgerMenuActionBttn(ActionEvent event) {
-
-    }
 
     @FXML
     void PharmacyActionBttn(ActionEvent event) {
@@ -373,22 +394,5 @@ public class AccountManagementController implements Initializable {
 
     }
 
-    private void toggleHamburgerMenu() {
-        Timeline timeline = new Timeline();
-    
-        if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
-
-        } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
-        }
-    
-        timeline.play();
-        isHamburgerPaneExtended = !isHamburgerPaneExtended;
-    }
 
 }
