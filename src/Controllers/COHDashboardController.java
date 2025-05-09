@@ -1,6 +1,9 @@
 package Controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.scene.control.Label;
 
 import javax.swing.JOptionPane;
@@ -21,27 +24,18 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 //import javafx.stage.StageStyle;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class COHDashboardController {
 
     @FXML
-    private Button AccountMenuBttn;
+    private AnchorPane hamburgerPane;
 
     @FXML
-    private Button DashboardBttn;
-
-    @FXML
-    private Button HamburgerMenuBttn;
-
-    @FXML
-    private Button PharmacyBttn;
-
-    @FXML
-    private Button ScheduleBttn;
-
-    @FXML
-    private Button ScheduleMenuBttn;
+    private Button minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, hamburgermenuBtn, PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
 
     @FXML
     private TableView<?> StkInTableView;
@@ -58,14 +52,47 @@ public class COHDashboardController {
     private AnchorPane NamePanel;
 
     @FXML
-    private AnchorPane TotalRequestPanel;
+    private AnchorPane mainPane;
 
     @FXML
-    private Button LogOutBttn;
+    private AnchorPane TotalRequestPanel;
+
+    private boolean isHamburgerPaneExtended = false;
 
     // private Stage stage;
     // private Scene scene;
     // private Parent root;
+    @FXML
+    public void initialize() {
+
+        hamburgerPane.setPrefWidth(230);
+        hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
+    }
+
+    @FXML
+    private void toggleHamburgerMenu() {
+        System.out.println("Hamburger menu button clicked");
+        try{
+        Timeline timeline = new Timeline();
+    
+        if (isHamburgerPaneExtended) {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+
+        } else {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+        }
+    
+        timeline.play();
+        isHamburgerPaneExtended = !isHamburgerPaneExtended;
+    }catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
+
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
@@ -80,11 +107,6 @@ public class COHDashboardController {
             JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    @FXML
-    void DashboardActionBttn(ActionEvent event) {
-
     }
 
     @FXML
@@ -111,11 +133,6 @@ public class COHDashboardController {
             JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    @FXML
-    void HamburgerMenuActionBttn(ActionEvent event) {
-
     }
 
     @FXML
@@ -160,5 +177,4 @@ public class COHDashboardController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }
