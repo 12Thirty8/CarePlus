@@ -160,7 +160,7 @@ public class AddAccountController implements Initializable {
                     shiftcb.getValue(),
                     dayoffcb.getValue());
 
-            showAlert("Success", "Account created successfully");
+            showAlert("Success", "Employee onboarded successfully.");
             clearForm();
 
             try {
@@ -237,10 +237,10 @@ public class AddAccountController implements Initializable {
             String shift, String dayoff) throws SQLException {
 
         String query = "INSERT INTO employee (f_name, l_name, dob, contact_no, email, password_hash, " +
-                "dep_id, shift_id, dayoff_id) VALUES (?, ?, ?, ?, ?, ?, " +
+                "dep_id, shift_id, dayoff_id, status) VALUES (?, ?, ?, ?, ?, ?, " +
                 "(SELECT dep_id FROM department WHERE dep_name = ?), " +
                 "(SELECT shift_id FROM shift WHERE timeslot = ?), " +
-                "(SELECT dotw_id FROM dotweek WHERE dotw_name = ?))";
+                "(SELECT dotw_id FROM dotweek WHERE dotw_name = ?), 1)";
 
         try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement pstmt = conn.prepareStatement(query)) {

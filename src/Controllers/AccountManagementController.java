@@ -144,7 +144,7 @@ public class AccountManagementController implements Initializable {
             ContextMenu contextMenu = new ContextMenu();
 
             MenuItem updateItem = new MenuItem("Update");
-            MenuItem deleteItem = new MenuItem("Delete");
+            MenuItem deleteItem = new MenuItem("Archive");
 
             updateItem.setOnAction(_ -> {
                 EmployeeModel selectedItem = row.getItem();
@@ -196,16 +196,16 @@ public class AccountManagementController implements Initializable {
     private void deleteRow(EmployeeModel item) {
         // Show confirmation dialog before deleting
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm Deletion");
-        alert.setHeaderText("Delete this record?");
-        alert.setContentText("Are you sure you want to delete: " + item + "?");
+        alert.setTitle("Confirm Archive");
+        alert.setHeaderText("Archive this account?");
+        alert.setContentText("Are you sure you want to archive: " + item + "?");
 
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 try {
-                    deleteAccount(item.getId()); // Pass the employee ID
+                    archiveAccount(item.getId()); // Pass the employee ID
                     AccountManagmentTableView.getItems().remove(item); // Remove from TableView
-                    showAlert("Success", "Employee deleted successfully");
+                    showAlert("Success", "Employee offboarded successfully.");
                 } catch (SQLException e) {
                     showAlert("Error", "Failed to delete employee: " + e.getMessage());
                     e.printStackTrace();
@@ -214,10 +214,10 @@ public class AccountManagementController implements Initializable {
         });
     }
 
-    private void deleteAccount(int id) throws SQLException {
+    private void archiveAccount(int id) throws SQLException {
         try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement pstmt = conn.prepareStatement(
-                        "DELETE FROM employee WHERE employee_id = ?")) {
+                        "UPDATE employee SET status = 0 WHERE employee_id = ?")) {
 
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
@@ -234,11 +234,12 @@ public class AccountManagementController implements Initializable {
                         d.dep_name AS depName,
                         e.password_hash,
                         s.timeslot AS shiftName,
-                        do.dotw_name AS dayoffName
+                        do.dotw_name AS dayoffName, e.status
                     FROM employee e
                     LEFT JOIN department d ON e.dep_id = d.dep_id
                     LEFT JOIN shift s ON e.shift_id = s.shift_id
                     LEFT JOIN dotweek do ON e.dayoff_id = do.dotw_id
+                    WHERE e.status = '1'
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
