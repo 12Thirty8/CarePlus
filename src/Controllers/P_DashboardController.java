@@ -251,9 +251,6 @@ public class P_DashboardController implements Initializable {
             a.show();
         }
     }
-
-    
-
     @FXML
     private void closeAction(ActionEvent Action) {
         Stage currentStage = (Stage) closeBtn.getScene().getWindow();
