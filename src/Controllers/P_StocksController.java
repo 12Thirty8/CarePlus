@@ -1,12 +1,12 @@
 package Controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import Models.StocksModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
@@ -14,16 +14,26 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class P_StocksController implements Initializable {
+
+    @FXML
+    private Button addstockBtn;
 
     @FXML
     private TableView<StocksModel> StockTable;
@@ -67,6 +77,8 @@ public class P_StocksController implements Initializable {
     private ObservableList<StocksModel> EmployeeList = FXCollections.observableArrayList();
 
     private boolean isHamburgerPaneExtended = false;
+
+    private Alert a = new Alert(AlertType.NONE);
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
@@ -139,5 +151,58 @@ public class P_StocksController implements Initializable {
 
         timeline.play();
         isHamburgerPaneExtended = !isHamburgerPaneExtended;
+    }
+
+    @FXML
+    void clipboardBtnPressed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void crossBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+    }
+
+    @FXML
+    void homeBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+    }
+
+    @FXML
+    void addstockBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_StockIn.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
     }
 }

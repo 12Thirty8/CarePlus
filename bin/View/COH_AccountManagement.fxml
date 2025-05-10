@@ -19,13 +19,13 @@
          <children>
             <AnchorPane fx:id="hamburgerPane" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                <children>
-                  <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="26.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="628.0" prefWidth="230.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane prefHeight="64.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                            <children>
-                              <Button fx:id="hamburgermenuBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="12.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="54.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
+                              <Button fx:id="hamburgermenuBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="12.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#toggleHamburgerMenu" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
                                  <graphic>
-                                    <ImageView fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../ICONS/Menu.png" />
                                        </image>
@@ -34,101 +34,147 @@
                               </Button>
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="58.0" prefWidth="230.0">
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" onAction="#DashboardActionBttn" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
-                                 <graphic>
-                                    <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../ICONS/Home.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="Gordita-Bold" size="15.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane prefHeight="58.0" prefWidth="230.0">
-                           <children>
-                              <Button fx:id="RecordsBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Records" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
-                                 <graphic>
-                                    <ImageView fitHeight="34.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../ICONS/Clipboard.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="Gordita-Bold" size="15.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane prefHeight="58.0" prefWidth="230.0">
-                           <children>
-                              <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
-                                 <graphic>
-                                    <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../ICONS/Hospital.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="Gordita-Bold" size="15.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane prefHeight="58.0" prefWidth="230.0">
-                           <children>
-                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
+                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#homeBtnAction" prefHeight="54.0" prefWidth="52.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
                                  <graphic>
-                                    <ImageView fitHeight="33.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../ICONS/Calendar.png" />
-                                       </image>
-                                    </ImageView>
+                                    <HBox prefHeight="41.0" prefWidth="25.0">
+                                       <children>
+                                          <AnchorPane HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="37.0" fitWidth="178.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../ICONS/Home.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
                                  </graphic>
                               </Button>
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="58.0" prefWidth="230.0">
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="accountBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" onAction="#AccountMenuActionBttn" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Accounts" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
+                              <Button fx:id="recordsBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Records" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
                                  <graphic>
-                                    <ImageView fitHeight="26.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../ICONS/profile-user%201.png" />
-                                       </image>
-                                    </ImageView>
+                                    <HBox prefHeight="41.0" prefWidth="25.0">
+                                       <children>
+                                          <AnchorPane prefHeight="0.0" prefWidth="1.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="47.0" fitWidth="30.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../ICONS/Clipboard.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
                                  </graphic>
                               </Button>
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="58.0" prefWidth="230.0" />
-                        <AnchorPane prefHeight="58.0" prefWidth="230.0" />
-                        <AnchorPane prefWidth="230.0" VBox.vgrow="ALWAYS">
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="LogoutBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="27.0" layoutY="7.0" minHeight="43.0" minWidth="52.0" mnemonicParsing="false" onAction="#LogOutActionBttn" prefHeight="43.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Exit " AnchorPane.bottomAnchor="9.799999999999997" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="28.19999999999999">
-                                 <graphic>
-                                    <ImageView fitHeight="39.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../ICONS/Logout.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
+                              <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
+                                 <graphic>
+                                    <HBox prefHeight="41.0" prefWidth="25.0">
+                                       <children>
+                                          <AnchorPane prefHeight="0.0" prefWidth="1.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="47.0" fitWidth="30.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../ICONS/Hospital.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
+                           <children>
+                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                                 <font>
+                                    <Font name="Gordita-Bold" size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <HBox prefHeight="41.0" prefWidth="25.0">
+                                       <children>
+                                          <AnchorPane prefHeight="0.0" prefWidth="1.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="47.0" fitWidth="30.0" layoutX="1.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../ICONS/Calendar.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
+                           <children>
+                              <Button fx:id="accountBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#AccountMenuActionBttn" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Account" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                                 <font>
+                                    <Font name="Gordita-Bold" size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <HBox prefHeight="41.0" prefWidth="25.0">
+                                       <children>
+                                          <AnchorPane prefHeight="0.0" prefWidth="1.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="26.0" fitWidth="33.0" layoutX="4.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../ICONS/profile-user%201.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Button fx:id="LogoutBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#LogOutActionBttn" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Log Out" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                                 <font>
+                                    <Font name="Gordita-Bold" size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <HBox prefHeight="41.0" prefWidth="25.0">
+                                       <children>
+                                          <AnchorPane prefHeight="0.0" prefWidth="1.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="26.0" fitWidth="33.0" layoutX="4.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../ICONS/Logout.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </graphic>
                               </Button>
                            </children>
                         </AnchorPane>

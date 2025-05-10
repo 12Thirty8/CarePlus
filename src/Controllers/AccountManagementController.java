@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -24,6 +23,8 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 //import javafx.stage.StageStyle;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -49,9 +50,9 @@ public class AccountManagementController implements Initializable {
     @FXML
     private TableView<EmployeeModel> AccountManagmentTableView;
 
-    
     @FXML
-    private Button hamburgermenuBtn, minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, HamburgerMenuBttn, PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
+    private Button hamburgermenuBtn, minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, HamburgerMenuBttn,
+            PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
 
     private boolean isHamburgerPaneExtended = false;
     @FXML
@@ -92,16 +93,13 @@ public class AccountManagementController implements Initializable {
     @FXML
     private TableColumn<EmployeeModel, String> shiftcol;
 
-    @FXML
-    private Label nameLabel;
-
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
+
+    private Alert a = new Alert(AlertType.NONE);
 
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -113,27 +111,26 @@ public class AccountManagementController implements Initializable {
         setupRowContextMenu();
 
         // Added by JC. Used to get the name of the COH
-        String cohName = DatabaseConnect.getCOHName();
-        nameLabel.setText(cohName != null ? cohName : "Name not found");
+        // String cohName = DatabaseConnect.getCOHName();
+        // nameLabel.setText(cohName != null ? cohName : "Name not found");
 
     }
 
-   
     @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
-    
+
         if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
 
         } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
             timeline.getKeyFrames().add(keyFrame);
         }
-    
+
         timeline.play();
         isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
@@ -168,6 +165,8 @@ public class AccountManagementController implements Initializable {
                         // Get the controller and pass the selected employee's data
                         UpdateAccountController controller = loader.getController();
                         controller.loadEmployeeData(selectedItem.getId());
+
+                        controller.setRefreshCallback(() -> refreshEmployeeTable());
 
                         // Create a new pop-up stage
                         Stage popupStage = new Stage();
@@ -332,22 +331,24 @@ public class AccountManagementController implements Initializable {
             // Load the login page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
             Parent root = loader.load();
-    
+
             // Create a new stage for the login page
             Stage loginStage = new Stage();
             loginStage.setScene(new Scene(root));
             loginStage.initStyle(StageStyle.UNDECORATED);
             loginStage.setResizable(false); // Optional: prevent resizing
             loginStage.show();
-    
+
             // Close the current stage
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-    
+
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setHeaderText("Error loading page.");
+            a.setContentText("Please try again.");
+            a.show();
         }
 
     }
@@ -370,21 +371,20 @@ public class AccountManagementController implements Initializable {
     }
 
     @FXML
-    void DashboardActionBttn(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-        Parent root;
+    void homeBtnAction(ActionEvent event) {
         try {
-            root = loader.load();
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
             stage.getScene().setRoot(root);
-
         } catch (IOException e) {
-
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
-
 
     @FXML
     void PharmacyActionBttn(ActionEvent event) {
@@ -400,6 +400,5 @@ public class AccountManagementController implements Initializable {
     void ScheduleuActionBttn(ActionEvent event) {
 
     }
-
 
 }

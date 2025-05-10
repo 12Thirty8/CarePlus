@@ -71,6 +71,29 @@ public class DatabaseConnect {
         return name;
     }
 
+    public static String getCOHName(int employeeId) {
+        String name = null;
+        String query = "SELECT f_name, l_name FROM employee WHERE employee_id = ? AND dep_id = 3";
+
+        try (Connection conn = connect();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, employeeId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String firstName = rs.getString("f_name");
+                String lastName = rs.getString("l_name");
+                name = firstName + " " + lastName;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return name;
+    }
+
     public static String getNurseName(int employeeId) {
         String name = null;
         String query = "SELECT f_name, l_name FROM employee WHERE employee_id = ? AND dep_id = 1";

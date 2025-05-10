@@ -2,12 +2,9 @@ package Controllers;
 
 import java.io.IOException;
 
+import db.DatabaseConnect;
 import javafx.scene.control.Label;
 
-
-import javax.swing.JOptionPane;
-
-import db.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +15,9 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.animation.FadeTransition;
@@ -26,14 +25,16 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import util.GetCurrentEmployeeID;
 
-public class COHDashboardController {
+public class COH_DashboardController {
 
     @FXML
     private AnchorPane hamburgerPane;
 
     @FXML
-    private Button minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, hamburgermenuBtn, PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
+    private Button minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, hamburgermenuBtn,
+            ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
 
     @FXML
     private TableView<?> StkInTableView;
@@ -42,7 +43,7 @@ public class COHDashboardController {
     private Label TitleText;
 
     @FXML
-    private Label nameLabel;
+    private Text nameLabel;
 
     @FXML
     private Button closeBtn;
@@ -61,6 +62,8 @@ public class COHDashboardController {
 
     private boolean isHamburgerPaneExtended = false;
 
+    private Alert a = new Alert(AlertType.NONE);
+
     @FXML
     public void initialize() {
         fadeInNode(TitleText, 0);
@@ -69,38 +72,37 @@ public class COHDashboardController {
         fadeInNode(AreaChartPanel, 300);
         fadeInNode(StkInTableView, 400);
 
-        // String cohName = DatabaseConnect.getCOHName();
-        // nameLabel.setText(cohName);
+        int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+        String COHName = DatabaseConnect.getCOHName(employeeId);
+        nameLabel.setText(COHName != null ? COHName : "Name not found");
 
     }
 
     @FXML
     private void toggleHamburgerMenu() {
-        try{
-        Timeline timeline = new Timeline();
-    
-        if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230); 
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
+        try {
+            Timeline timeline = new Timeline();
 
-        } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107); 
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
+            if (isHamburgerPaneExtended) {
+                KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
+                KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+                timeline.getKeyFrames().add(keyFrame);
+
+            } else {
+                KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
+                KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+                timeline.getKeyFrames().add(keyFrame);
+            }
+
+            timeline.play();
+            isHamburgerPaneExtended = !isHamburgerPaneExtended;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    
-        timeline.play();
-        isHamburgerPaneExtended = !isHamburgerPaneExtended;
-    }catch (Exception e) {
-        e.printStackTrace();
     }
-    }
-
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
-
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -108,8 +110,9 @@ public class COHDashboardController {
             stage.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
         }
     }
 
@@ -134,13 +137,14 @@ public class COHDashboardController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading login page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
         }
     }
 
     @FXML
-    void PharmacyActionBttn(ActionEvent event) {
+    void RecordsBtnPressed(ActionEvent event) {
 
     }
 
@@ -159,6 +163,7 @@ public class COHDashboardController {
         fade.setDelay(Duration.millis(delayMillis)); // Delay before it starts
         fade.play();
     }
+
     @FXML
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -167,6 +172,7 @@ public class COHDashboardController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     @FXML
     private void closeAction(ActionEvent Action) {
         Stage currentStage = (Stage) closeBtn.getScene().getWindow();
@@ -175,8 +181,63 @@ public class COHDashboardController {
 
     @FXML
     private void minimizeAction(ActionEvent event) {
-    // Get the current stage and minimize it
-    Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    currentStage.setIconified(true);
+        // Get the current stage and minimize it
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+    @FXML
+    void clipboardBtnAction(ActionEvent event) {
+    }
+
+    @FXML
+    void crossBtnAction(ActionEvent event) {
+         try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_StockInReport.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+
+    }
+
+    @FXML
+    void homeBtnAction(ActionEvent event) {
+
+         try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+
+    }
+
+    @FXML
+    void recordsBtnAction(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_ActivityReports.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
     }
 }

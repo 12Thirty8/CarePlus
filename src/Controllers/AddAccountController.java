@@ -22,14 +22,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-
 import db.DatabaseConnect;
 
 public class AddAccountController implements Initializable {
@@ -59,6 +56,7 @@ public class AddAccountController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private Alert a = new Alert(AlertType.NONE);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -177,8 +175,10 @@ public class AddAccountController implements Initializable {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading page.");
+                a.setHeaderText("Error");
+                a.show();
             }
 
         } catch (SQLException e) {
@@ -257,8 +257,10 @@ public class AddAccountController implements Initializable {
 
             pstmt.executeUpdate();
         } catch (SQLException e1) {
-            // TODO Auto-generated catch block
-            JOptionPane.showMessageDialog(null, "Error creating Account: " + e1.getMessage());
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error creating account: " + e1.getMessage());
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 
@@ -311,8 +313,10 @@ public class AddAccountController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 
@@ -330,8 +334,10 @@ public class AddAccountController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
         }
 
     }
