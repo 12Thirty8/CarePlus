@@ -96,6 +96,7 @@ public class P_DashboardController implements Initializable {
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
     }
+
     private void setupTableColumns() {
         idcol.setCellValueFactory(new PropertyValueFactory<>("reqid"));
         listcol.setCellValueFactory(new PropertyValueFactory<>("requestListId"));
@@ -140,18 +141,20 @@ public class P_DashboardController implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void toggleHamburgerMenu() {
-    Timeline timeline = new Timeline();
-    double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
+        Timeline timeline = new Timeline();
+        double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
-    KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
-    KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-    timeline.getKeyFrames().add(keyFrame);
-    timeline.play();
+        KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
 
-    ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
-}
+        ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+    }
+
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
         try {
@@ -168,7 +171,7 @@ public class P_DashboardController implements Initializable {
         }
     }
 
-     @FXML
+    @FXML
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -206,7 +209,7 @@ public class P_DashboardController implements Initializable {
 
     @FXML
     private void PharmacyBtnPressed(ActionEvent event) {
-         try {
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -251,6 +254,7 @@ public class P_DashboardController implements Initializable {
             a.show();
         }
     }
+
     @FXML
     private void closeAction(ActionEvent Action) {
         Stage currentStage = (Stage) closeBtn.getScene().getWindow();
