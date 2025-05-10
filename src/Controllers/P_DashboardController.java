@@ -97,30 +97,7 @@ public class P_DashboardController implements Initializable {
         // Added by JC. Used to get the current user's pharmacist name.
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
-
-        hamburgerPane.setPrefWidth(230);
-        hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
     }
-
-    @FXML
-    private void toggleHamburgerMenu() {
-        Timeline timeline = new Timeline();
-
-        if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
-
-        } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
-        }
-
-        timeline.play();
-        isHamburgerPaneExtended = !isHamburgerPaneExtended;
-    }
-
     private void setupTableColumns() {
         idcol.setCellValueFactory(new PropertyValueFactory<>("reqid"));
         listcol.setCellValueFactory(new PropertyValueFactory<>("requestListId"));
@@ -165,43 +142,29 @@ public class P_DashboardController implements Initializable {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+
+        if (isHamburgerPaneExtended) {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+
+        } else {
+            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+        }
+
+        timeline.play();
+        isHamburgerPaneExtended = !isHamburgerPaneExtended;
+    }
 
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/P_ProcessRequest.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
-    }
-
-    @FXML
-    void crossBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
-    }
-
-    @FXML
-    void homeBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Dashboard.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.getScene().setRoot(root);
@@ -252,7 +215,6 @@ public class P_DashboardController implements Initializable {
 
     @FXML
     private void PharmacyBtnPressed(ActionEvent event) {
-
          try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -265,7 +227,38 @@ public class P_DashboardController implements Initializable {
             a.setHeaderText("Error");
             a.show();
         }
+    }
 
+    @FXML
+    void crossBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+    }
+
+    @FXML
+    void homeBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
     }
 
      @FXML
@@ -276,7 +269,6 @@ public class P_DashboardController implements Initializable {
 
     @FXML
     private void minimizeAction(ActionEvent event) {
-        // Get the current stage and minimize it
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.setIconified(true);
     }

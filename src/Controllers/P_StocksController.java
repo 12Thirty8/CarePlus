@@ -167,8 +167,8 @@ public class P_StocksController implements Initializable {
     }
 
     @FXML
-    void crossBtnPressed(ActionEvent event) {
-        try {
+    private void PharmacyBtnPressed(ActionEvent event) {
+         try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -176,12 +176,11 @@ public class P_StocksController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
+            a.setContentText("Error loading Pharmacy page.");
             a.setHeaderText("Error");
             a.show();
         }
     }
-
     @FXML
     void homeBtnPressed(ActionEvent event) {
         try {
