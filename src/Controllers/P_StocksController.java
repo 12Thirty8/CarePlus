@@ -41,9 +41,6 @@ public class P_StocksController implements Initializable {
     private TableView<StocksModel> StockTable;
 
     @FXML
-    private TableColumn<StocksModel, String> catcol;
-
-    @FXML
     private Button clipboardBtn;
 
     @FXML
@@ -99,7 +96,6 @@ public class P_StocksController implements Initializable {
         namecol.setCellValueFactory(new PropertyValueFactory<>("medName"));
         stockcol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         expcol.setCellValueFactory(new PropertyValueFactory<>("expDate"));
-        catcol.setCellValueFactory(new PropertyValueFactory<>("category"));
         sincol.setCellValueFactory(new PropertyValueFactory<>("inBy"));
     }
 
@@ -112,9 +108,10 @@ public class P_StocksController implements Initializable {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        m.med_id, m.med_name, m.med_stock, m.med_exp, m.med_cat, e.f_name AS stockinBy
-                    FROM medicine m
-                    LEFT JOIN employee e ON m.stockin_by = e.employee_id
+                        b.batch_id, m.med_name, b.batch_stock, b.batch_exp, e.f_name AS stockinBy
+                    FROM batch b
+                    LEFT JOIN employee e ON b.stockin_by = e.employee_id
+                    LEFT JOIN medicine m ON b.med_id = m.med_id
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
@@ -125,7 +122,6 @@ public class P_StocksController implements Initializable {
                         rs.getString("med_name"),
                         rs.getInt("med_stock"),
                         rs.getDate("med_exp"),
-                        rs.getString("med_cat"),
                         rs.getString("stockinBy")));
             }
 
@@ -140,18 +136,18 @@ public class P_StocksController implements Initializable {
     }
 
     @FXML
-   
-private void toggleHamburgerMenu() {
-    Timeline timeline = new Timeline();
-    double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
-    KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
-    KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-    timeline.getKeyFrames().add(keyFrame);
-    timeline.play();
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+        double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
-    ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
-}
+        KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+
+        ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+    }
 
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
@@ -171,7 +167,7 @@ private void toggleHamburgerMenu() {
 
     @FXML
     private void PharmacyBtnPressed(ActionEvent event) {
-         try {
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -184,6 +180,7 @@ private void toggleHamburgerMenu() {
             a.show();
         }
     }
+
     @FXML
     void homeBtnPressed(ActionEvent event) {
         try {
@@ -216,7 +213,7 @@ private void toggleHamburgerMenu() {
         }
     }
 
-     @FXML
+    @FXML
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -225,7 +222,7 @@ private void toggleHamburgerMenu() {
         alert.showAndWait();
     }
 
-       @FXML
+    @FXML
     void LogOutActionBttn(ActionEvent event) {
         showAlert("Confirm Logout", "Are you sure you want to log out?");
         try {
@@ -252,7 +249,7 @@ private void toggleHamburgerMenu() {
         }
     }
 
-     @FXML
+    @FXML
     private void closeAction(ActionEvent Action) {
         Stage currentStage = (Stage) closeBtn.getScene().getWindow();
         currentStage.close();
