@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_StocksController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_ProductsController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
@@ -138,7 +138,7 @@
                <children>
                   <StackPane layoutX="289.0" layoutY="18.0" prefHeight="43.0" prefWidth="115.0" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="293.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stocks" wrappingWidth="114.58200073242188">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Products" wrappingWidth="151.38195610046387">
                            <font>
                               <Font name="Gordita-Bold" size="34.0" />
                            </font>
@@ -168,17 +168,16 @@
                         <TextField prefHeight="25.0" prefWidth="192.0" promptText="Search Requests" style="-fx-background-radius: 20;" />
                      </children>
                   </StackPane>
-                  <TableView fx:id="StockTable" layoutX="14.0" layoutY="271.0" prefHeight="342.0" prefWidth="664.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0">
+                  <TableView fx:id="ProductTable" layoutX="14.0" layoutY="271.0" prefHeight="342.0" prefWidth="664.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0">
                      <columns>
-                        <TableColumn fx:id="idcol" prefWidth="81.60003697872162" text="Batch ID" />
-                        <TableColumn fx:id="namecol" prefWidth="164.79998779296875" text="Medicine Name" />
-                        <TableColumn fx:id="stockcol" prefWidth="63.199920654296875" text="Stock" />
-                        <TableColumn fx:id="expcol" prefWidth="202.40008544921875" text="Expiry Date" />
-                        <TableColumn fx:id="sincol" prefWidth="153.59994506835938" text="Stock In By" />
+                        <TableColumn fx:id="idcol" prefWidth="81.60003697872162" text="Medicine ID" />
+                        <TableColumn fx:id="namecol" prefWidth="267.9999694824219" text="Medicine Name" />
+                        <TableColumn fx:id="catcol" prefWidth="178.39996337890625" text="Category" />
+                        <TableColumn fx:id="desccol" prefWidth="174.4000244140625" text="Description" />
                      </columns>
                   </TableView>
-                  <Button fx:id="addstockBtn" layoutX="607.0" layoutY="233.0" mnemonicParsing="false" onAction="#addstockBtnPressed" text="Add Stock" />
-                  <Button fx:id="movetoProductBtn" layoutX="515.0" layoutY="233.0" mnemonicParsing="false" onAction="#movetoProductBtnPressed" text="Product Page" />
+                  <Button fx:id="addstockBtn" layoutX="598.0" layoutY="233.0" mnemonicParsing="false" onAction="#addstockBtnPressed" text="Add New Product" />
+                  <Button fx:id="movetostockBtn" layoutX="501.0" layoutY="233.0" mnemonicParsing="false" onAction="#movetostockBtnPressed" text="Stock Page" />
                </children>
             </AnchorPane>
          </children>

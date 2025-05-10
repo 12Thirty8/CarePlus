@@ -17,11 +17,11 @@ public class StocksModel {
         this.inBy = inBy;
     }
 
-    public int getbatchId() {
+    public int getBatchId() {
         return batchId;
     }
 
-    public void setbatchId(int batchId) {
+    public void setBatchId(int batchId) {
         this.batchId = batchId;
     }
 

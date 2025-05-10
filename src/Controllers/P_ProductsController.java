@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import Models.StocksModel;
+import Models.ProductsModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -28,20 +28,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-public class P_StocksController implements Initializable {
+public class P_ProductsController implements Initializable {
 
     @FXML
     private Button addstockBtn;
 
     @FXML
-    private Button movetoProductBtn;
-
-    @FXML
-    private TableView<StocksModel> StockTable;
+    private TableView<ProductsModel> ProductTable;
 
     @FXML
     private Button clipboardBtn;
@@ -50,7 +48,7 @@ public class P_StocksController implements Initializable {
     private Button crossBtn;
 
     @FXML
-    private TableColumn<StocksModel, String> expcol;
+    private Button movetostockBtn;
 
     @FXML
     private AnchorPane hamburgerPane;
@@ -62,19 +60,19 @@ public class P_StocksController implements Initializable {
     private Button homeBtn;
 
     @FXML
-    private TableColumn<StocksModel, Integer> idcol;
+    private TableColumn<ProductsModel, Integer> idcol;
 
     @FXML
     private AnchorPane mainPane;
 
     @FXML
-    private TableColumn<StocksModel, String> namecol;
+    private TableColumn<ProductsModel, String> namecol;
 
     @FXML
-    private TableColumn<StocksModel, String> sincol;
+    private TableColumn<ProductsModel, String> catcol;
 
     @FXML
-    private TableColumn<StocksModel, Integer> stockcol;
+    private TableColumn<ProductsModel, Text> desccol;
 
     @FXML
     private Button closeBtn;
@@ -82,7 +80,7 @@ public class P_StocksController implements Initializable {
     @FXML
     private Button minimizeBtn;
 
-    private ObservableList<StocksModel> EmployeeList = FXCollections.observableArrayList();
+    private ObservableList<ProductsModel> EmployeeList = FXCollections.observableArrayList();
 
     private Alert a = new Alert(AlertType.NONE);
 
@@ -95,11 +93,10 @@ public class P_StocksController implements Initializable {
     }
 
     private void setupTableColumns() {
-        idcol.setCellValueFactory(new PropertyValueFactory<>("batchId"));
-        namecol.setCellValueFactory(new PropertyValueFactory<>("medName"));
-        stockcol.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        expcol.setCellValueFactory(new PropertyValueFactory<>("expDate"));
-        sincol.setCellValueFactory(new PropertyValueFactory<>("inBy"));
+        idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        catcol.setCellValueFactory(new PropertyValueFactory<>("category"));
+        desccol.setCellValueFactory(new PropertyValueFactory<>("desc"));
     }
 
     private void setupRowContextMenu() {
@@ -111,24 +108,21 @@ public class P_StocksController implements Initializable {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        b.batch_id, m.med_name AS medName, b.batch_stock, b.batch_exp, e.f_name AS stockinBy
-                    FROM batch b
-                    LEFT JOIN employee e ON b.stockin_by = e.employee_id
-                    LEFT JOIN medicine m ON b.med_id = m.med_id
+                        m.med_id, m.med_name, m.med_cat, m.med_desc
+                    FROM medicine m
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                EmployeeList.add(new StocksModel(
-                        rs.getInt("batch_id"),
-                        rs.getString("medName"),
-                        rs.getInt("batch_stock"),
-                        rs.getDate("batch_exp"),
-                        rs.getString("stockinBy")));
+                EmployeeList.add(new ProductsModel(
+                        rs.getInt("med_id"),
+                        rs.getString("med_name"),
+                        rs.getString("med_cat"),
+                        new Text(rs.getString("med_desc"))));
             }
 
-            StockTable.setItems(EmployeeList);
+            ProductTable.setItems(EmployeeList);
 
             rs.close();
             pstmt.close();
@@ -139,7 +133,22 @@ public class P_StocksController implements Initializable {
     }
 
     @FXML
+    void movetostockBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+    }
+
+    @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
         double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
@@ -204,22 +213,6 @@ public class P_StocksController implements Initializable {
     void addstockBtnPressed(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/P_StockIn.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
-    }
-
-    @FXML
-    void movetoProductBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Products.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.getScene().setRoot(root);

@@ -170,7 +170,7 @@
                   </StackPane>
                   <TableView fx:id="StockTable" layoutX="14.0" layoutY="271.0" prefHeight="342.0" prefWidth="664.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0">
                      <columns>
-                        <TableColumn fx:id="idcol" prefWidth="81.60003697872162" text="Medicine ID" />
+                        <TableColumn fx:id="idcol" prefWidth="81.60003697872162" text="Batch ID" />
                         <TableColumn fx:id="namecol" prefWidth="164.79998779296875" text="Medicine Name" />
                         <TableColumn fx:id="stockcol" prefWidth="63.199920654296875" text="Stock" />
                         <TableColumn fx:id="expcol" prefWidth="202.40008544921875" text="Expiry Date" />
@@ -178,6 +178,7 @@
                      </columns>
                   </TableView>
                   <Button fx:id="addstockBtn" layoutX="607.0" layoutY="233.0" mnemonicParsing="false" onAction="#addstockBtnPressed" text="Add Stock" />
+                  <Button fx:id="movetoProductBtn" layoutX="515.0" layoutY="233.0" mnemonicParsing="false" onAction="#movetoProductBtnPressed" text="Product Page" />
                </children>
             </AnchorPane>
          </children>
