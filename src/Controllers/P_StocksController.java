@@ -84,14 +84,11 @@ public class P_StocksController implements Initializable {
 
     private ObservableList<StocksModel> EmployeeList = FXCollections.observableArrayList();
 
-    private boolean isHamburgerPaneExtended = false;
-
     private Alert a = new Alert(AlertType.NONE);
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
-        hamburgerPane.setPrefWidth(230);
-        hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
@@ -143,23 +140,18 @@ public class P_StocksController implements Initializable {
     }
 
     @FXML
-    private void toggleHamburgerMenu() {
-        Timeline timeline = new Timeline();
+   
+private void toggleHamburgerMenu() {
+    Timeline timeline = new Timeline();
+    double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
-        if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
+    KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+    KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+    timeline.getKeyFrames().add(keyFrame);
+    timeline.play();
 
-        } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
-        }
-
-        timeline.play();
-        isHamburgerPaneExtended = !isHamburgerPaneExtended;
-    }
+    ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+}
 
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
