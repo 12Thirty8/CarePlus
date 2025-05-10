@@ -142,7 +142,7 @@ public class P_DashboardController implements Initializable {
     }
     @FXML
     private void toggleHamburgerMenu() {
-        Timeline timeline = new Timeline();
+    Timeline timeline = new Timeline();
     double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
     KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);

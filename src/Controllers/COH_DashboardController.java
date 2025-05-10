@@ -60,12 +60,12 @@ public class COH_DashboardController {
     @FXML
     private AnchorPane TotalRequestPanel;
 
-    private boolean isHamburgerPaneExtended = false;
-
     private Alert a = new Alert(AlertType.NONE);
 
     @FXML
     public void initialize() {
+
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
         fadeInNode(TitleText, 0);
         fadeInNode(NamePanel, 200);
         fadeInNode(TotalRequestPanel, 200);
@@ -80,26 +80,16 @@ public class COH_DashboardController {
 
     @FXML
     private void toggleHamburgerMenu() {
-        try {
-            Timeline timeline = new Timeline();
+    Timeline timeline = new Timeline();
+    double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
-            if (isHamburgerPaneExtended) {
-                KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
-                KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-                timeline.getKeyFrames().add(keyFrame);
+    KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+    KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+    timeline.getKeyFrames().add(keyFrame);
+    timeline.play();
 
-            } else {
-                KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
-                KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-                timeline.getKeyFrames().add(keyFrame);
-            }
-
-            timeline.play();
-            isHamburgerPaneExtended = !isHamburgerPaneExtended;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+}
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
