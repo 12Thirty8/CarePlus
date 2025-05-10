@@ -32,6 +32,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -100,6 +101,7 @@ public class AccountManagementController implements Initializable {
 
         ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
     }
+
     private void setupTableColumns() {
         emp_idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
         f_namecol.setCellValueFactory(new PropertyValueFactory<>("fname"));
@@ -292,30 +294,35 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     void LogOutActionBttn(ActionEvent event) {
-        showAlert("Confirm Logout", "Are you sure you want to log out?");
-        try {
-            // Load the login page
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
-            Parent root = loader.load();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Logout");
+        alert.setHeaderText("Are you sure you want to log out?");
 
-            // Create a new stage for the login page
-            Stage loginStage = new Stage();
-            loginStage.setScene(new Scene(root));
-            loginStage.initStyle(StageStyle.UNDECORATED);
-            loginStage.setResizable(false); // Optional: prevent resizing
-            loginStage.show();
+        Optional<ButtonType> result = alert.showAndWait();
 
-            // Close the current stage
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
+                Parent root = loader.load();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.show();
+                Stage loginStage = new Stage();
+                loginStage.setScene(new Scene(root));
+                loginStage.initStyle(StageStyle.UNDECORATED);
+                loginStage.setResizable(false);
+                loginStage.show();
+
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading page.");
+                a.show();
+            }
         }
     }
+
     @FXML
     private void closeAction(ActionEvent Action) {
         Stage currentStage = (Stage) closeBtn.getScene().getWindow();
@@ -342,7 +349,7 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     private void homeBtnAction(ActionEvent event) {
-         SceneLoader.loadScene(event, "/View/COH_Dashboard.fxml");
+        SceneLoader.loadScene(event, "/View/COH_Dashboard.fxml");
     }
 
     @FXML
@@ -357,7 +364,7 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     void Archiveactionbtn(ActionEvent event) {
-         try {
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Archive.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
