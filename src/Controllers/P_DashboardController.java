@@ -250,6 +250,24 @@ public class P_DashboardController implements Initializable {
         }
     }
 
+    @FXML
+    private void PharmacyBtnPressed(ActionEvent event) {
+
+         try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Pharmacy page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+
+    }
+
      @FXML
     private void closeAction(ActionEvent Action) {
         Stage currentStage = (Stage) closeBtn.getScene().getWindow();

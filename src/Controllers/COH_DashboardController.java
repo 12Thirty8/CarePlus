@@ -191,7 +191,7 @@ public class COH_DashboardController {
     }
 
     @FXML
-    void crossBtnAction(ActionEvent event) {
+    private void crossBtnAction(ActionEvent event) {
          try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/COH_StockInReport.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -208,7 +208,7 @@ public class COH_DashboardController {
     }
 
     @FXML
-    void homeBtnAction(ActionEvent event) {
+    private void homeBtnAction(ActionEvent event) {
 
          try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
@@ -226,7 +226,7 @@ public class COH_DashboardController {
     }
 
     @FXML
-    void recordsBtnAction(ActionEvent event) {
+    private void recordsBtnAction(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/COH_ActivityReports.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
