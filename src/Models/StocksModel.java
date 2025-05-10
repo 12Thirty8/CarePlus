@@ -3,28 +3,26 @@ package Models;
 import java.sql.Date;
 
 public class StocksModel {
-    int medId;
+    int batchId;
     String medName;
     int stock;
     Date expDate;
-    String category;
     String inBy;
 
-    public StocksModel(int medId, String medName, int stock, Date expDate, String category, String inBy) {
-        this.medId = medId;
+    public StocksModel(int batchId, String medName, int stock, Date expDate, String inBy) {
+        this.batchId = batchId;
         this.medName = medName;
         this.stock = stock;
         this.expDate = expDate;
-        this.category = category;
         this.inBy = inBy;
     }
 
-    public int getMedId() {
-        return medId;
+    public int getbatchId() {
+        return batchId;
     }
 
-    public void setMedId(int medId) {
-        this.medId = medId;
+    public void setbatchId(int batchId) {
+        this.batchId = batchId;
     }
 
     public String getMedName() {
@@ -49,14 +47,6 @@ public class StocksModel {
 
     public void setExpDate(Date expDate) {
         this.expDate = expDate;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getInBy() {
