@@ -21,6 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 //import javafx.stage.StageStyle;
@@ -52,6 +54,23 @@ public class LoginPageController {
     private Alert a = new Alert(AlertType.NONE);
 
     @FXML
+    public void initialize() {
+        // Set Enter key handlers for both fields
+        empIDTf.setOnKeyPressed(this::handleKeyPress);
+        psfield.setOnKeyPressed(this::handleKeyPress);
+    }
+
+    private void handleKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            try {
+                onPressed(new ActionEvent(loginBtn, null));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
     public void onPressed(ActionEvent event) throws IOException {
         String username = empIDTf.getText().trim();
         String password = new String(psfield.getText());
@@ -62,6 +81,15 @@ public class LoginPageController {
             a.setTitle("Error");
             a.setHeaderText("Login Error");
             a.setContentText("Username must be between 1 and 6 characters.");
+            a.show();
+            return;
+        }
+
+        if (!username.matches("\\d+")) {
+            a.setAlertType(AlertType.ERROR);
+            a.setTitle("Error");
+            a.setHeaderText("Login Error");
+            a.setContentText("Invalid username format.");
             a.show();
             return;
         }

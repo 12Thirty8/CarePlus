@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import Models.NurseModel;
 import db.DatabaseConnect;
@@ -15,32 +14,29 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import util.GetCurrentEmployeeID;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 
 public class N_DashboardController {
+    @FXML
+    private Button clipboardBtn;
 
     @FXML
-    private Button AccountMenuBttn;
+    private Button crossBtn;
 
     @FXML
-    private Button DashboardBttn;
+    private AnchorPane hamburgerPane;
 
     @FXML
-    private Button HamburgerMenuBttn;
+    private Button hamburgermenuBtn;
 
     @FXML
-    private Button PharmacyBttn;
+    private Button homeBtn;
 
     @FXML
-    private Button ScheduleBttn;
-
-    @FXML
-    private Button ScheduleMenuBttn;
-
-    @FXML
-    private TableView<NurseModel> NurseDashboardTableView;
+    private TableView<NurseModel> StkInTableView;
 
     @FXML
     private TableColumn<NurseModel, String> takenFrColumn;
@@ -51,15 +47,13 @@ public class N_DashboardController {
     @FXML
     private TableColumn<NurseModel, LocalDateTime> dateTimeColumn;
 
-    private ObservableList<NurseModel> nurseModelObservableList;
+    private ObservableList<NurseModel> nurseModelObservableList = FXCollections.observableArrayList();
 
     @FXML
-    private Label nameLabel;
+    private Text nameLabel;
 
     @FXML
     public void initialize() {
-
-        nurseModelObservableList = FXCollections.observableArrayList();
         setupTableColumns();
         refreshEmployeeTable();
         int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
@@ -80,23 +74,22 @@ public class N_DashboardController {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        taken_from, activity, datetime_logged
-                    FROM nurse_activity_log
+                        n.taken_from, n.activity, n.datetime_logged
+                    FROM nurse_activity_log n
+                    LEFT JOIN employee e ON n.employee_id = e.employee_id
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                System.out.println("Loaded rows: " + nurseModelObservableList.size());
-                Timestamp ts = rs.getTimestamp("datetime_logged");
                 nurseModelObservableList.add(new NurseModel(
                         rs.getString("taken_from"),
                         rs.getString("activity"),
-                        ts.toLocalDateTime()));
+                        rs.getTimestamp("datetime_logged").toLocalDateTime()));
 
             }
 
-            NurseDashboardTableView.setItems(nurseModelObservableList);
+            StkInTableView.setItems(nurseModelObservableList);
 
             rs.close();
             pstmt.close();
