@@ -18,10 +18,8 @@ import javafx.stage.Stage;
 public class COH_CStkOutReport {
 
     @FXML
-    private Button FilterBttn;
-
-    @FXML
-    private Button LogoutBtn;
+    private Button FilterBttn, LogoutBtn, StkOutBttn, accountBtn, clipboardBtn, closeBtn, crossBtn,
+            hamburgermenuBtn, homeBtn, minimizeBtn, recordsBtn, ExpiredReportsBtn;
 
     @FXML
     private TextField SearchButton;
@@ -30,37 +28,8 @@ public class COH_CStkOutReport {
     private TableView<?> StkInTableView;
 
     @FXML
-    private Button StkOutBttn;
-
-    @FXML
-    private Button StkOutBttn1;
-
-    @FXML
-    private Button accountBtn;
-
-    @FXML
-    private Button clipboardBtn;
-
-    @FXML
-    private Button closeBtn;
-
-    @FXML
-    private Button crossBtn;
-
-    @FXML
     private AnchorPane hamburgerPane;
 
-    @FXML
-    private Button hamburgermenuBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button minimizeBtn;
-
-    @FXML
-    private Button recordsBtn;
 
     private Alert a = new Alert(AlertType.NONE);
 

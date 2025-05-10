@@ -187,7 +187,7 @@
             </AnchorPane>
             <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
-                  <StackPane layoutX="16.0" layoutY="92.0" maxWidth="600.0" prefHeight="115.0" prefWidth="161.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="521.0">
+                  <StackPane layoutX="17.0" layoutY="93.0" maxWidth="600.0" prefHeight="115.0" prefWidth="161.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="521.0">
                      <children>
                         <AnchorPane prefHeight="115.0" prefWidth="149.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
                            <children>
@@ -222,7 +222,7 @@
                         </TableView>
                      </children>
                   </StackPane>
-                  <StackPane layoutX="66.0" layoutY="24.0">
+                  <StackPane layoutX="67.0" layoutY="24.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" wrappingWidth="177.58200073242188">
                            <font>

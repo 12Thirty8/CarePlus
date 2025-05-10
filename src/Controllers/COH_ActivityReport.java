@@ -18,11 +18,8 @@ import javafx.stage.Stage;
 public class COH_ActivityReport {
 
     @FXML
-    private Button FilterBttn;
-
-    @FXML
-    private Button LogoutBtn;
-
+    private Button FilterBttn, LogoutBtn, accountBtn, clipboardBtn, closeBtn, crossBtn,
+            hamburgermenuBtn, homeBtn, minimizeBtn, recordsBtn;
     @FXML
     private TextField SearchButton;
 
@@ -30,33 +27,14 @@ public class COH_ActivityReport {
     private TableView<?> StkInTableView;
 
     @FXML
-    private Button accountBtn;
-
-    @FXML
-    private Button clipboardBtn;
-
-    @FXML
-    private Button closeBtn;
-
-    @FXML
-    private Button crossBtn;
-
-    @FXML
     private AnchorPane hamburgerPane;
 
-    @FXML
-    private Button hamburgermenuBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button minimizeBtn;
-
-    @FXML
-    private Button recordsBtn;
-
     private Alert a = new Alert(AlertType.NONE);
+
+    @FXML
+    public void initialize() {
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+    }
 
     @FXML
     void homeBtnAction(ActionEvent event) {
