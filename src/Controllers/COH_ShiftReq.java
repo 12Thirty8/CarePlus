@@ -1,5 +1,11 @@
 package Controllers;
 
+import java.io.IOException;
+import java.util.Optional;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,17 +85,35 @@ public class COH_ShiftReq {
         ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
     @FXML
     void LogOutActionBttn(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Logout");
+        alert.setHeaderText("Are you sure you want to log out?");
 
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
+                Parent root = loader.load();
+
+                Stage loginStage = new Stage();
+                loginStage.setScene(new Scene(root));
+                loginStage.initStyle(StageStyle.UNDECORATED);
+                loginStage.setResizable(false);
+                loginStage.show();
+
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading page.");
+                a.show();
+            }
+        }
     }
 
     @FXML
