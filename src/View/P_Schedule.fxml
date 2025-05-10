@@ -165,5 +165,23 @@
             </AnchorPane>
          </children>
       </HBox>
+      <Button fx:id="closeBtn" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="28.0" prefWidth="24.0" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="6.0">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ICONS/Close.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="minimizeBtn" layoutX="881.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimizeAction" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="40.59">
+         <graphic>
+            <ImageView fitHeight="10.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ICONS/Subtract.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

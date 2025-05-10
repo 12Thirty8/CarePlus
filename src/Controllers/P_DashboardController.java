@@ -155,7 +155,7 @@ public class P_DashboardController implements Initializable {
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_ProcessRequest.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Schedule.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.getScene().setRoot(root);
@@ -177,7 +177,7 @@ public class P_DashboardController implements Initializable {
         alert.showAndWait();
     }
 
-     @FXML
+    @FXML
     void LogOutActionBttn(ActionEvent event) {
         showAlert("Confirm Logout", "Are you sure you want to log out?");
         try {
@@ -252,7 +252,9 @@ public class P_DashboardController implements Initializable {
         }
     }
 
-     @FXML
+    
+
+    @FXML
     private void closeAction(ActionEvent Action) {
         Stage currentStage = (Stage) closeBtn.getScene().getWindow();
         currentStage.close();

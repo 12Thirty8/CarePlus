@@ -1,11 +1,22 @@
 package Controllers;
+import java.io.IOException;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 
@@ -29,88 +40,148 @@ public class P_ScheduleController {
     @FXML
     private AnchorPane mainPane;
 
-      @FXML
+    @FXML
     private VBox vbox;
+
+    @FXML
+    private Button closeBtn;
 
     @FXML
     private boolean isHamburgerPaneExtended = false;
 
+    private Alert a = new Alert(AlertType.NONE);
+
 
      @FXML
     public void initialize() {
-        hamburgerPane.setPrefWidth(230);
-        hamburgermenuBtn.setOnAction(_ -> toggleHamburgerMenu());
-        LeaveRequest[] requests = {
-        new LeaveRequest("1 Jun", "Personal Matters", "Approved"),
-        new LeaveRequest("2-4 Jun", "Lmao", "Approved")
+    hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
     };
 
-    for (LeaveRequest req : requests) {
-        vbox.getChildren().add(createLeaveCard(req));
-    }
+    @FXML
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
     private void toggleHamburgerMenu() {
-        Timeline timeline = new Timeline();
+    Timeline timeline = new Timeline();
+    double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
-        if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
+    KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+    KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+    timeline.getKeyFrames().add(keyFrame);
+    timeline.play();
 
-        } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
+    ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+}
+
+    @FXML
+    void clipboardBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Schedule.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
         }
-
-        timeline.play();
-        isHamburgerPaneExtended = !isHamburgerPaneExtended;
     }
 
-    public static class LeaveRequest {
-    private final String date;
-    private final String reason;
-    private final String status;
+    @FXML
+    void LogOutActionBttn(ActionEvent event) {
+        showAlert("Confirm Logout", "Are you sure you want to log out?");
+        try {
+            // Load the login page
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
+            Parent root = loader.load();
 
-    public LeaveRequest(String date, String reason, String status) {
-        this.date = date;
-        this.reason = reason;
-        this.status = status;
+            // Create a new stage for the login page
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.initStyle(StageStyle.UNDECORATED);
+            loginStage.setResizable(false); // Optional: prevent resizing
+            loginStage.show();
+
+            // Close the current stage
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
+        }
     }
-    public String getDate() { return date; }
-    public String getReason() { return reason; }
-    public String getStatus() { return status; }
-}
 
-private AnchorPane createLeaveCard(LeaveRequest req) {
-    AnchorPane card = new AnchorPane();
-    card.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0, 0, 2); -fx-padding: 16;");
+    @FXML
+    private void PharmacyBtnPressed(ActionEvent event) {
+         try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-    // Date label
-    javafx.scene.control.Label dateLabel = new javafx.scene.control.Label(req.getDate());
-    dateLabel.setStyle("-fx-font-size: 22; -fx-font-weight: bold;");
-    dateLabel.setLayoutX(16);
-    dateLabel.setLayoutY(10);
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Pharmacy page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+    }
 
-    // Reason label
-    javafx.scene.control.Label reasonLabel = new javafx.scene.control.Label(req.getReason());
-    reasonLabel.setStyle("-fx-font-size: 14;");
-    reasonLabel.setLayoutX(90);
-    reasonLabel.setLayoutY(18);
+     @FXML
+    void crossBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-    // Status label
-    javafx.scene.control.Label statusLabel = new javafx.scene.control.Label(req.getStatus());
-    statusLabel.setStyle("-fx-background-color: #00C853; -fx-text-fill: white; -fx-padding: 4 16; -fx-background-radius: 16; -fx-font-weight: bold;");
-    statusLabel.setLayoutX(250);
-    statusLabel.setLayoutY(16);
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+    }
 
-    card.setPrefHeight(54);
-    card.setMinWidth(320);
+     @FXML
+    void homeBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-    card.getChildren().addAll(dateLabel, reasonLabel, statusLabel);
-    return card;
-}
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+    }
+
+    @FXML
+    private void closeAction(ActionEvent Action) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
+
+    @FXML
+    private void minimizeAction(ActionEvent event) {
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+    
 
 }
