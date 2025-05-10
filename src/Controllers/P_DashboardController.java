@@ -83,18 +83,16 @@ public class P_DashboardController implements Initializable {
 
     private ObservableList<RequestModel> EmployeeList = FXCollections.observableArrayList();
 
-    private boolean isHamburgerPaneExtended = false;
-
     private Alert a = new Alert(AlertType.NONE);
 
     public static int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
-        // Added by JC. Used to get the current user's pharmacist name.
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
     }
@@ -144,27 +142,20 @@ public class P_DashboardController implements Initializable {
     }
     @FXML
     private void toggleHamburgerMenu() {
-        Timeline timeline = new Timeline();
+    Timeline timeline = new Timeline();
+    double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
-        if (isHamburgerPaneExtended) {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 230);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
+    KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+    KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+    timeline.getKeyFrames().add(keyFrame);
+    timeline.play();
 
-        } else {
-            KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), 107);
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-            timeline.getKeyFrames().add(keyFrame);
-        }
-
-        timeline.play();
-        isHamburgerPaneExtended = !isHamburgerPaneExtended;
-    }
-
+    ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+}
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_ProcessRequest.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Schedule.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.getScene().setRoot(root);
@@ -186,7 +177,7 @@ public class P_DashboardController implements Initializable {
         alert.showAndWait();
     }
 
-     @FXML
+    @FXML
     void LogOutActionBttn(ActionEvent event) {
         showAlert("Confirm Logout", "Are you sure you want to log out?");
         try {
@@ -261,7 +252,9 @@ public class P_DashboardController implements Initializable {
         }
     }
 
-     @FXML
+    
+
+    @FXML
     private void closeAction(ActionEvent Action) {
         Stage currentStage = (Stage) closeBtn.getScene().getWindow();
         currentStage.close();

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -161,22 +160,28 @@
                         </AnchorPane>
                      </children>
                   </StackPane>
-                  <StackPane layoutX="16.0" layoutY="223.0" prefHeight="378.0" prefWidth="198.0" AnchorPane.leftAnchor="16.0">
-                     <children>
-                        <AnchorPane prefHeight="141.0" prefWidth="198.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
-                           <children>
-                              <ScrollPane layoutY="68.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                                 <content>
-                                    <VBox fx:id="vbox" prefHeight="310.0" prefWidth="198.0" style="-fx-background-color: grey;" />
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </StackPane>
+                  <StackPane layoutX="16.0" layoutY="223.0" prefHeight="378.0" prefWidth="198.0" AnchorPane.leftAnchor="16.0" />
                </children>
             </AnchorPane>
          </children>
       </HBox>
+      <Button fx:id="closeBtn" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="28.0" prefWidth="24.0" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="6.0">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ICONS/Close.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="minimizeBtn" layoutX="881.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimizeAction" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="40.59">
+         <graphic>
+            <ImageView fitHeight="10.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ICONS/Subtract.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
