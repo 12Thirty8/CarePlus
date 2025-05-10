@@ -58,6 +58,7 @@ public class COH_DashboardController {
     public void initialize() {
 
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+        
         fadeInNode(TitleText, 0);
         fadeInNode(NamePanel, 200);
         fadeInNode(TotalRequestPanel, 200);

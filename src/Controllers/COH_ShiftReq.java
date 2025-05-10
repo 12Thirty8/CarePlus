@@ -1,11 +1,26 @@
 package Controllers;
 
+import java.io.IOException;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
+import util.SceneLoader;
 
 public class COH_ShiftReq {
 
@@ -47,50 +62,99 @@ public class COH_ShiftReq {
 
     @FXML
     private Button recordsBtn;
+        
+    private Alert a = new Alert(AlertType.NONE);
 
     @FXML
-    void AccountMenuActionBttn(ActionEvent event) {
+    public void initialize() {
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+    }
 
+    @FXML
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+        double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
+
+        KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+
+        ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
     void LogOutActionBttn(ActionEvent event) {
+        showAlert("Confirm Logout", "Are you sure you want to log out?");
+        try {
+            // Load the login page
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
+            Parent root = loader.load();
 
+            // Create a new stage for the login page
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.initStyle(StageStyle.UNDECORATED);
+            loginStage.setResizable(false); // Optional: prevent resizing
+            loginStage.show();
+
+            // Close the current stage
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
+        }
+    }
+    @FXML
+    private void closeAction(ActionEvent Action) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
+
+    @FXML
+    private void minimizeAction(ActionEvent event) {
+        // Get the current stage and minimize it
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
     }
 
     @FXML
     void clipboardBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ManageShiftRequest.fxml");
+    }
+
+    @FXML
+    private void crossBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_StockInReport.fxml");
 
     }
 
     @FXML
-    void closeAction(ActionEvent event) {
-
+    private void homeBtnAction(ActionEvent event) {
+         SceneLoader.loadScene(event, "/View/COH_Dashboard.fxml");
     }
 
     @FXML
-    void crossBtnAction(ActionEvent event) {
-
+    private void recordsBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ActivityReports.fxml");
     }
 
     @FXML
-    void homeBtnAction(ActionEvent event) {
-
+    void AccountMenuActionBttn(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_AccountManagement.fxml");
     }
 
-    @FXML
-    void minimizeAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void recordsBtnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void toggleHamburgerMenu(ActionEvent event) {
-
-    }
 
 }

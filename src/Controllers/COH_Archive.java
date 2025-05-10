@@ -14,8 +14,8 @@ public class COH_Archive {
     private TableView<?> AccountManagmentTableView;
 
     @FXML
-    private Button FilterBttn, LogoutBtn, StkOutBttn, accountBtn, clipboardBtn, closeBtn, crossBtn,
-            hamburgermenuBtn, homeBtn, minimizeBtn, recordsBtn;
+    private Button FilterBttn, hamburgermenuBtn, minimizedBtn, closeBtn, accountBtn, homeBtn,
+            crossBtn, recordsBtn, clipboardBtn, LogOutBtn;
 
     @FXML
     private TextField TFsearch;
