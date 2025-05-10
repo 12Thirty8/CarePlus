@@ -53,8 +53,8 @@ public class AccountManagementController implements Initializable {
     private TableView<EmployeeModel> AccountManagmentTableView;
 
     @FXML
-    private Button hamburgermenuBtn, minimizedBtn, closeBtn, accountBtn, homeBtn, HamburgerMenuBtn,
-            crossBtn, recordsBtn, clipboardBtn, LogOutBtn, Archivebtn, AddAccountBttn, FilterBttn;
+    private Button hamburgermenuBtn, minimizeBtn, closeBtn, accountBtn, homeBtn,
+            crossBtn, recordsBtn, clipboardBtn, LogOutBtn, Archivebtn, AddAccountBtn, FilterBttn;
 
     @FXML
     private AnchorPane hamburgerPane;
