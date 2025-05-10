@@ -3,23 +3,25 @@ package Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-public class COH_EStkOutReportController {
+public class COH_Archive {
 
     @FXML
-    private Button FilterBttn, LogoutBtn, StkInBttn, accountBtn, clipboardBtn, closeBtn, crossBtn,
-            hamburgermenuBtn, homeBtn, minimizeBtn, recordsBtn, ExpiredReportsBtn;
+    private TableView<?> AccountManagmentTableView;
 
     @FXML
-    private TextField SearchButton;
+    private Button FilterBttn, LogoutBtn, StkOutBttn, accountBtn, clipboardBtn, closeBtn, crossBtn,
+            hamburgermenuBtn, homeBtn, minimizeBtn, recordsBtn;
 
     @FXML
-    private TableView<?> StkInTableView;
+    private TextField TFsearch;
+
     @FXML
-    private Button CompletedReportBtn;
+    private TableColumn<?, ?> depcol, dobcol, emailcol, emp_idcol, f_namecol, l_namecol, numbercol, offcol, shiftcol;
 
     @FXML
     private AnchorPane hamburgerPane;
@@ -40,12 +42,7 @@ public class COH_EStkOutReportController {
     }
 
     @FXML
-    void closeAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void minimizeAction(ActionEvent event) {
+    void homeBtnAction(ActionEvent event) {
 
     }
 

@@ -21,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import util.SceneLoader;
 //import javafx.stage.StageStyle;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -51,46 +52,18 @@ public class AccountManagementController implements Initializable {
     private TableView<EmployeeModel> AccountManagmentTableView;
 
     @FXML
-    private Button hamburgermenuBtn, minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, HamburgerMenuBttn,
-            PharmacyBttn, ScheduleBttn, ScheduleMenuBttn, LogOutBttn;
+    private Button hamburgermenuBtn, minimizedBtn, closeBtn, accountBtn, homeBtn, HamburgerMenuBtn,
+            crossBtn, recordsBtn, clipboardBtn, LogOutBtn, Archivebtn, AddAccountBttn, FilterBttn;
 
     @FXML
     private AnchorPane hamburgerPane;
 
     @FXML
-    private Button AddAccountBttn;
-
-    @FXML
-    private Button FilterBttn;
-    @FXML
     private TextField TFsearch;
 
     @FXML
-    private TableColumn<EmployeeModel, String> depcol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> dobcol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> emailcol;
-
-    @FXML
-    private TableColumn<EmployeeModel, Integer> emp_idcol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> f_namecol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> l_namecol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> numbercol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> offcol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> shiftcol;
+    private TableColumn<EmployeeModel, String> depcol, dobcol, emailcol, emp_idcol,
+            f_namecol, l_namecol, numbercol, offcol, shiftcol;
 
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
 
@@ -102,6 +75,7 @@ public class AccountManagementController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
 
         setupTableColumns();
@@ -116,16 +90,16 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     private void toggleHamburgerMenu() {
-    Timeline timeline = new Timeline();
-    double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
+        Timeline timeline = new Timeline();
+        double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
-    KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
-    KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
-    timeline.getKeyFrames().add(keyFrame);
-    timeline.play();
+        KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
 
-    ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
-}
+        ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+    }
     private void setupTableColumns() {
         emp_idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
         f_namecol.setCellValueFactory(new PropertyValueFactory<>("fname"));
@@ -338,59 +312,63 @@ public class AccountManagementController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             a.setAlertType(AlertType.ERROR);
-            a.setHeaderText("Error loading page.");
-            a.setContentText("Please try again.");
+            a.setContentText("Error loading page.");
             a.show();
         }
+    }
+    @FXML
+    private void closeAction(ActionEvent Action) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
 
+    @FXML
+    private void minimizeAction(ActionEvent event) {
+        // Get the current stage and minimize it
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+    @FXML
+    void clipboardBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ManageShiftRequest.fxml");
+    }
+
+    @FXML
+    private void crossBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_StockInReport.fxml");
+
+    }
+
+    @FXML
+    private void homeBtnAction(ActionEvent event) {
+         SceneLoader.loadScene(event, "/View/COH_Dashboard.fxml");
+    }
+
+    @FXML
+    private void recordsBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ActivityReports.fxml");
     }
 
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-        Parent root;
-        try {
-            root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.getScene().setRoot(root);
-
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-
+        SceneLoader.loadScene(event, "/View/COH_AccountManagement.fxml");
     }
 
     @FXML
-    void homeBtnAction(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
+    void Archiveactionbtn(ActionEvent event) {
+         try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Archive.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
             a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading Account Management page.");
+            a.setContentText("Error loading Archive page.");
             a.setHeaderText("Error");
             a.show();
         }
-    }
-
-    @FXML
-    void PharmacyActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ScheduleActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ScheduleuActionBttn(ActionEvent event) {
-
     }
 
 }

@@ -36,7 +36,7 @@ public class AddAccountController implements Initializable {
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
     @FXML
-    private Button DashboardBttn;
+    private Button DashboardBttn, LogOutBttn, AccountMenuBttn;
     @FXML
     private Button HamburgerMenuBttn;
     @FXML

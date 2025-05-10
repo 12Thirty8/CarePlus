@@ -1,6 +1,8 @@
 package Controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,6 +62,11 @@ public class COH_StkInReport {
     private Button recordsBtn;
 
     private Alert a = new Alert(AlertType.NONE);
+
+    @FXML
+    public void initialize() {
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+    }
 
     @FXML
     void homeBtnAction(ActionEvent event) {
