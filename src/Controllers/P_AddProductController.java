@@ -107,12 +107,12 @@ public class P_AddProductController {
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
                 a.setAlertType(AlertType.INFORMATION);
-                a.setContentText("Medicine added successfully.");
+                a.setContentText("Product added successfully.");
                 a.setHeaderText("Success");
                 a.show();
             } else {
                 a.setAlertType(AlertType.ERROR);
-                a.setContentText("Failed to add medicine.");
+                a.setContentText("Failed to add product.");
                 a.setHeaderText("Error");
                 a.show();
             }

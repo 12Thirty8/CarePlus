@@ -135,7 +135,7 @@ public class P_UpdateProductController {
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
                 a.setAlertType(AlertType.INFORMATION);
-                a.setContentText("Medicine updated successfully.");
+                a.setContentText("Product details updated successfully.");
                 a.setHeaderText("Success");
                 a.show();
             } else {

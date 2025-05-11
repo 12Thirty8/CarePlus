@@ -174,7 +174,7 @@ public class P_ProductsController implements Initializable {
                 try {
                     archiveAccount(item.getId()); // Pass the employee ID
                     ProductTable.getItems().remove(item); // Remove from TableView
-                    showAlert("Success", "Item deleted successfully.");
+                    showAlert("Success", "Product deleted successfully.");
                 } catch (SQLException e) {
                     showAlert("Error", "Failed to delete item: " + e.getMessage());
                     e.printStackTrace();
