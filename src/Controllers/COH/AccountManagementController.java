@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -64,6 +65,9 @@ public class AccountManagementController implements Initializable {
     private TextField TFsearch;
 
     @FXML
+    private Label nameLabel;
+
+    @FXML
     private TableColumn<EmployeeModel, String> depcol, dobcol, emailcol, emp_idcol,
             f_namecol, l_namecol, numbercol, offcol, shiftcol;
 
@@ -85,8 +89,8 @@ public class AccountManagementController implements Initializable {
         setupRowContextMenu();
 
         // Added by JC. Used to get the name of the COH
-        // String cohName = DatabaseConnect.getCOHName();
-        // nameLabel.setText(cohName != null ? cohName : "Name not found");
+        String cohName = DatabaseConnect.getCOHName();
+        nameLabel.setText(cohName != null ? cohName : "Name not found");
 
     }
 

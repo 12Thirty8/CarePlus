@@ -3,6 +3,7 @@ package Controllers.COH;
 import java.io.IOException;
 
 import Controllers.ViewState;
+import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -15,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -32,6 +34,9 @@ public class COH_ActivityReport {
     private TextField SearchButton;
 
     @FXML
+    private Label nameLabel;
+
+    @FXML
     private TableView<?> StkInTableView;
 
     @FXML
@@ -42,6 +47,8 @@ public class COH_ActivityReport {
     @FXML
     public void initialize() {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+        String cohName = DatabaseConnect.getCOHName();
+        nameLabel.setText(cohName != null ? cohName : "Name not found");
     }
 
     @FXML
