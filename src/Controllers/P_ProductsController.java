@@ -219,16 +219,19 @@ public class P_ProductsController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_AddProduct.fxml"));
             Parent root = loader.load();
 
-            // Create a new pop-up stage
+            P_AddProductController controller = loader.getController();
+            controller.setRefreshCallback(() -> {
+                refreshEmployeeTable(); // Refresh the table
+            });
+
             Stage popupStage = new Stage();
             popupStage.setTitle("Add New Product");
-            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
-            popupStage.initOwner(addstockBtn.getScene().getWindow()); // Set owner window
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(addstockBtn.getScene().getWindow());
+            popupStage.setScene(new Scene(root));
+            popupStage.setResizable(false);
+            popupStage.showAndWait(); // Wait until closed
 
-            Scene scene = new Scene(root);
-            popupStage.setScene(scene);
-            popupStage.setResizable(false); // Optional: make it fixed size
-            popupStage.showAndWait(); // Wait until this window is closed (optional)
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to open form: " + e.getMessage());

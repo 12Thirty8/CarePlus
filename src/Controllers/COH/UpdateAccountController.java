@@ -11,11 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -25,7 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import db.DatabaseConnect;
@@ -43,9 +39,6 @@ public class UpdateAccountController implements Initializable {
     private TextField fnametf, lnametf, numbertf, emailtf;
     @FXML
     private PasswordField psfield;
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     private Alert a = new Alert(AlertType.NONE);
     private Runnable refreshCallback;
 
@@ -123,16 +116,15 @@ public class UpdateAccountController implements Initializable {
     @FXML
     void BackBttnAction(ActionEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            // Get the current stage (popup window)
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            // Close the current popup window
+            stage.close();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading Account Management page.");
+            a.setContentText("Error closing the window.");
             a.setHeaderText("Error");
             a.show();
         }
