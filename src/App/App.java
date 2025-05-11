@@ -12,11 +12,11 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         System.setProperty("prism.lcdtext", "false");
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Products.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            // primaryStage.setMaximized(true);
+            primaryStage.setMaximized(true);
             primaryStage.initStyle(StageStyle.UNDECORATED);
             // primaryStage.setMinWidth(942);
             // primaryStage.setMinHeight(670);

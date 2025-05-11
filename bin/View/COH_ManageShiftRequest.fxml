@@ -208,13 +208,13 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TableView fx:id="ShiftRequestView" layoutX="16.0" layoutY="245.0" prefHeight="350.0" prefWidth="680.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 0px;" stylesheets="@styleshet.css" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="244.80000000000007">
+                  <TableView fx:id="ShiftRequestView" layoutX="16.0" layoutY="245.0" prefHeight="350.0" prefWidth="680.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 0px;" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="244.80000000000007">
                      <columns>
-                        <TableColumn prefWidth="107.199951171875" text="Shift Request ID" />
-                        <TableColumn prefWidth="68.80000305175781" text="Shift ID" />
-                        <TableColumn prefWidth="154.39996337890625" text="Description" />
-                        <TableColumn prefWidth="114.39996337890625" text="New Shift ID" />
-                        <TableColumn prefWidth="88.00006103515625" text="Request Date" />
+                        <TableColumn prefWidth="69.5999755859375" text="Shift Request ID" />
+                        <TableColumn prefWidth="65.59996795654297" text="Shift ID" />
+                        <TableColumn prefWidth="184.00003051757812" text="Description" />
+                        <TableColumn prefWidth="110.39996337890625" text="New Shift ID" />
+                        <TableColumn prefWidth="85.60012817382812" text="Request Date" />
                         <TableColumn prefWidth="109.5999755859375" text="Status" />
                      </columns>
                      <columnResizePolicy>

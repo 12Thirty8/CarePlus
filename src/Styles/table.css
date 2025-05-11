@@ -1,0 +1,61 @@
+.table-view {
+    -fx-background-insets: 0;
+    -fx-background-color: white;
+    -fx-control-inner-background: white;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 16;
+    /* -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0.1, 0, 4); */
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-font-family: "Gordita";
+    -fx-font-size: 13px;
+}
+
+@font-face {
+    font-family: 'Gordita';
+    src: url('fonts/Gordita-Regular.otf');
+}
+
+.table-view .column-header-background {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent; /* or any header color */
+}
+
+.table-view .column-header {
+    -fx-border-color: #ECEFF6;
+    -fx-border-width: 0px;
+    -fx-background-color: #ECEFF6;
+    -fx-padding: 20 0 20 0;  /* Top, Right, Bottom, Left */
+}
+
+.table-view .table-column {
+    -fx-border-color: transparent;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 4 0 4 0;
+}
+
+.table-cell {
+    -fx-padding: 6 10 6 10;
+    -fx-text-fill: #333333;
+}
+
+.table-view .filler {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #ECEFF6;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #e6f2ff;
+}

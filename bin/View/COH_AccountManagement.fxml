@@ -234,17 +234,17 @@
                         </Button>
                      </children>
                   </StackPane>
-                  <TableView fx:id="AccountManagmentTableView" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 0px;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
+                  <TableView fx:id="AccountManagmentTableView" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
                      <columns>
-                        <TableColumn fx:id="emp_idcol" prefWidth="92.80001527070999" text="Employee ID" />
-                        <TableColumn fx:id="f_namecol" prefWidth="80.00001525878906" text="First Name" />
-                        <TableColumn fx:id="l_namecol" prefWidth="80.79998779296875" text="Last Name" />
-                        <TableColumn fx:id="dobcol" prefWidth="101.60003662109375" text="Date of Birth" />
-                        <TableColumn fx:id="numbercol" prefWidth="88.79998779296875" text="Contact Number" />
-                        <TableColumn fx:id="emailcol" prefWidth="107.20001220703125" text="Email Address" />
-                        <TableColumn fx:id="depcol" prefWidth="109.5999755859375" text="Department" />
-                        <TableColumn fx:id="shiftcol" prefWidth="75.0" text="Shift" />
-                        <TableColumn fx:id="offcol" prefWidth="75.0" text="Day Off" />
+                        <TableColumn fx:id="emp_idcol" prefWidth="65.59997177124023" text="Employee ID" />
+                        <TableColumn fx:id="f_namecol" prefWidth="83.99999237060547" text="First Name" />
+                        <TableColumn fx:id="l_namecol" prefWidth="78.39996337890625" text="Last Name" />
+                        <TableColumn fx:id="dobcol" prefWidth="63.99998474121094" text="Date of Birth" />
+                        <TableColumn fx:id="numbercol" prefWidth="57.60003662109375" text="Contact Number" />
+                        <TableColumn fx:id="emailcol" prefWidth="81.5999755859375" text="Email Address" />
+                        <TableColumn fx:id="depcol" prefWidth="56.800079345703125" text="Department" />
+                        <TableColumn fx:id="shiftcol" prefWidth="92.0" text="Shift" />
+                        <TableColumn fx:id="offcol" prefWidth="45.5999755859375" text="Day Off" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
