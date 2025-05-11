@@ -26,10 +26,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -37,7 +40,49 @@ import javafx.util.Duration;
 public class P_StocksController implements Initializable {
 
     @FXML
+    private Button clearBtn;
+
+    @FXML
+    private DatePicker expdate;
+
+    @FXML
+    private TextField medidtf;
+
+    @FXML
+    private Text nameLabel;
+
+    @FXML
+    private TextField nametf;
+
+    @FXML
+    private TableColumn<?, ?> qtycol;
+
+    @FXML
+    private TextField qtytf;
+
+    @FXML
+    private TableColumn<?, ?> sinbycol;
+
+    @FXML
+    private TableColumn<?, ?> sindatecol;
+
+    @FXML
+    private TextField sintf;
+
+    @FXML
+    private TableColumn<?, ?> statcol;
+
+    @FXML
+    private Button updatebtn;
+
+    @FXML
+    private Button LogoutBtn;
+
+    @FXML
     private Button addstockBtn;
+
+    @FXML
+    private TextField batchidtf;
 
     @FXML
     private Button movetoProductBtn;
@@ -285,5 +330,15 @@ public class P_StocksController implements Initializable {
         // Get the current stage and minimize it
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.setIconified(true);
+    }
+
+    @FXML
+    void clearBtnPressed(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void updatebtnPressed(ActionEvent event) {
+
     }
 }
