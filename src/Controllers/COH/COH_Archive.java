@@ -10,6 +10,9 @@ import java.util.Optional;
 import Controllers.ViewState;
 import Models.EmployeeModel;
 import db.DatabaseConnect;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,6 +36,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import util.SceneLoader;
 
 public class COH_Archive {
@@ -174,7 +178,19 @@ public class COH_Archive {
         }
     }
 
-    
+    @FXML
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+        double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
+
+        KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+
+        ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+    }
+
     @FXML
     void BackBttnAction(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/COH_AccountManagement.fxml");

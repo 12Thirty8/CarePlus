@@ -18,6 +18,7 @@ public class App extends Application {
             primaryStage.setResizable(false);
             primaryStage.setMaximized(true);
             primaryStage.initStyle(StageStyle.UNDECORATED);
+
             // primaryStage.setMinWidth(942);
             // primaryStage.setMinHeight(670);
             primaryStage.show();

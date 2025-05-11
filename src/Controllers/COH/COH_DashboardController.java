@@ -61,15 +61,14 @@ public class COH_DashboardController {
     public void initialize() {
 
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
-        
+
         fadeInNode(TitleText, 0);
         fadeInNode(NamePanel, 200);
         fadeInNode(TotalRequestPanel, 200);
         fadeInNode(AreaChartPanel, 300);
         fadeInNode(StkInTableView, 400);
 
-        int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
-        String COHName = DatabaseConnect.getCOHName(employeeId);
+        String COHName = DatabaseConnect.getCOHName();
         nameLabel.setText(COHName != null ? COHName : "Name not found");
 
     }
