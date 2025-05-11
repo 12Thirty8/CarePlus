@@ -3,42 +3,47 @@ package Models;
 import java.sql.Date;
 
 public class StocksModel {
-    int batchId;
-    String medName;
-    int stock;
-    Date expDate;
-    String inBy;
 
-    public StocksModel(int batchId, String medName, int stock, Date expDate, String inBy) {
-        this.batchId = batchId;
-        this.medName = medName;
-        this.stock = stock;
+    private int id;
+    private String name;
+    private int quantity;
+    private Date expDate;
+    private String sinby;
+    private Date sinDate;
+    private String status;
+
+    public StocksModel(int id, String name, int quantity, Date expDate, String sinby, Date sinDate, String status) {
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
         this.expDate = expDate;
-        this.inBy = inBy;
+        this.sinby = sinby;
+        this.sinDate = sinDate;
+        this.status = status;
     }
 
-    public int getBatchId() {
-        return batchId;
+    public int getId() {
+        return id;
     }
 
-    public void setBatchId(int batchId) {
-        this.batchId = batchId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getMedName() {
-        return medName;
+    public String getName() {
+        return name;
     }
 
-    public void setMedName(String medName) {
-        this.medName = medName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getStock() {
-        return stock;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Date getExpDate() {
@@ -49,12 +54,27 @@ public class StocksModel {
         this.expDate = expDate;
     }
 
-    public String getInBy() {
-        return inBy;
+    public String getSinby() {
+        return sinby;
     }
 
-    public void setInBy(String inBy) {
-        this.inBy = inBy;
+    public void setSinby(String sinby) {
+        this.sinby = sinby;
     }
 
+    public Date getSinDate() {
+        return sinDate;
+    }
+
+    public void setSinDate(Date sinDate) {
+        this.sinDate = sinDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

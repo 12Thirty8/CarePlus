@@ -56,22 +56,19 @@ public class P_StocksController implements Initializable {
     private TextField nametf;
 
     @FXML
-    private TableColumn<?, ?> qtycol;
-
-    @FXML
     private TextField qtytf;
 
     @FXML
-    private TableColumn<?, ?> sinbycol;
+    private TableColumn<StocksModel, String> sinbycol;
 
     @FXML
-    private TableColumn<?, ?> sindatecol;
+    private TableColumn<StocksModel, String> sindatecol;
 
     @FXML
     private TextField sintf;
 
     @FXML
-    private TableColumn<?, ?> statcol;
+    private TableColumn<StocksModel, String> statcol;
 
     @FXML
     private Button updatebtn;
@@ -119,10 +116,7 @@ public class P_StocksController implements Initializable {
     private TableColumn<StocksModel, String> namecol;
 
     @FXML
-    private TableColumn<StocksModel, String> sincol;
-
-    @FXML
-    private TableColumn<StocksModel, Integer> stockcol;
+    private TableColumn<StocksModel, Integer> qtycol;
 
     @FXML
     private Button closeBtn;
@@ -147,11 +141,15 @@ public class P_StocksController implements Initializable {
     }
 
     private void setupTableColumns() {
-        idcol.setCellValueFactory(new PropertyValueFactory<>("batchId"));
-        namecol.setCellValueFactory(new PropertyValueFactory<>("medName"));
-        stockcol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        qtycol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         expcol.setCellValueFactory(new PropertyValueFactory<>("expDate"));
-        sincol.setCellValueFactory(new PropertyValueFactory<>("inBy"));
+        sinbycol.setCellValueFactory(new PropertyValueFactory<>("sinby"));
+        sindatecol.setCellValueFactory(new PropertyValueFactory<>("sinDate"));
+        statcol.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        StockTable.setItems(EmployeeList);
     }
 
     private void setupRowContextMenu() {
@@ -163,10 +161,17 @@ public class P_StocksController implements Initializable {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        b.batch_id, m.med_name AS medName, b.batch_stock, b.batch_exp, e.f_name AS stockinBy
+                        b.batch_id,
+                        m.med_name AS medName,
+                        b.batch_stock,
+                        b.batch_exp,
+                        CONCAT(COALESCE(e.f_name, ''), ' ', COALESCE(e.l_name, '')) AS stockinBy,
+                        b.stockin_date,
+                        s.status_name AS status
                     FROM batch b
                     LEFT JOIN employee e ON b.stockin_by = e.employee_id
                     LEFT JOIN medicine m ON b.med_id = m.med_id
+                    LEFT JOIN stockstatus s ON b.status_id = s.status_id
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
@@ -177,7 +182,9 @@ public class P_StocksController implements Initializable {
                         rs.getString("medName"),
                         rs.getInt("batch_stock"),
                         rs.getDate("batch_exp"),
-                        rs.getString("stockinBy")));
+                        rs.getString("stockinBy"),
+                        rs.getDate("stockin_date"),
+                        rs.getString("status")));
             }
 
             StockTable.setItems(EmployeeList);
