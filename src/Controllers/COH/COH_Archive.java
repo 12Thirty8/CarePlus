@@ -33,6 +33,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import util.SceneLoader;
 
 public class COH_Archive {
 
@@ -41,7 +42,7 @@ public class COH_Archive {
 
     @FXML
     private Button FilterBttn, hamburgermenuBtn, minimizedBtn, closeBtn, accountBtn, homeBtn,
-            crossBtn, recordsBtn, clipboardBtn, LogOutBtn;
+            crossBtn, recordsBtn, clipboardBtn, LogOutBtn, Backbtn;
 
     @FXML
     private TextField TFsearch;
@@ -173,17 +174,18 @@ public class COH_Archive {
         }
     }
 
+    
+    @FXML
+    void BackBttnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_AccountManagement.fxml");
+    }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    @FXML
-    void AccountMenuActionBttn(ActionEvent event) {
-
     }
 
     @FXML
@@ -218,13 +220,41 @@ public class COH_Archive {
     }
 
     @FXML
-    void homeBtnAction(ActionEvent event) {
+    private void closeAction(ActionEvent Action) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
+
+    @FXML
+    private void minimizeAction(ActionEvent event) {
+        // Get the current stage and minimize it
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+    @FXML
+    void clipboardBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ManageShiftRequest.fxml");
+    }
+
+    @FXML
+    private void crossBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_StockInReport.fxml");
 
     }
 
     @FXML
-    void toggleHamburgerMenu(ActionEvent event) {
-
+    private void homeBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_Dashboard.fxml");
     }
 
+    @FXML
+    private void recordsBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ActivityReports.fxml");
+    }
+
+    @FXML
+    void AccountMenuActionBttn(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_AccountManagement.fxml");
+    }
 }

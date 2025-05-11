@@ -184,9 +184,9 @@
             </AnchorPane>
             <AnchorPane prefHeight="628.0" prefWidth="580.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
-                  <StackPane layoutX="17.0" layoutY="24.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="18.199999999999932" AnchorPane.topAnchor="27.0">
+                  <StackPane layoutX="69.0" layoutY="27.0" prefHeight="44.0" prefWidth="552.0" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="69.39999999999998" AnchorPane.topAnchor="27.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="778.0" text="Archive">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="462.0" text="Archive">
                            <font>
                               <Font name="Gordita-Bold" size="34.0" />
                            </font>
@@ -224,11 +224,20 @@
                      </columnResizePolicy>
                   </TableView>
                   <StackPane layoutX="529.0" layoutY="207.0" AnchorPane.rightAnchor="30.19999999999999" />
+                  <Button fx:id="BackBttn" layoutX="4.0" layoutY="1.0" mnemonicParsing="false" onAction="#BackBttnAction" prefHeight="44.0" prefWidth="52.0" style="-fx-background-color: transparent; -fx-padding: 10;">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../ICONS/Back%20Arrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </AnchorPane>
          </children>
       </HBox>
-      <Button fx:id="closeBtn" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="24.0" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="6.0">
+      <Button fx:id="closeBtn" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="24.0" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="6.0">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -237,7 +246,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="minimizeBtn" layoutX="881.0" layoutY="3.0" mnemonicParsing="false" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="40.59999999999995">
+      <Button fx:id="minimizeBtn" layoutX="881.0" layoutY="3.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="40.59999999999995">
          <graphic>
             <ImageView fitHeight="10.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                <image>

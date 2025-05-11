@@ -134,7 +134,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+            <AnchorPane fx:id="mainPane" prefHeight="628.0" prefWidth="445.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
                   <StackPane layoutX="289.0" layoutY="18.0" prefHeight="43.0" prefWidth="115.0" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="293.0">
                      <children>
@@ -145,9 +145,9 @@
                         </Text>
                      </children>
                   </StackPane>
-                  <StackPane layoutX="16.0" layoutY="92.0" prefHeight="115.0" prefWidth="659.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
+                  <StackPane layoutX="16.0" layoutY="92.0" prefHeight="115.0" prefWidth="626.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
                      <children>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
+                        <AnchorPane prefHeight="200.0" prefWidth="646.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
                            <children>
                               <Text layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                                  <font>
@@ -168,7 +168,7 @@
                         <TextField prefHeight="25.0" prefWidth="192.0" promptText="Search Requests" style="-fx-background-radius: 20;" />
                      </children>
                   </StackPane>
-                  <TableView fx:id="ProductTable" layoutX="14.0" layoutY="271.0" prefHeight="342.0" prefWidth="664.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0">
+                  <TableView fx:id="ProductTable" layoutX="14.0" layoutY="271.0" prefHeight="342.0" prefWidth="653.0" AnchorPane.bottomAnchor="14.600000000000023" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0">
                      <columns>
                         <TableColumn fx:id="idcol" prefWidth="81.60003697872162" text="Medicine ID" />
                         <TableColumn fx:id="namecol" prefWidth="267.9999694824219" text="Medicine Name" />
@@ -176,8 +176,14 @@
                         <TableColumn fx:id="desccol" prefWidth="174.4000244140625" text="Description" />
                      </columns>
                   </TableView>
-                  <Button fx:id="addstockBtn" layoutX="598.0" layoutY="233.0" mnemonicParsing="false" onAction="#addstockBtnPressed" text="Add New Product" />
-                  <Button fx:id="movetostockBtn" layoutX="501.0" layoutY="233.0" mnemonicParsing="false" onAction="#movetostockBtnPressed" text="Stock Page" />
+                  <Button fx:id="addstockBtn" layoutX="603.0" layoutY="233.0" mnemonicParsing="false" onAction="#addstockBtnPressed" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Add Product" textFill="WHITE" AnchorPane.rightAnchor="20.0">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="movetostockBtn" layoutX="480.0" layoutY="233.0" mnemonicParsing="false" onAction="#movetostockBtnPressed" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Stock" textFill="WHITE" AnchorPane.rightAnchor="145.60000000000002">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font></Button>
                </children>
             </AnchorPane>
          </children>

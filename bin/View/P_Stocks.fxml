@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_StocksController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" prefHeight="670.0" prefWidth="942.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_StocksController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
@@ -177,8 +177,14 @@
                         <TableColumn fx:id="sincol" prefWidth="153.59994506835938" text="Stock In By" />
                      </columns>
                   </TableView>
-                  <Button fx:id="addstockBtn" layoutX="607.0" layoutY="233.0" mnemonicParsing="false" onAction="#addstockBtnPressed" text="Add Stock" />
-                  <Button fx:id="movetoProductBtn" layoutX="515.0" layoutY="233.0" mnemonicParsing="false" onAction="#movetoProductBtnPressed" text="Product Page" />
+                  <Button fx:id="addstockBtn" layoutX="575.0" layoutY="228.0" mnemonicParsing="false" onAction="#addstockBtnPressed" prefHeight="28.0" prefWidth="108.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Add Stock" textFill="WHITE" AnchorPane.rightAnchor="20.0">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="movetoProductBtn" layoutX="442.0" layoutY="228.0" mnemonicParsing="false" onAction="#movetoProductBtnPressed" prefHeight="28.0" prefWidth="108.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Product " textFill="WHITE" AnchorPane.rightAnchor="146.79999999999995">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font></Button>
                </children>
             </AnchorPane>
          </children>
