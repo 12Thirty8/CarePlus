@@ -50,9 +50,6 @@ public class P_StocksController implements Initializable {
     private TextField medidtf;
 
     @FXML
-    private Text nameLabel;
-
-    @FXML
     private TextField nametf;
 
     @FXML
