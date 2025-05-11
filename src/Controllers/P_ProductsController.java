@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
 import Models.ProductsModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
@@ -31,6 +32,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -214,16 +216,22 @@ public class P_ProductsController implements Initializable {
     @FXML
     void addstockBtnPressed(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_StockIn.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_AddProduct.fxml"));
+            Parent root = loader.load();
 
-            stage.getScene().setRoot(root);
+            // Create a new pop-up stage
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Add New Product");
+            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+            popupStage.initOwner(addstockBtn.getScene().getWindow()); // Set owner window
+
+            Scene scene = new Scene(root);
+            popupStage.setScene(scene);
+            popupStage.setResizable(false); // Optional: make it fixed size
+            popupStage.showAndWait(); // Wait until this window is closed (optional)
         } catch (IOException e) {
             e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
+            showAlert("Error", "Failed to open form: " + e.getMessage());
         }
     }
 
