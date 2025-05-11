@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_DashboardController">
+   <children>
+      <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
+         <children>
+            <AnchorPane fx:id="hamburgerPane" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+               <children>
+                  <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="26.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                           <children>
+                              <Button fx:id="hamburgermenuBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="12.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
+                                 <graphic>
+                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../ICONS/Menu.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
+                           <children>
+                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="..\Styles\pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                                 <graphic>
+                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../ICONS/Home.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="Gordita-Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
+                           <children>
+                              <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="17.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="..\Styles\pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                                 <graphic>
+                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../ICONS/Hospital.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="Gordita-Bold" size="15.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="7.0" top="4.0" />
+                                 </padding>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
+                           <children>
+                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="..\Styles\pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                                 <graphic>
+                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../ICONS/Clipboard.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="11.0" top="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Gordita-Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="614.0" prefWidth="813.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <children>
+                  <StackPane alignment="TOP_LEFT" layoutX="16.0" layoutY="41.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
+                     <children>
+                        <AnchorPane prefHeight="100.0" prefWidth="778.0" style="-fx-background-radius: 15; -fx-background-color: F3F6FF;">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="28.0" prefHeight="44.0" prefWidth="363.0" text="Create New Record">
+                                 <font>
+                                    <Font name="Gordita-Bold" size="34.0" />
+                                 </font>
+                              </Label>
+                              <StackPane alignment="TOP_RIGHT" layoutX="562.0" layoutY="37.0" nodeOrientation="RIGHT_TO_LEFT">
+                                 <children>
+                                    <DatePicker nodeOrientation="LEFT_TO_RIGHT" promptText="MM/DD/YYYY" StackPane.alignment="TOP_RIGHT" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </StackPane>
+                  <AnchorPane layoutX="17.0" layoutY="166.0" prefHeight="397.0" prefWidth="780.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 15;" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
+                     <children>
+                        <Label layoutX="18.0" layoutY="15.0" text="Patient ID*:">
+                           <font>
+                              <Font name="Gordita-Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <StackPane layoutX="1.0999984741210938" layoutY="19.0" />
+                        <Label layoutX="14.0" layoutY="100.0" text="Doctor ID*:">
+                           <font>
+                              <Font name="Gordita-Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <StackPane layoutX="1.0999984741210938" layoutY="100.0" />
+                        <StackPane layoutX="4.099998474121094" layoutY="226.0" />
+                        <Label layoutX="18.0" layoutY="199.0" text="If patient is new, Encode data here:">
+                           <font>
+                              <Font name="Gordita-Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="259.0" layoutY="15.0" text="Diagnoses*:" AnchorPane.rightAnchor="434.0">
+                           <font>
+                              <Font name="Gordita-Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <StackPane layoutX="259.0" layoutY="43.0" AnchorPane.rightAnchor="321.0">
+                           <children>
+                              <TextArea prefHeight="237.0" prefWidth="200.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane layoutX="613.0999984741211" layoutY="333.0" AnchorPane.rightAnchor="64.9000015258789">
+                           <children>
+                              <Button fx:id="EncodeBttn" mnemonicParsing="false" onAction="#EncodeActionBttn" style="-fx-background-color: #5271CE;" text="Update Record" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </StackPane>
+                        <Label layoutX="513.0" layoutY="15.0" text="Notes*:" AnchorPane.rightAnchor="211.0">
+                           <font>
+                              <Font name="Gordita-Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <StackPane layoutX="513.0" layoutY="43.0" AnchorPane.rightAnchor="67.0">
+                           <children>
+                              <TextArea prefHeight="237.0" prefWidth="200.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane layoutX="12.899999618530273" layoutY="269.8999938964844" AnchorPane.leftAnchor="12.899999618530273">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="197.0" text="ENCODE PATIENT DATA" />
+                           </children>
+                        </StackPane>
+                        <StackPane layoutX="14.0" layoutY="36.0" AnchorPane.leftAnchor="14.0">
+                           <children>
+                              <TextField floatText="Patient ID" opacity="0.56" prefHeight="35.0" prefWidth="203.0" style="-fx-background-color: FFFFFF;" />
+                           </children>
+                        </StackPane>
+                        <StackPane layoutX="18.0" layoutY="125.0" AnchorPane.leftAnchor="14.0">
+                           <children>
+                              <TextField floatText="Doctor ID" opacity="0.56" prefHeight="35.0" prefWidth="203.0" style="-fx-background-color: FFFFFF;" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

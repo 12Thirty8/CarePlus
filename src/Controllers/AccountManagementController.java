@@ -15,20 +15,33 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+//import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
+import util.SceneLoader;
+//import javafx.stage.StageStyle;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
 import Models.EmployeeModel;
 import db.DatabaseConnect;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,66 +49,26 @@ import javafx.event.ActionEvent;
 
 public class AccountManagementController implements Initializable {
 
-    private DatabaseConnect dbConnect = new DatabaseConnect();
-
     @FXML
     private TableView<EmployeeModel> AccountManagmentTableView;
 
     @FXML
-    private Button AccountMenuBttn;
+    private Button hamburgermenuBtn, minimizeBtn, closeBtn, accountBtn, homeBtn,
+            crossBtn, recordsBtn, clipboardBtn, LogOutBtn, Archivebtn, AddAccountBtn, FilterBttn;
 
     @FXML
-    private Button AddAccountBttn;
-
-    @FXML
-    private Button DashboardBttn;
-
-    @FXML
-    private Button FilterBttn;
-
-    @FXML
-    private Button HamburgerMenuBttn;
-
-    @FXML
-    private Button PharmacyBttn;
-
-    @FXML
-    private Button ScheduleBttn;
-
-    @FXML
-    private Button ScheduleMenuBttn;
+    private AnchorPane hamburgerPane;
 
     @FXML
     private TextField TFsearch;
 
     @FXML
-    private TableColumn<EmployeeModel, Integer> depcol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> dobcol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> emailcol;
-
-    @FXML
-    private TableColumn<EmployeeModel, Integer> emp_idcol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> f_namecol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> l_namecol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> numbercol;
-
-    @FXML
-    private TableColumn<EmployeeModel, String> offcol;
-
-    @FXML
-    private TableColumn<EmployeeModel, Integer> shiftcol;
+    private TableColumn<EmployeeModel, String> depcol, dobcol, emailcol, emp_idcol,
+            f_namecol, l_namecol, numbercol, offcol, shiftcol;
 
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
+
+    private Alert a = new Alert(AlertType.NONE);
 
     private Stage stage;
     private Scene scene;
@@ -103,9 +76,30 @@ public class AccountManagementController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+
+        // Added by JC. Used to get the name of the COH
+        // String cohName = DatabaseConnect.getCOHName();
+        // nameLabel.setText(cohName != null ? cohName : "Name not found");
+
+    }
+
+    @FXML
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+        double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
+
+        KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+
+        ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
     }
 
     private void setupTableColumns() {
@@ -115,9 +109,9 @@ public class AccountManagementController implements Initializable {
         dobcol.setCellValueFactory(new PropertyValueFactory<>("dob"));
         numbercol.setCellValueFactory(new PropertyValueFactory<>("number"));
         emailcol.setCellValueFactory(new PropertyValueFactory<>("email"));
-        depcol.setCellValueFactory(new PropertyValueFactory<>("dep"));
-        shiftcol.setCellValueFactory(new PropertyValueFactory<>("shift"));
-        offcol.setCellValueFactory(new PropertyValueFactory<>("dayoff"));
+        depcol.setCellValueFactory(new PropertyValueFactory<>("depName"));
+        shiftcol.setCellValueFactory(new PropertyValueFactory<>("shiftName"));
+        offcol.setCellValueFactory(new PropertyValueFactory<>("dayoffName"));
     }
 
     private void setupRowContextMenu() {
@@ -126,21 +120,31 @@ public class AccountManagementController implements Initializable {
             ContextMenu contextMenu = new ContextMenu();
 
             MenuItem updateItem = new MenuItem("Update");
-            MenuItem deleteItem = new MenuItem("Delete");
+            MenuItem deleteItem = new MenuItem("Archive");
 
             updateItem.setOnAction(_ -> {
                 EmployeeModel selectedItem = row.getItem();
                 if (selectedItem != null) {
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_UpdateAccount.fxml"));
-                        root = loader.load();
+                        Parent root = loader.load();
 
+                        // Get the controller and pass the selected employee's data
                         UpdateAccountController controller = loader.getController();
                         controller.loadEmployeeData(selectedItem.getId());
 
-                        stage = (Stage) row.getScene().getWindow();
-                        stage.setScene(new Scene(root));
-                        stage.show();
+                        controller.setRefreshCallback(() -> refreshEmployeeTable());
+
+                        // Create a new pop-up stage
+                        Stage popupStage = new Stage();
+                        popupStage.setTitle("Update Account");
+                        popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+                        popupStage.initOwner(row.getScene().getWindow()); // Set owner window
+
+                        Scene scene = new Scene(root);
+                        popupStage.setScene(scene);
+                        popupStage.setResizable(false); // Optional: make it fixed size
+                        popupStage.showAndWait(); // Wait until this window is closed (optional)
                     } catch (IOException e) {
                         e.printStackTrace();
                         showAlert("Error", "Failed to open update form: " + e.getMessage());
@@ -168,16 +172,16 @@ public class AccountManagementController implements Initializable {
     private void deleteRow(EmployeeModel item) {
         // Show confirmation dialog before deleting
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm Deletion");
-        alert.setHeaderText("Delete this record?");
-        alert.setContentText("Are you sure you want to delete: " + item + "?");
+        alert.setTitle("Confirm Archive");
+        alert.setHeaderText("Archive this account?");
+        alert.setContentText("Are you sure you want to archive: " + item + "?");
 
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 try {
-                    deleteAccount(item.getId()); // Pass the employee ID
+                    archiveAccount(item.getId()); // Pass the employee ID
                     AccountManagmentTableView.getItems().remove(item); // Remove from TableView
-                    showAlert("Success", "Employee deleted successfully");
+                    showAlert("Success", "Employee offboarded successfully.");
                 } catch (SQLException e) {
                     showAlert("Error", "Failed to delete employee: " + e.getMessage());
                     e.printStackTrace();
@@ -186,10 +190,10 @@ public class AccountManagementController implements Initializable {
         });
     }
 
-    private void deleteAccount(int id) throws SQLException {
-        try (Connection conn = dbConnect.connect();
+    private void archiveAccount(int id) throws SQLException {
+        try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement pstmt = conn.prepareStatement(
-                        "DELETE FROM employee WHERE employee_id = ?")) {
+                        "UPDATE employee SET status = 0 WHERE employee_id = ?")) {
 
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
@@ -199,8 +203,20 @@ public class AccountManagementController implements Initializable {
     private void refreshEmployeeTable() {
         EmployeeList.clear();
         try {
-            Connection conn = dbConnect.connect();
-            String query = "SELECT * FROM employee"; // Adjust table name as needed
+            Connection conn = DatabaseConnect.connect();
+            String query = """
+                    SELECT
+                        e.employee_id, e.f_name, e.l_name, e.dob, e.contact_no, e.email,
+                        d.dep_name AS depName,
+                        e.password_hash,
+                        s.timeslot AS shiftName,
+                        do.dotw_name AS dayoffName, e.status
+                    FROM employee e
+                    LEFT JOIN department d ON e.dep_id = d.dep_id
+                    LEFT JOIN shift s ON e.shift_id = s.shift_id
+                    LEFT JOIN dotweek do ON e.dayoff_id = do.dotw_id
+                    WHERE e.status = '1'
+                    """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
@@ -212,10 +228,10 @@ public class AccountManagementController implements Initializable {
                         rs.getDate("dob"),
                         rs.getString("contact_no"),
                         rs.getString("email"),
-                        rs.getInt("dep_id"),
+                        rs.getString("depName"),
                         rs.getString("password_hash"), // Assuming you store hashed passwords
-                        rs.getInt("shift_id"),
-                        rs.getInt("dayoff_id")));
+                        rs.getString("shiftName"),
+                        rs.getString("dayoffName")));
             }
 
             AccountManagmentTableView.setItems(EmployeeList);
@@ -277,62 +293,89 @@ public class AccountManagementController implements Initializable {
     }
 
     @FXML
+    void LogOutActionBttn(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Logout");
+        alert.setHeaderText("Are you sure you want to log out?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
+                Parent root = loader.load();
+
+                Stage loginStage = new Stage();
+                loginStage.setScene(new Scene(root));
+                loginStage.initStyle(StageStyle.UNDECORATED);
+                loginStage.setResizable(false);
+                loginStage.show();
+
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading page.");
+                a.show();
+            }
+        }
+    }
+
+    @FXML
+    private void closeAction(ActionEvent Action) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
+
+    @FXML
+    private void minimizeAction(ActionEvent event) {
+        // Get the current stage and minimize it
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+    @FXML
+    void clipboardBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ManageShiftRequest.fxml");
+    }
+
+    @FXML
+    private void crossBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_StockInReport.fxml");
+
+    }
+
+    @FXML
+    private void homeBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_Dashboard.fxml");
+    }
+
+    @FXML
+    private void recordsBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ActivityReports.fxml");
+    }
+
+    @FXML
     void AccountMenuActionBttn(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_AccountManagement.fxml");
+    }
 
+    @FXML
+    void Archiveactionbtn(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-            root = loader.load();
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Archive.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
+            stage.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Archive page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 
-    @FXML
-    void DashboardActionBttn(ActionEvent event) {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-            root = loader.load();
-
-            root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    @FXML
-    void HamburgerMenuActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void PharmacyActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ScheduleActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ScheduleuActionBttn(ActionEvent event) {
-
-    }
 }

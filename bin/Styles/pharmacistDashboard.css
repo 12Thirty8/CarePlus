@@ -1,0 +1,111 @@
+#hamburgermenuBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#hamburgermenuBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#homeBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#homeBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#crossBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#crossBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#clipboardBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#clipboardBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#recordsBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#recordsBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#accountBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#accountBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#LogoutBtn {
+    -fx-border-color:  white;
+    -fx-background-color:  white;
+    -fx-border-radius: 8;
+    -fx-border-width:  0;
+}
+
+#LogoutBtn:hover {
+    -fx-background-color:  rgb(198, 198, 198); 
+    -fx-cursor: hand;
+}
+
+#closeBtn {
+   -fx-border-color:  #0B69B9;
+   -fx-background-color:  #0B69B9;
+   -fx-border-radius: 8;
+    
+}
+
+
+#closeBtn:hover {
+   -fx-border-color:  red;
+   -fx-background-color:  red;
+}
+
+#minimizeBtn {
+   -fx-border-color:  #0B69B9;
+   -fx-background-color:  #0B69B9;
+   -fx-border-radius: 8;
+    
+}
+
+
+#minimizeBtn:hover {
+   -fx-border-color:  rgb(198, 198, 198); 
+   -fx-background-color: rgb(198, 198, 198); 
+}
+
+

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_StocksController">
+   <children>
+      <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
+         <children>
+            <AnchorPane fx:id="hamburgerPane" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="628.0" prefWidth="230.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                           <children>
+                              <Button fx:id="hamburgermenuBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="12.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#toggleHamburgerMenu" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
+                                 <graphic>
+                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../ICONS/Menu.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
+                           <children>
+                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#homeBtnPressed" prefHeight="54.0" prefWidth="52.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                                 <font>
+                                    <Font name="Gordita-Bold" size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <HBox prefHeight="41.0" prefWidth="25.0">
+                                       <children>
+                                          <AnchorPane HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="37.0" fitWidth="178.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../ICONS/Home.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
+                           <children>
+                              <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#PharmacyBtnPressed" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                                 <font>
+                                    <Font name="Gordita-Bold" size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <HBox prefHeight="41.0" prefWidth="25.0">
+                                       <children>
+                                          <AnchorPane prefHeight="0.0" prefWidth="1.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="47.0" fitWidth="30.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../ICONS/Hospital.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
+                           <children>
+                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#clipboardBtnPressed" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                                 <font>
+                                    <Font name="Gordita-Bold" size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <HBox prefHeight="41.0" prefWidth="25.0">
+                                       <children>
+                                          <AnchorPane prefHeight="0.0" prefWidth="1.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="47.0" fitWidth="30.0" layoutX="1.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../ICONS/Calendar.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="80.0" prefWidth="107.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Button fx:id="LogoutBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#LogOutActionBttn" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Log Out" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                                 <font>
+                                    <Font name="Gordita-Bold" size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <HBox prefHeight="41.0" prefWidth="25.0">
+                                       <children>
+                                          <AnchorPane prefHeight="0.0" prefWidth="1.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <ImageView fitHeight="26.0" fitWidth="33.0" layoutX="4.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../ICONS/Logout.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+               <children>
+                  <StackPane layoutX="289.0" layoutY="18.0" prefHeight="43.0" prefWidth="115.0" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="293.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stocks" wrappingWidth="114.58200073242188">
+                           <font>
+                              <Font name="Gordita-Bold" size="34.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </StackPane>
+                  <StackPane layoutX="16.0" layoutY="92.0" prefHeight="115.0" prefWidth="659.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
+                           <children>
+                              <Text layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                                 <font>
+                                    <Font name="Gordita-Regular" size="24.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
+                                 <font>
+                                    <Font name="Gordita-Regular" size="12.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </StackPane>
+                  <StackPane layoutX="16.0" layoutY="233.0">
+                     <children>
+                        <TextField prefHeight="25.0" prefWidth="192.0" promptText="Search Requests" style="-fx-background-radius: 20;" />
+                     </children>
+                  </StackPane>
+                  <TableView fx:id="StockTable" layoutX="14.0" layoutY="271.0" prefHeight="342.0" prefWidth="664.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0">
+                     <columns>
+                        <TableColumn fx:id="idcol" prefWidth="81.60003697872162" text="Batch ID" />
+                        <TableColumn fx:id="namecol" prefWidth="164.79998779296875" text="Medicine Name" />
+                        <TableColumn fx:id="stockcol" prefWidth="63.199920654296875" text="Stock" />
+                        <TableColumn fx:id="expcol" prefWidth="202.40008544921875" text="Expiry Date" />
+                        <TableColumn fx:id="sincol" prefWidth="153.59994506835938" text="Stock In By" />
+                     </columns>
+                  </TableView>
+                  <Button fx:id="addstockBtn" layoutX="607.0" layoutY="233.0" mnemonicParsing="false" onAction="#addstockBtnPressed" text="Add Stock" />
+                  <Button fx:id="movetoProductBtn" layoutX="515.0" layoutY="233.0" mnemonicParsing="false" onAction="#movetoProductBtnPressed" text="Product Page" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <Button fx:id="closeBtn" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="28.0" prefWidth="24.0" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="6.0">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ICONS/Close.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="minimizeBtn" layoutX="881.0" layoutY="3.0" mnemonicParsing="false" onAction="#minimizeAction" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="40.59">
+         <graphic>
+            <ImageView fitHeight="10.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ICONS/Subtract.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

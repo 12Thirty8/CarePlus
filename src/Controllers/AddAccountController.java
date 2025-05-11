@@ -22,24 +22,21 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-
 import db.DatabaseConnect;
 
 public class AddAccountController implements Initializable {
 
-    private DatabaseConnect dbConnect = new DatabaseConnect();
+    private int currentEmployeeId;
 
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
     @FXML
-    private Button DashboardBttn;
+    private Button DashboardBttn, LogOutBttn, AccountMenuBttn;
     @FXML
     private Button HamburgerMenuBttn;
     @FXML
@@ -59,6 +56,7 @@ public class AddAccountController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private Alert a = new Alert(AlertType.NONE);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -113,6 +111,39 @@ public class AddAccountController implements Initializable {
             return;
         }
 
+        if (!fnametf.getText().matches("[a-zA-Z]+") || !lnametf.getText().matches("[a-zA-Z]+")) {
+            showAlert("Input Error", "Names can only contain letters");
+            return;
+        }
+
+        if (!isValidEmail(emailtf.getText())) {
+            showAlert("Invalid Email", "Please enter a valid email (e.g., user@example.com)");
+            return;
+        }
+
+        if (!numbertf.getText().matches("09\\d{9}")) {
+            showAlert("Input Error", "Phone number must start with 09 and have 11 digits");
+            return;
+        }
+
+        if (psfield.getText().length() < 6) {
+            showAlert("Input Error", "Password must be at least 6 characters long");
+            return;
+        }
+        // Check COH constraint
+        if ("COH".equalsIgnoreCase(depcb.getValue())) {
+            try {
+                if (isCOHDepartmentFull(currentEmployeeId)) {
+                    showAlert("Department Constraint", "Only one employee is allowed in the COH department.");
+                    return;
+                }
+            } catch (SQLException e) {
+                showAlert("Department Constraint", "Only one employee is allowed in the COH department.");
+                e.printStackTrace();
+                return;
+            }
+        }
+
         try {
             // Convert LocalDate to SQL Date
             LocalDate localDate = dob.getValue();
@@ -129,7 +160,7 @@ public class AddAccountController implements Initializable {
                     shiftcb.getValue(),
                     dayoffcb.getValue());
 
-            showAlert("Success", "Account created successfully");
+            showAlert("Success", "Employee onboarded successfully.");
             clearForm();
 
             try {
@@ -144,8 +175,10 @@ public class AddAccountController implements Initializable {
 
             } catch (IOException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error loading dashboard", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading page.");
+                a.setHeaderText("Error");
+                a.show();
             }
 
         } catch (SQLException e) {
@@ -158,7 +191,7 @@ public class AddAccountController implements Initializable {
         List<String> depList = new ArrayList<>();
         String query = "SELECT dep_name FROM department";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -173,7 +206,7 @@ public class AddAccountController implements Initializable {
         List<String> shiftList = new ArrayList<>();
         String query = "SELECT timeslot FROM shift";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -188,7 +221,7 @@ public class AddAccountController implements Initializable {
         List<String> offList = new ArrayList<>();
         String query = "SELECT dotw_name FROM dotweek";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
@@ -204,12 +237,12 @@ public class AddAccountController implements Initializable {
             String shift, String dayoff) throws SQLException {
 
         String query = "INSERT INTO employee (f_name, l_name, dob, contact_no, email, password_hash, " +
-                "dep_id, shift_id, dayoff_id) VALUES (?, ?, ?, ?, ?, ?, " +
+                "dep_id, shift_id, dayoff_id, status) VALUES (?, ?, ?, ?, ?, ?, " +
                 "(SELECT dep_id FROM department WHERE dep_name = ?), " +
                 "(SELECT shift_id FROM shift WHERE timeslot = ?), " +
-                "(SELECT dotw_id FROM dotweek WHERE dotw_name = ?))";
+                "(SELECT dotw_id FROM dotweek WHERE dotw_name = ?), 1)";
 
-        try (Connection conn = dbConnect.connect();
+        try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, fname);
@@ -224,8 +257,10 @@ public class AddAccountController implements Initializable {
 
             pstmt.executeUpdate();
         } catch (SQLException e1) {
-            // TODO Auto-generated catch block
-            JOptionPane.showMessageDialog(null, "Error creating Account: " + e1.getMessage());
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error creating account: " + e1.getMessage());
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 
@@ -249,6 +284,21 @@ public class AddAccountController implements Initializable {
         alert.showAndWait();
     }
 
+    private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
+        String query = "SELECT COUNT(*) AS count FROM employee " +
+                "WHERE dep_id = (SELECT dep_id FROM department WHERE dep_name = 'COH')";
+
+        try (Connection conn = DatabaseConnect.connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, currentEmployeeId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count") >= 1; // Already one assigned
+            }
+        }
+        return false;
+    }
+
     @FXML
     void AccountMenuActionBttn(ActionEvent event) {
         try {
@@ -263,8 +313,10 @@ public class AddAccountController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 
@@ -282,8 +334,10 @@ public class AddAccountController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
         }
 
     }

@@ -15,7 +15,6 @@
         "javaFX/openjfx-24.0.1_windows-x64_bin-sdk/javafx-sdk-24.0.1/lib/javafx-swt.jar",
         "javaFX/openjfx-24.0.1_windows-x64_bin-sdk/javafx-sdk-24.0.1/lib/jdk.jsobject.jar",
         "javaFX/openjfx-24.0.1_windows-x64_bin-sdk/javafx-sdk-24.0.1/lib/jfx.incubator.input.jar",
-        "javaFX/openjfx-24.0.1_windows-x64_bin-sdk/javafx-sdk-24.0.1/lib/jfx.incubator.richtext.jar",
-        "c:\\Program Files\\Java\\mysql-connector-j-9.3.0\\mysql-connector-j-9.3.0.jar"
+        "javaFX/openjfx-24.0.1_windows-x64_bin-sdk/javafx-sdk-24.0.1/lib/jfx.incubator.richtext.jar"
     ]
 }
