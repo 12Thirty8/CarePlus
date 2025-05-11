@@ -3,6 +3,7 @@ package Controllers;
 import java.io.IOException;
 import java.util.Optional;
 
+import db.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -32,6 +34,9 @@ public class COH_LeaveReq {
     private TextField SearchButton;
 
     @FXML
+    private Label nameLabel;
+
+    @FXML
     private AnchorPane hamburgerPane;
 
     private Alert a = new Alert(AlertType.NONE);
@@ -39,6 +44,8 @@ public class COH_LeaveReq {
     @FXML
     public void initialize() {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+        String cohName = DatabaseConnect.getCOHName();
+        nameLabel.setText(cohName != null ? cohName : "Name not found");
     }
 
     @FXML
