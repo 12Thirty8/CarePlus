@@ -168,7 +168,7 @@
                         <TextField prefHeight="25.0" prefWidth="192.0" promptText="Search Requests" style="-fx-background-radius: 20;" />
                      </children>
                   </StackPane>
-                  <TableView fx:id="ProductTable" layoutX="14.0" layoutY="271.0" prefHeight="342.0" prefWidth="653.0" AnchorPane.bottomAnchor="14.600000000000023" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="271.20000000000005">
+                  <TableView fx:id="ProductTable" layoutX="14.0" layoutY="271.0" prefHeight="342.0" prefWidth="700.0" AnchorPane.bottomAnchor="14.600000000000023" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="271.20000000000005">
                      <columns>
                         <TableColumn fx:id="idcol" prefWidth="81.60003697872162" text="Medicine ID" />
                         <TableColumn fx:id="namecol" prefWidth="267.9999694824219" text="Medicine Name" />

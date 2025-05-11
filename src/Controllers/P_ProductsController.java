@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import Controllers.COH.UpdateAccountController;
 import Models.ProductsModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
@@ -124,7 +123,7 @@ public class P_ProductsController implements Initializable {
                         Parent root = loader.load();
 
                         // Get the controller and pass the selected employee's data
-                        UpdateAccountController controller = loader.getController();
+                        P_UpdateProductController controller = loader.getController();
                         controller.loadEmployeeData(selectedItem.getId());
 
                         controller.setRefreshCallback(() -> refreshEmployeeTable());
