@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.PHARMACIST;
 
 import java.io.IOException;
 import java.net.URL;
@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import Controllers.ViewState;
 import Models.StocksModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
