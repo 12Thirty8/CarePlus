@@ -50,6 +50,9 @@ public class P_StocksController implements Initializable {
     private TextField medidtf;
 
     @FXML
+    private Text nameLabel;
+
+    @FXML
     private TextField nametf;
 
     @FXML
@@ -126,9 +129,6 @@ public class P_StocksController implements Initializable {
 
     @FXML
     private Button minimizeBtn;
-
-    @FXML
-    private Text nameLabel;
 
     private ObservableList<StocksModel> EmployeeList = FXCollections.observableArrayList();
 
