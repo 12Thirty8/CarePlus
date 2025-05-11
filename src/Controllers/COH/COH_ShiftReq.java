@@ -1,76 +1,75 @@
-package Controllers;
-
+package Controllers.COH;
 import java.io.IOException;
 import java.util.Optional;
 
-import db.DatabaseConnect;
-import javafx.scene.control.Label;
-import util.SceneLoader;
-
+import Controllers.ViewState;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.AreaChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.util.Duration;
-import util.GetCurrentEmployeeID;
+import util.SceneLoader;
 
-public class COH_DashboardController {
+public class COH_ShiftReq {
+
+    @FXML
+    private Button FilterBttn;
+
+    @FXML
+    private Button LogoutBtn;
+
+    @FXML
+    private TextField SearchButton;
+
+    @FXML
+    private TableView<?> ShiftRequestView;
+
+    @FXML
+    private Button accountBtn;
+
+    @FXML
+    private Button clipboardBtn;
+
+    @FXML
+    private Button closeBtn;
+
+    @FXML
+    private Button crossBtn;
 
     @FXML
     private AnchorPane hamburgerPane;
 
     @FXML
-    private Button minimizedButton, closeButton, AccountMenuBttn, DashboardBttn, hamburgermenuBtn,
-            ScheduleBttn, ScheduleMenuBttn, LogOutBttn, closeBtn;
+    private Button hamburgermenuBtn;
 
     @FXML
-    private TableView<?> StkInTableView;
+    private Button homeBtn;
 
     @FXML
-    private Label TitleText;
+    private Button minimizeBtn;
 
     @FXML
-    private Text nameLabel;
-
-    @FXML
-    private AreaChart<?, ?> AreaChartPanel;
-
-    @FXML
-    private AnchorPane NamePanel, mainPane, TotalRequestPanel;
+    private Button recordsBtn;
 
     private Alert a = new Alert(AlertType.NONE);
 
     @FXML
     public void initialize() {
-
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
-        
-        fadeInNode(TitleText, 0);
-        fadeInNode(NamePanel, 200);
-        fadeInNode(TotalRequestPanel, 200);
-        fadeInNode(AreaChartPanel, 300);
-        fadeInNode(StkInTableView, 400);
-
-        int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
-        String COHName = DatabaseConnect.getCOHName(employeeId);
-        nameLabel.setText(COHName != null ? COHName : "Name not found");
-
     }
 
     @FXML
@@ -84,26 +83,6 @@ public class COH_DashboardController {
         timeline.play();
 
         ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
-    }
-
-    @FXML
-    private void fadeInNode(Node node, double delayMillis) {
-        // node.setOpacity(0); // Start fully transparent
-        FadeTransition fade = new FadeTransition(Duration.millis(800), node);
-        fade.setFromValue(0.0);
-        fade.setToValue(1.0);
-        fade.setCycleCount(1);
-        fade.setDelay(Duration.millis(delayMillis)); // Delay before it starts
-        fade.play();
-    }
-
-    @FXML
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     @FXML
@@ -175,4 +154,5 @@ public class COH_DashboardController {
     void AccountMenuActionBttn(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/COH_AccountManagement.fxml");
     }
+
 }

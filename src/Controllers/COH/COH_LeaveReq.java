@@ -1,8 +1,9 @@
-package Controllers;
+package Controllers.COH;
 
 import java.io.IOException;
 import java.util.Optional;
 
+import Controllers.ViewState;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

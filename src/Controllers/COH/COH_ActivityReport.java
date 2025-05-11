@@ -1,6 +1,8 @@
-package Controllers;
+package Controllers.COH;
 
 import java.io.IOException;
+
+import Controllers.ViewState;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.COH;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,6 +37,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
+import Controllers.ViewState;
 import Models.EmployeeModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;

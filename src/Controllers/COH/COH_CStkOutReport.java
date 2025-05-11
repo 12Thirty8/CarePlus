@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.COH;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -19,10 +19,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class COH_EStkOutReportController {
+public class COH_CStkOutReport {
 
     @FXML
-    private Button FilterBttn, LogoutBtn, StkInBttn, accountBtn, clipboardBtn, closeBtn, crossBtn,
+    private Button FilterBttn, LogoutBtn, StkOutBttn, accountBtn, clipboardBtn, closeBtn, crossBtn,
             hamburgermenuBtn, homeBtn, minimizeBtn, recordsBtn, ExpiredReportsBtn;
 
     @FXML
@@ -30,8 +30,6 @@ public class COH_EStkOutReportController {
 
     @FXML
     private TableView<?> StkInTableView;
-    @FXML
-    private Button CompletedReportBtn;
 
     @FXML
     private AnchorPane hamburgerPane;
@@ -39,8 +37,19 @@ public class COH_EStkOutReportController {
     private Alert a = new Alert(AlertType.NONE);
 
     @FXML
-    public void initialize() {
-        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+    void homeBtnAction(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading Account Management page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
     }
 
     @FXML

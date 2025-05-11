@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AccountManagementController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.COH.AccountManagementController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
@@ -263,7 +263,7 @@
             </AnchorPane>
          </children>
       </HBox>
-      <Button fx:id="closeBtn" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="28.0" prefWidth="24.0" style="-fx-background-color: transparent;" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="6.0">
+      <Button fx:id="closeBtn" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="28.0" prefWidth="24.0" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="6.0">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -272,7 +272,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="minimizeBtn" layoutX="881.0" layoutY="3.0" mnemonicParsing="false" onAction="#minimizeAction" style="-fx-background-color: transparent;" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="40.59999999999995">
+      <Button fx:id="minimizeBtn" layoutX="881.0" layoutY="3.0" mnemonicParsing="false" onAction="#minimizeAction" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="40.59999999999995">
          <graphic>
             <ImageView fitHeight="10.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
