@@ -208,7 +208,7 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TableView fx:id="StkInTableView" editable="true" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
+                  <TableView fx:id="StkInTableView" editable="true" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
                      <columns>
                         <TableColumn prefWidth="100.7999866604805" text="Record ID" />
                         <TableColumn prefWidth="280.00000762939453" text="Activity" />

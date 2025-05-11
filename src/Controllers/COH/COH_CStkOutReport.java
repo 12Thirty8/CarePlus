@@ -3,6 +3,11 @@ package Controllers.COH;
 import java.io.IOException;
 import java.util.Optional;
 
+import Controllers.ViewState;
+import db.DatabaseConnect;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +24,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
+import util.SceneLoader;
 
 public class COH_CStkOutReport {
 
@@ -41,24 +48,33 @@ public class COH_CStkOutReport {
     private Alert a = new Alert(AlertType.NONE);
 
     @FXML
-    void homeBtnAction(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading Account Management page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
+    public void initialize() {
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+        String cohName = DatabaseConnect.getCOHName();
+        nameLabel.setText(cohName != null ? cohName : "Name not found");
     }
 
     @FXML
-    void AccountMenuActionBttn(ActionEvent event) {
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+        double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
+        KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+
+        ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+    }
+
+    @FXML
+    void ExpiredReportsBtnAction (ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ExpiredStkOutReport.fxml");
+    }
+
+    @FXML
+    void StkOutBttnAction (ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_StockInReport.fxml");
     }
 
     @FXML
@@ -93,18 +109,47 @@ public class COH_CStkOutReport {
     }
 
     @FXML
-    void closeAction(ActionEvent event) {
+    private void closeAction(ActionEvent Action) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
+
+    @FXML
+    private void ShiftReqBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ManageShiftRequest.fxml");
+    }
+
+    @FXML
+    private void minimizeAction(ActionEvent event) {
+        // Get the current stage and minimize it
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+    @FXML
+    void clipboardBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ManageShiftRequest.fxml");
+    }
+
+    @FXML
+    private void crossBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_StockInReport.fxml");
 
     }
 
     @FXML
-    void minimizeAction(ActionEvent event) {
-
+    private void homeBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_Dashboard.fxml");
     }
 
     @FXML
-    void toggleHamburgerMenu(ActionEvent event) {
+    private void recordsBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ActivityReports.fxml");
+    }
 
+    @FXML
+    void AccountMenuActionBttn(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_AccountManagement.fxml");
     }
 
 }

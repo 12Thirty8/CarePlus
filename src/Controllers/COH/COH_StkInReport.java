@@ -28,7 +28,7 @@ public class COH_StkInReport {
 
     @FXML
     private Button FilterBttn, hamburgermenuBtn, minimizeBtn, closeBtn, accountBtn, homeBtn,
-            crossBtn, recordsBtn, clipboardBtn, LogoutBtn;
+            crossBtn, recordsBtn, clipboardBtn, LogoutBtn, StkOutBttn;
 
     @FXML
     private TextField SearchButton;
@@ -38,9 +38,6 @@ public class COH_StkInReport {
 
     @FXML
     private TableView<?> StkInTableView;
-
-    @FXML
-    private Button StkOutBttn;
 
     @FXML
     private AnchorPane hamburgerPane;
@@ -100,6 +97,11 @@ public class COH_StkInReport {
             a.setContentText("Error loading page.");
             a.show();
         }
+    }
+
+    @FXML
+    private void StkOutBttnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_CompletedStkOutReport.fxml");
     }
 
     @FXML

@@ -213,7 +213,7 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TableView fx:id="StkInTableView" editable="true" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
+                  <TableView fx:id="StkInTableView" editable="true" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
                      <columns>
                         <TableColumn prefWidth="162.4000671505928" text="Medicine ID" />
                         <TableColumn prefWidth="440.79994201660156" text="Employee ID" />
@@ -223,7 +223,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Button fx:id="CompletedReportBtn" layoutX="378.0" layoutY="207.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="131.0" style="-fx-background-color: #4749D9;" text="Completed Report" textFill="WHITE" AnchorPane.rightAnchor="181.2">
+                  <Button fx:id="CompletedReportBtn" layoutX="378.0" layoutY="207.0" mnemonicParsing="false" onAction="#CompletedReportBtnAction" prefHeight="26.0" prefWidth="131.0" style="-fx-background-color: #4749D9;" text="Completed Report" textFill="WHITE" AnchorPane.rightAnchor="181.2">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>

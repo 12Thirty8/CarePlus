@@ -202,23 +202,21 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <Button fx:id="StkOutBttn" layoutX="650.0" layoutY="207.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="131.0" style="-fx-background-color: #4749D9;" text="Stock Out" textFill="WHITE" AnchorPane.rightAnchor="32.60000000000002">
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
-                  </Button>
                   <TextField fx:id="SearchButton" layoutX="17.0" layoutY="207.0" prefHeight="26.0" prefWidth="194.0" promptText="Search" style="-fx-background-radius: 20;" AnchorPane.leftAnchor="17.0" />
                   <Button fx:id="FilterBttn" layoutX="239.0" layoutY="207.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="88.0" style="-fx-background-color: #F5F5F5; -fx-background-radius: 20;" text="Filter" textFill="#7e7e7e" AnchorPane.leftAnchor="239.0">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TableView fx:id="StkInTableView" editable="true" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
+                  <TableView fx:id="StkInTableView" editable="true" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
                      <columns>
-                        <TableColumn prefWidth="162.3999786376953" text="Medicine ID" />
-                        <TableColumn prefWidth="110.40003967285156" text="Quantity" />
-                        <TableColumn minWidth="8.79998779296875" prefWidth="184.79998779296875" text="Stock In by" />
-                        <TableColumn prefWidth="219.20004272460938" text="Stock In Time" />
+                        <TableColumn fx:id="BatchCol" prefWidth="99.99992752075195" text="Batch ID" />
+                        <TableColumn fx:id="MedCol" prefWidth="129.59996795654297" text="Medicine Name" />
+                        <TableColumn prefWidth="113.59996032714844" text="Stock In Date" />
+                        <TableColumn minWidth="8.79998779296875" prefWidth="120.0" text="Stock In by" />
+                        <TableColumn prefWidth="69.60006713867188" text="Quantity" />
+                        <TableColumn prefWidth="110.40003967285156" text="Expiry Date" />
+                        <TableColumn prefWidth="110.40003967285156" text="Status" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
