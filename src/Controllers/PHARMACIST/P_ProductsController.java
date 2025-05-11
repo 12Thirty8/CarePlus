@@ -49,6 +49,9 @@ public class P_ProductsController implements Initializable {
     private Button addstockBtn;
 
     @FXML
+    private Button movetoStocksBtn;
+
+    @FXML
     private TableView<ProductsModel> ProductTable;
 
     @FXML
@@ -371,6 +374,38 @@ public class P_ProductsController implements Initializable {
                 a.setContentText("Error loading page.");
                 a.show();
             }
+        }
+    }
+
+     @FXML
+    void movetoProductBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Products.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
+        }
+    }
+
+     @FXML
+    void movetoStocksBtnPressed(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.setHeaderText("Error");
+            a.show();
         }
     }
 
