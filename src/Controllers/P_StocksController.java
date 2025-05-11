@@ -138,6 +138,37 @@ public class P_StocksController implements Initializable {
         setupRowContextMenu();
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
+        sintf.setText(Integer.toString(P_DashboardController.employeeId));
+
+        batchidtf.setOnKeyReleased(_ -> {
+            String batchIdText = batchidtf.getText();
+            Connection conn = DatabaseConnect.connect();
+            String sql = "SELECT b.med_id, m.med_name as medName, b.batch_stock, b.batch_exp FROM batch b LEFT JOIN medicine m ON b.med_id = m.med_id WHERE batch_id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, batchIdText);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    int medId = rs.getInt("med_id");
+                    String medName = rs.getString("medName");
+                    int stock = rs.getInt("batch_stock");
+                    java.sql.Date expDate = rs.getDate("batch_exp");
+
+                    // Set the values in the text fields
+                    nametf.setText(medName);
+                    medidtf.setText(String.valueOf(medId));
+                    qtytf.setText(String.valueOf(stock));
+                    expdate.setValue(expDate.toLocalDate());
+                } else {
+                    // Clear the text fields if no result is found
+                    nametf.clear();
+                    medidtf.clear();
+                    qtytf.clear();
+                    expdate.setValue(null);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void setupTableColumns() {
