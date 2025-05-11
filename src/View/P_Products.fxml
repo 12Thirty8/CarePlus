@@ -136,9 +136,9 @@
             </AnchorPane>
             <AnchorPane fx:id="mainPane" prefHeight="628.0" prefWidth="445.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
-                  <StackPane layoutX="289.0" layoutY="18.0" prefHeight="43.0" prefWidth="115.0" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="293.0">
+                  <StackPane layoutX="246.0" layoutY="19.0" prefHeight="43.0" prefWidth="121.0" AnchorPane.leftAnchor="246.0" AnchorPane.rightAnchor="246.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Products" wrappingWidth="151.38195610046387">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Products" wrappingWidth="149.58200073242188">
                            <font>
                               <Font name="Gordita-Bold" size="34.0" />
                            </font>
@@ -171,9 +171,9 @@
                   <TableView fx:id="ProductTable" layoutX="14.0" layoutY="271.0" prefHeight="342.0" prefWidth="700.0" AnchorPane.bottomAnchor="14.600000000000023" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="271.20000000000005">
                      <columns>
                         <TableColumn fx:id="idcol" prefWidth="81.60003697872162" text="Medicine ID" />
-                        <TableColumn fx:id="namecol" prefWidth="267.9999694824219" text="Medicine Name" />
-                        <TableColumn fx:id="catcol" prefWidth="178.39996337890625" text="Category" />
-                        <TableColumn fx:id="desccol" prefWidth="174.4000244140625" text="Description" />
+                        <TableColumn fx:id="namecol" prefWidth="112.0" text="Medicine Name" />
+                        <TableColumn fx:id="catcol" prefWidth="114.0" text="Category" />
+                        <TableColumn fx:id="desccol" prefWidth="109.0" text="Description" />
                      </columns>
                   </TableView>
                   <Button fx:id="addstockBtn" layoutX="603.0" layoutY="233.0" mnemonicParsing="false" onAction="#addstockBtnPressed" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Add Product" textFill="WHITE" AnchorPane.rightAnchor="20.0">
