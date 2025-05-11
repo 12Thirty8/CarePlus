@@ -9,11 +9,13 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import Controllers.COH.UpdateAccountController;
 import Models.ProductsModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,7 +29,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -104,6 +109,89 @@ public class P_ProductsController implements Initializable {
     }
 
     private void setupRowContextMenu() {
+        ProductTable.setRowFactory(_ -> {
+            TableRow<ProductsModel> row = new TableRow<>();
+            ContextMenu contextMenu = new ContextMenu();
+
+            MenuItem updateItem = new MenuItem("Update");
+            MenuItem deleteItem = new MenuItem("Delete");
+
+            updateItem.setOnAction(_ -> {
+                ProductsModel selectedItem = row.getItem();
+                if (selectedItem != null) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_UpdateProduct.fxml"));
+                        Parent root = loader.load();
+
+                        // Get the controller and pass the selected employee's data
+                        UpdateAccountController controller = loader.getController();
+                        controller.loadEmployeeData(selectedItem.getId());
+
+                        controller.setRefreshCallback(() -> refreshEmployeeTable());
+
+                        // Create a new pop-up stage
+                        Stage popupStage = new Stage();
+                        popupStage.setTitle("Update Product");
+                        popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+                        popupStage.initOwner(row.getScene().getWindow()); // Set owner window
+
+                        Scene scene = new Scene(root);
+                        popupStage.setScene(scene);
+                        popupStage.setResizable(false); // Optional: make it fixed size
+                        popupStage.showAndWait(); // Wait until this window is closed (optional)
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        showAlert("Error", "Failed to open update form: " + e.getMessage());
+                    }
+                }
+            });
+
+            deleteItem.setOnAction(_ -> {
+                ProductsModel selectedItem = row.getItem();
+                if (selectedItem != null) {
+                    deleteRow(selectedItem);
+                }
+            });
+
+            contextMenu.getItems().addAll(updateItem, deleteItem);
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(contextMenu));
+
+            return row;
+        });
+    }
+
+    private void deleteRow(ProductsModel item) {
+        // Show confirmation dialog before deleting
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Delete");
+        alert.setHeaderText("Delete this account?");
+        alert.setContentText("Are you sure you want to delete: " + item + "?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                try {
+                    archiveAccount(item.getId()); // Pass the employee ID
+                    ProductTable.getItems().remove(item); // Remove from TableView
+                    showAlert("Success", "Item deleted successfully.");
+                } catch (SQLException e) {
+                    showAlert("Error", "Failed to delete item: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void archiveAccount(int id) throws SQLException {
+        try (Connection conn = DatabaseConnect.connect();
+                PreparedStatement pstmt = conn.prepareStatement(
+                        "DELETE FROM medicine WHERE med_id = ?")) {
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } // Resources will be auto-closed
     }
 
     private void refreshEmployeeTable() {
