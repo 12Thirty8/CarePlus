@@ -117,7 +117,7 @@ public class P_DashboardController implements Initializable {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        r.request_id, r.record_id, r.requestlist_id, e.f_name AS encodedBy, r.request_date, r.status
+                        r.request_id, r.record_id, r.reqlist_id, e.f_name AS encodedBy, r.request_date, r.status
                     FROM request r
                     LEFT JOIN employee e ON r.encoded_by = e.employee_id
                     """;

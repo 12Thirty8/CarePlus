@@ -40,6 +40,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import util.GetCurrentEmployeeID;
 
 public class P_ProductsController implements Initializable {
 
@@ -88,9 +89,14 @@ public class P_ProductsController implements Initializable {
     @FXML
     private Button minimizeBtn;
 
+    @FXML
+    private Text nameLabel;
+
     private ObservableList<ProductsModel> EmployeeList = FXCollections.observableArrayList();
 
     private Alert a = new Alert(AlertType.NONE);
+
+    public static int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
@@ -98,6 +104,8 @@ public class P_ProductsController implements Initializable {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+        String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
+        nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
     }
 
     private void setupTableColumns() {

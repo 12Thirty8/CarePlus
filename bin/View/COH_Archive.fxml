@@ -60,7 +60,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="recordsBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Records" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="recordsBtn" onAction="#recordsBtnAction" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Records" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
@@ -84,7 +84,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="crossBtn" onAction="#crossBtnAction" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
@@ -108,7 +108,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="clipboardBtn" onAction="#clipboardBtnAction" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
@@ -132,7 +132,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="accountBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#AccountMenuActionBttn" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Account" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="accountBtn"  alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#AccountMenuActionBttn" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Account" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
@@ -237,7 +237,7 @@
             </AnchorPane>
          </children>
       </HBox>
-      <Button fx:id="closeBtn" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="24.0" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="6.0">
+      <Button fx:id="closeBtn" onAction="#closeAction" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="24.0" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="6.0">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -246,7 +246,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="minimizeBtn" layoutX="881.0" layoutY="3.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="40.59999999999995">
+      <Button fx:id="minimizeBtn" onAction="#minimizeAction" layoutX="881.0" layoutY="3.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="40.59999999999995">
          <graphic>
             <ImageView fitHeight="10.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                <image>

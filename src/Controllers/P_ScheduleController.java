@@ -3,6 +3,7 @@ package Controllers;
 import java.io.IOException;
 import java.util.Optional;
 
+import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -18,9 +19,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import util.GetCurrentEmployeeID;
 
 public class P_ScheduleController {
 
@@ -51,11 +54,19 @@ public class P_ScheduleController {
     @FXML
     private boolean isHamburgerPaneExtended = false;
 
+    @FXML
+    private Text nameLabel;
+
     private Alert a = new Alert(AlertType.NONE);
+
+    public static int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
     @FXML
     public void initialize() {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+
+        String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
+        nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
     };
 
     @FXML

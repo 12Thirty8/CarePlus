@@ -207,14 +207,14 @@
                   </StackPane>
                   <StackPane layoutX="16.0" layoutY="228.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="228.0">
                      <children>
-                        <TableView fx:id="StkInTableView" prefHeight="386.0" prefWidth="662.0">
+                        <TableView fx:id="StkInTableView" prefHeight="386.0" prefWidth="662.0" stylesheets="@../Styles/table.css">
                            <columns>
                               <TableColumn fx:id="idcol" editable="false" maxWidth="80.0" minWidth="80.0" text="Request ID" />
                               <TableColumn fx:id="recordcol" editable="false" maxWidth="164.80003356933594" minWidth="85.0" prefWidth="151.1999969482422" text="Record ID" />
                               <TableColumn fx:id="listcol" editable="false" maxWidth="164.0" minWidth="84.0" prefWidth="132.0" text="Request List ID" />
                               <TableColumn fx:id="encbycol" editable="false" maxWidth="268.0" minWidth="116.0" prefWidth="116.0" text="Encoded By" />
                               <TableColumn fx:id="reqcol" editable="false" maxWidth="277.60015869140625" minWidth="137.60003662109375" prefWidth="137.60003662109375" text="Request Date" />
-                              <TableColumn fx:id="statcol" editable="false" maxWidth="146.39993896484373" minWidth="75.0" prefWidth="96.7998046875" text="Status" />
+                              <TableColumn fx:id="statcol" editable="false" maxWidth="146.39993896484373" minWidth="75.0" prefWidth="91.99996337890627" text="Status" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
