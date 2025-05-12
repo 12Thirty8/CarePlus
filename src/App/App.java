@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -20,6 +21,8 @@ public class App extends Application {
             primaryStage.initStyle(StageStyle.UNDECORATED);
             // primaryStage.setMinWidth(942);
             // primaryStage.setMinHeight(670);
+            primaryStage.setTitle("Care ++");
+            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/ICONS/1Care++.png")));
             primaryStage.show();
 
         } catch (IOException e) {

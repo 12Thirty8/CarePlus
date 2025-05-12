@@ -1,6 +1,5 @@
 package Controllers.PHARMACIST;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,16 +11,12 @@ import java.util.ResourceBundle;
 import db.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import util.SceneLoader;
 import javafx.scene.control.Alert.AlertType;
 
 public class P_StkInController implements Initializable {
@@ -51,10 +46,6 @@ public class P_StkInController implements Initializable {
 
     private Connection connection = DatabaseConnect.connect();
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         stkinbytf.setText(Integer.toString(P_DashboardController.employeeId));
@@ -62,20 +53,8 @@ public class P_StkInController implements Initializable {
 
     @FXML
     void BackBttnAction(ActionEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+        SceneLoader.loadScene(event, "/View/P_Stocks.fxml");
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading Account Management page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
     }
 
     @FXML
