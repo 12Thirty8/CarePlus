@@ -123,7 +123,7 @@ public class N_RequestMonitorController implements Initializable {
         nameLabel.setText(nurseName != null ? nurseName : "Name not found");
 
         initializeRowSelectionListener();
-        // Setup columns for listTableView
+        initializeRowSelectionListener2();
         batchidcol.setCellValueFactory(new PropertyValueFactory<>("id"));
         namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
         dosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
@@ -175,6 +175,8 @@ public class N_RequestMonitorController implements Initializable {
                 ObservableList<ListModel> listItems = FXCollections.observableArrayList();
                 reqidtf.setText(String.valueOf(newSelection.getReqid()));
                 recordidtf.setText(String.valueOf(newSelection.getRecordid()));
+                batchidtf.clear();
+                qtytf.clear();
                 try {
                     Connection conn = DatabaseConnect.connect();
                     String query = """
@@ -216,6 +218,15 @@ public class N_RequestMonitorController implements Initializable {
                     dosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
                     qtycol.setCellValueFactory(new PropertyValueFactory<>("qty"));
                 }
+            }
+        });
+    }
+
+    private void initializeRowSelectionListener2() {
+        listTableView.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
+            if (newSelection != null) {
+                batchidtf.setText(String.valueOf(newSelection.getId()));
+                qtytf.setText(String.valueOf(newSelection.getQuantity()));
             }
         });
     }
