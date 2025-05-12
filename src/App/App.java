@@ -21,7 +21,7 @@ public class App extends Application {
             // primaryStage.setMinWidth(942);
             // primaryStage.setMinHeight(670);
             primaryStage.show();
-
+            // tae
         } catch (IOException e) {
             e.printStackTrace();
         }
