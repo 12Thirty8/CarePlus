@@ -40,7 +40,7 @@ public class N_RequestMonitorController implements Initializable {
     private Button LogoutBtn;
 
     @FXML
-    private Button SubmitBtn;
+    private Button newreqBtn;
 
     @FXML
     private Button clipboardBtn;
@@ -119,7 +119,7 @@ public class N_RequestMonitorController implements Initializable {
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         setupTableColumns();
         refreshEmployeeTable();
-        String nurseName = DatabaseConnect.getPharmacistName(employeeId);
+        String nurseName = DatabaseConnect.getNurseName(employeeId);
         nameLabel.setText(nurseName != null ? nurseName : "Name not found");
 
         initializeRowSelectionListener();
@@ -234,8 +234,8 @@ public class N_RequestMonitorController implements Initializable {
     }
 
     @FXML
-    void SubmitBtnAction(ActionEvent event) {
-
+    void newreqBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_PharmacyRequest.fxml");
     }
 
     @FXML

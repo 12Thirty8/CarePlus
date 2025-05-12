@@ -213,7 +213,7 @@
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="SubmitBtn" layoutX="18.0" layoutY="582.0" mnemonicParsing="false" onAction="#SubmitBtnAction" prefHeight="34.0" prefWidth="368.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Add New Request" textFill="WHITE">
+                  <Button fx:id="newreqBtn" layoutX="18.0" layoutY="582.0" mnemonicParsing="false" onAction="#newreqBtnPressed" prefHeight="34.0" prefWidth="368.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Add New Request" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
