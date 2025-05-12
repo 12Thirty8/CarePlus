@@ -23,7 +23,6 @@ public class App extends Application {
             // primaryStage.setMinHeight(670);
             primaryStage.setTitle("Care ++");
             primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/ICONS/1Care++.png")));
-
             primaryStage.show();
             
         } catch (IOException e) {
