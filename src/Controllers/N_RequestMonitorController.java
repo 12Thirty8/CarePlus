@@ -173,6 +173,8 @@ public class N_RequestMonitorController implements Initializable {
             if (newSelection != null) {
                 int selectedRequestId = newSelection.getReqid();
                 ObservableList<ListModel> listItems = FXCollections.observableArrayList();
+                reqidtf.setText(String.valueOf(newSelection.getReqid()));
+                recordidtf.setText(String.valueOf(newSelection.getRecordid()));
                 try {
                     Connection conn = DatabaseConnect.connect();
                     String query = """
