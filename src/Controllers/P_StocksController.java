@@ -15,6 +15,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -53,25 +55,29 @@ public class P_StocksController implements Initializable {
     private Text nameLabel;
 
     @FXML
-    private TextField nametf;
+    private ComboBox<String> nametf;
 
-    @FXML
-    private TableColumn<?, ?> qtycol;
+    private ObservableList<String> allMedicineNames = FXCollections.observableArrayList();
+
+    private FilteredList<String> filteredMedicineNames;
 
     @FXML
     private TextField qtytf;
 
     @FXML
-    private TableColumn<?, ?> sinbycol;
+    private TableColumn<StocksModel, String> sinbycol;
 
     @FXML
-    private TableColumn<?, ?> sindatecol;
+    private TableColumn<StocksModel, String> sindatecol;
+
+    @FXML
+    private TableColumn<StocksModel, String> dosecol;
 
     @FXML
     private TextField sintf;
 
     @FXML
-    private TableColumn<?, ?> statcol;
+    private TableColumn<StocksModel, String> statcol;
 
     @FXML
     private Button updatebtn;
@@ -84,6 +90,9 @@ public class P_StocksController implements Initializable {
 
     @FXML
     private TextField batchidtf;
+
+    @FXML
+    private TextField dosetf;
 
     @FXML
     private Button movetoProductBtn;
@@ -119,10 +128,7 @@ public class P_StocksController implements Initializable {
     private TableColumn<StocksModel, String> namecol;
 
     @FXML
-    private TableColumn<StocksModel, String> sincol;
-
-    @FXML
-    private TableColumn<StocksModel, Integer> stockcol;
+    private TableColumn<StocksModel, Integer> qtycol;
 
     @FXML
     private Button closeBtn;
@@ -142,16 +148,150 @@ public class P_StocksController implements Initializable {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+        loadMedicineNames();
+        setupMedicineComboBox();
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
+        sintf.setText(Integer.toString(P_DashboardController.employeeId));
+
+        batchidtf.setOnKeyReleased(_ -> {
+            String batchIdText = batchidtf.getText();
+            Connection conn = DatabaseConnect.connect();
+            String sql = "SELECT b.med_id, m.med_name as medName, b.batch_stock, b.batch_dosage, b.batch_exp FROM batch b LEFT JOIN medicine m ON b.med_id = m.med_id WHERE batch_id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, batchIdText);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    int medId = rs.getInt("med_id");
+                    int stock = rs.getInt("batch_stock");
+                    String dosage = rs.getString("batch_dosage");
+                    java.sql.Date expDate = rs.getDate("batch_exp");
+
+                    // Set the values in the text fields
+                    nametf.setValue(rs.getString("medName"));
+                    medidtf.setText(String.valueOf(medId));
+                    qtytf.setText(String.valueOf(stock));
+                    expdate.setValue(expDate.toLocalDate());
+                    dosetf.setText(dosage);
+
+                } else {
+                    nametf.setValue(null);
+                    medidtf.clear();
+                    qtytf.clear();
+                    expdate.setValue(null);
+                    dosetf.clear();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void loadMedicineNames() {
+        allMedicineNames.clear();
+        try {
+            Connection conn = DatabaseConnect.connect();
+            String query = "SELECT med_name FROM medicine";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                allMedicineNames.add(rs.getString("med_name"));
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupMedicineComboBox() {
+        if (allMedicineNames == null) {
+            allMedicineNames = FXCollections.observableArrayList();
+        }
+        nametf.setItems(allMedicineNames);
+
+        if (!allMedicineNames.isEmpty()) {
+            filteredMedicineNames = new FilteredList<>(allMedicineNames, _ -> true);
+            nametf.setItems(filteredMedicineNames);
+
+            nametf.getEditor().textProperty().addListener((_, _, newValue) -> {
+                filteredMedicineNames.setPredicate(item -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    return item.toLowerCase().contains(lowerCaseFilter);
+                });
+
+                boolean exactMatch = false;
+                if (newValue != null && !newValue.isEmpty()) {
+                    try {
+                        Connection conn = DatabaseConnect.connect();
+                        String query = "SELECT COUNT(*) FROM medicine WHERE LOWER(med_name) = ?";
+                        PreparedStatement pstmt = conn.prepareStatement(query);
+                        pstmt.setString(1, newValue.toLowerCase());
+                        ResultSet rs = pstmt.executeQuery();
+                        if (rs.next() && rs.getInt(1) > 0) {
+                            exactMatch = true;
+                        }
+                        rs.close();
+                        pstmt.close();
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (newValue != null && !newValue.isEmpty() && !filteredMedicineNames.isEmpty() && !exactMatch) {
+                    if (!nametf.isShowing()) {
+                        nametf.show();
+                    }
+                } else {
+                    nametf.hide();
+                }
+
+                if (newValue == null || newValue.isEmpty()) {
+                    nametf.setValue(null);
+                }
+            });
+            nametf.valueProperty().addListener((_, _, newVal) -> {
+                if (newVal != null && !newVal.isEmpty()) {
+                    try {
+                        Connection conn = DatabaseConnect.connect();
+                        String query = "SELECT med_id FROM medicine WHERE med_name = ?";
+                        PreparedStatement pstmt = conn.prepareStatement(query);
+                        pstmt.setString(1, newVal);
+                        ResultSet rs = pstmt.executeQuery();
+
+                        if (rs.next()) {
+                            medidtf.setText(String.valueOf(rs.getInt("med_id")));
+                        }
+
+                        rs.close();
+                        pstmt.close();
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 
     private void setupTableColumns() {
-        idcol.setCellValueFactory(new PropertyValueFactory<>("batchId"));
-        namecol.setCellValueFactory(new PropertyValueFactory<>("medName"));
-        stockcol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        qtycol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        dosecol.setCellValueFactory(new PropertyValueFactory<>("dose"));
         expcol.setCellValueFactory(new PropertyValueFactory<>("expDate"));
-        sincol.setCellValueFactory(new PropertyValueFactory<>("inBy"));
+        sinbycol.setCellValueFactory(new PropertyValueFactory<>("sinby"));
+        sindatecol.setCellValueFactory(new PropertyValueFactory<>("sinDate"));
+        statcol.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        StockTable.setItems(EmployeeList);
     }
 
     private void setupRowContextMenu() {
@@ -163,10 +303,18 @@ public class P_StocksController implements Initializable {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        b.batch_id, m.med_name AS medName, b.batch_stock, b.batch_exp, e.f_name AS stockinBy
+                        b.batch_id,
+                        m.med_name AS medName,
+                        b.batch_stock,
+                        b.batch_dosage,
+                        b.batch_exp,
+                        CONCAT(COALESCE(e.f_name, ''), ' ', COALESCE(e.l_name, '')) AS stockinBy,
+                        b.stockin_date,
+                        s.status_name AS status
                     FROM batch b
                     LEFT JOIN employee e ON b.stockin_by = e.employee_id
                     LEFT JOIN medicine m ON b.med_id = m.med_id
+                    LEFT JOIN stockstatus s ON b.status_id = s.status_id
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
@@ -176,8 +324,11 @@ public class P_StocksController implements Initializable {
                         rs.getInt("batch_id"),
                         rs.getString("medName"),
                         rs.getInt("batch_stock"),
+                        rs.getString("batch_dosage"),
                         rs.getDate("batch_exp"),
-                        rs.getString("stockinBy")));
+                        rs.getString("stockinBy"),
+                        rs.getDate("stockin_date"),
+                        rs.getString("status")));
             }
 
             StockTable.setItems(EmployeeList);
@@ -191,7 +342,6 @@ public class P_StocksController implements Initializable {
     }
 
     @FXML
-
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
         double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
@@ -254,17 +404,44 @@ public class P_StocksController implements Initializable {
 
     @FXML
     void addstockBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_StockIn.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
+        String medId = medidtf.getText();
+        String quantity = qtytf.getText();
+        String dose = dosetf.getText();
+        String expDate = expdate.getValue() != null ? expdate.getValue().toString() : null;
+        String stockinDate = java.time.LocalDate.now().toString();
+
+        if (medId.isEmpty() || quantity.isEmpty() || expDate == null) {
+            showAlert("Error", "Please fill in all fields.");
+            return;
+        }
+
+        try {
+            Connection conn = DatabaseConnect.connect();
+            String sql = "INSERT INTO batch ( med_id, batch_stock, batch_dosage, batch_exp, stockin_by, stockin_date, status_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, medId);
+            pstmt.setString(2, quantity);
+            pstmt.setString(3, dose);
+            pstmt.setString(4, expDate);
+            pstmt.setString(6, stockinDate);
+            pstmt.setInt(5, employeeId);
+            pstmt.setInt(7, 7); // 7 is the ID for "Available" status
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                showAlert("Success", "Stock added successfully.");
+                refreshEmployeeTable();
+                clearBtnPressed(event);
+            } else {
+                showAlert("Error", "Failed to add stock.");
+            }
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
             e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
+            showAlert("Error", "Database error: " + e.getMessage());
         }
     }
 
@@ -332,18 +509,60 @@ public class P_StocksController implements Initializable {
 
     @FXML
     private void minimizeAction(ActionEvent event) {
-        // Get the current stage and minimize it
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.setIconified(true);
     }
 
     @FXML
     void clearBtnPressed(ActionEvent event) {
-
+        batchidtf.clear();
+        nametf.setValue(null);
+        medidtf.clear();
+        qtytf.clear();
+        expdate.setValue(null);
+        dosetf.clear();
     }
 
     @FXML
     private void updatebtnPressed(ActionEvent event) {
+        String batchId = batchidtf.getText();
+        String medId = medidtf.getText();
+        String quantity = qtytf.getText();
+        String dose = dosetf.getText();
+        String expDate = expdate.getValue() != null ? expdate.getValue().toString() : null;
+        String stockinDate = java.time.LocalDate.now().toString();
 
+        if (batchId.isEmpty() || medId.isEmpty() || quantity.isEmpty() || expDate == null) {
+            showAlert("Error", "Please fill in all fields.");
+            return;
+        }
+
+        try {
+            Connection conn = DatabaseConnect.connect();
+            String sql = "UPDATE batch SET med_id = ?, batch_stock = ?, batch_dosage = ?, batch_exp = ?, stockin_by = ?, stockin_date = ? WHERE batch_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, medId);
+            pstmt.setString(2, quantity);
+            pstmt.setString(3, dose);
+            pstmt.setString(4, expDate);
+            pstmt.setInt(5, employeeId);
+            pstmt.setString(6, stockinDate);
+            pstmt.setString(7, batchId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                showAlert("Success", "Stock updated successfully.");
+                refreshEmployeeTable();
+                clearBtnPressed(event);
+            } else {
+                showAlert("Error", "Failed to update stock.");
+            }
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Database error: " + e.getMessage());
+        }
     }
 }
