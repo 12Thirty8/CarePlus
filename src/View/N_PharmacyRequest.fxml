@@ -11,54 +11,61 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="535.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_PharmacyReq">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="593.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_PharmacyReq">
    <children>
-      <Pane layoutX="13.0" layoutY="14.0" prefHeight="590.0" prefWidth="509.0" style="-fx-background-color: White; -fx-background-radius: 12;">
+      <Pane layoutX="13.0" layoutY="14.0" prefHeight="570.0" prefWidth="574.0" style="-fx-background-color: White; -fx-background-radius: 12;">
          <children>
-            <Pane layoutX="13.0" layoutY="67.0" prefHeight="424.0" prefWidth="483.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
+            <Pane layoutX="13.0" layoutY="67.0" prefHeight="424.0" prefWidth="549.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
                <children>
                   <Label layoutX="21.0" layoutY="14.0" text="Request Information">
                      <font>
                         <Font name="Gordita-Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="21.0" layoutY="55.0" text="Nurse ID" />
-                  <TextField fx:id="Nnametf" layoutX="21.0" layoutY="81.0" prefHeight="26.0" prefWidth="180.0" promptText="Nurse ID" style="-fx-background-radius: 5;" />
-                  <Label layoutX="21.0" layoutY="126.0" text="Medicine Name:">
+                  <Label layoutX="21.0" layoutY="57.0" text="Nurse ID" />
+                  <TextField fx:id="Nnametf" layoutX="21.0" layoutY="80.0" prefHeight="26.0" prefWidth="180.0" promptText="Nurse ID" style="-fx-background-radius: 5;" />
+                  <Label layoutX="21.0" layoutY="115.0" text="Medicine Name:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="qtytf" layoutX="21.0" layoutY="223.0" prefHeight="26.0" prefWidth="180.0" promptText="Quantity" style="-fx-background-radius: 5;" />
-                  <Label layoutX="21.0" layoutY="197.0" text="Quantity (Qty)">
+                  <TextField fx:id="qtytf" layoutX="21.0" layoutY="249.0" prefHeight="26.0" prefWidth="180.0" promptText="Quantity" style="-fx-background-radius: 5;" />
+                  <Label layoutX="22.0" layoutY="226.0" text="Quantity (Qty)">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="medicinetf" layoutX="21.0" layoutY="152.0" prefHeight="26.0" prefWidth="180.0" promptText="Medicine Name" style="-fx-background-radius: 5;" />
-                  <Label layoutX="21.0" layoutY="268.0" text="Record ID">
+                  <TextField fx:id="medicinetf" layoutX="21.0" layoutY="137.0" prefHeight="26.0" prefWidth="180.0" promptText="Medicine Name" style="-fx-background-radius: 5;" />
+                  <Label layoutX="21.0" layoutY="282.0" text="Record ID">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="recordtf" layoutX="21.0" layoutY="294.0" prefHeight="26.0" prefWidth="180.0" promptText="Record ID" style="-fx-background-radius: 5;" />
+                  <TextField fx:id="recordtf" layoutX="21.0" layoutY="303.0" prefHeight="26.0" prefWidth="180.0" promptText="Record ID" style="-fx-background-radius: 5;" />
                   <Label layoutX="221.0" layoutY="46.0" text="List of requested medicines:">
                      <font>
                         <Font name="Gordita-Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TableView layoutX="221.0" layoutY="80.0" prefHeight="249.0" prefWidth="253.0" stylesheets="@../Styles/table.css">
+                  <TableView layoutX="221.0" layoutY="80.0" prefHeight="249.0" prefWidth="319.0" stylesheets="@../Styles/table.css">
                      <columns>
                         <TableColumn prefWidth="44.0" text="ID" />
                         <TableColumn prefWidth="104.0" text="Name" />
-                        <TableColumn prefWidth="70.4000244140625" text="Qty" />
+                        <TableColumn prefWidth="70.4000244140625" text="Dosage" />
+                        <TableColumn prefWidth="93.4000244140625" text="Qty" />
                      </columns>
                   </TableView>
-                  <Button fx:id="AddMedBtn" layoutX="17.0" layoutY="364.0" mnemonicParsing="false" onAction="#AddMedBtnAction" prefHeight="34.0" prefWidth="449.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Add Medicine" textFill="WHITE">
+                  <Button fx:id="AddMedBtn" layoutX="17.0" layoutY="364.0" mnemonicParsing="false" onAction="#AddMedBtnAction" prefHeight="34.0" prefWidth="522.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Add Medicine" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
+                  <Label layoutX="23.0" layoutY="169.0" text="Dosage">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="medicinetf1" layoutX="21.0" layoutY="192.0" prefHeight="26.0" prefWidth="180.0" promptText="Medicine Name" style="-fx-background-radius: 5;" />
                </children>
             </Pane>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="14.0" prefHeight="44.0" prefWidth="368.0" text="Pharmacy Request">
@@ -75,12 +82,12 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="ClearBtn" layoutX="14.0" layoutY="523.0" mnemonicParsing="false" onAction="#ClearBtnAction" prefHeight="34.0" prefWidth="236.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
+            <Button fx:id="ClearBtn" layoutX="14.0" layoutY="523.0" mnemonicParsing="false" onAction="#ClearBtnAction" prefHeight="34.0" prefWidth="268.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
                <font>
                   <Font name="Gordita-Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="SubmitBtn" layoutX="260.0" layoutY="523.0" mnemonicParsing="false" onAction="#SubmitBtnAction" prefHeight="34.0" prefWidth="236.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Submit Request" textFill="WHITE">
+            <Button fx:id="SubmitBtn" layoutX="292.0" layoutY="523.0" mnemonicParsing="false" onAction="#SubmitBtnAction" prefHeight="34.0" prefWidth="268.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Submit Request" textFill="WHITE">
                <font>
                   <Font name="Gordita-Bold" size="14.0" />
                </font>
