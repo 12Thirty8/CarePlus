@@ -362,23 +362,21 @@ public class P_StocksController implements Initializable {
 
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Schedule.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Schedule.fxml");
     }
 
     @FXML
     private void PharmacyBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Stocks.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Stocks.fxml");
     }
 
     @FXML
     void homeBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Dashboard.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Dashboard.fxml");
     }
 
     @FXML
     void addstockBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_StockIn.fxml"); 
-
         String medId = medidtf.getText();
         String quantity = qtytf.getText();
         String dose = dosetf.getText();
@@ -421,12 +419,12 @@ public class P_StocksController implements Initializable {
 
     @FXML
     void movetoProductBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Products.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Products.fxml");
     }
 
-     @FXML
+    @FXML
     void movetoStocksBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Stocks.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Stocks.fxml");
     }
 
     @FXML
