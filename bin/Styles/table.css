@@ -4,7 +4,7 @@
     -fx-control-inner-background: white;
     -fx-border-color: transparent;
     -fx-table-cell-border-color: transparent;
-    -fx-padding: 5;
+    /* -fx-padding: 16; */
     /* -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0.1, 0, 4); */
     -fx-background-radius: 12;
     -fx-border-radius: 12;
@@ -40,6 +40,7 @@
 }
 
 .table-cell {
+    -fx-padding: 6 10 6 10;
     -fx-text-fill: #333333;
 }
 
