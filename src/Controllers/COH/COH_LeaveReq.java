@@ -135,7 +135,6 @@ public class COH_LeaveReq {
     @FXML
     private void crossBtnAction(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/COH_StockInReport.fxml");
-
     }
 
     @FXML
