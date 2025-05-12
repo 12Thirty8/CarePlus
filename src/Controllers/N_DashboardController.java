@@ -117,7 +117,7 @@ public class N_DashboardController {
 
     @FXML
     private void crossBtnAction(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_PharmacyRequest.fxml");
+        SceneLoader.loadScene(event, "/View/N_RequestMonitor.fxml");
 
     }
 

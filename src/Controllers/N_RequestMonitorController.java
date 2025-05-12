@@ -1,15 +1,11 @@
 package Controllers;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-
 import Models.ListModel;
 import Models.MyRequestModel;
-import Models.RequestModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -20,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -118,8 +113,6 @@ public class N_RequestMonitorController implements Initializable {
 
     public static int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
-    private Alert a = new Alert(Alert.AlertType.NONE);
-
     private ObservableList<MyRequestModel> EmployeeList = FXCollections.observableArrayList();
 
     @Override
@@ -128,6 +121,13 @@ public class N_RequestMonitorController implements Initializable {
         refreshEmployeeTable();
         String nurseName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(nurseName != null ? nurseName : "Name not found");
+
+        initializeRowSelectionListener();
+        // Setup columns for listTableView
+        batchidcol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        dosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
+        qtycol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
     }
 
     private void setupTableColumns() {
@@ -165,6 +165,57 @@ public class N_RequestMonitorController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void initializeRowSelectionListener() {
+        reqTableView.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
+            if (newSelection != null) {
+                int selectedRequestId = newSelection.getReqid();
+                ObservableList<ListModel> listItems = FXCollections.observableArrayList();
+                try {
+                    Connection conn = DatabaseConnect.connect();
+                    String query = """
+                            SELECT
+                                l.batch_id,
+                                m.med_name AS name,
+                                b.batch_dosage,
+                                l.qty
+                            FROM
+                                requestlist l
+                            JOIN
+                                batch b ON l.batch_id = b.batch_id
+                            LEFT JOIN
+                                medicine m ON b.med_id = m.med_id
+                            WHERE
+                                l.req_id = ?
+                            """;
+                    PreparedStatement pstmt = conn.prepareStatement(query);
+                    pstmt.setInt(1, selectedRequestId);
+                    ResultSet rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        listItems.add(new ListModel(
+                                rs.getInt("batch_id"),
+                                rs.getString("name"),
+                                rs.getString("batch_dosage"),
+                                rs.getInt("qty")));
+                    }
+                    listTableView.setItems(listItems);
+                    rs.close();
+                    pstmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    // Removed instance initializer block; moved logic to initialize()
+                    initializeRowSelectionListener();
+                    // Optionally, setup columns for listTableView if not already done elsewhere
+                    batchidcol.setCellValueFactory(new PropertyValueFactory<>("batchid"));
+                    namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
+                    dosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
+                    qtycol.setCellValueFactory(new PropertyValueFactory<>("qty"));
+                }
+            }
+        });
     }
 
     @FXML

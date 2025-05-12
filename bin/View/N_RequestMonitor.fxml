@@ -147,7 +147,7 @@
                      </children>
                   </StackPane>
                   <StackPane layoutX="16.0" layoutY="233.0" />
-                  <TableView fx:id="reqTableView" layoutX="16.0" layoutY="106.4" prefHeight="376.0" prefWidth="368.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="149.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="433.0" AnchorPane.topAnchor="106.0">
+                  <TableView fx:id="reqTableView" layoutX="16.0" layoutY="106.4" prefHeight="376.0" prefWidth="368.0" stylesheets="@../Styles/table.css">
                      <columns>
                         <TableColumn fx:id="idcol" editable="false" maxWidth="118.0" minWidth="80.0" prefWidth="118.0" text="Request ID" />
                         <TableColumn fx:id="recordcol" editable="false" maxWidth="164.80003356933594" minWidth="85.0" prefWidth="91.0" text="Record ID" />
@@ -158,7 +158,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <TableView fx:id="reqTableView1" layoutX="428.0" layoutY="106.0" prefHeight="270.0" prefWidth="368.0" stylesheets="@../Styles/table.css">
+                  <TableView fx:id="listTableView" layoutX="428.0" layoutY="106.0" prefHeight="270.0" prefWidth="368.0" stylesheets="@../Styles/table.css">
                      <columns>
                         <TableColumn fx:id="batchidcol" editable="false" maxWidth="118.0" minWidth="80.0" prefWidth="94.39990234375" text="Batch ID" />
                         <TableColumn fx:id="namecol" editable="false" maxWidth="183.99993896484375" minWidth="85.0" prefWidth="126.40005493164062" text="Medicine Name" />
