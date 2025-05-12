@@ -13,7 +13,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         System.setProperty("prism.lcdtext", "false");
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/N_RequestMonitor.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setResizable(true);
@@ -24,7 +24,7 @@ public class App extends Application {
             primaryStage.setTitle("Care ++");
             primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/ICONS/1Care++.png")));
             primaryStage.show();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -2,73 +2,74 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="535.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PHARMACIST.P_StkInController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="267.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PHARMACIST.P_StkInController">
    <children>
-      <Pane prefHeight="83.0" prefWidth="535.0" style="-fx-background-color: #0B69B9;">
+      <Pane layoutX="15.0" layoutY="51.0" prefHeight="509.0" prefWidth="239.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <children>
-            <Text layoutX="21.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stock In">
+            <Label layoutX="21.0" layoutY="14.0" text="Information:">
                <font>
-                  <Font name="Gordita-Black" size="34.0" />
+                  <Font name="Gordita-Bold" size="15.0" />
                </font>
-            </Text>
-            <Button fx:id="BackBttn" layoutX="237.0" layoutY="16.0" mnemonicParsing="false" onAction="#BackBttnAction" prefHeight="44.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-padding: 10;">
-               <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../ICONS/Back%20Arrow.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            </Label>
+            <Label layoutX="22.0" layoutY="49.0" text="Name:">
+               <font>
+                  <Font name="Gordita-Regular" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nametf" layoutX="19.0" layoutY="63.0" prefHeight="26.0" prefWidth="197.0" promptText="Name" />
+            <Label layoutX="21.0" layoutY="109.0" text="Quantity:">
+               <font>
+                  <Font name="Gordita-Regular" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="qtytf" layoutX="19.0" layoutY="124.0" prefHeight="26.0" prefWidth="197.0" promptText="Quantity" />
+            <Label layoutX="23.0" layoutY="391.0" text="Stock In By:">
+               <font>
+                  <Font name="Gordita-Regular" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="stkinbytf" layoutX="20.0" layoutY="408.0" prefHeight="26.0" prefWidth="197.0" />
+            <Label layoutX="21.0" layoutY="171.0" text="Category:">
+               <font>
+                  <Font name="Gordita-Regular" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="232.0" text="Expiry:">
+               <font>
+                  <Font name="Gordita-Regular" size="12.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="expdate" layoutX="19.0" layoutY="248.0" prefHeight="26.0" prefWidth="197.0" promptText="Expiry" />
+            <Button fx:id="addstkBtn" layoutX="12.0" layoutY="461.0" mnemonicParsing="false" onAction="#addstkBtnPressed" prefHeight="34.0" prefWidth="213.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Save Changes" textFill="WHITE">
+               <font>
+                  <Font name="Gordita-Bold" size="14.0" />
+               </font>
             </Button>
+            <PasswordField fx:id="cattf" layoutX="19.0" layoutY="187.0" prefHeight="25.0" prefWidth="197.0" promptText="Category" />
          </children>
       </Pane>
-      <AnchorPane layoutY="83.0" prefHeight="537.0" prefWidth="535.0">
-         <children>
-            <VBox layoutX="14.0" layoutY="8.0" prefHeight="295.0" prefWidth="508.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
-                     <font>
-                        <Font name="Gordita-Bold" size="18.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="nametf" promptText="Name" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity:">
-                     <font>
-                        <Font name="Gordita-Bold" size="18.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="qtytf" promptText="Qty" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category:">
-                     <font>
-                        <Font name="Gordita-Bold" size="18.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="cattf" promptText="Set Category" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expiry:">
-                     <font>
-                        <Font name="Gordita-Bold" size="18.0" />
-                     </font>
-                  </Text>
-                  <DatePicker fx:id="expdate" prefHeight="26.0" prefWidth="188.0" promptText="Set Expiry Date" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stock In By:">
-                     <font>
-                        <Font name="Gordita-Bold" size="18.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="stkinbytf" editable="false" focusTraversable="false" />
-               </children>
-            </VBox>
-            <Button fx:id="addstkBtn" layoutX="168.0" layoutY="391.0" mnemonicParsing="false" onAction="#addstkBtnPressed" prefHeight="26.0" prefWidth="200.0" text="Add Stock" />
-         </children>
-      </AnchorPane>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="89.0" layoutY="7.0" prefHeight="44.0" prefWidth="90.0" text="Stock In">
+         <font>
+            <Font name="Gordita-Bold" size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="BackBttn" layoutX="6.0" layoutY="7.0" mnemonicParsing="false" onAction="#BackBttnAction" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../ICONS/Back%20Arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
-</Pane>
+</AnchorPane>
