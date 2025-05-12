@@ -15,6 +15,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -53,7 +55,11 @@ public class P_StocksController implements Initializable {
     private Text nameLabel;
 
     @FXML
-    private TextField nametf;
+    private ComboBox<String> nametf;
+
+    private ObservableList<String> allMedicineNames = FXCollections.observableArrayList();
+
+    private FilteredList<String> filteredMedicineNames;
 
     @FXML
     private TextField qtytf;
@@ -136,6 +142,8 @@ public class P_StocksController implements Initializable {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+        loadMedicineNames();
+        setupMedicineComboBox();
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
         sintf.setText(Integer.toString(P_DashboardController.employeeId));
@@ -149,18 +157,16 @@ public class P_StocksController implements Initializable {
                 ResultSet rs = pstmt.executeQuery();
                 if (rs.next()) {
                     int medId = rs.getInt("med_id");
-                    String medName = rs.getString("medName");
                     int stock = rs.getInt("batch_stock");
                     java.sql.Date expDate = rs.getDate("batch_exp");
 
                     // Set the values in the text fields
-                    nametf.setText(medName);
+                    nametf.setValue(rs.getString("medName"));
                     medidtf.setText(String.valueOf(medId));
                     qtytf.setText(String.valueOf(stock));
                     expdate.setValue(expDate.toLocalDate());
                 } else {
-                    // Clear the text fields if no result is found
-                    nametf.clear();
+                    nametf.setValue(null);
                     medidtf.clear();
                     qtytf.clear();
                     expdate.setValue(null);
@@ -169,6 +175,100 @@ public class P_StocksController implements Initializable {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void loadMedicineNames() {
+        allMedicineNames.clear();
+        try {
+            Connection conn = DatabaseConnect.connect();
+            String query = "SELECT med_name FROM medicine";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                allMedicineNames.add(rs.getString("med_name"));
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupMedicineComboBox() {
+        if (allMedicineNames == null) {
+            allMedicineNames = FXCollections.observableArrayList();
+        }
+        nametf.setItems(allMedicineNames);
+
+        if (!allMedicineNames.isEmpty()) {
+            filteredMedicineNames = new FilteredList<>(allMedicineNames, _ -> true);
+            nametf.setItems(filteredMedicineNames);
+
+            nametf.getEditor().textProperty().addListener((_, _, newValue) -> {
+                filteredMedicineNames.setPredicate(item -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    return item.toLowerCase().contains(lowerCaseFilter);
+                });
+
+                boolean exactMatch = false;
+                if (newValue != null && !newValue.isEmpty()) {
+                    try {
+                        Connection conn = DatabaseConnect.connect();
+                        String query = "SELECT COUNT(*) FROM medicine WHERE LOWER(med_name) = ?";
+                        PreparedStatement pstmt = conn.prepareStatement(query);
+                        pstmt.setString(1, newValue.toLowerCase());
+                        ResultSet rs = pstmt.executeQuery();
+                        if (rs.next() && rs.getInt(1) > 0) {
+                            exactMatch = true;
+                        }
+                        rs.close();
+                        pstmt.close();
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (newValue != null && !newValue.isEmpty() && !filteredMedicineNames.isEmpty() && !exactMatch) {
+                    if (!nametf.isShowing()) {
+                        nametf.show();
+                    }
+                } else {
+                    nametf.hide();
+                }
+
+                if (newValue == null || newValue.isEmpty()) {
+                    nametf.setValue(null);
+                }
+            });
+            nametf.valueProperty().addListener((_, _, newVal) -> {
+                if (newVal != null && !newVal.isEmpty()) {
+                    try {
+                        Connection conn = DatabaseConnect.connect();
+                        String query = "SELECT med_id FROM medicine WHERE med_name = ?";
+                        PreparedStatement pstmt = conn.prepareStatement(query);
+                        pstmt.setString(1, newVal);
+                        ResultSet rs = pstmt.executeQuery();
+
+                        if (rs.next()) {
+                            medidtf.setText(String.valueOf(rs.getInt("med_id")));
+                        }
+
+                        rs.close();
+                        pstmt.close();
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 
     private void setupTableColumns() {
@@ -229,7 +329,6 @@ public class P_StocksController implements Initializable {
     }
 
     @FXML
-
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
         double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
