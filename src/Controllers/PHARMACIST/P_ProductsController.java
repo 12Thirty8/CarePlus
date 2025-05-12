@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.PHARMACIST;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import Controllers.ViewState;
 import Models.ProductsModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
@@ -41,11 +42,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
+import util.SceneLoader;
 
 public class P_ProductsController implements Initializable {
 
     @FXML
     private Button addstockBtn;
+
+    @FXML
+    private Button movetoStocksBtn;
 
     @FXML
     private TableView<ProductsModel> ProductTable;
@@ -294,43 +299,13 @@ public class P_ProductsController implements Initializable {
 
     @FXML
     void homeBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Dashboard.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
+        SceneLoader.loadScene(event, "/View/P_Dashboard.fxml");     
     }
 
     @FXML
     void addstockBtnPressed(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_AddProduct.fxml"));
-            Parent root = loader.load();
-
-            P_AddProductController controller = loader.getController();
-            controller.setRefreshCallback(() -> {
-                refreshEmployeeTable(); // Refresh the table
-            });
-
-            Stage popupStage = new Stage();
-            popupStage.setTitle("Add New Product");
-            popupStage.initModality(Modality.WINDOW_MODAL);
-            popupStage.initOwner(addstockBtn.getScene().getWindow());
-            popupStage.setScene(new Scene(root));
-            popupStage.setResizable(false);
-            popupStage.showAndWait(); // Wait until closed
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "Failed to open form: " + e.getMessage());
-        }
+        SceneLoader.loadScene(event, "/View/P_AddProduct.fxml"); 
+            
     }
 
     @FXML
@@ -371,6 +346,16 @@ public class P_ProductsController implements Initializable {
                 a.show();
             }
         }
+    }
+
+     @FXML
+    void movetoProductBtnPressed(ActionEvent event) {
+            SceneLoader.loadScene(event, "/View/P_Products.fxml"); 
+    }
+
+     @FXML
+    void movetoStocksBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/P_Stocks.fxml");
     }
 
     @FXML

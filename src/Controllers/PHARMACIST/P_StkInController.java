@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.PHARMACIST;
 
 import java.io.IOException;
 import java.net.URL;
