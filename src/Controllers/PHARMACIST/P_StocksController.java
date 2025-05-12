@@ -39,6 +39,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
+import util.SceneLoader;
 
 public class P_StocksController implements Initializable {
 
@@ -218,98 +219,32 @@ public class P_StocksController implements Initializable {
 
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Schedule.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
+        SceneLoader.loadScene(event, "/View/P_Schedule.fxml"); 
     }
 
     @FXML
     private void PharmacyBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading Pharmacy page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
+        SceneLoader.loadScene(event, "/View/P_Stocks.fxml"); 
     }
 
     @FXML
     void homeBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Dashboard.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
+        SceneLoader.loadScene(event, "/View/P_Dashboard.fxml"); 
     }
 
     @FXML
     void addstockBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_StockIn.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
+        SceneLoader.loadScene(event, "/View/P_StockIn.fxml"); 
     }
 
     @FXML
     void movetoProductBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Products.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
+        SceneLoader.loadScene(event, "/View/P_Products.fxml"); 
     }
 
      @FXML
     void movetoStocksBtnPressed(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
+        SceneLoader.loadScene(event, "/View/P_Stocks.fxml"); 
     }
 
     @FXML
