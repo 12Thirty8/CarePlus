@@ -140,7 +140,6 @@
                <children>
                   <AnchorPane layoutX="508.0" layoutY="266.0" prefHeight="348.0" prefWidth="230.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="266.0">
                      <children>
-                        <TextField fx:id="nametf" layoutX="9.0" layoutY="37.0" prefHeight="25.0" prefWidth="192.0" promptText="Enter Medicine Name" style="-fx-background-radius: 20;" />
                         <Text layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medicine Name:">
                            <font>
                               <Font name="Gordita-Regular" size="14.0" />
@@ -180,6 +179,7 @@
                               <Font name="Gordita-Bold" size="12.0" />
                            </font>
                         </Button>
+                        <ComboBox fx:id="nametf" layoutX="14.0" layoutY="37.0" prefHeight="25.0" prefWidth="192.0" />
                      </children>
                   </AnchorPane>
                   <StackPane layoutX="289.0" layoutY="18.0" prefHeight="43.0" prefWidth="115.0" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="293.0">
@@ -261,6 +261,7 @@
                         </Button>
                      </children>
                   </StackPane>
+                  <TextField fx:id="dosetf" layoutX="229.0" layoutY="234.0" prefHeight="25.0" prefWidth="192.0" promptText="Enter Batch Dosage" style="-fx-background-radius: 20;" />
                </children>
             </AnchorPane>
          </children>
