@@ -16,10 +16,7 @@ public class App extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setResizable(true);
-            // primaryStage.setMaximized(true);
             primaryStage.initStyle(StageStyle.UNDECORATED);
-            // primaryStage.setMinWidth(942);
-            // primaryStage.setMinHeight(670);
             primaryStage.show();
 
         } catch (IOException e) {
