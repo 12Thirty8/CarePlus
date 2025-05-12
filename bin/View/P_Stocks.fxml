@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" prefHeight="670.0" prefWidth="942.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PHARMACIST.P_StocksController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PHARMACIST.P_StocksController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
@@ -137,6 +137,50 @@
             </AnchorPane>
             <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
+                  <AnchorPane layoutX="508.0" layoutY="266.0" prefHeight="348.0" prefWidth="230.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="266.0">
+                     <children>
+                        <TextField fx:id="nametf" layoutX="9.0" layoutY="37.0" prefHeight="25.0" prefWidth="192.0" promptText="Enter Medicine Name" style="-fx-background-radius: 20;" />
+                        <Text layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medicine Name:">
+                           <font>
+                              <Font name="Gordita-Regular" size="14.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="medidtf" editable="false" layoutX="9.0" layoutY="93.0" prefHeight="25.0" prefWidth="192.0" promptText="--None Found--" style="-fx-background-radius: 20;" />
+                        <Text layoutX="14.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medicine ID:">
+                           <font>
+                              <Font name="Gordita-Regular" size="14.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="sintf" editable="false" layoutX="9.0" layoutY="209.0" prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20;" />
+                        <Text layoutX="14.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity:">
+                           <font>
+                              <Font name="Gordita-Regular" size="14.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="qtytf" layoutX="9.0" layoutY="153.0" prefHeight="25.0" prefWidth="192.0" promptText="Enter Stock Amount" style="-fx-background-radius: 20;" />
+                        <Text layoutX="17.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stock In by:" AnchorPane.bottomAnchor="138.89400005340576" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="136.33600616455078" AnchorPane.topAnchor="193.5900001525879">
+                           <font>
+                              <Font name="Gordita-Regular" size="14.0" />
+                           </font>
+                        </Text>
+                        <DatePicker fx:id="expdate" layoutX="14.0" layoutY="266.0" prefHeight="26.0" prefWidth="201.0" promptText="Select Date" />
+                        <Text layoutX="16.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expiry Date:">
+                           <font>
+                              <Font name="Gordita-Regular" size="14.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="clearBtn" layoutX="105.0" layoutY="306.0" mnemonicParsing="false" onAction="#clearBtnPressed" prefHeight="28.0" prefWidth="91.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Clear" textFill="WHITE" AnchorPane.bottomAnchor="14.0">
+                           <font>
+                              <Font name="Gordita-Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="updatebtn" layoutX="9.0" layoutY="306.0" mnemonicParsing="false" onAction="#updatebtnPressed" prefHeight="28.0" prefWidth="91.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Update" textFill="WHITE" AnchorPane.bottomAnchor="14.0">
+                           <font>
+                              <Font name="Gordita-Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                   <StackPane layoutX="289.0" layoutY="18.0" prefHeight="43.0" prefWidth="115.0" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="293.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stocks" wrappingWidth="114.58200073242188">
@@ -169,7 +213,7 @@
                         <TextField fx:id="batchidtf" prefHeight="25.0" prefWidth="192.0" promptText="Enter Batch ID" style="-fx-background-radius: 20;" />
                      </children>
                   </StackPane>
-                  <TableView fx:id="StockTable" layoutX="15.2" layoutY="271.0" prefHeight="169.0" prefWidth="663.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="19.0">
+                  <TableView fx:id="StockTable" layoutX="21.0" layoutY="373.0" prefHeight="348.0" prefWidth="715.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="257.0" AnchorPane.topAnchor="266.0">
                      <columns>
                         <TableColumn fx:id="idcol" prefWidth="73.60005110502243" text="Batch ID" />
                         <TableColumn fx:id="namecol" prefWidth="117.5999755859375" text="Medicine Name" />
@@ -183,73 +227,38 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Button fx:id="addstockBtn" layoutX="473.0" layoutY="531.0" mnemonicParsing="false" onAction="#addstockBtnPressed" prefHeight="28.0" prefWidth="92.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Add Stock" textFill="WHITE" AnchorPane.rightAnchor="132.0">
-                     <font>
-                        <Font name="Gordita-Bold" size="12.0" />
-                     </font></Button>
-                  <TextField fx:id="nametf" layoutX="16.0" layoutY="475.0" prefHeight="25.0" prefWidth="192.0" promptText="Enter Medicine Name" style="-fx-background-radius: 20;" />
-                  <TextField fx:id="medidtf" editable="false" layoutX="16.0" layoutY="532.0" prefHeight="25.0" prefWidth="192.0" promptText="--None Found--" style="-fx-background-radius: 20;" />
-                  <TextField fx:id="qtytf" layoutX="250.0" layoutY="475.0" prefHeight="25.0" prefWidth="192.0" promptText="Enter Stock Amount" style="-fx-background-radius: 20;" />
-                  <Text layoutX="18.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Batch ID:">
+                  <Text layoutX="25.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Batch ID:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Text>
-                  <Text layoutX="22.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medicine Name:">
-                     <font>
-                        <Font name="Gordita-Regular" size="12.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="250.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Qty:">
-                     <font>
-                        <Font name="Gordita-Regular" size="12.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="22.0" layoutY="527.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medicine ID:">
-                     <font>
-                        <Font name="Gordita-Regular" size="12.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="473.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expiry Date:">
-                     <font>
-                        <Font name="Gordita-Regular" size="12.0" />
-                     </font>
-                  </Text>
-                  <DatePicker fx:id="expdate" layoutX="473.0" layoutY="474.0" prefHeight="26.0" prefWidth="201.0" promptText="Select Date" />
-                  <TextField fx:id="sintf" editable="false" layoutX="250.0" layoutY="532.0" prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20;" />
-                  <Text layoutX="250.0" layoutY="527.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stock In by:">
-                     <font>
-                        <Font name="Gordita-Regular" size="12.0" />
-                     </font>
-                  </Text>
-                  <Button fx:id="clearBtn" layoutX="474.0" layoutY="576.0" mnemonicParsing="false" onAction="#clearBtnPressed" prefHeight="28.0" prefWidth="202.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Clear" textFill="WHITE">
-                     <font>
-                        <Font name="Gordita-Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="updatebtn" layoutX="591.0" layoutY="531.0" mnemonicParsing="false" onAction="#updatebtnPressed" prefHeight="28.0" prefWidth="86.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Update" textFill="WHITE">
-                     <font>
-                        <Font name="Gordita-Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <AnchorPane layoutX="21.0" layoutY="-14.0" prefHeight="29.0" prefWidth="67.0" style="-fx-background-color: white; -fx-background-radius: 10;" AnchorPane.topAnchor="-14.0">
+                  <AnchorPane layoutX="21.0" layoutY="-24.0" prefHeight="29.0" prefWidth="97.0" style="-fx-background-color: white; -fx-background-radius: 10;" AnchorPane.topAnchor="-24.0">
                      <children>
                         <Button fx:id="movetoStocksBtn" layoutX="37.0" layoutY="2.0" mnemonicParsing="false" onAction="#movetoStocksBtnPressed" prefHeight="28.0" prefWidth="125.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Stocks" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
                            <font>
-                              <Font name="Gordita-Bold" size="12.0" />
+                              <Font name="Gordita-Bold" size="14.0" />
                            </font>
                         </Button>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="92.0" layoutY="-15.0" prefHeight="28.0" prefWidth="77.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                  <AnchorPane layoutX="122.0" layoutY="-15.0" prefHeight="36.0" prefWidth="91.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                      <children>
                         <Button fx:id="movetoProductBtn" layoutX="37.0" layoutY="2.0" mnemonicParsing="false" onAction="#movetoProductBtnPressed" prefHeight="28.0" prefWidth="125.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Products" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+                           <font>
+                              <Font name="Gordita-Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <StackPane layoutX="638.0" layoutY="231.0" prefHeight="30.0" prefWidth="91.0" AnchorPane.rightAnchor="257.0">
+                     <children>
+                        <Button fx:id="addstockBtn" mnemonicParsing="false" onAction="#addstockBtnPressed" prefHeight="28.0" prefWidth="92.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Add Stock" textFill="WHITE">
                            <font>
                               <Font name="Gordita-Bold" size="12.0" />
                            </font>
                         </Button>
                      </children>
-                  </AnchorPane>
+                  </StackPane>
                </children>
             </AnchorPane>
          </children>
