@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import util.GetCurrentEmployeeID;
+import util.SceneLoader;
 import javafx.scene.control.TableColumn;
 
 public class N_DashboardController {
@@ -115,17 +116,13 @@ public class N_DashboardController {
     }
 
     @FXML
-    void PharmacyActionBttn(ActionEvent event) {
+    private void crossBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_PharmacyRequest.fxml");
 
     }
 
     @FXML
     void ScheduleActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ScheduleuActionBttn(ActionEvent event) {
 
     }
 
