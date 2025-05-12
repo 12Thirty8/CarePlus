@@ -7,15 +7,18 @@ public class StocksModel {
     private int id;
     private String name;
     private int quantity;
+    private String dose;
     private Date expDate;
     private String sinby;
     private Date sinDate;
     private String status;
 
-    public StocksModel(int id, String name, int quantity, Date expDate, String sinby, Date sinDate, String status) {
+    public StocksModel(int id, String name, int quantity, String dose, Date expDate, String sinby, Date sinDate,
+            String status) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
+        this.dose = dose;
         this.expDate = expDate;
         this.sinby = sinby;
         this.sinDate = sinDate;
@@ -44,6 +47,14 @@ public class StocksModel {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getDose() {
+        return dose;
+    }
+
+    public void setDose(String dose) {
+        this.dose = dose;
     }
 
     public Date getExpDate() {
