@@ -157,13 +157,13 @@
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="medidtf" editable="false" prefHeight="25.0" prefWidth="192.0" promptText="--None Found--" style="-fx-background-radius: 20;" />
+                              <ComboBox fx:id="nametf" prefHeight="25.0" prefWidth="257.0" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Medicine ID:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="sintf" editable="false" prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20;" />
+                              <TextField fx:id="medidtf" editable="false" prefHeight="25.0" prefWidth="192.0" promptText="--None Found--" style="-fx-background-radius: 20;" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
@@ -175,7 +175,7 @@
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <DatePicker fx:id="expdate" prefHeight="26.0" prefWidth="201.0" promptText="Select Date" />
+                              <TextField fx:id="sintf" editable="false" prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20;" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dosage:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
@@ -187,7 +187,7 @@
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <ComboBox fx:id="nametf" prefHeight="25.0" prefWidth="192.0" />
+                              <DatePicker fx:id="expdate" prefHeight="26.0" prefWidth="201.0" promptText="Select Date" />
                            </children>
                         </VBox>
                      </children>
