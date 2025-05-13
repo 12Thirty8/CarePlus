@@ -1,9 +1,11 @@
 package Controllers;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import Models.ListModel;
 import Models.MyRequestModel;
 import db.DatabaseConnect;
@@ -14,8 +16,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
@@ -246,9 +253,30 @@ public class N_RequestMonitorController implements Initializable {
 
     }
 
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     @FXML
     void newreqBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_PharmacyRequest.fxml");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_PharmacyRequest.fxml"));
+            Parent root = loader.load();
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Pharmacy Request");
+            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+            Scene scene = new Scene(root);
+            popupStage.setScene(scene);
+            popupStage.setResizable(false); // Optional: make it fixed size
+            popupStage.showAndWait(); // Wait until this window is closed (optional)
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open update form: " + e.getMessage());
+        }
     }
 
     @FXML

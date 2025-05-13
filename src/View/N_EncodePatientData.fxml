@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="535.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_CreateRecord">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="535.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_EncodePatientData">
    <children>
       <Pane layoutX="13.0" layoutY="14.0" prefHeight="669.0" prefWidth="510.0" style="-fx-background-color: White; -fx-background-radius: 12;">
          <children>
@@ -28,7 +28,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf" layoutX="21.0" layoutY="81.0" prefHeight="26.0" prefWidth="197.0" promptText="Ex. 101239" style="-fx-background-radius: 5;">
+                  <TextField fx:id="p_IDtf" layoutX="21.0" layoutY="81.0" prefHeight="26.0" prefWidth="197.0" promptText="Ex. 101239" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -38,7 +38,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="doctorIDtf" layoutX="271.0" layoutY="81.0" prefHeight="26.0" prefWidth="197.0" promptText="Doctor ID" style="-fx-background-radius: 5;">
+                  <TextField fx:id="d_IDtf" layoutX="271.0" layoutY="81.0" prefHeight="26.0" prefWidth="197.0" promptText="Doctor ID" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -63,8 +63,8 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="DiagnosisArea" layoutX="22.0" layoutY="282.0" prefHeight="92.0" prefWidth="200.0" />
-                  <TextArea fx:id="NotesArea" layoutX="270.0" layoutY="282.0" prefHeight="92.0" prefWidth="200.0" />
+                  <TextArea fx:id="CCarea" layoutX="22.0" layoutY="282.0" prefHeight="92.0" prefWidth="200.0" />
+                  <TextArea fx:id="DiagnosisArea" layoutX="270.0" layoutY="282.0" prefHeight="92.0" prefWidth="200.0" />
                   <DatePicker fx:id="CheckupDate" layoutX="21.0" layoutY="221.0" prefHeight="25.0" prefWidth="197.0" />
                   <Label layoutX="21.0" layoutY="194.0" text="Checkup Date:">
                      <font>
@@ -82,8 +82,8 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="DiagnosisArea1" layoutX="19.0" layoutY="417.0" prefHeight="92.0" prefWidth="446.0" />
-                  <TextField fx:id="patientIDtf1" layoutX="21.0" layoutY="150.0" prefHeight="26.0" prefWidth="197.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextArea fx:id="DispositionArea" layoutX="19.0" layoutY="417.0" prefHeight="92.0" prefWidth="446.0" />
+                  <TextField fx:id="p_fnametf" layoutX="21.0" layoutY="150.0" prefHeight="26.0" prefWidth="197.0" promptText="First Name" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -98,7 +98,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf11" layoutX="270.0" layoutY="150.0" prefHeight="26.0" prefWidth="197.0" promptText="Last Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="p_lnametf" layoutX="270.0" layoutY="150.0" prefHeight="26.0" prefWidth="197.0" promptText="Last Name" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
