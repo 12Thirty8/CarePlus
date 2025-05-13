@@ -20,6 +20,7 @@ public class App extends Application {
             // primaryStage.setMaximized(true);
             primaryStage.initStyle(StageStyle.UNDECORATED);
             // primaryStage.setMinWidth(942);
+          
             // primaryStage.setMinHeight(670);
             primaryStage.setTitle("Care ++");
             primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/ICONS/1Care++.png")));
