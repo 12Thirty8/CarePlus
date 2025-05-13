@@ -68,7 +68,7 @@
                   <TextField fx:id="medicinetf1" layoutX="21.0" layoutY="192.0" prefHeight="26.0" prefWidth="180.0" promptText="Medicine Name" style="-fx-background-radius: 5;" />
                </children>
             </Pane>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="14.0" prefHeight="44.0" prefWidth="368.0" text="Pharmacy Request">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="14.0" prefHeight="44.0" prefWidth="368.0" text="Pharmacy Request">
                <font>
                   <Font name="Gordita-Bold" size="21.0" />
                </font>
