@@ -370,30 +370,42 @@ public class P_StocksController implements Initializable {
             showAlert("Error", "Please fill in all fields.");
             return;
         }
+        // Set the session variable with the current employee ID
+        int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
-        try {
-            Connection conn = DatabaseConnect.connect();
-            String sql = "INSERT INTO batch ( med_id, batch_stock, batch_dosage, batch_exp, stockin_by, stockin_date, status_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, medId);
-            pstmt.setString(2, quantity);
-            pstmt.setString(3, dose);
-            pstmt.setString(4, expDate);
-            pstmt.setString(6, stockinDate);
-            pstmt.setInt(5, employeeId);
-            pstmt.setInt(7, 7); // 7 is the ID for "Available" status
+        String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
+        String insertBatchQuery = "INSERT INTO batch ( med_id, batch_stock, batch_dosage, batch_exp, stockin_by, stockin_date, status_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                showAlert("Success", "Stock added successfully.");
-                refreshEmployeeTable();
-                clearBtnPressed(event);
-            } else {
-                showAlert("Error", "Failed to add stock.");
+        try (Connection conn = DatabaseConnect.connect()) {
+
+            try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
+                setStmt.setInt(1, currentEmpId);
+                setStmt.executeUpdate();
             }
 
-            pstmt.close();
-            conn.close();
+            try (PreparedStatement pstmt = conn.prepareStatement(insertBatchQuery)) {
+
+                pstmt.setString(1, medId);
+                pstmt.setString(2, quantity);
+                pstmt.setString(3, dose);
+                pstmt.setString(4, expDate);
+                pstmt.setString(6, stockinDate);
+                pstmt.setInt(5, employeeId);
+                pstmt.setInt(7, 7); // 7 is the ID for "Available" status
+
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    showAlert("Success", "Stock added successfully.");
+                    refreshEmployeeTable();
+                    clearBtnPressed(event);
+                } else {
+                    showAlert("Error", "Failed to add stock.");
+                }
+
+                pstmt.close();
+                conn.close();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Error", "Database error: " + e.getMessage());
@@ -485,30 +497,41 @@ public class P_StocksController implements Initializable {
             showAlert("Error", "Please fill in all fields.");
             return;
         }
+        // Set the session variable with the current employee ID
+        int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
-        try {
-            Connection conn = DatabaseConnect.connect();
-            String sql = "UPDATE batch SET med_id = ?, batch_stock = ?, batch_dosage = ?, batch_exp = ?, stockin_by = ?, stockin_date = ? WHERE batch_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, medId);
-            pstmt.setString(2, quantity);
-            pstmt.setString(3, dose);
-            pstmt.setString(4, expDate);
-            pstmt.setInt(5, employeeId);
-            pstmt.setString(6, stockinDate);
-            pstmt.setString(7, batchId);
+        String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
+        String updateBatchQuery = "UPDATE batch SET med_id = ?, batch_stock = ?, batch_dosage = ?, batch_exp = ?, stockin_by = ?, stockin_date = ? WHERE batch_id = ?";
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                showAlert("Success", "Stock updated successfully.");
-                refreshEmployeeTable();
-                clearBtnPressed(event);
-            } else {
-                showAlert("Error", "Failed to update stock.");
+        try (Connection conn = DatabaseConnect.connect()) {
+            // 1. Set the session variable @current_employee_id
+            try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
+                setStmt.setInt(1, currentEmpId);
+                setStmt.executeUpdate();
             }
 
-            pstmt.close();
-            conn.close();
+            try (PreparedStatement pstmt = conn.prepareStatement(updateBatchQuery)) {
+                pstmt.setString(1, medId);
+                pstmt.setString(2, quantity);
+                pstmt.setString(3, dose);
+                pstmt.setString(4, expDate);
+                pstmt.setInt(5, employeeId);
+                pstmt.setString(6, stockinDate);
+                pstmt.setString(7, batchId);
+
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    showAlert("Success", "Stock updated successfully.");
+                    refreshEmployeeTable();
+                    clearBtnPressed(event);
+                } else {
+                    showAlert("Error", "Failed to update stock.");
+                }
+
+                pstmt.close();
+                conn.close();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Error", "Database error: " + e.getMessage());
