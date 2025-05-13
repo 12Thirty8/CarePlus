@@ -185,6 +185,11 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </TableView>
+                  <Text layoutX="24.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search:">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </Text>
                </children></AnchorPane>
          </children>
       </HBox>

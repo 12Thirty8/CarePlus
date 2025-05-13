@@ -232,13 +232,13 @@
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="medidtf" editable="false" prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20; -fx-background-color: D9D9D9;" />
+                              <TextField fx:id="medidtf" editable="false" prefHeight="25.0" prefWidth="192.0" promptText="--Nothing Selected--" style="-fx-background-radius: 20; -fx-background-color: D9D9D9;" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="qtytf" prefHeight="25.0" prefWidth="192.0" promptText="Enter Stock Amount" style="-fx-background-radius: 20;" />
+                              <TextField fx:id="qtytf" prefHeight="25.0" prefWidth="192.0" promptText="--Nothing Selected--" style="-fx-background-radius: 20;" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
