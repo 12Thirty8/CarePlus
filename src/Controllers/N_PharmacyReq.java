@@ -197,43 +197,7 @@ public class N_PharmacyReq implements Initializable {
     }
 
     private void refreshEmployeeTable() {
-        EmployeeList.clear();
-        try {
-            Connection conn = DatabaseConnect.connect();
-            String query = """
-                    SELECT
-                        b.batch_id,
-                        m.med_name AS medName,
-                        b.batch_stock,
-                        b.batch_dosage,
-                        b.batch_exp,
-                        CONCAT(COALESCE(e.f_name, ''), ' ', COALESCE(e.l_name, '')) AS stockinBy,
-                        b.stockin_date,
-                        s.status_name AS status
-                    FROM batch b
-                    LEFT JOIN employee e ON b.stockin_by = e.employee_id
-                    LEFT JOIN medicine m ON b.med_id = m.med_id
-                    LEFT JOIN stockstatus s ON b.status_id = s.status_id
-                    """;
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                EmployeeList.add(new ListModel(
-                        rs.getInt("batch_id"),
-                        rs.getString("medName"),
-                        rs.getString("batch_dosage"),
-                        rs.getInt("batch_stock")));
-            }
-
-            listTableView.setItems(EmployeeList);
-
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     private void setupTableColumns() {
@@ -244,7 +208,37 @@ public class N_PharmacyReq implements Initializable {
 
         listTableView.setItems(EmployeeList);
     }
+    // Fixes for record ComboBox and record name loading
 
+    // Loads patient full names into allRecordNames for ComboBox
+    private void loadRecordNames() {
+        allRecordNames.clear();
+        try {
+            Connection conn = DatabaseConnect.connect();
+            String query = "SELECT patient_id, f_name, m_name, l_name FROM patient";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                StringBuilder fullName = new StringBuilder();
+                fullName.append(rs.getString("f_name"));
+                String mName = rs.getString("m_name");
+                if (mName != null && !mName.trim().isEmpty()) {
+                    fullName.append(" ").append(mName);
+                }
+                fullName.append(" ").append(rs.getString("l_name"));
+                allRecordNames.add(fullName.toString().trim());
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Sets up ComboBox for patient names and fills recordidtf when selected
     private void setupRecordComboBox() {
         if (allRecordNames == null) {
             allRecordNames = FXCollections.observableArrayList();
@@ -264,48 +258,35 @@ public class N_PharmacyReq implements Initializable {
                     return item.toLowerCase().contains(lowerCaseFilter);
                 });
 
-                boolean exactMatch = false;
-                if (newValue != null && !newValue.isEmpty()) {
-                    try {
-                        Connection conn = DatabaseConnect.connect();
-                        String query = "SELECT patient_id FROM patient WHERE LOWER(l_name) = LOWER(?) AND LOWER(f_name) = LOWER(?) AND (m_name IS NULL OR LOWER(m_name) = LOWER(?))";
-                        PreparedStatement pstmt = conn.prepareStatement(query);
-                        pstmt.setString(1, newValue.toLowerCase());
-                        ResultSet rs = pstmt.executeQuery();
-                        if (rs.next() && rs.getInt(1) > 0) {
-                            exactMatch = true;
-                        }
-                        rs.close();
-                        pstmt.close();
-                        conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (newValue != null && !newValue.isEmpty() && !filteredRecords.isEmpty() && !exactMatch) {
-                    if (!recordname.isShowing()) {
-                        recordname.show();
-                    }
-                } else {
-                    recordname.hide();
-                }
-
                 if (newValue == null || newValue.isEmpty()) {
                     recordname.setValue(null);
                 }
             });
+
             recordname.valueProperty().addListener((_, _, newVal) -> {
                 if (newVal != null && !newVal.isEmpty()) {
                     try {
                         Connection conn = DatabaseConnect.connect();
-                        String query = "SELECT p.patient_id as patientId FROM records r LEFT JOIN patient p ON r.patient_id = p.patient_id WHERE med_name = ?";
+                        // Split full name into parts
+                        String[] parts = newVal.trim().split("\\s+");
+                        String fName = parts.length > 0 ? parts[0] : "";
+                        String mName = parts.length == 3 ? parts[1] : null;
+                        String lName = parts.length == 3 ? parts[2] : (parts.length == 2 ? parts[1] : "");
+
+                        String query = "SELECT patient_id FROM patient WHERE LOWER(f_name) = ? AND LOWER(l_name) = ?" +
+                                (mName != null ? " AND LOWER(m_name) = ?" : "");
                         PreparedStatement pstmt = conn.prepareStatement(query);
-                        pstmt.setString(1, newVal);
+                        pstmt.setString(1, fName.toLowerCase());
+                        pstmt.setString(2, lName.toLowerCase());
+                        if (mName != null) {
+                            pstmt.setString(3, mName.toLowerCase());
+                        }
                         ResultSet rs = pstmt.executeQuery();
 
                         if (rs.next()) {
-                            medidtf.setText(String.valueOf(rs.getInt("med_id")));
+                            recordidtf.setText(String.valueOf(rs.getInt("patient_id")));
+                        } else {
+                            recordidtf.clear();
                         }
 
                         rs.close();
@@ -314,28 +295,10 @@ public class N_PharmacyReq implements Initializable {
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    recordidtf.clear();
                 }
             });
-        }
-    }
-
-    private void loadRecordNames() {
-        allRecordNames.clear();
-        try {
-            Connection conn = DatabaseConnect.connect();
-            String query = "SELECT med_name FROM medicine";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                allRecordNames.add(rs.getString("med_name"));
-            }
-
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -345,90 +308,81 @@ public class N_PharmacyReq implements Initializable {
         }
         dosage.setItems(allDosage);
 
-        if (!allDosage.isEmpty()) {
-            filteredDosage = new FilteredList<>(allDosage, _ -> true);
-            dosage.setItems(filteredDosage);
+        filteredDosage = new FilteredList<>(allDosage, _ -> true);
+        dosage.setItems(filteredDosage);
 
-            dosage.getEditor().textProperty().addListener((_, _, newValue) -> {
-                filteredDosage.setPredicate(item -> {
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-                    String lowerCaseFilter = newValue.toLowerCase();
-                    return item.toLowerCase().contains(lowerCaseFilter);
-                });
+        // Update dosage list when medicine changes
+        medname.valueProperty().addListener((_, _, _) -> {
+            loadDosage();
+        });
 
-                boolean exactMatch = false;
-                if (newValue != null && !newValue.isEmpty()) {
-                    try {
-                        Connection conn = DatabaseConnect.connect();
-                        String query = "SELECT COUNT(*) FROM medicine WHERE LOWER(med_name) = ?";
-                        PreparedStatement pstmt = conn.prepareStatement(query);
-                        pstmt.setString(1, newValue.toLowerCase());
-                        ResultSet rs = pstmt.executeQuery();
-                        if (rs.next() && rs.getInt(1) > 0) {
-                            exactMatch = true;
-                        }
-                        rs.close();
-                        pstmt.close();
-                        conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (newValue != null && !newValue.isEmpty() && !filteredDosage.isEmpty() && !exactMatch) {
-                    if (!dosage.isShowing()) {
-                        dosage.show();
-                    }
-                } else {
-                    dosage.hide();
-                }
-
+        dosage.getEditor().textProperty().addListener((_, _, newValue) -> {
+            filteredDosage.setPredicate(item -> {
                 if (newValue == null || newValue.isEmpty()) {
-                    dosage.setValue(null);
+                    return true;
                 }
+                String lowerCaseFilter = newValue.toLowerCase();
+                return item.toLowerCase().contains(lowerCaseFilter);
             });
-            dosage.valueProperty().addListener((_, _, newVal) -> {
-                if (newVal != null && !newVal.isEmpty()) {
-                    try {
-                        Connection conn = DatabaseConnect.connect();
-                        String query = "SELECT med_id FROM medicine WHERE med_name = ?";
-                        PreparedStatement pstmt = conn.prepareStatement(query);
-                        pstmt.setString(1, newVal);
-                        ResultSet rs = pstmt.executeQuery();
 
-                        if (rs.next()) {
-                            medidtf.setText(String.valueOf(rs.getInt("med_id")));
-                        }
-
-                        rs.close();
-                        pstmt.close();
-                        conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+            boolean exactMatch = false;
+            if (newValue != null && !newValue.isEmpty()) {
+                try {
+                    Connection conn = DatabaseConnect.connect();
+                    String query = "SELECT COUNT(*) FROM batch WHERE LOWER(batch_dosage) = ?";
+                    PreparedStatement pstmt = conn.prepareStatement(query);
+                    pstmt.setString(1, newValue.toLowerCase());
+                    ResultSet rs = pstmt.executeQuery();
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        exactMatch = true;
                     }
+                    rs.close();
+                    pstmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            });
-        }
+            }
+
+            if (newValue != null && !newValue.isEmpty() && !filteredDosage.isEmpty() && !exactMatch) {
+                if (!dosage.isShowing()) {
+                    dosage.show();
+                }
+            } else {
+                dosage.hide();
+            }
+
+            if (newValue == null || newValue.isEmpty()) {
+                dosage.setValue(null);
+            }
+        });
+
+        dosage.valueProperty().addListener((_, _, _) -> {
+            // Optionally handle dosage selection
+        });
     }
 
     private void loadDosage() {
         allDosage.clear();
+        String medIdText = medidtf.getText();
+        if (medIdText == null || medIdText.isEmpty()) {
+            return;
+        }
         try {
             Connection conn = DatabaseConnect.connect();
-            String query = "SELECT med_name FROM medicine";
+            String query = "SELECT batch_dosage FROM batch WHERE med_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, Integer.parseInt(medIdText));
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                allDosage.add(rs.getString("med_name"));
+                allDosage.add(rs.getString("batch_dosage"));
             }
 
             rs.close();
             pstmt.close();
             conn.close();
-        } catch (SQLException e) {
+        } catch (SQLException | NumberFormatException e) {
             e.printStackTrace();
         }
     }
