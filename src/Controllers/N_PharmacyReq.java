@@ -1,10 +1,13 @@
 package Controllers;
 
+import Models.ListModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class N_PharmacyReq {
 
@@ -18,19 +21,40 @@ public class N_PharmacyReq {
     private Button ClearBtn;
 
     @FXML
-    private TextField Nnametf;
-
-    @FXML
     private Button SubmitBtn;
 
     @FXML
-    private TextField medicinetf;
+    private ComboBox<String> dosage;
+
+    @FXML
+    private TableColumn<ListModel, String> dosagecol;
+
+    @FXML
+    private TableColumn<ListModel, String> idcol;
+
+    @FXML
+    private TableView<ListModel> listTableView;
+
+    @FXML
+    private TextField medidtf;
+
+    @FXML
+    private ComboBox<String> medname;
+
+    @FXML
+    private TableColumn<ListModel, String> namecol;
+
+    @FXML
+    private TableColumn<ListModel, Integer> qtycol;
 
     @FXML
     private TextField qtytf;
 
     @FXML
-    private TextField recordtf;
+    private TextField recordidtf;
+
+    @FXML
+    private ComboBox<String> recordname;
 
     @FXML
     void AddMedBtnAction(ActionEvent event) {
@@ -39,8 +63,7 @@ public class N_PharmacyReq {
 
     @FXML
     void BackBttnAction(ActionEvent event) {
-        Stage currentStage = (Stage) BackBttn.getScene().getWindow();
-        currentStage.close();
+
     }
 
     @FXML
