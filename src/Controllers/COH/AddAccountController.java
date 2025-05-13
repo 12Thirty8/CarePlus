@@ -24,6 +24,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import util.GetCurrentEmployeeID;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -236,26 +238,39 @@ public class AddAccountController implements Initializable {
             String email, String password, String dep,
             String shift, String dayoff) throws SQLException {
 
-        String query = "INSERT INTO employee (f_name, l_name, dob, contact_no, email, password_hash, " +
-                "dep_id, shift_id, dayoff_id, status) VALUES (?, ?, ?, ?, ?, ?, " +
-                "(SELECT dep_id FROM department WHERE dep_name = ?), " +
-                "(SELECT shift_id FROM shift WHERE timeslot = ?), " +
-                "(SELECT dotw_id FROM dotweek WHERE dotw_name = ?), 1)";
+        // Get the current employee ID from the session
+        int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
-        try (Connection conn = DatabaseConnect.connect();
-                PreparedStatement pstmt = conn.prepareStatement(query)) {
+        String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
+        String insertEmployeeQuery = "INSERT INTO employee (f_name, l_name, dob, contact_no, email, password_hash, "
+                + "dep_id, shift_id, dayoff_id, status) VALUES (?, ?, ?, ?, ?, ?, "
+                + "(SELECT dep_id FROM department WHERE dep_name = ?), "
+                + "(SELECT shift_id FROM shift WHERE timeslot = ?), "
+                + "(SELECT dotw_id FROM dotweek WHERE dotw_name = ?), 1)";
 
-            pstmt.setString(1, fname);
-            pstmt.setString(2, lname);
-            pstmt.setDate(3, dob);
-            pstmt.setString(4, number);
-            pstmt.setString(5, email);
-            pstmt.setString(6, password);
-            pstmt.setString(7, dep);
-            pstmt.setString(8, shift);
-            pstmt.setString(9, dayoff);
+        try (Connection conn = DatabaseConnect.connect()) {
 
-            pstmt.executeUpdate();
+            // 1. Set the session variable @current_employee_id
+            try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
+                setStmt.setInt(1, currentEmpId);
+                setStmt.executeUpdate();
+            }
+
+            // 2. Insert the new employee
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertEmployeeQuery)) {
+                insertStmt.setString(1, fname);
+                insertStmt.setString(2, lname);
+                insertStmt.setDate(3, dob);
+                insertStmt.setString(4, number);
+                insertStmt.setString(5, email);
+                insertStmt.setString(6, password);
+                insertStmt.setString(7, dep);
+                insertStmt.setString(8, shift);
+                insertStmt.setString(9, dayoff);
+
+                insertStmt.executeUpdate();
+            }
+
         } catch (SQLException e1) {
             a.setAlertType(AlertType.ERROR);
             a.setContentText("Error creating account: " + e1.getMessage());

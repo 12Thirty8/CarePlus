@@ -379,21 +379,33 @@ public class P_ProductsController implements Initializable {
             String category = cattf.getText();
             String description = descta.getText();
 
-            try {
-                Connection conn = DatabaseConnect.connect();
-                String query = "UPDATE medicine SET med_name = ?, med_cat = ?, med_desc = ? WHERE med_id = ?";
-                PreparedStatement pstmt = conn.prepareStatement(query);
-                pstmt.setString(1, name);
-                pstmt.setString(2, category);
-                pstmt.setString(3, description);
-                pstmt.setInt(4, selectedItem.getId());
-                pstmt.executeUpdate();
+            // Get the current employee ID from the session
+            int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
-                showAlert("Success", "Product updated successfully.");
-                refreshEmployeeTable();
+            String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
+            String updateMedicineQuery = "UPDATE medicine SET med_name = ?, med_cat = ?, med_desc = ? WHERE med_id = ?";
+            try (Connection conn = DatabaseConnect.connect()) {
 
-                pstmt.close();
-                conn.close();
+                // 1. Set the session variable @current_employee_id
+                try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
+                    setStmt.setInt(1, currentEmpId);
+                    setStmt.executeUpdate();
+                }
+
+                try (PreparedStatement pstmt = conn.prepareStatement(updateMedicineQuery)) {
+                    pstmt.setString(1, name);
+                    pstmt.setString(2, category);
+                    pstmt.setString(3, description);
+                    pstmt.setInt(4, selectedItem.getId());
+                    pstmt.executeUpdate();
+
+                    showAlert("Success", "Product updated successfully.");
+                    refreshEmployeeTable();
+
+                    pstmt.close();
+                    conn.close();
+                }
+
             } catch (SQLException e) {
                 e.printStackTrace();
                 showAlert("Error", "Failed to update product: " + e.getMessage());
