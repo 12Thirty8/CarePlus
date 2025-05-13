@@ -164,7 +164,7 @@
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="medidtf" editable="false" prefHeight="25.0" prefWidth="192.0" promptText="--None Found--" style="-fx-background-radius: 20;" />
+                              <TextField fx:id="medidtf" editable="false" prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20; -fx-background-color: D9D9D9;" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
@@ -176,7 +176,7 @@
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="sintf" editable="false" prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20;" />
+                              <TextField fx:id="sintf" editable="false" prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20; -fx-background-color: D9D9D9;" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dosage:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
@@ -222,7 +222,7 @@
                   </StackPane>
                   <StackPane layoutX="16.0" layoutY="233.0">
                      <children>
-                        <TextField fx:id="batchidtf" prefHeight="25.0" prefWidth="192.0" promptText="Enter Batch ID" style="-fx-background-radius: 20;" />
+                        <TextField fx:id="batchidtf" prefHeight="25.0" prefWidth="192.0" promptText="Search" style="-fx-background-radius: 20;" />
                      </children>
                   </StackPane>
                   <TableView fx:id="StockTable" layoutX="21.0" layoutY="373.0" prefHeight="348.0" prefWidth="680.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="292.0" AnchorPane.topAnchor="266.0">

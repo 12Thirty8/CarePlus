@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import Controllers.COH.UpdateAccountController;
 import Models.ListModel;
 import Models.MyRequestModel;
 import db.DatabaseConnect;
@@ -32,7 +31,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
 import util.SceneLoader;
@@ -254,6 +252,7 @@ public class N_RequestMonitorController implements Initializable {
     void LogOutActionBttn(ActionEvent event) {
 
     }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -265,20 +264,19 @@ public class N_RequestMonitorController implements Initializable {
     @FXML
     void newreqBtnPressed(ActionEvent event) {
         try {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_PharmacyRequest.fxml"));
-                        Parent root = loader.load();
-                        Stage popupStage = new Stage();
-                        popupStage.setTitle("Pharmacy Request");
-                        popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
-                        Scene scene = new Scene(root);
-                        popupStage.setScene(scene);
-                        popupStage.setResizable(false); // Optional: make it fixed size
-                        popupStage.showAndWait(); // Wait until this window is closed (optional)
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        showAlert("Error", "Failed to open update form: " + e.getMessage());
-                    }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_PharmacyRequest.fxml"));
+            Parent root = loader.load();
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Pharmacy Request");
+            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+            Scene scene = new Scene(root);
+            popupStage.setScene(scene);
+            popupStage.setResizable(false); // Optional: make it fixed size
+            popupStage.showAndWait(); // Wait until this window is closed (optional)
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open update form: " + e.getMessage());
+        }
     }
 
     @FXML

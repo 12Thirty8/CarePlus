@@ -17,9 +17,10 @@ public class App extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setResizable(true);
-            // primaryStage.setMaximized(true);
+            // primaryStage.setMaximized(true);         
             primaryStage.initStyle(StageStyle.UNDECORATED);
             // primaryStage.setMinWidth(942);
+          
             // primaryStage.setMinHeight(670);
             primaryStage.setTitle("Care ++");
             primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/ICONS/1Care++.png")));
