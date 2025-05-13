@@ -109,8 +109,18 @@ public class P_ProductsController implements Initializable {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+        initializeRowSelectionListener();
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
+    }
+
+    @FXML
+    private void initializeRowSelectionListener() {
+        ProductTable.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
+            if (newSelection != null) {
+
+            }
+        });
     }
 
     private void setupTableColumns() {
@@ -299,13 +309,13 @@ public class P_ProductsController implements Initializable {
 
     @FXML
     void homeBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Dashboard.fxml");     
+        SceneLoader.loadScene(event, "/View/P_Dashboard.fxml");
     }
 
     @FXML
     void addstockBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_AddProduct.fxml"); 
-            
+        SceneLoader.loadScene(event, "/View/P_AddProduct.fxml");
+
     }
 
     @FXML
@@ -348,12 +358,12 @@ public class P_ProductsController implements Initializable {
         }
     }
 
-     @FXML
+    @FXML
     void movetoProductBtnPressed(ActionEvent event) {
-            SceneLoader.loadScene(event, "/View/P_Products.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Products.fxml");
     }
 
-     @FXML
+    @FXML
     void movetoStocksBtnPressed(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/P_Stocks.fxml");
     }

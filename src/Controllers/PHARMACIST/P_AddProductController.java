@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import util.SceneLoader;
 
 public class P_AddProductController {
 
@@ -41,19 +42,7 @@ public class P_AddProductController {
 
     @FXML
     void BackBttnAction(ActionEvent event) {
-        try {
-            // Get the current stage (popup window)
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            // Close the current popup window
-            stage.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error closing the window.");
-            a.setHeaderText("Error");
-            a.show();
-        }
+        SceneLoader.loadScene(event, "/View/P_Products.fxml");
     }
 
     @FXML
