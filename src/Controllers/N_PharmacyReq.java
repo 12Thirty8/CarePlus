@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import util.SceneLoader;
 
 public class N_PharmacyReq {
@@ -39,7 +40,8 @@ public class N_PharmacyReq {
 
     @FXML
     void BackBttnAction(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_RequestMonitor.fxml");
+        Stage currentStage = (Stage) BackBttn.getScene().getWindow();
+        currentStage.close();
     }
 
     @FXML
