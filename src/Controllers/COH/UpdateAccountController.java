@@ -21,6 +21,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import util.GetCurrentEmployeeID;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -241,34 +242,47 @@ public class UpdateAccountController implements Initializable {
     private void updateAccount(int empId, String fname, String lname, Date dob, String number,
             String email, String password, String dep, String shift, String dayoff) throws SQLException {
 
-        String query = "UPDATE employee SET f_name = ?, l_name = ?, dob = ?, contact_no = ?, " +
+        // Get the current employee ID from the session
+        int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+
+        String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
+        String updateEmployeeQuery = "UPDATE employee SET f_name = ?, l_name = ?, dob = ?, contact_no = ?, " +
                 "email = ?, password_hash = ?, dep_id = (SELECT dep_id FROM department WHERE dep_name = ?), " +
                 "shift_id = (SELECT shift_id FROM shift WHERE timeslot = ?), " +
                 "dayoff_id = (SELECT dotw_id FROM dotweek WHERE dotw_name = ?) " +
                 "WHERE employee_id = ?";
 
-        try (Connection conn = DatabaseConnect.connect();
-                PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try (Connection conn = DatabaseConnect.connect()) {
 
-            pstmt.setString(1, fname);
-            pstmt.setString(2, lname);
-            pstmt.setDate(3, dob);
-            pstmt.setString(4, number);
-            pstmt.setString(5, email);
-            pstmt.setString(6, password);
-            pstmt.setString(7, dep);
-            pstmt.setString(8, shift);
-            pstmt.setString(9, dayoff);
-            pstmt.setInt(10, empId);
-
-            int affectedRows = pstmt.executeUpdate();
-
-            if (affectedRows == 0) {
-                throw new SQLException("Updating account failed, no rows affected.");
+            // 1. Set the session variable @current_employee_id
+            try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
+                setStmt.setInt(1, currentEmpId);
+                setStmt.executeUpdate();
             }
-        } catch (SQLException e) {
-            showAlert("Database Error", "Failed to update account: " + e.getMessage());
-            throw e;
+            try (PreparedStatement pstmt = conn.prepareStatement(updateEmployeeQuery)) {
+                {
+
+                    pstmt.setString(1, fname);
+                    pstmt.setString(2, lname);
+                    pstmt.setDate(3, dob);
+                    pstmt.setString(4, number);
+                    pstmt.setString(5, email);
+                    pstmt.setString(6, password);
+                    pstmt.setString(7, dep);
+                    pstmt.setString(8, shift);
+                    pstmt.setString(9, dayoff);
+                    pstmt.setInt(10, empId);
+
+                    int affectedRows = pstmt.executeUpdate();
+
+                    if (affectedRows == 0) {
+                        throw new SQLException("Updating account failed, no rows affected.");
+                    }
+                }
+            } catch (SQLException e) {
+                showAlert("Database Error", "Failed to update account: " + e.getMessage());
+                throw e;
+            }
         }
     }
 

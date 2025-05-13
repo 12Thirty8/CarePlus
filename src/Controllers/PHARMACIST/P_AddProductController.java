@@ -12,6 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import util.GetCurrentEmployeeID;
 import util.SceneLoader;
 
 public class P_AddProductController {
@@ -68,29 +69,40 @@ public class P_AddProductController {
     }
 
     private void addMedicine(String name, String category, String description) throws SQLException {
-        String query = "INSERT INTO medicine (med_name, med_cat, med_desc) VALUES (?, ?, ?)";
+        // Get the current employee ID from the session
+        int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
-        try (Connection conn = DatabaseConnect.connect();
-                PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, name);
-            pstmt.setString(2, category);
-            pstmt.setString(3, description);
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                if (refreshCallback != null) {
-                    refreshCallback.run();
+        String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
+        String insertMedicineQuery = "INSERT INTO medicine (med_name, med_cat, med_desc) VALUES (?, ?, ?)";
+
+        try (Connection conn = DatabaseConnect.connect()) {
+            // 1. Set the session variable @current_employee_id
+            try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
+                setStmt.setInt(1, currentEmpId);
+                setStmt.executeUpdate();
+            }
+            try (PreparedStatement pstmt = conn.prepareStatement(insertMedicineQuery)) {
+                pstmt.setString(1, name);
+                pstmt.setString(2, category);
+                pstmt.setString(3, description);
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    if (refreshCallback != null) {
+                        refreshCallback.run();
+                    }
+                    a.setAlertType(AlertType.INFORMATION);
+                    a.setContentText("Product added successfully.");
+                    a.setHeaderText("Success");
+                    a.showAndWait();
+                } else {
+                    a.setAlertType(AlertType.ERROR);
+                    a.setContentText("Failed to add product.");
+                    a.setHeaderText("Error");
+                    a.showAndWait();
                 }
-                a.setAlertType(AlertType.INFORMATION);
-                a.setContentText("Product added successfully.");
-                a.setHeaderText("Success");
-                a.showAndWait();
-            } else {
-                a.setAlertType(AlertType.ERROR);
-                a.setContentText("Failed to add product.");
-                a.setHeaderText("Error");
-                a.showAndWait();
             }
         }
+
     }
 
 }

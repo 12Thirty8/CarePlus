@@ -25,7 +25,7 @@ public class App extends Application {
             primaryStage.setTitle("Care ++");
             primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/ICONS/1Care++.png")));
             primaryStage.show();
-
+            // tae
         } catch (IOException e) {
             e.printStackTrace();
         }
