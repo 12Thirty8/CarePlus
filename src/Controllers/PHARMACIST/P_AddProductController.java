@@ -7,13 +7,11 @@ import java.sql.SQLException;
 import db.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import util.SceneLoader;
 
 public class P_AddProductController {
@@ -46,31 +44,15 @@ public class P_AddProductController {
     }
 
     @FXML
-    void addmedBtnPressed(ActionEvent event) {
+    void addmedBtnPressed(ActionEvent event) throws SQLException {
         if (mednametf.getText().isEmpty() || medcattf.getText().isEmpty() || descTextArea.getText().isEmpty()) {
             a.setAlertType(AlertType.ERROR);
             a.setContentText("Please fill in all fields.");
             a.setHeaderText("Error");
             a.show();
         } else {
-            try {
-                addMedicine(mednametf.getText(), medcattf.getText(), descTextArea.getText());
-
-                // Execute callback if it exists
-                if (refreshCallback != null) {
-                    refreshCallback.run();
-                }
-
-                // Close the window after successful addition
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.close();
-
-            } catch (SQLException e) {
-                a.setAlertType(AlertType.ERROR);
-                a.setContentText("Error adding medicine." + e.getMessage());
-                a.setHeaderText("Error");
-                a.show();
-            }
+            addMedicine(mednametf.getText(), medcattf.getText(), descTextArea.getText());
+            SceneLoader.loadScene(event, "/View/P_Products.fxml");
         }
     }
 
@@ -95,15 +77,18 @@ public class P_AddProductController {
             pstmt.setString(3, description);
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
+                if (refreshCallback != null) {
+                    refreshCallback.run();
+                }
                 a.setAlertType(AlertType.INFORMATION);
                 a.setContentText("Product added successfully.");
                 a.setHeaderText("Success");
-                a.show();
+                a.showAndWait();
             } else {
                 a.setAlertType(AlertType.ERROR);
                 a.setContentText("Failed to add product.");
                 a.setHeaderText("Error");
-                a.show();
+                a.showAndWait();
             }
         }
     }

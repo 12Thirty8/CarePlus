@@ -29,15 +29,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -51,6 +53,9 @@ public class P_ProductsController implements Initializable {
 
     @FXML
     private Button movetoStocksBtn;
+
+    @FXML
+    private Button updateBtn;
 
     @FXML
     private TableView<ProductsModel> ProductTable;
@@ -89,6 +94,18 @@ public class P_ProductsController implements Initializable {
     private TableColumn<ProductsModel, Text> desccol;
 
     @FXML
+    private ComboBox<String> nametf;
+
+    @FXML
+    private TextField medidtf;
+
+    @FXML
+    private TextField cattf;
+
+    @FXML
+    private TextArea descta;
+
+    @FXML
     private Button closeBtn;
 
     @FXML
@@ -118,6 +135,10 @@ public class P_ProductsController implements Initializable {
     private void initializeRowSelectionListener() {
         ProductTable.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
             if (newSelection != null) {
+                nametf.getSelectionModel().select(newSelection.getName());
+                medidtf.setText(String.valueOf(newSelection.getId()));
+                descta.setText(newSelection.getDesc().getText());
+                cattf.setText(newSelection.getCategory());
 
             }
         });
@@ -135,38 +156,7 @@ public class P_ProductsController implements Initializable {
             TableRow<ProductsModel> row = new TableRow<>();
             ContextMenu contextMenu = new ContextMenu();
 
-            MenuItem updateItem = new MenuItem("Update");
             MenuItem deleteItem = new MenuItem("Delete");
-
-            updateItem.setOnAction(_ -> {
-                ProductsModel selectedItem = row.getItem();
-                if (selectedItem != null) {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_UpdateProduct.fxml"));
-                        Parent root = loader.load();
-
-                        // Get the controller and pass the selected employee's data
-                        P_UpdateProductController controller = loader.getController();
-                        controller.loadEmployeeData(selectedItem.getId());
-
-                        controller.setRefreshCallback(() -> refreshEmployeeTable());
-
-                        // Create a new pop-up stage
-                        Stage popupStage = new Stage();
-                        popupStage.setTitle("Update Product");
-                        popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
-                        popupStage.initOwner(row.getScene().getWindow()); // Set owner window
-
-                        Scene scene = new Scene(root);
-                        popupStage.setScene(scene);
-                        popupStage.setResizable(false); // Optional: make it fixed size
-                        popupStage.showAndWait(); // Wait until this window is closed (optional)
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        showAlert("Error", "Failed to open update form: " + e.getMessage());
-                    }
-                }
-            });
 
             deleteItem.setOnAction(_ -> {
                 ProductsModel selectedItem = row.getItem();
@@ -175,7 +165,7 @@ public class P_ProductsController implements Initializable {
                 }
             });
 
-            contextMenu.getItems().addAll(updateItem, deleteItem);
+            contextMenu.getItems().addAll(deleteItem);
             row.contextMenuProperty().bind(
                     Bindings.when(row.emptyProperty())
                             .then((ContextMenu) null)
@@ -379,5 +369,37 @@ public class P_ProductsController implements Initializable {
         // Get the current stage and minimize it
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.setIconified(true);
+    }
+
+    @FXML
+    void updateBtnPressed(ActionEvent event) {
+        ProductsModel selectedItem = ProductTable.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            String name = nametf.getValue();
+            String category = cattf.getText();
+            String description = descta.getText();
+
+            try {
+                Connection conn = DatabaseConnect.connect();
+                String query = "UPDATE medicine SET med_name = ?, med_cat = ?, med_desc = ? WHERE med_id = ?";
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, name);
+                pstmt.setString(2, category);
+                pstmt.setString(3, description);
+                pstmt.setInt(4, selectedItem.getId());
+                pstmt.executeUpdate();
+
+                showAlert("Success", "Product updated successfully.");
+                refreshEmployeeTable();
+
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showAlert("Error", "Failed to update product: " + e.getMessage());
+            }
+        } else {
+            showAlert("Error", "Please select a product to update.");
+        }
     }
 }
