@@ -214,7 +214,7 @@
                               <Font name="Gordita-Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="updatebtn" layoutX="9.0" layoutY="306.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="127.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Update" textFill="WHITE" AnchorPane.bottomAnchor="14.0">
+                        <Button fx:id="updateBtn" layoutX="9.0" layoutY="306.0" mnemonicParsing="false" onAction="#updateBtnPressed" prefHeight="28.0" prefWidth="127.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Update" textFill="WHITE" AnchorPane.bottomAnchor="14.0">
                            <font>
                               <Font name="Gordita-Bold" size="12.0" />
                            </font>
@@ -238,13 +238,17 @@
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
+<<<<<<< HEAD
                               <TextField fx:id="qtytf" prefHeight="25.0" prefWidth="192.0" promptText="--Nothing Selected--" style="-fx-background-radius: 20;" />
+=======
+                              <TextField fx:id="cattf" prefHeight="25.0" prefWidth="192.0" promptText="Enter Stock Amount" style="-fx-background-radius: 20;" />
+>>>>>>> 7595e17b0f5db54b46ac74b6188efd61ffec389f
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextArea prefHeight="200.0" prefWidth="200.0" wrapText="true" />
+                              <TextArea fx:id="descta" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
                            </children>
                         </VBox>
                      </children>
