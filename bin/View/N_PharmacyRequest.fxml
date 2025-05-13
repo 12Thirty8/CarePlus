@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,20 +12,20 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="593.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_PharmacyReq">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="593.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_PharmacyReq">
    <children>
-      <Pane layoutX="9.0" layoutY="10.0" prefHeight="570.0" prefWidth="574.0" style="-fx-background-color: White; -fx-background-radius: 12;">
+      <Pane layoutX="9.0" layoutY="10.0" prefHeight="596.0" prefWidth="574.0" style="-fx-background-color: White; -fx-background-radius: 12;">
          <children>
-            <Pane layoutX="13.0" layoutY="67.0" prefHeight="424.0" prefWidth="549.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
+            <Pane layoutX="13.0" layoutY="67.0" prefHeight="466.0" prefWidth="549.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
                <children>
                   <Label layoutX="21.0" layoutY="14.0" text="Request Information">
                      <font>
                         <Font name="Gordita-Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="21.0" layoutY="57.0" text="Nurse ID" />
-                  <TextField fx:id="Nnametf" layoutX="21.0" layoutY="80.0" prefHeight="26.0" prefWidth="180.0" promptText="Nurse ID" style="-fx-background-radius: 5;" />
-                  <Label layoutX="21.0" layoutY="115.0" text="Medicine Name:">
+                  <Label layoutX="21.0" layoutY="57.0" text="Medicine ID:" />
+                  <TextField fx:id="medidtf" editable="false" layoutX="21.0" layoutY="80.0" prefHeight="26.0" prefWidth="180.0" promptText="Medicine ID" style="-fx-background-radius: 5;" />
+                  <Label fx:id="medname" layoutX="21.0" layoutY="115.0" text="Medicine Name:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -35,27 +36,25 @@
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="medicinetf" layoutX="21.0" layoutY="137.0" prefHeight="26.0" prefWidth="180.0" promptText="Medicine Name" style="-fx-background-radius: 5;" />
-                  <Label layoutX="21.0" layoutY="282.0" text="Record ID">
+                  <Label layoutX="22.0" layoutY="345.0" text="Record Name:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="recordtf" layoutX="21.0" layoutY="303.0" prefHeight="26.0" prefWidth="180.0" promptText="Record ID" style="-fx-background-radius: 5;" />
                   <Label layoutX="221.0" layoutY="46.0" text="List of requested medicines:">
                      <font>
                         <Font name="Gordita-Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TableView layoutX="221.0" layoutY="80.0" prefHeight="249.0" prefWidth="319.0" stylesheets="@../Styles/table.css">
+                  <TableView fx:id="listTableView" layoutX="221.0" layoutY="80.0" prefHeight="309.0" prefWidth="319.0" stylesheets="@../Styles/table.css">
                      <columns>
-                        <TableColumn prefWidth="44.0" text="ID" />
-                        <TableColumn prefWidth="104.0" text="Name" />
-                        <TableColumn prefWidth="70.4000244140625" text="Dosage" />
-                        <TableColumn prefWidth="93.4000244140625" text="Qty" />
+                        <TableColumn fx:id="idcol" prefWidth="44.0" text="ID" />
+                        <TableColumn fx:id="namecol" prefWidth="104.0" text="Name" />
+                        <TableColumn fx:id="dosagecol" prefWidth="70.4000244140625" text="Dosage" />
+                        <TableColumn fx:id="qtycol" prefWidth="93.4000244140625" text="Qty" />
                      </columns>
                   </TableView>
-                  <Button fx:id="AddMedBtn" layoutX="17.0" layoutY="364.0" mnemonicParsing="false" onAction="#AddMedBtnAction" prefHeight="34.0" prefWidth="522.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Add Medicine" textFill="WHITE">
+                  <Button fx:id="AddMedBtn" layoutX="13.0" layoutY="418.0" mnemonicParsing="false" onAction="#AddMedBtnAction" prefHeight="34.0" prefWidth="522.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Add Medicine" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
@@ -65,7 +64,11 @@
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="medicinetf1" layoutX="21.0" layoutY="192.0" prefHeight="26.0" prefWidth="180.0" promptText="Medicine Name" style="-fx-background-radius: 5;" />
+                  <ComboBox fx:id="recordname" editable="true" layoutX="21.0" layoutY="367.0" prefHeight="25.0" prefWidth="180.0" />
+                  <ComboBox fx:id="medname" editable="true" layoutX="20.0" layoutY="137.0" prefHeight="25.0" prefWidth="180.0" />
+                  <ComboBox fx:id="dosage" editable="true" layoutX="20.0" layoutY="192.0" prefHeight="25.0" prefWidth="180.0" />
+                  <Label layoutX="20.0" layoutY="286.0" text="Medicine ID:" />
+                  <TextField fx:id="recordidtf" editable="false" layoutX="20.0" layoutY="309.0" prefHeight="26.0" prefWidth="180.0" promptText="Medicine ID" style="-fx-background-radius: 5;" />
                </children>
             </Pane>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="14.0" prefHeight="44.0" prefWidth="368.0" text="Pharmacy Request">
@@ -82,12 +85,12 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="ClearBtn" layoutX="14.0" layoutY="523.0" mnemonicParsing="false" onAction="#ClearBtnAction" prefHeight="34.0" prefWidth="268.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
+            <Button fx:id="ClearBtn" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#ClearBtnAction" prefHeight="34.0" prefWidth="268.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
                <font>
                   <Font name="Gordita-Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="SubmitBtn" layoutX="292.0" layoutY="523.0" mnemonicParsing="false" onAction="#SubmitBtnAction" prefHeight="34.0" prefWidth="268.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Submit Request" textFill="WHITE">
+            <Button fx:id="SubmitBtn" layoutX="292.0" layoutY="548.0" mnemonicParsing="false" onAction="#SubmitBtnAction" prefHeight="34.0" prefWidth="268.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Submit Request" textFill="WHITE">
                <font>
                   <Font name="Gordita-Bold" size="14.0" />
                </font>
