@@ -164,25 +164,31 @@
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="medidtf" editable="false" prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20; -fx-background-color: D9D9D9;" />
+                              <TextField fx:id="medidtf" editable="false" prefHeight="25.0" prefWidth="192.0" promptText="--Nothing Selected--" style="-fx-background-radius: 20; -fx-background-color: D9D9D9;" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Batch ID:">
+                                 <font>
+                                    <Font name="Gordita-Regular" size="12.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="batchidtf" prefHeight="25.0" prefWidth="192.0" promptText="--Nothing Selected--" style="-fx-background-radius: 20;" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="qtytf" prefHeight="25.0" prefWidth="192.0" promptText="Enter Stock Amount" style="-fx-background-radius: 20;" />
+                              <TextField fx:id="qtytf" prefHeight="25.0" prefWidth="192.0" promptText="--Nothing Selected--" style="-fx-background-radius: 20;" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stock In by:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="sintf" editable="false" prefHeight="25.0" prefWidth="192.0" style="-fx-background-radius: 20; -fx-background-color: D9D9D9;" />
+                              <TextField fx:id="sintf" editable="false" prefHeight="25.0" prefWidth="192.0" promptText="--Nothing Selected--" style="-fx-background-radius: 20; -fx-background-color: D9D9D9;" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dosage:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="dosetf" prefHeight="25.0" prefWidth="192.0" promptText="Enter Batch Dosage" style="-fx-background-radius: 20;" />
+                              <TextField fx:id="dosetf" prefHeight="25.0" prefWidth="192.0" promptText="--Nothing Selected--" style="-fx-background-radius: 20;" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Expiry Date:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
@@ -220,11 +226,6 @@
                         </AnchorPane>
                      </children>
                   </StackPane>
-                  <StackPane layoutX="16.0" layoutY="233.0">
-                     <children>
-                        <TextField fx:id="batchidtf" prefHeight="25.0" prefWidth="192.0" promptText="Search" style="-fx-background-radius: 20;" />
-                     </children>
-                  </StackPane>
                   <TableView fx:id="StockTable" layoutX="21.0" layoutY="373.0" prefHeight="348.0" prefWidth="680.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="292.0" AnchorPane.topAnchor="266.0">
                      <columns>
                         <TableColumn fx:id="idcol" prefWidth="73.60005110502243" text="Batch ID" />
@@ -243,11 +244,6 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </TableView>
-                  <Text layoutX="25.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Batch ID:">
-                     <font>
-                        <Font name="Gordita-Regular" size="12.0" />
-                     </font>
-                  </Text>
                   <AnchorPane layoutX="21.0" layoutY="-24.0" prefHeight="29.0" prefWidth="97.0" style="-fx-background-color: white; -fx-background-radius: 10;" AnchorPane.topAnchor="-24.0">
                      <children>
                         <Button fx:id="movetoStocksBtn" layoutX="37.0" layoutY="2.0" mnemonicParsing="false" onAction="#movetoStocksBtnPressed" prefHeight="28.0" prefWidth="125.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Stocks" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
