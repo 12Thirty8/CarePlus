@@ -1,9 +1,11 @@
 package Controllers;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import Models.ListModel;
 import Models.MyRequestModel;
 import db.DatabaseConnect;
@@ -14,8 +16,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
@@ -40,7 +47,7 @@ public class N_RequestMonitorController implements Initializable {
     private Button LogoutBtn;
 
     @FXML
-    private Button SubmitBtn;
+    private Button newreqBtn;
 
     @FXML
     private Button clipboardBtn;
@@ -119,11 +126,11 @@ public class N_RequestMonitorController implements Initializable {
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         setupTableColumns();
         refreshEmployeeTable();
-        String nurseName = DatabaseConnect.getPharmacistName(employeeId);
+        String nurseName = DatabaseConnect.getNurseName(employeeId);
         nameLabel.setText(nurseName != null ? nurseName : "Name not found");
 
         initializeRowSelectionListener();
-        // Setup columns for listTableView
+        initializeRowSelectionListener2();
         batchidcol.setCellValueFactory(new PropertyValueFactory<>("id"));
         namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
         dosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
@@ -173,6 +180,10 @@ public class N_RequestMonitorController implements Initializable {
             if (newSelection != null) {
                 int selectedRequestId = newSelection.getReqid();
                 ObservableList<ListModel> listItems = FXCollections.observableArrayList();
+                reqidtf.setText(String.valueOf(newSelection.getReqid()));
+                recordidtf.setText(String.valueOf(newSelection.getRecordid()));
+                batchidtf.clear();
+                qtytf.clear();
                 try {
                     Connection conn = DatabaseConnect.connect();
                     String query = """
@@ -218,6 +229,15 @@ public class N_RequestMonitorController implements Initializable {
         });
     }
 
+    private void initializeRowSelectionListener2() {
+        listTableView.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
+            if (newSelection != null) {
+                batchidtf.setText(String.valueOf(newSelection.getId()));
+                qtytf.setText(String.valueOf(newSelection.getQuantity()));
+            }
+        });
+    }
+
     @FXML
     void AddMedBtnAction(ActionEvent event) {
 
@@ -233,9 +253,30 @@ public class N_RequestMonitorController implements Initializable {
 
     }
 
-    @FXML
-    void SubmitBtnAction(ActionEvent event) {
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
+    @FXML
+    void newreqBtnPressed(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_PharmacyRequest.fxml"));
+            Parent root = loader.load();
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Pharmacy Request");
+            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+            Scene scene = new Scene(root);
+            popupStage.setScene(scene);
+            popupStage.setResizable(false); // Optional: make it fixed size
+            popupStage.showAndWait(); // Wait until this window is closed (optional)
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open update form: " + e.getMessage());
+        }
     }
 
     @FXML

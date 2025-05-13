@@ -13,11 +13,11 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="762.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_CreatePatientRecord">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="762.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_AddPatientRecord">
    <children>
-      <Pane layoutX="13.0" layoutY="14.0" prefHeight="763.0" prefWidth="740.0" style="-fx-background-color: White; -fx-background-radius: 12;">
+      <Pane layoutX="11.0" layoutY="11.0" prefHeight="763.0" prefWidth="740.0" style="-fx-background-color: White; -fx-background-radius: 12;">
          <children>
-            <Pane layoutX="14.0" layoutY="44.0" prefHeight="703.0" prefWidth="712.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
+            <Pane layoutX="14.0" layoutY="58.0" prefHeight="689.0" prefWidth="712.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
                <children>
                   <Label layoutX="21.0" layoutY="14.0" text="Information Sheet">
                      <font>
@@ -29,7 +29,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf" layoutX="21.0" layoutY="69.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="firstnametf" layoutX="21.0" layoutY="69.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -39,22 +39,22 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="doctorIDtf" layoutX="254.0" layoutY="69.0" prefHeight="26.0" prefWidth="211.0" promptText="Doctor ID" style="-fx-background-radius: 5;">
+                  <TextField fx:id="lastnametf" layoutX="254.0" layoutY="69.0" prefHeight="26.0" prefWidth="211.0" promptText="Last Name" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="savebtn" layoutX="364.0" layoutY="660.0" mnemonicParsing="false" onAction="#SaveChangesAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Submit Record" textFill="WHITE">
+                  <Button fx:id="savebtn" layoutX="364.0" layoutY="643.0" mnemonicParsing="false" onAction="#SaveChangesAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Submit Record" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="cancelbtn" layoutX="17.0" layoutY="660.0" mnemonicParsing="false" onAction="#CancelButtonAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
+                  <Button fx:id="cancelbtn" layoutX="17.0" layoutY="643.0" mnemonicParsing="false" onAction="#CancelButtonAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <DatePicker fx:id="CheckupDate" layoutX="491.0" layoutY="126.0" prefHeight="25.0" prefWidth="211.0" />
+                  <DatePicker fx:id="birthdate" layoutX="491.0" layoutY="126.0" prefHeight="25.0" prefWidth="211.0" promptText="Date of Birth" />
                   <Label layoutX="491.0" layoutY="48.0" text="Middle Name">
                      <font>
                         <Font name="Gordita-Bold" size="12.0" />
@@ -65,7 +65,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf1" layoutX="21.0" layoutY="125.0" prefHeight="26.0" prefWidth="91.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="agetf" layoutX="21.0" layoutY="125.0" prefHeight="26.0" prefWidth="91.0" promptText="Age" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -80,7 +80,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf11" layoutX="131.0" layoutY="125.0" prefHeight="26.0" prefWidth="103.0" promptText="Last Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="gendertf" layoutX="131.0" layoutY="125.0" prefHeight="26.0" prefWidth="103.0" promptText="Gender" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -90,7 +90,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf111" layoutX="491.0" layoutY="183.0" prefHeight="26.0" prefWidth="211.0" promptText="Last Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="birthplacetf" layoutX="491.0" layoutY="183.0" prefHeight="26.0" prefWidth="211.0" promptText="Brthplace" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -100,12 +100,12 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf12" layoutX="18.0" layoutY="183.0" prefHeight="26.0" prefWidth="446.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="addresstf" layoutX="18.0" layoutY="183.0" prefHeight="26.0" prefWidth="446.0" promptText="Complete Address" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="patientIDtf112" layoutX="254.0" layoutY="125.0" prefHeight="26.0" prefWidth="211.0" promptText="Last Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="emailaddtf" layoutX="254.0" layoutY="125.0" prefHeight="26.0" prefWidth="211.0" promptText="Email Adress" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -115,7 +115,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="doctorIDtf1" layoutX="491.0" layoutY="69.0" prefHeight="26.0" prefWidth="211.0" promptText="Doctor ID" style="-fx-background-radius: 5;">
+                  <TextField fx:id="middlenametf" layoutX="491.0" layoutY="69.0" prefHeight="26.0" prefWidth="211.0" promptText="Middle Name" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -125,17 +125,17 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf2" layoutX="20.0" layoutY="232.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="nationalitytf" layoutX="20.0" layoutY="232.0" prefHeight="26.0" prefWidth="211.0" promptText="Nationality" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="patientIDtf21" layoutX="254.0" layoutY="232.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="religiontf" layoutX="254.0" layoutY="232.0" prefHeight="26.0" prefWidth="211.0" promptText="Religion" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="patientIDtf211" layoutX="491.0" layoutY="232.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="occupationtf" layoutX="491.0" layoutY="232.0" prefHeight="26.0" prefWidth="211.0" promptText="Occupation" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -150,12 +150,12 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="22.0" layoutY="266.0" text="Contact Number">
+                  <Label layoutX="22.0" layoutY="266.0" text="Contact No">
                      <font>
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf22" layoutX="21.0" layoutY="287.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="contactnotf" layoutX="21.0" layoutY="287.0" prefHeight="26.0" prefWidth="211.0" promptText="Contact Number" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -170,17 +170,17 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf23" layoutX="19.0" layoutY="353.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="f_fullnametf" layoutX="19.0" layoutY="353.0" prefHeight="26.0" prefWidth="211.0" promptText="Father's Full Name" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="patientIDtf212" layoutX="251.0" layoutY="353.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="f_addresstf" layoutX="251.0" layoutY="353.0" prefHeight="26.0" prefWidth="211.0" promptText="Address" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="patientIDtf2111" layoutX="489.0" layoutY="353.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="f_contactnotf" layoutX="489.0" layoutY="353.0" prefHeight="26.0" prefWidth="211.0" promptText="Contact Number" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -201,17 +201,17 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf231" layoutX="19.0" layoutY="404.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="m_fullnametf" layoutX="19.0" layoutY="404.0" prefHeight="26.0" prefWidth="211.0" promptText="Mother's Full Name" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="patientIDtf2121" layoutX="254.0" layoutY="404.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="m_addresstf" layoutX="254.0" layoutY="404.0" prefHeight="26.0" prefWidth="211.0" promptText="Address" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="patientIDtf21111" layoutX="489.0" layoutY="404.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="m_contactnotf" layoutX="489.0" layoutY="404.0" prefHeight="26.0" prefWidth="211.0" promptText="Contact Number" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -226,29 +226,29 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ComboBox layoutX="489.0" layoutY="288.0" prefHeight="25.0" prefWidth="211.0" />
+                  <ComboBox fx:id="patcatcombobox" layoutX="489.0" layoutY="288.0" prefHeight="25.0" prefWidth="211.0" promptText="Patient Category" />
                   <Label layoutX="19.0" layoutY="512.0" text="Allergic To:">
                      <font>
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextArea layoutX="20.0" layoutY="534.0" prefHeight="90.0" prefWidth="211.0" />
+                  <TextArea fx:id="allergicarea" layoutX="20.0" layoutY="534.0" prefHeight="90.0" prefWidth="211.0" />
                   <Label layoutX="19.0" layoutY="443.0" text="Employer's Name">
                      <font>
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf232" layoutX="14.0" layoutY="460.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="e_fullnametf" layoutX="14.0" layoutY="460.0" prefHeight="26.0" prefWidth="211.0" promptText="Employer's Full Name" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="patientIDtf2122" layoutX="254.0" layoutY="460.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="e_addresstf" layoutX="254.0" layoutY="460.0" prefHeight="26.0" prefWidth="211.0" promptText="Address" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="patientIDtf21112" layoutX="489.0" layoutY="460.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="e_contactnotf" layoutX="489.0" layoutY="460.0" prefHeight="26.0" prefWidth="211.0" promptText="Contact Number" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -268,7 +268,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf21221" layoutX="255.0" layoutY="534.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="em_fullnametf" layoutX="255.0" layoutY="534.0" prefHeight="26.0" prefWidth="211.0" promptText="Emergency Contact Full Name" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -278,7 +278,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf212211" layoutX="489.0" layoutY="534.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="em_addresstf" layoutX="489.0" layoutY="534.0" prefHeight="26.0" prefWidth="211.0" promptText="Emergency Contact Address" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -288,7 +288,7 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf212212" layoutX="255.0" layoutY="593.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="em_contacnotf" layoutX="255.0" layoutY="593.0" prefHeight="26.0" prefWidth="211.0" promptText="Emergency Contact Number" style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
@@ -298,19 +298,19 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="patientIDtf2122111" layoutX="489.0" layoutY="593.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                  <TextField fx:id="em_relation" layoutX="489.0" layoutY="593.0" prefHeight="26.0" prefWidth="211.0" promptText="Relationship " style="-fx-background-radius: 5;">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
                </children>
             </Pane>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" prefHeight="44.0" prefWidth="368.0" text="Add Patient Data">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="6.0" prefHeight="44.0" prefWidth="368.0" text="Add Patient Data">
                <font>
                   <Font name="Gordita-Bold" size="21.0" />
                </font>
             </Label>
-            <Button fx:id="BackBttn" layoutX="13.0" layoutY="-3.0" mnemonicParsing="false" onAction="#BackBttnAction" prefHeight="44.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-padding: 10;">
+            <Button fx:id="BackBttn" layoutX="14.0" layoutY="3.0" mnemonicParsing="false" onAction="#BackBttnAction" prefHeight="34.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-padding: 10;">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>

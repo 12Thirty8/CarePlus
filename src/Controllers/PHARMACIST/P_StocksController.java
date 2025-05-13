@@ -156,39 +156,22 @@ public class P_StocksController implements Initializable {
         setupRowContextMenu();
         loadMedicineNames();
         setupMedicineComboBox();
+        initializeRowSelectionListener();
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
         sintf.setText(Integer.toString(P_DashboardController.employeeId));
 
-        batchidtf.setOnKeyReleased(_ -> {
-            String batchIdText = batchidtf.getText();
-            Connection conn = DatabaseConnect.connect();
-            String sql = "SELECT b.med_id, m.med_name as medName, b.batch_stock, b.batch_dosage, b.batch_exp FROM batch b LEFT JOIN medicine m ON b.med_id = m.med_id WHERE batch_id = ?";
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, batchIdText);
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    int medId = rs.getInt("med_id");
-                    int stock = rs.getInt("batch_stock");
-                    String dosage = rs.getString("batch_dosage");
-                    java.sql.Date expDate = rs.getDate("batch_exp");
+    }
 
-                    // Set the values in the text fields
-                    nametf.setValue(rs.getString("medName"));
-                    medidtf.setText(String.valueOf(medId));
-                    qtytf.setText(String.valueOf(stock));
-                    expdate.setValue(expDate.toLocalDate());
-                    dosetf.setText(dosage);
-
-                } else {
-                    nametf.setValue(null);
-                    medidtf.clear();
-                    qtytf.clear();
-                    expdate.setValue(null);
-                    dosetf.clear();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+    @FXML
+    private void initializeRowSelectionListener() {
+        StockTable.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
+            if (newSelection != null) {
+                nametf.getSelectionModel().select(newSelection.getName());
+                qtytf.setText(String.valueOf(newSelection.getQuantity()));
+                dosetf.setText(newSelection.getDose());
+                expdate.setValue(newSelection.getExpDate().toLocalDate());
+                batchidtf.setText(String.valueOf(newSelection.getId()));
             }
         });
     }
@@ -362,23 +345,21 @@ public class P_StocksController implements Initializable {
 
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Schedule.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Schedule.fxml");
     }
 
     @FXML
     private void PharmacyBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Stocks.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Stocks.fxml");
     }
 
     @FXML
     void homeBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Dashboard.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Dashboard.fxml");
     }
 
     @FXML
     void addstockBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_StockIn.fxml"); 
-
         String medId = medidtf.getText();
         String quantity = qtytf.getText();
         String dose = dosetf.getText();
@@ -421,12 +402,12 @@ public class P_StocksController implements Initializable {
 
     @FXML
     void movetoProductBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Products.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Products.fxml");
     }
 
-     @FXML
+    @FXML
     void movetoStocksBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Stocks.fxml"); 
+        SceneLoader.loadScene(event, "/View/P_Stocks.fxml");
     }
 
     @FXML

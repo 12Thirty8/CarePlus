@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="593.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_PharmacyReq">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="593.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_PharmacyReq">
    <children>
-      <Pane layoutX="13.0" layoutY="14.0" prefHeight="570.0" prefWidth="574.0" style="-fx-background-color: White; -fx-background-radius: 12;">
+      <Pane layoutX="9.0" layoutY="10.0" prefHeight="570.0" prefWidth="574.0" style="-fx-background-color: White; -fx-background-radius: 12;">
          <children>
             <Pane layoutX="13.0" layoutY="67.0" prefHeight="424.0" prefWidth="549.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
                <children>
@@ -68,7 +68,7 @@
                   <TextField fx:id="medicinetf1" layoutX="21.0" layoutY="192.0" prefHeight="26.0" prefWidth="180.0" promptText="Medicine Name" style="-fx-background-radius: 5;" />
                </children>
             </Pane>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="14.0" prefHeight="44.0" prefWidth="368.0" text="Pharmacy Request">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="14.0" prefHeight="44.0" prefWidth="368.0" text="Pharmacy Request">
                <font>
                   <Font name="Gordita-Bold" size="21.0" />
                </font>

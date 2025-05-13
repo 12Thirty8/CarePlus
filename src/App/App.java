@@ -12,14 +12,15 @@ import javafx.stage.StageStyle;
 public class App extends Application {
     public void start(Stage primaryStage) {
         System.setProperty("prism.lcdtext", "false");
-        try {
+        try { 
             Parent root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setResizable(true);
-            // primaryStage.setMaximized(true);
+            // primaryStage.setMaximized(true);         
             primaryStage.initStyle(StageStyle.UNDECORATED);
             // primaryStage.setMinWidth(942);
+          
             // primaryStage.setMinHeight(670);
             primaryStage.setTitle("Care ++");
             primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/ICONS/1Care++.png")));
