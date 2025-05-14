@@ -146,7 +146,6 @@ public class AccountManagementController implements Initializable {
                         popupStage.setTitle("Update Account");
                         popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
                         popupStage.initOwner(row.getScene().getWindow()); // Set owner window
-                        popupStage.initStyle(StageStyle.UNDECORATED); // Optional: set style
                         Scene scene = new Scene(root);
                         popupStage.setScene(scene);
                         popupStage.setResizable(false); // Optional: make it fixed size

@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import Controllers.ViewState;
+import Controllers.COH.UpdateAccountController;
 import Models.StocksModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
@@ -37,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -163,6 +165,10 @@ public class P_StocksController implements Initializable {
 
     }
 
+    public TableView<StocksModel> getStockTable() {
+    return StockTable;
+        }   
+
     @FXML
     private void initializeRowSelectionListener() {
         StockTable.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
@@ -286,7 +292,7 @@ public class P_StocksController implements Initializable {
     private void setupRowContextMenu() {
     }
 
-    private void refreshEmployeeTable() {
+    public void refreshEmployeeTable() {
         EmployeeList.clear();
         try {
             Connection conn = DatabaseConnect.connect();
@@ -360,56 +366,28 @@ public class P_StocksController implements Initializable {
 
     @FXML
     void addstockBtnPressed(ActionEvent event) {
-        String medId = medidtf.getText();
-        String quantity = qtytf.getText();
-        String dose = dosetf.getText();
-        String expDate = expdate.getValue() != null ? expdate.getValue().toString() : null;
-        String stockinDate = java.time.LocalDate.now().toString();
+        try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_StockIn.fxml"));
+                        Parent root = loader.load();
 
-        if (medId.isEmpty() || quantity.isEmpty() || expDate == null) {
-            showAlert("Error", "Please fill in all fields.");
-            return;
-        }
-        // Set the session variable with the current employee ID
-        int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
-        String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
-        String insertBatchQuery = "INSERT INTO batch ( med_id, batch_stock, batch_dosage, batch_exp, stockin_by, stockin_date, status_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                        // Get the controller and pass the selected employee's data
+                        UpdateAccountController controller = loader.getController();
 
-        try (Connection conn = DatabaseConnect.connect()) {
+                        controller.setRefreshCallback(() -> refreshEmployeeTable());
 
-            try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
-                setStmt.setInt(1, currentEmpId);
-                setStmt.executeUpdate();
-            }
-
-            try (PreparedStatement pstmt = conn.prepareStatement(insertBatchQuery)) {
-
-                pstmt.setString(1, medId);
-                pstmt.setString(2, quantity);
-                pstmt.setString(3, dose);
-                pstmt.setString(4, expDate);
-                pstmt.setString(6, stockinDate);
-                pstmt.setInt(5, employeeId);
-                pstmt.setInt(7, 7); // 7 is the ID for "Available" status
-
-                int rowsAffected = pstmt.executeUpdate();
-                if (rowsAffected > 0) {
-                    showAlert("Success", "Stock added successfully.");
-                    refreshEmployeeTable();
-                    clearBtnPressed(event);
-                } else {
-                    showAlert("Error", "Failed to add stock.");
-                }
-
-                pstmt.close();
-                conn.close();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Error", "Database error: " + e.getMessage());
-        }
+                        // Create a new pop-up stage
+                        Stage popupStage = new Stage();
+                        popupStage.setTitle("Stock In");
+                        popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+                        Scene scene = new Scene(root);
+                        popupStage.setScene(scene);
+                        popupStage.setResizable(false); // Optional: make it fixed size
+                        popupStage.showAndWait(); // Wait until this window is closed (optional)
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        showAlert("Error", "Failed to open update form: " + e.getMessage());
+                    }
     }
 
     @FXML

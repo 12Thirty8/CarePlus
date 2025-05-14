@@ -2,9 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,9 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="301.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.COH.UpdateAccountController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="301.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PHARMACIST.P_StkInController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="105.0" layoutY="7.0" prefHeight="44.0" prefWidth="90.0" text="Request">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="105.0" layoutY="11.0" prefHeight="44.0" prefWidth="90.0" text="Request">
          <font>
             <Font name="Gordita-Bold" size="21.0" />
          </font>
@@ -43,7 +43,7 @@
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="nametf" prefHeight="26.0" prefWidth="197.0" promptText="Name" />
+                  <ComboBox fx:id="nametf" editable="true" prefHeight="25.0" prefWidth="257.0" />
                   <Label text="Medicine ID:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
@@ -52,7 +52,7 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="qtytf" prefHeight="26.0" prefWidth="197.0" promptText="Quantity" />
+                  <TextField fx:id="medidtf" editable="false" prefHeight="26.0" prefWidth="197.0" promptText="-- Nothing is selected" />
                   <Label text="Batch ID:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
@@ -61,7 +61,7 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <PasswordField fx:id="cattf" prefHeight="25.0" prefWidth="197.0" promptText="Category" />
+                  <TextField fx:id="batchidtf" prefHeight="26.0" prefWidth="197.0" promptText="-- Nothing is selected" />
                   <Label text="Quantity">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
@@ -70,7 +70,7 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <PasswordField fx:id="cattf1" prefHeight="25.0" prefWidth="197.0" promptText="Nurse" />
+                  <TextField fx:id="qtytf" prefHeight="26.0" prefWidth="197.0" promptText="-- Nothing is selected" />
                   <Label text="Stock In By:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
@@ -79,7 +79,7 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <PasswordField fx:id="cattf11" prefHeight="25.0" prefWidth="197.0" promptText="Nurse" />
+                  <TextField fx:id="sintf" editable="false" prefHeight="26.0" prefWidth="197.0" promptText="-- Nothing is selected" />
                   <Label text="Dosage">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
@@ -88,7 +88,7 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <PasswordField fx:id="cattf111" prefHeight="25.0" prefWidth="197.0" promptText="Nurse" />
+                  <TextField fx:id="dosetf" prefHeight="26.0" prefWidth="197.0" promptText="-- Nothing is selected" />
                   <Label text="Expiry Date:">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
@@ -97,7 +97,7 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Label>
-                  <DatePicker fx:id="expdate" prefHeight="26.0" prefWidth="217.0" promptText="Date" />
+                  <DatePicker fx:id="expdate" prefHeight="26.0" prefWidth="250.0" promptText="Date" />
                   <Button fx:id="addstkBtn" mnemonicParsing="false" onAction="#addstkBtnPressed" prefHeight="34.0" prefWidth="265.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Save Changes" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
