@@ -1,6 +1,7 @@
 package Controllers.NURSE;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import Controllers.ViewState;
 import db.DatabaseConnect;
@@ -16,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -153,7 +155,38 @@ public class N_AccountController {
 
     @FXML
     void minimizeAction(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+    @FXML
+    void LogOutActionBttn(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Logout");
+        alert.setHeaderText("Are you sure you want to log out?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
+                Parent root = loader.load();
+
+                Stage loginStage = new Stage();
+                loginStage.setScene(new Scene(root));
+                loginStage.initStyle(StageStyle.UNDECORATED);
+                loginStage.setResizable(false);
+                loginStage.show();
+
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading page.");
+                a.show();
+            }
+        }
     }
     @FXML
     private void toggleHamburgerMenu() {
