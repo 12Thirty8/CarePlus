@@ -152,6 +152,10 @@ public class N_AccountController {
     }
 
     @FXML
+    void minimizeAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
+    }
+    @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
         double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
