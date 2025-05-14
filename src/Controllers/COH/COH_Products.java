@@ -1,4 +1,5 @@
 package Controllers.COH;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import Controllers.ViewState;
-import Models.StocksModel;
+import Models.ProductsModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,118 +24,107 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
 import util.SceneLoader;
 
-public class COH_StkInReport {
+public class COH_Products {
+
 
     @FXML
-    private Button FilterBttn, hamburgermenuBtn, minimizeBtn, closeBtn, accountBtn, homeBtn,
-            crossBtn, recordsBtn, clipboardBtn, LogoutBtn, StkOutBttn, movetoProductBtn, movetoStocksBtn;
+    private Button FilterBttn;
+
+    @FXML
+    private Button LogoutBtn;
 
     @FXML
     private TextField SearchButton;
 
     @FXML
-    private Label nameLabel;
+    private Button accountBtn;
 
     @FXML
-    private TableView<?> StkInTableView;
+    private Button clipboardBtn;
+
+    @FXML
+    private Button closeBtn;
+
+    @FXML
+    private Button crossBtn;
 
     @FXML
     private AnchorPane hamburgerPane;
 
     @FXML
-    private TableColumn<StocksModel, String> sinbycol;
+    private Button hamburgermenuBtn;
 
     @FXML
-    private TableColumn<StocksModel, String> sindatecol;
+    private Button homeBtn;
 
     @FXML
-    private TableColumn<StocksModel, String> dosecol;
+    private Button minimizeBtn;
 
     @FXML
-    private TableColumn<StocksModel, String> statcol;
+    private Button movetoProductBtn;
 
     @FXML
-    private TableColumn<StocksModel, String> expcol;
+    private Button movetoStocksBtn;
 
     @FXML
-    private TableColumn<StocksModel, Integer> idcol;
+    private Label nameLabel;
 
     @FXML
-    private TableColumn<StocksModel, String> namecol;
+    private Button recordsBtn;
 
     @FXML
-    private TableColumn<StocksModel, Integer> qtycol;
+    private TableColumn<ProductsModel, Integer> idcol;
+    
+    @FXML
+    private TableColumn<ProductsModel, String> namecol;
 
     @FXML
-    private TableView<StocksModel> StockTable;
+    private TableColumn<ProductsModel, String> catcol;
 
-    private ObservableList<String> allMedicineNames = FXCollections.observableArrayList();
+    @FXML
+    private TableColumn<ProductsModel, Text> desccol;
 
+    @FXML
+    private TableView<ProductsModel> ProductTable;
 
-
-    private ObservableList<StocksModel> EmployeeList = FXCollections.observableArrayList();
-
-    private Alert a = new Alert(AlertType.NONE);
+    private ObservableList<ProductsModel> EmployeeList = FXCollections.observableArrayList();
 
     public static int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+
+    private Alert a = new Alert(AlertType.NONE);
 
     @FXML
     public void initialize() {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
-        
         setupTableColumns();
         refreshEmployeeTable();
-        loadMedicineNames();        
         String cohName = DatabaseConnect.getCOHName();
         nameLabel.setText(cohName != null ? cohName : "Name not found");
     }
 
-    private void loadMedicineNames() {
-        allMedicineNames.clear();
-        try {
-            Connection conn = DatabaseConnect.connect();
-            String query = "SELECT med_name FROM medicine";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                allMedicineNames.add(rs.getString("med_name"));
-            }
-
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    
-
     private void setupTableColumns() {
         idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
         namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        qtycol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        dosecol.setCellValueFactory(new PropertyValueFactory<>("dose"));
-        expcol.setCellValueFactory(new PropertyValueFactory<>("expDate"));
-        sinbycol.setCellValueFactory(new PropertyValueFactory<>("sinby"));
-        sindatecol.setCellValueFactory(new PropertyValueFactory<>("sinDate"));
-        statcol.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        StockTable.setItems(EmployeeList);
+        catcol.setCellValueFactory(new PropertyValueFactory<>("category"));
+        desccol.setCellValueFactory(new PropertyValueFactory<>("desc"));
     }
+
 
     private void refreshEmployeeTable() {
         EmployeeList.clear();
@@ -141,35 +132,21 @@ public class COH_StkInReport {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        b.batch_id,
-                        m.med_name AS medName,
-                        b.batch_stock,
-                        b.batch_dosage,
-                        b.batch_exp,
-                        CONCAT(COALESCE(e.f_name, ''), ' ', COALESCE(e.l_name, '')) AS stockinBy,
-                        b.stockin_date,
-                        s.status_name AS status
-                    FROM batch b
-                    LEFT JOIN employee e ON b.stockin_by = e.employee_id
-                    LEFT JOIN medicine m ON b.med_id = m.med_id
-                    LEFT JOIN stockstatus s ON b.status_id = s.status_id
+                        m.med_id, m.med_name, m.med_cat, m.med_desc
+                    FROM medicine m
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                EmployeeList.add(new StocksModel(
-                        rs.getInt("batch_id"),
-                        rs.getString("medName"),
-                        rs.getInt("batch_stock"),
-                        rs.getString("batch_dosage"),
-                        rs.getDate("batch_exp"),
-                        rs.getString("stockinBy"),
-                        rs.getDate("stockin_date"),
-                        rs.getString("status")));
+                EmployeeList.add(new ProductsModel(
+                        rs.getInt("med_id"),
+                        rs.getString("med_name"),
+                        rs.getString("med_cat"),
+                        new Text(rs.getString("med_desc"))));
             }
 
-            StockTable.setItems(EmployeeList);
+            ProductTable.setItems(EmployeeList);
 
             rs.close();
             pstmt.close();
@@ -200,6 +177,7 @@ public class COH_StkInReport {
         alert.showAndWait();
     }
 
+
     @FXML
     void LogOutActionBttn(ActionEvent event) {
         showAlert("Confirm Logout", "Are you sure you want to log out?");
@@ -226,10 +204,17 @@ public class COH_StkInReport {
             a.show();
         }
     }
-    
+
     @FXML
-    private void movetoProductBtnPressed(ActionEvent event) {
+    void movetoProductBtnPressed(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/COH_Products.fxml");
+
+    }
+
+    @FXML
+    void movetoStocksBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_StockInReport.fxml");
+
     }
 
     @FXML
