@@ -13,7 +13,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         System.setProperty("prism.lcdtext", "false");
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Stocks.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setResizable(true);

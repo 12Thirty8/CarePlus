@@ -1,58 +1,83 @@
 package Controllers.PHARMACIST;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import Controllers.ViewState;
+import Controllers.COH.UpdateAccountController;
+import Models.StocksModel;
 import db.DatabaseConnect;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import util.GetCurrentEmployeeID;
 import util.SceneLoader;
 import javafx.scene.control.Alert.AlertType;
 
-public class P_StkInController implements Initializable {
+public class P_StkInController {
+
+    @FXML
+    private ImageView BackBttn;
+
 
     @FXML
     private Button addstkBtn;
 
     @FXML
-    private Button BackBttn;
+    private TextField batchidtf;
 
     @FXML
-    private TextField cattf;
+    private TextField dosetf;
 
     @FXML
     private DatePicker expdate;
 
     @FXML
-    private TextField nametf;
+    private TextField medidtf;
+
+    @FXML
+    private ComboBox<?> nametf;
 
     @FXML
     private TextField qtytf;
 
     @FXML
-    private TextField stkinbytf;
+    private TextField sintf;
 
+    public static int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+        
     private Alert a = new Alert(AlertType.NONE);
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        stkinbytf.setText(Integer.toString(P_DashboardController.employeeId));
-    }
+
 
     @FXML
-    void BackBttnAction(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Stocks.fxml");
+    void BackBttnAction(MouseEvent event) {
+
+    }
+
+    private void refreshEmployeeTable() {
+        
 
     }
 
@@ -72,6 +97,7 @@ public class P_StkInController implements Initializable {
 
             addStock(nametf.getText(), cattf.getText(), Integer.parseInt(qtytf.getText()), stkinbytf.getText(),
                     sqlDate);
+                    
             clearFields();
         } catch (NullPointerException e) {
             a.setAlertType(AlertType.ERROR);
@@ -79,6 +105,15 @@ public class P_StkInController implements Initializable {
             a.show();
             return;
         }
+    }
+
+    @FXML
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private void addStock(String name, String category, int quantity, String stkinby, Date expdate)
@@ -133,4 +168,7 @@ public class P_StkInController implements Initializable {
         qtytf.clear();
         expdate.setValue(null);
     }
-}
+
+
+    }
+
