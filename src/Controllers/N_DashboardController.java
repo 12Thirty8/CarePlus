@@ -7,15 +7,21 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import Models.NurseModel;
 import db.DatabaseConnect;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
 import util.SceneLoader;
 import javafx.scene.control.TableColumn;
@@ -54,7 +60,11 @@ public class N_DashboardController {
     private Text nameLabel;
 
     @FXML
+    private Button closeBtn;
+
+    @FXML
     public void initialize() {
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
         setupTableColumns();
         refreshEmployeeTable();
         int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
@@ -100,30 +110,42 @@ public class N_DashboardController {
         }
     }
 
-    @FXML
-    void AccountMenuActionBttn(ActionEvent event) {
+     @FXML
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+        double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
-    }
+        KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
 
-    @FXML
-    void DashboardActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void HamburgerMenuActionBttn(ActionEvent event) {
-
+        ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
     }
 
     @FXML
     private void crossBtnAction(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/N_RequestMonitor.fxml");
-
     }
 
     @FXML
-    void ScheduleActionBttn(ActionEvent event) {
+    void homeBtnPressed(ActionEvent event) {
+                SceneLoader.loadScene(event, "/View/P_Dashboard.fxml");
 
     }
+
+     @FXML
+    private void closeAction(ActionEvent Action) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
+
+      @FXML
+    private void minimizeAction(ActionEvent event) {
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+    
 
 }

@@ -98,6 +98,7 @@ public class P_DashboardController implements Initializable {
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
+        int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
     }
