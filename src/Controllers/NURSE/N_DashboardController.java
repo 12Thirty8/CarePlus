@@ -1,10 +1,12 @@
-package Controllers;
+package Controllers.NURSE;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+
+import Controllers.ViewState;
 import Models.NurseModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
@@ -130,7 +132,7 @@ public class N_DashboardController {
 
     @FXML
     void homeBtnPressed(ActionEvent event) {
-                SceneLoader.loadScene(event, "/View/P_Dashboard.fxml");
+                SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
 
     }
 

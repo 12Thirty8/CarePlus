@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.NURSE;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Controllers.ViewState;
 import Models.ListModel;
 import Models.MyRequestModel;
 import db.DatabaseConnect;

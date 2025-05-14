@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="669.0" prefWidth="510.0" style="-fx-background-color: White; -fx-background-radius: 12;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.N_UpdateRecord">
+<Pane prefHeight="669.0" prefWidth="510.0" style="-fx-background-color: White; -fx-background-radius: 12;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_UpdateRecord">
    <children>
       <Pane layoutX="13.0" layoutY="67.0" prefHeight="584.0" prefWidth="483.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
          <children>

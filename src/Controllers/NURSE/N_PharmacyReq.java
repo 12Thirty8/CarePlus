@@ -1,4 +1,4 @@
-package Controllers;
+package Controllers.NURSE;
 
 import java.net.URL;
 import java.sql.Connection;

@@ -1,4 +1,4 @@
-    package Controllers;
+    package Controllers.NURSE;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
