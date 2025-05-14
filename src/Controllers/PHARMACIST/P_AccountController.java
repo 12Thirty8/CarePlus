@@ -1,10 +1,9 @@
-package Controllers.NURSE;
+package Controllers.PHARMACIST;
 
 import java.io.IOException;
 import java.util.Optional;
 
 import Controllers.ViewState;
-import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -27,7 +26,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import util.SceneLoader;
 
-public class N_AccountController {
+public class P_AccountController {
 
     @FXML
     private Button ChangeShiftBtn;
@@ -136,28 +135,6 @@ public class N_AccountController {
                 a.show();
             }
     }
-
-    @FXML
-    void closeAction(ActionEvent event) {
-        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
-        currentStage.close();
-    }
-
-    @FXML
-    void crossBtnAction(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_RequestMonitor.fxml");
-    }
-
-    @FXML
-    void homeBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
-    }
-
-    @FXML
-    void minimizeAction(ActionEvent event) {
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        currentStage.setIconified(true);
-    }
     @FXML
     void LogOutActionBttn(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -188,6 +165,28 @@ public class N_AccountController {
             }
         }
     }
+
+    @FXML
+    void closeAction(ActionEvent event) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
+
+    @FXML
+    void crossBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/P_Stocks.fxml");
+    }
+
+    @FXML
+    void homeBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/P_Dashboard.fxml");
+    }
+
+    @FXML
+    void minimizeAction(ActionEvent event) {
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
+    }    
     @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
@@ -203,8 +202,6 @@ public class N_AccountController {
 
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_Account.fxml");
-
+        SceneLoader.loadScene(event, "/View/P_Account.fxml");
     }
-
 }

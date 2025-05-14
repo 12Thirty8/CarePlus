@@ -1,10 +1,12 @@
 package Controllers.PHARMACIST;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import db.DatabaseConnect;
@@ -13,14 +15,21 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import util.GetCurrentEmployeeID;
 
 public class P_StkInController implements Initializable {
@@ -59,6 +68,9 @@ public class P_StkInController implements Initializable {
     private FilteredList<String> filteredMedicineNames;
 
     private Runnable refreshCallback;
+
+    private Alert a = new Alert(AlertType.NONE);
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,6 +117,37 @@ public class P_StkInController implements Initializable {
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void LogOutActionBttn(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Logout");
+        alert.setHeaderText("Are you sure you want to log out?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
+                Parent root = loader.load();
+
+                Stage loginStage = new Stage();
+                loginStage.setScene(new Scene(root));
+                loginStage.initStyle(StageStyle.UNDECORATED);
+                loginStage.setResizable(false);
+                loginStage.show();
+
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading page.");
+                a.show();
+            }
         }
     }
 
