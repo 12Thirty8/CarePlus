@@ -15,14 +15,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="617.0" prefWidth="301.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PHARMACIST.P_StkInController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="105.0" layoutY="11.0" prefHeight="44.0" prefWidth="90.0" text="Request">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="11.0" prefHeight="44.0" prefWidth="125.0" text="Add Stock">
          <font>
             <Font name="Gordita-Bold" size="21.0" />
          </font>
       </Label>
       <Button fx:id="BackBttn" layoutX="2.0" layoutY="7.0" mnemonicParsing="false" onAction="#BackBttnAction" prefHeight="44.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-padding: 10;">
          <graphic>
-            <ImageView fx:id="BackBttn" fitHeight="30.0" fitWidth="25.0" onDragDetected="#BackBttnAction" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../ICONS/Back%20Arrow.png" />
                </image>
@@ -53,15 +53,6 @@
                      </VBox.margin>
                   </Label>
                   <TextField fx:id="medidtf" editable="false" prefHeight="26.0" prefWidth="197.0" promptText="-- Nothing is selected" />
-                  <Label text="Batch ID:">
-                     <font>
-                        <Font name="Gordita-Regular" size="12.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Label>
-                  <TextField fx:id="batchidtf" prefHeight="26.0" prefWidth="197.0" promptText="-- Nothing is selected" />
                   <Label text="Quantity">
                      <font>
                         <Font name="Gordita-Regular" size="12.0" />
@@ -98,6 +89,11 @@
                      </VBox.margin>
                   </Label>
                   <DatePicker fx:id="expdate" prefHeight="26.0" prefWidth="250.0" promptText="Date" />
+                  <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#clearBtnPressed" prefHeight="34.0" prefWidth="265.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Clear" textFill="WHITE">
+                     <font>
+                        <Font name="Gordita-Bold" size="14.0" />
+                     </font>
+                  </Button>
                   <Button fx:id="addstkBtn" mnemonicParsing="false" onAction="#addstkBtnPressed" prefHeight="34.0" prefWidth="265.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Save Changes" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />

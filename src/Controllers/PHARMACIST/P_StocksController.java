@@ -10,12 +10,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import Controllers.ViewState;
-import Controllers.COH.UpdateAccountController;
 import Models.StocksModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -31,8 +31,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -166,8 +169,8 @@ public class P_StocksController implements Initializable {
     }
 
     public TableView<StocksModel> getStockTable() {
-    return StockTable;
-        }   
+        return StockTable;
+    }
 
     @FXML
     private void initializeRowSelectionListener() {
@@ -290,6 +293,58 @@ public class P_StocksController implements Initializable {
     }
 
     private void setupRowContextMenu() {
+        StockTable.setRowFactory(_ -> {
+            TableRow<StocksModel> row = new TableRow<>();
+            ContextMenu contextMenu = new ContextMenu();
+
+            MenuItem deleteItem = new MenuItem("Delete");
+
+            deleteItem.setOnAction(_ -> {
+                StocksModel selectedItem = row.getItem();
+                if (selectedItem != null) {
+                    deleteRow(selectedItem);
+                }
+            });
+
+            contextMenu.getItems().addAll(deleteItem);
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(contextMenu));
+
+            return row;
+        });
+    }
+
+    private void deleteRow(StocksModel item) {
+        // Show confirmation dialog before deleting
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Delete");
+        alert.setHeaderText("Delete this account?");
+        alert.setContentText("Are you sure you want to delete: " + item + "?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                try {
+                    archiveAccount(item.getId());
+                    StockTable.getItems().remove(item);
+                    showAlert("Success", "Product deleted successfully.");
+                } catch (SQLException e) {
+                    showAlert("Error", "Failed to delete item: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void archiveAccount(int id) throws SQLException {
+        try (Connection conn = DatabaseConnect.connect();
+                PreparedStatement pstmt = conn.prepareStatement(
+                        "DELETE FROM batch WHERE batch_id = ?")) {
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        }
     }
 
     public void refreshEmployeeTable() {
@@ -367,27 +422,26 @@ public class P_StocksController implements Initializable {
     @FXML
     void addstockBtnPressed(ActionEvent event) {
         try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_StockIn.fxml"));
-                        Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_StockIn.fxml"));
+            Parent root = loader.load();
 
+            // Get the controller and pass the selected employee's data
+            P_StkInController controller = loader.getController();
 
-                        // Get the controller and pass the selected employee's data
-                        UpdateAccountController controller = loader.getController();
+            controller.setRefreshCallback(() -> refreshEmployeeTable());
 
-                        controller.setRefreshCallback(() -> refreshEmployeeTable());
-
-                        // Create a new pop-up stage
-                        Stage popupStage = new Stage();
-                        popupStage.setTitle("Stock In");
-                        popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
-                        Scene scene = new Scene(root);
-                        popupStage.setScene(scene);
-                        popupStage.setResizable(false); // Optional: make it fixed size
-                        popupStage.showAndWait(); // Wait until this window is closed (optional)
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        showAlert("Error", "Failed to open update form: " + e.getMessage());
-                    }
+            // Create a new pop-up stage
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Stock In");
+            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+            Scene scene = new Scene(root);
+            popupStage.setScene(scene);
+            popupStage.setResizable(false); // Optional: make it fixed size
+            popupStage.showAndWait(); // Wait until this window is closed (optional)
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open update form: " + e.getMessage());
+        }
     }
 
     @FXML
