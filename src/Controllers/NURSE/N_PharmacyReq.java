@@ -456,13 +456,13 @@ public class N_PharmacyReq implements Initializable {
 
     @FXML
     void ClearBtnAction(ActionEvent event) {
+        EmployeeList.clear();
         medidtf.clear();
         medname.setValue(null);
         dosage.setValue(null);
         qtytf.clear();
         recordidtf.clear();
         recordname.setValue(null);
-        EmployeeList.clear();
 
     }
 
@@ -577,4 +577,5 @@ public class N_PharmacyReq implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }
