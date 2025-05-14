@@ -169,7 +169,7 @@
                         <TextField prefHeight="25.0" prefWidth="192.0" promptText="Search" style="-fx-background-radius: 20;" />
                      </children>
                   </StackPane>
-                  <TableView fx:id="StkInTableView" layoutX="-57.0" layoutY="233.0" prefHeight="348.0" prefWidth="659.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="266.0">
+                  <TableView fx:id="StkInTableView" layoutX="-57.0" layoutY="233.0" prefHeight="348.0" prefWidth="659.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="266.0">
                      <columns>
                         <TableColumn fx:id="takenFrColumn" prefWidth="95.20007514953613" text="Patient" />
                         <TableColumn fx:id="activityColumn" prefWidth="130.39995574951172" text="ID" />
@@ -185,7 +185,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </TableView>
-                  <Button layoutX="484.0" layoutY="237.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Add Product" textFill="WHITE">
+                  <Button layoutX="607.0" layoutY="232.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Archive" textFill="WHITE">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="531.0" layoutY="232.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Update" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
