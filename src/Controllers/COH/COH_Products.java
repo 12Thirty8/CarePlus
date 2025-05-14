@@ -12,7 +12,6 @@ import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,11 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -41,7 +37,6 @@ import util.GetCurrentEmployeeID;
 import util.SceneLoader;
 
 public class COH_Products {
-
 
     @FXML
     private Button FilterBttn;
@@ -90,7 +85,7 @@ public class COH_Products {
 
     @FXML
     private TableColumn<ProductsModel, Integer> idcol;
-    
+
     @FXML
     private TableColumn<ProductsModel, String> namecol;
 
@@ -124,7 +119,6 @@ public class COH_Products {
         catcol.setCellValueFactory(new PropertyValueFactory<>("category"));
         desccol.setCellValueFactory(new PropertyValueFactory<>("desc"));
     }
-
 
     private void refreshEmployeeTable() {
         EmployeeList.clear();
@@ -176,7 +170,6 @@ public class COH_Products {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 
     @FXML
     void LogOutActionBttn(ActionEvent event) {
