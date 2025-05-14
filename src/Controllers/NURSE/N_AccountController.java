@@ -1,20 +1,34 @@
 package Controllers.NURSE;
 
+import java.io.IOException;
+
+import Controllers.ViewState;
+import db.DatabaseConnect;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
+import util.SceneLoader;
 
 public class N_AccountController {
 
     @FXML
     private Button ChangeShiftBtn;
-
-    @FXML
-    private Button LeaveBtn;
 
     @FXML
     private Button LogoutBtn;
@@ -94,38 +108,65 @@ public class N_AccountController {
     @FXML
     private TextField shifttf;
 
-    @FXML
-    void ChangeShiftBtnAction(ActionEvent event) {
+    private Alert a = new Alert(AlertType.NONE);
 
+     @FXML
+    public void initialize() {
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
     }
 
-    @FXML
-    void LeaveBtnAction(ActionEvent event) {
 
+    @FXML
+    void ChangeShiftBtnAction(ActionEvent event) {
+        try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ChangeShift.fxml"));
+                Parent root = loader.load();
+
+                Stage loginStage = new Stage();
+                loginStage.setScene(new Scene(root));
+                loginStage.setResizable(false);
+                loginStage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading page.");
+                a.show();
+            }
     }
 
     @FXML
     void closeAction(ActionEvent event) {
-
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
     }
 
     @FXML
     void crossBtnAction(ActionEvent event) {
-
+        SceneLoader.loadScene(event, "/View/N_RequestMonitor.fxml");
     }
 
     @FXML
     void homeBtnPressed(ActionEvent event) {
-
+        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
     }
 
     @FXML
-    void minimizeAction(ActionEvent event) {
+    private void toggleHamburgerMenu() {
+        Timeline timeline = new Timeline();
+        double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
 
+        KeyValue keyValue = new KeyValue(hamburgerPane.prefWidthProperty(), targetWidth);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(200), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+
+        ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
     }
 
     @FXML
-    void toggleHamburgerMenu(ActionEvent event) {
+    void clipboardBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_Account.fxml");
 
     }
 
