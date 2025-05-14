@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.COH.COH_StkInReport">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.COH.COH_Products">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
@@ -183,7 +183,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="628.0" prefWidth="646.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 12;" HBox.hgrow="ALWAYS">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="24.0" prefHeight="44.0" prefWidth="778.0" text="Stock in Report" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="19.199999999999932" AnchorPane.topAnchor="27.0">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="24.0" prefHeight="44.0" prefWidth="778.0" text="Products" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="19.199999999999932" AnchorPane.topAnchor="27.0">
                      <font>
                         <Font name="Gordita-Bold" size="34.0" />
                      </font>
@@ -208,31 +208,27 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TableView fx:id="StockTable" editable="true" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
+                  <TableView fx:id="ProductTable" editable="true" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
                      <columns>
-                        <TableColumn fx:id="idcol" prefWidth="99.99992752075195" text="Batch ID" />
+                        <TableColumn fx:id="idcol" prefWidth="99.99992752075195" text="Medicine ID" />
                         <TableColumn fx:id="namecol" prefWidth="129.59996795654297" text="Medicine Name" />
-                        <TableColumn fx:id="qtycol" prefWidth="69.60006713867188" text="Quantity" />
-                        <TableColumn fx:id="dosecol" prefWidth="110.40003967285156" text="Dosage" />
-                        <TableColumn fx:id="expcol" prefWidth="110.40003967285156" text="Expiry Date" />
-                        <TableColumn fx:id="sinbycol" minWidth="8.79998779296875" prefWidth="120.0" text="Stock In by" />
-                        <TableColumn fx:id="sindatecol" prefWidth="113.59996032714844" text="Stock In Date" />
-                        <TableColumn fx:id="statcol" prefWidth="110.40003967285156" text="Status" />
+                        <TableColumn fx:id="catcol" prefWidth="113.59996032714844" text="Category" />
+                        <TableColumn fx:id="desccol" minWidth="8.79998779296875" prefWidth="120.0" text="Description" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <AnchorPane layoutX="14.0" layoutY="-22.0" prefHeight="29.0" prefWidth="97.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                  <AnchorPane layoutX="14.0" layoutY="-18.0" prefHeight="29.0" prefWidth="97.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                      <children>
-                        <Button fx:id="movetoStocksBtn" layoutX="37.0" layoutY="2.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="125.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Stocks" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+                        <Button fx:id="movetoStocksBtn" layoutX="37.0" layoutY="2.0" mnemonicParsing="false" onAction="#movetoStocksBtnPressed" prefHeight="28.0" prefWidth="125.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Stocks" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
                            <font>
                               <Font name="Gordita-Bold" size="14.0" />
                            </font>
                         </Button>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="114.0" layoutY="-18.0" prefHeight="36.0" prefWidth="91.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                  <AnchorPane layoutX="114.0" layoutY="-22.0" prefHeight="36.0" prefWidth="91.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                      <children>
                         <Button fx:id="movetoProductBtn" layoutX="37.0" layoutY="2.0" mnemonicParsing="false" onAction="#movetoProductBtnPressed" prefHeight="28.0" prefWidth="125.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Products" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
                            <font>

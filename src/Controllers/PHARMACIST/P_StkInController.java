@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import util.GetCurrentEmployeeID;
 import util.SceneLoader;
 import javafx.scene.control.Alert.AlertType;
 
@@ -43,8 +44,6 @@ public class P_StkInController implements Initializable {
     private TextField stkinbytf;
 
     private Alert a = new Alert(AlertType.NONE);
-
-    private Connection connection = DatabaseConnect.connect();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,26 +83,41 @@ public class P_StkInController implements Initializable {
 
     private void addStock(String name, String category, int quantity, String stkinby, Date expdate)
             throws SQLException {
-        String sql = "INSERT INTO medicine (med_name, med_cat, med_stock, stockin_by, med_exp) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setString(2, category);
-            pstmt.setInt(3, quantity);
-            pstmt.setString(4, stkinby);
-            pstmt.setDate(5, expdate);
+        // Get the current employee ID from the session
+        int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+        System.out.println("[DEBUG] Current Employee ID: " + currentEmpId); // Add this line
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                a.setAlertType(AlertType.INFORMATION);
-                a.setContentText("Stock added successfully");
-                a.show();
-                clearFields();
-            } else {
-                a.setAlertType(AlertType.ERROR);
-                a.setContentText("Failed to add stock");
-                a.show();
+        String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
+        String insertMedicineQuery = "INSERT INTO medicine (med_name, med_cat, med_stock, stockin_by, med_exp) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnect.connect()) {
+            // 1. Set the session variable @current_employee_id
+            try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
+                setStmt.setInt(1, currentEmpId);
+                setStmt.executeUpdate();
             }
+
+            try (PreparedStatement pstmt = conn.prepareStatement(insertMedicineQuery)) {
+                pstmt.setString(1, name);
+                pstmt.setString(2, category);
+                pstmt.setInt(3, quantity);
+                pstmt.setString(4, stkinby);
+                pstmt.setDate(5, expdate);
+
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    a.setAlertType(AlertType.INFORMATION);
+                    a.setContentText("Stock added successfully");
+                    a.show();
+                    clearFields();
+                } else {
+                    a.setAlertType(AlertType.ERROR);
+                    a.setContentText("Failed to add stock");
+                    a.show();
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             a.setAlertType(AlertType.ERROR);
