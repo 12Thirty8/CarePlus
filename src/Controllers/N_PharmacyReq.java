@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -23,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import util.GetCurrentEmployeeID;
 
 public class N_PharmacyReq implements Initializable {
 
@@ -273,24 +275,42 @@ public class N_PharmacyReq implements Initializable {
                         String mName = parts.length == 3 ? parts[1] : null;
                         String lName = parts.length == 3 ? parts[2] : (parts.length == 2 ? parts[1] : "");
 
-                        String query = "SELECT patient_id FROM patient WHERE LOWER(f_name) = ? AND LOWER(l_name) = ?" +
+                        // First get patient_id
+                        String patientQuery = "SELECT patient_id FROM patient WHERE LOWER(f_name) = ? AND LOWER(l_name) = ?"
+                                +
                                 (mName != null ? " AND LOWER(m_name) = ?" : "");
-                        PreparedStatement pstmt = conn.prepareStatement(query);
-                        pstmt.setString(1, fName.toLowerCase());
-                        pstmt.setString(2, lName.toLowerCase());
+                        PreparedStatement patientStmt = conn.prepareStatement(patientQuery);
+                        patientStmt.setString(1, fName.toLowerCase());
+                        patientStmt.setString(2, lName.toLowerCase());
                         if (mName != null) {
-                            pstmt.setString(3, mName.toLowerCase());
+                            patientStmt.setString(3, mName.toLowerCase());
                         }
-                        ResultSet rs = pstmt.executeQuery();
+                        ResultSet patientRs = patientStmt.executeQuery();
 
-                        if (rs.next()) {
-                            recordidtf.setText(String.valueOf(rs.getInt("patient_id")));
+                        if (patientRs.next()) {
+                            int patientId = patientRs.getInt("patient_id");
+
+                            // Now get the most recent record_id for this patient
+                            String recordQuery = "SELECT record_id FROM records WHERE patient_id = ? ORDER BY record_date DESC LIMIT 1";
+                            PreparedStatement recordStmt = conn.prepareStatement(recordQuery);
+                            recordStmt.setInt(1, patientId);
+                            ResultSet recordRs = recordStmt.executeQuery();
+
+                            if (recordRs.next()) {
+                                recordidtf.setText(String.valueOf(recordRs.getInt("record_id")));
+                            } else {
+                                recordidtf.clear();
+                                // Optional: show message that no records exist for this patient
+                            }
+
+                            recordRs.close();
+                            recordStmt.close();
                         } else {
                             recordidtf.clear();
                         }
 
-                        rs.close();
-                        pstmt.close();
+                        patientRs.close();
+                        patientStmt.close();
                         conn.close();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -389,7 +409,43 @@ public class N_PharmacyReq implements Initializable {
 
     @FXML
     void AddMedBtnAction(ActionEvent event) {
+        String medIdStr = medidtf.getText();
+        String medName = medname.getValue();
+        String medDosage = dosage.getValue();
+        String qtyStr = qtytf.getText();
 
+        if (medIdStr == null || medIdStr.isEmpty() ||
+                medName == null || medName.isEmpty() ||
+                medDosage == null || medDosage.isEmpty() ||
+                qtyStr == null || qtyStr.isEmpty()) {
+            // Optionally show an error message to the user
+            return;
+        }
+
+        int medId;
+        try {
+            medId = Integer.parseInt(medidtf.getText());
+        } catch (NumberFormatException e) {
+            // Optionally show an error message to the user
+            return;
+        }
+
+        int quantity;
+        try {
+            quantity = Integer.parseInt(qtyStr);
+        } catch (NumberFormatException e) {
+            // Optionally show an error message to the user
+            return;
+        }
+
+        ListModel entry = new ListModel(medId, medName, medDosage, quantity);
+        EmployeeList.add(entry);
+
+        // Optionally clear fields after adding
+        medidtf.clear();
+        medname.setValue(null);
+        dosage.setValue(null);
+        qtytf.clear();
     }
 
     @FXML
@@ -400,12 +456,125 @@ public class N_PharmacyReq implements Initializable {
 
     @FXML
     void ClearBtnAction(ActionEvent event) {
+        medidtf.clear();
+        medname.setValue(null);
+        dosage.setValue(null);
+        qtytf.clear();
+        recordidtf.clear();
+        recordname.setValue(null);
+        EmployeeList.clear();
 
     }
 
     @FXML
     void SubmitBtnAction(ActionEvent event) {
+        String recordIdStr = recordidtf.getText();
+        if (recordIdStr == null || recordIdStr.isEmpty() || EmployeeList.isEmpty()) {
+            showAlert("Error", "Please select a patient and add at least one medicine");
+            return;
+        }
 
+        int recordId;
+        try {
+            recordId = Integer.parseInt(recordIdStr);
+        } catch (NumberFormatException e) {
+            showAlert("Error", "Invalid patient record ID");
+            return;
+        }
+
+        try {
+            Connection conn = DatabaseConnect.connect();
+            conn.setAutoCommit(false);
+
+            // 1. Check if record exists
+            String checkRecordSql = "SELECT 1 FROM records WHERE record_id = ?";
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkRecordSql)) {
+                checkStmt.setInt(1, recordId);
+                ResultSet checkRs = checkStmt.executeQuery();
+                if (!checkRs.next()) {
+                    showAlert("Error", "Patient record not found");
+                    conn.setAutoCommit(true);
+                    conn.close();
+                    return;
+                }
+            }
+
+            // 2. Insert pharmacy request
+            String insertReqSql = "INSERT INTO request (record_id, request_date, encoded_by, status) VALUES (?, CURRENT_DATE, ?, 0)";
+            int requestId;
+            try (PreparedStatement reqStmt = conn.prepareStatement(insertReqSql,
+                    PreparedStatement.RETURN_GENERATED_KEYS)) {
+                reqStmt.setInt(1, recordId);
+                reqStmt.setInt(2, GetCurrentEmployeeID.fetchEmployeeIdFromSession());
+                reqStmt.executeUpdate();
+
+                try (ResultSet reqKeys = reqStmt.getGeneratedKeys()) {
+                    if (reqKeys.next()) {
+                        requestId = reqKeys.getInt(1);
+                    } else {
+                        throw new SQLException("Failed to get request ID");
+                    }
+                }
+            }
+
+            // 3. Process each medicine
+            for (ListModel entry : EmployeeList) {
+                int medId = entry.getId();
+                String medDosage = entry.getDosage();
+                int qty = entry.getQuantity();
+
+                // Find available batch
+                String batchSql = "SELECT batch_id, batch_stock FROM batch WHERE med_id = ? AND batch_dosage = ? AND batch_stock >= ? AND status_id = 7 ORDER BY batch_exp ASC LIMIT 1";
+                try (PreparedStatement batchStmt = conn.prepareStatement(batchSql)) {
+                    batchStmt.setInt(1, medId);
+                    batchStmt.setString(2, medDosage);
+                    batchStmt.setInt(3, qty);
+
+                    try (ResultSet batchRs = batchStmt.executeQuery()) {
+                        if (batchRs.next()) {
+                            int batchId = batchRs.getInt("batch_id");
+
+                            // Insert into requestlist
+                            String insertItemSql = "INSERT INTO requestlist (req_id, batch_id, qty) VALUES (?, ?, ?)";
+                            try (PreparedStatement itemStmt = conn.prepareStatement(insertItemSql)) {
+                                itemStmt.setInt(1, requestId);
+                                itemStmt.setInt(2, batchId);
+                                itemStmt.setInt(3, qty);
+                                itemStmt.executeUpdate();
+                            }
+                        } else {
+                            conn.rollback();
+                            showAlert("Error", "Insufficient stock for " + entry.getName() + " (" + medDosage + ")");
+                            return;
+                        }
+                    }
+                }
+            }
+
+            conn.commit();
+            showAlert("Success", "Pharmacy request submitted successfully");
+
+            // Clear form
+            EmployeeList.clear();
+            medidtf.clear();
+            medname.setValue(null);
+            dosage.setValue(null);
+            qtytf.clear();
+            recordidtf.clear();
+            recordname.setValue(null);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Database error: " + e.getMessage());
+        }
     }
 
+    @FXML
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
