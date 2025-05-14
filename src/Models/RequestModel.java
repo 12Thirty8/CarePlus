@@ -5,16 +5,14 @@ import java.sql.Date;
 public class RequestModel {
     int reqid;
     int recId;
-    int requestListId;
     String nurseName;
     Date requestDate;
     boolean status;
 
-    public RequestModel(int reqid, int recId, int requestListId, String nurseName,
+    public RequestModel(int reqid, int recId, String nurseName,
             Date requestDate, boolean status) {
         this.reqid = reqid;
         this.recId = recId;
-        this.requestListId = requestListId;
         this.nurseName = nurseName;
         this.requestDate = requestDate;
         this.status = status;
@@ -34,14 +32,6 @@ public class RequestModel {
 
     public void setRecId(int recId) {
         this.recId = recId;
-    }
-
-    public int getRequestListId() {
-        return requestListId;
-    }
-
-    public void setRequestListId(int requestListId) {
-        this.requestListId = requestListId;
     }
 
     public String getNurseName() {

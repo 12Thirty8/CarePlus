@@ -29,6 +29,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
 import util.SceneLoader;
+import Models.ListModel;
 import Models.RequestModel;
 import db.DatabaseConnect;
 import javafx.collections.FXCollections;
@@ -42,16 +43,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class P_DashboardController implements Initializable {
 
     @FXML
-    private TableView<RequestModel> StkInTableView;
+    private Button approvereqBtn;
 
     @FXML
     private Button clipboardBtn;
 
     @FXML
     private Button crossBtn;
-
-    @FXML
-    private TableColumn<RequestModel, String> encbycol;
 
     @FXML
     private AnchorPane hamburgerPane;
@@ -63,22 +61,10 @@ public class P_DashboardController implements Initializable {
     private Button homeBtn;
 
     @FXML
-    private TableColumn<RequestModel, Integer> idcol;
-
-    @FXML
-    private TableColumn<RequestModel, Integer> listcol;
+    private Button minimizeBtn;
 
     @FXML
     private AnchorPane mainPane;
-
-    @FXML
-    private TableColumn<RequestModel, Integer> recordcol;
-
-    @FXML
-    private TableColumn<RequestModel, String> reqcol;
-
-    @FXML
-    private TableColumn<RequestModel, Boolean> statcol;
 
     @FXML
     private Button closeBtn;
@@ -86,30 +72,66 @@ public class P_DashboardController implements Initializable {
     @FXML
     private Text nameLabel;
 
-    private ObservableList<RequestModel> EmployeeList = FXCollections.observableArrayList();
+    @FXML
+    private TableColumn<RequestModel, Integer> idcol;
 
-    private Alert a = new Alert(AlertType.NONE);
+    @FXML
+    private TableColumn<ListModel, Integer> batchidcol;
+
+    @FXML
+    private TableColumn<RequestModel, Integer> recordcol;
+
+    @FXML
+    private TableColumn<ListModel, String> namecol;
+
+    @FXML
+    private TableColumn<ListModel, String> dosagecol;
+
+    @FXML
+    private TableColumn<ListModel, String> enccol;
+
+    @FXML
+    private TableView<RequestModel> reqTableView;
+
+    @FXML
+    private TableView<ListModel> listTableView;
+
+    @FXML
+    private TableColumn<RequestModel, String> reqdatecol;
+
+    @FXML
+    private TableColumn<ListModel, Integer> qtycol;
+
+    @FXML
+    private TableColumn<RequestModel, Boolean> statcol;
+
+    private Alert a = new Alert(AlertType.INFORMATION);
+
+    private ObservableList<RequestModel> EmployeeList = FXCollections.observableArrayList();
 
     public static int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
-    @FXML
     public void initialize(URL url, ResourceBundle rb) {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+        initializeRowSelectionListener();
         setupTableColumns();
         refreshEmployeeTable();
         setupRowContextMenu();
-        int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
         String pharmacistName = DatabaseConnect.getPharmacistName(employeeId);
         nameLabel.setText(pharmacistName != null ? pharmacistName : "Name not found");
+
+        batchidcol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        dosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
+        qtycol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
     }
 
     private void setupTableColumns() {
         idcol.setCellValueFactory(new PropertyValueFactory<>("reqid"));
-        listcol.setCellValueFactory(new PropertyValueFactory<>("requestListId"));
         recordcol.setCellValueFactory(new PropertyValueFactory<>("recId"));
-        encbycol.setCellValueFactory(new PropertyValueFactory<>("nurseName"));
-        reqcol.setCellValueFactory(new PropertyValueFactory<>("requestDate"));
+        reqdatecol.setCellValueFactory(new PropertyValueFactory<>("requestDate"));
         statcol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        enccol.setCellValueFactory(new PropertyValueFactory<>("nurseName"));
     }
 
     private void setupRowContextMenu() {
@@ -121,24 +143,21 @@ public class P_DashboardController implements Initializable {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        r.request_id, r.record_id, r.reqlist_id, e.f_name AS encodedBy, r.request_date, r.status
-                    FROM request r
-                    LEFT JOIN employee e ON r.encoded_by = e.employee_id
+                        r.request_id, r.record_id, e.f_name AS encodedBy, r.request_date, r.status
+                    FROM request r LEFT JOIN employee e ON r.encoded_by = e.employee_id
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
-
             while (rs.next()) {
                 EmployeeList.add(new RequestModel(
                         rs.getInt("request_id"),
                         rs.getInt("record_id"),
-                        rs.getInt("requestlist_id"),
                         rs.getString("encodedBy"),
                         rs.getDate("request_date"),
                         rs.getBoolean("status")));
             }
 
-            StkInTableView.setItems(EmployeeList);
+            reqTableView.setItems(EmployeeList);
 
             rs.close();
             pstmt.close();
@@ -146,6 +165,57 @@ public class P_DashboardController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void initializeRowSelectionListener() {
+        reqTableView.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
+            if (newSelection != null) {
+                int selectedRequestId = newSelection.getReqid();
+                ObservableList<ListModel> listItems = FXCollections.observableArrayList();
+                try {
+                    Connection conn = DatabaseConnect.connect();
+                    String query = """
+                            SELECT
+                                l.batch_id,
+                                m.med_name AS name,
+                                b.batch_dosage,
+                                l.qty
+                            FROM
+                                requestlist l
+                            JOIN
+                                batch b ON l.batch_id = b.batch_id
+                            LEFT JOIN
+                                medicine m ON b.med_id = m.med_id
+                            WHERE
+                                l.req_id = ?
+                            """;
+                    PreparedStatement pstmt = conn.prepareStatement(query);
+                    pstmt.setInt(1, selectedRequestId);
+                    ResultSet rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        listItems.add(new ListModel(
+                                rs.getInt("batch_id"),
+                                rs.getString("name"),
+                                rs.getString("batch_dosage"),
+                                rs.getInt("qty")));
+                    }
+                    listTableView.setItems(listItems);
+                    rs.close();
+                    pstmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    // Removed instance initializer block; moved logic to initialize()
+                    initializeRowSelectionListener();
+                    // Optionally, setup columns for listTableView if not already done elsewhere
+                    batchidcol.setCellValueFactory(new PropertyValueFactory<>("batchid"));
+                    namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
+                    dosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
+                    qtycol.setCellValueFactory(new PropertyValueFactory<>("qty"));
+                }
+            }
+        });
     }
 
     @FXML
@@ -215,7 +285,7 @@ public class P_DashboardController implements Initializable {
 
     @FXML
     void homeBtnPressed(ActionEvent event) {
-                SceneLoader.loadScene(event, "/View/P_Dashboard.fxml");
+        SceneLoader.loadScene(event, "/View/P_Dashboard.fxml");
 
     }
 
@@ -226,8 +296,12 @@ public class P_DashboardController implements Initializable {
     }
 
     @FXML
-    private void minimizeAction(ActionEvent event) {
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        currentStage.setIconified(true);
+    void minimizeAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void approvereqBtnPressed(ActionEvent event) {
+
     }
 }
