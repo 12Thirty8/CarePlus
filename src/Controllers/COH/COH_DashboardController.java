@@ -10,7 +10,6 @@ import java.util.Optional;
 
 import Controllers.ViewState;
 import Models.ChiefDashboardModel;
-import Models.ProductsModel;
 import db.DatabaseConnect;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
