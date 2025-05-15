@@ -98,11 +98,6 @@ public class AddAccountController implements Initializable {
             showAlert("Invalid Email", "Please enter a valid email address.");
             return;
         }
-        // ✅ Phone number format validation
-        if (!isValidPhoneNumber(numbertf.getText().trim())) {
-            showAlert("Invalid Phone Number", "Contact number must be exactly 11 digits.");
-            return;
-        }
 
         if (!fnametf.getText().matches("[a-zA-Z]+") || !lnametf.getText().matches("[a-zA-Z]+")) {
             showAlert("Input Error", "Names can only contain letters");
@@ -116,6 +111,12 @@ public class AddAccountController implements Initializable {
 
         if (!numbertf.getText().matches("09\\d{9}")) {
             showAlert("Input Error", "Phone number must start with 09 and have 11 digits");
+            return;
+        }
+
+        // ✅ Phone number format validation
+        if (!isValidPhoneNumber(numbertf.getText().trim())) {
+            showAlert("Invalid Phone Number", "Contact number must be exactly 11 digits.");
             return;
         }
 
