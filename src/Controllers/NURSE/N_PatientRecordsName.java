@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import util.SceneLoader;
 
 public class N_PatientRecordsName {
 
@@ -55,17 +56,17 @@ public class N_PatientRecordsName {
 
     @FXML
     void accountBtnAction(ActionEvent event) {
-
+        SceneLoader.loadScene(event, "/View/N_Account.fxml");
     }
 
-    @FXML
-    void crossBtnAction(ActionEvent event) {
-
+     @FXML
+    private void crossBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_RequestMonitor.fxml");
     }
 
-    @FXML
+   @FXML
     void homeBtnPressed(ActionEvent event) {
-
+        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
     }
 
     @FXML
@@ -79,6 +80,16 @@ public class N_PatientRecordsName {
         timeline.play();
 
         ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
+    }
+
+    @FXML
+    void movetoProductBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_PatientData.fxml");
+    }
+
+    @FXML
+    void movetoStocksBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
     }
 
 }
