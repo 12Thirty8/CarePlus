@@ -257,12 +257,15 @@ public class AccountManagementController implements Initializable {
             Parent root = loader.load();
             // Create a new pop-up stage
             Stage popupStage = new Stage();
-            popupStage.setTitle("Update Account");
-            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+            popupStage.setTitle("Add Account");
+            popupStage.initModality(Modality.APPLICATION_MODAL); // Makes it modal
+            popupStage.initOwner(((Node) event.getSource()).getScene().getWindow()); // Set owner to current window
             Scene scene = new Scene(root);
             popupStage.setScene(scene);
-            popupStage.setResizable(false); // Optional: make it fixed size
-            popupStage.showAndWait(); // Wait until this window is closed (optional)
+            popupStage.setResizable(false); 
+            popupStage.showAndWait();
+
+            
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to open update form: " + e.getMessage());

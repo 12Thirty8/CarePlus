@@ -156,6 +156,7 @@ public class N_DashboardController {
             Scene scene = new Scene(root);
             popupStage.setScene(scene);
             popupStage.setResizable(false); // Optional: make it fixed size
+            popupStage.initOwner(((Node) event.getSource()).getScene().getWindow()); // Set owner to current window
             popupStage.showAndWait(); // Wait until this window is closed (optional)
         } catch (IOException e) {
             e.printStackTrace();
