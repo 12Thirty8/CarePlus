@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.  stage.StageStyle;
 
 public class App extends Application {
     public void start(Stage primaryStage) {

@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1012.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_RequestMonitorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" prefWidth="1200.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_RequestMonitorController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
@@ -109,7 +109,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button fx:id="LogoutBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Log Out" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="LogoutBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#LogoutBtnAction" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Log Out" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
@@ -135,27 +135,27 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="mainPane" prefWidth="762.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
+            <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
-                  <StackPane layoutX="207.0" layoutY="14.0" prefHeight="86.0" prefWidth="280.0" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="208.20000000000005">
+                  <StackPane layoutX="289.0" layoutY="18.0" prefHeight="43.0" prefWidth="115.0" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="293.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Request Monitor" wrappingWidth="277.58204650878906">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Records" wrappingWidth="263.3819274902344">
                            <font>
                               <Font name="Gordita-Bold" size="34.0" />
                            </font>
                         </Text>
                      </children>
                   </StackPane>
-                  <StackPane layoutX="16.0" layoutY="92.0" prefHeight="115.0" prefWidth="659.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
+                  <StackPane layoutX="16.0" layoutY="92.0" prefHeight="115.0" prefWidth="659.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.799999999999955">
                      <children>
-                        <AnchorPane prefHeight="200.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
+                        <AnchorPane prefHeight="200.0" prefWidth="664.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
                            <children>
                               <Text fx:id="nameLabel" layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                                  <font>
                                     <Font name="Gordita-Regular" size="24.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nurse">
+                              <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacist">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
@@ -164,37 +164,40 @@
                         </AnchorPane>
                      </children>
                   </StackPane>
-                  <StackPane layoutX="16.0" layoutY="233.0" />
-                  <Label layoutX="16.0" layoutY="233.0" text="Requests List">
-                     <font>
-                        <Font name="Gordita-Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <TableView fx:id="reqTableView" layoutX="26.0" layoutY="267.2" prefHeight="266.0" prefWidth="437.0" stylesheets="@../Styles/table.css" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="307.19999999999993" AnchorPane.topAnchor="267.0">
-                     <columns>
-                        <TableColumn fx:id="idcol" editable="false" maxWidth="118.0" minWidth="80.0" prefWidth="118.0" text="Request ID" />
-                        <TableColumn fx:id="recordcol" editable="false" maxWidth="164.80003356933594" minWidth="85.0" prefWidth="91.0" text="Record ID" />
-                        <TableColumn fx:id="reqdatecol" editable="false" maxWidth="277.60015869140625" minWidth="40.0" prefWidth="154.0" text="Request Date" />
-                        <TableColumn fx:id="statcol" editable="false" maxWidth="500.0" minWidth="71.0" prefWidth="71.0" text="Status" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-                  <TableView fx:id="listTableView" layoutX="476.0" layoutY="267.0" prefHeight="266.0" prefWidth="270.0" stylesheets="@../Styles/table.css" AnchorPane.rightAnchor="16.0">
-                     <columns>
-                        <TableColumn fx:id="batchidcol" editable="false" maxWidth="118.0" minWidth="80.0" prefWidth="94.39990234375" text="Batch ID" />
-                        <TableColumn fx:id="namecol" editable="false" maxWidth="183.99993896484375" minWidth="85.0" prefWidth="126.40005493164062" text="Medicine Name" />
-                        <TableColumn fx:id="dosagecol" editable="false" maxWidth="229.60000610351562" minWidth="76.0" prefWidth="229.60000610351562" text="Dosage" />
-                        <TableColumn fx:id="qtycol" editable="false" maxWidth="300.8000793457031" minWidth="40.0" prefWidth="256.0" text="Qty" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-                  <AnchorPane layoutX="16.0" layoutY="548.0" prefHeight="186.0" prefWidth="170.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;" AnchorPane.bottomAnchor="16.0">
+                  <StackPane layoutX="16.0" layoutY="233.0" prefHeight="25.0" prefWidth="192.0" />
+                  <StackPane layoutX="14.0" layoutY="266.3999938964844" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="532.8" AnchorPane.topAnchor="266.0">
                      <children>
-                        <VBox layoutX="50.0" layoutY="-7.0" prefHeight="200.0" prefWidth="200.0" spacing="5.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="20.0">
+                        <TableView fx:id="reqTableView" prefHeight="375.0" prefWidth="401.0" stylesheets="@../Styles/table.css">
+                           <columns>
+                              <TableColumn fx:id="idcol" editable="false" maxWidth="118.0" minWidth="80.0" prefWidth="118.0" text="Request ID" />
+                              <TableColumn fx:id="recordcol" editable="false" maxWidth="164.80003356933594" minWidth="85.0" prefWidth="91.0" text="Record ID" />
+                              <TableColumn fx:id="reqdatecol" editable="false" maxWidth="277.60015869140625" minWidth="40.0" prefWidth="154.0" text="Request Date" />
+                              <TableColumn fx:id="statcol" editable="false" maxWidth="500.0" minWidth="71.0" prefWidth="71.0" text="Status" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </StackPane>
+                  <StackPane layoutX="423.0" layoutY="266.3999938964844" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="197.79999999999995" AnchorPane.topAnchor="266.0">
+                     <children>
+                        <TableView fx:id="listTableView" prefHeight="375.0" prefWidth="328.0" stylesheets="@../Styles/table.css">
+                           <columns>
+                              <TableColumn fx:id="batchidcol" editable="false" maxWidth="118.0" minWidth="80.0" prefWidth="94.39990234375" text="Batch ID" />
+                              <TableColumn fx:id="namecol" editable="false" maxWidth="183.99993896484375" minWidth="85.0" prefWidth="126.40005493164062" text="Medicine Name" />
+                              <TableColumn fx:id="dosagecol" editable="false" maxWidth="229.60000610351562" minWidth="76.0" prefWidth="98.39996337890625" text="Dosage" />
+                              <TableColumn fx:id="qtycol" editable="false" maxWidth="300.8000793457031" minWidth="40.0" prefWidth="60.0" text="Qty" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </StackPane>
+                  <AnchorPane layoutX="761.0" layoutY="237.0" prefHeight="375.0" prefWidth="170.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;" AnchorPane.bottomAnchor="19.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="266.0">
+                     <children>
+                        <VBox layoutX="50.0" layoutY="-7.0" prefHeight="205.0" prefWidth="148.0" spacing="5.0" AnchorPane.bottomAnchor="118.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="20.0">
                            <children>
                               <Label text="Record ID:">
                                  <font>
@@ -208,26 +211,13 @@
                                  </font>
                               </Label>
                               <TextField fx:id="recordidtf" prefHeight="26.0" prefWidth="86.0" promptText="--None Selected--" style="-fx-background-radius: 5;" />
-                           </children>
-                        </VBox>
-                        <Button fx:id="newreqBtn" layoutX="23.0" layoutY="144.0" mnemonicParsing="false" onAction="#newreqBtnPressed" prefHeight="28.0" prefWidth="122.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Add " textFill="WHITE">
-                           <font>
-                              <Font name="Gordita-Bold" size="12.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="207.0" layoutY="548.0" prefHeight="186.0" prefWidth="183.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;" AnchorPane.bottomAnchor="16.0">
-                     <children>
-                        <VBox layoutX="50.0" layoutY="-7.0" prefHeight="200.0" prefWidth="200.0" spacing="5.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="20.0">
-                           <children>
-                              <Label text="Record ID:">
+                              <Label text="Batch ID:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Label>
                               <TextField fx:id="batchidtf" editable="false" prefHeight="26.0" prefWidth="65.0" promptText="--None Selected--" style="-fx-background-radius: 5;" />
-                              <Label text="Request ID:">
+                              <Label text="Quantity:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
@@ -235,23 +225,28 @@
                               <TextField fx:id="qtytf" prefHeight="26.0" prefWidth="180.0" promptText="--None Selected--" style="-fx-background-radius: 5;" />
                            </children>
                         </VBox>
-                        <Button fx:id="newreqBtn1" layoutX="26.0" layoutY="144.0" mnemonicParsing="false" onAction="#newreqBtnPressed" prefHeight="28.0" prefWidth="122.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Update" textFill="WHITE">
+                        <Button fx:id="newreqBtn1" layoutX="11.0" layoutY="297.0" mnemonicParsing="false" onAction="#newreqBtnPressed" prefHeight="28.0" prefWidth="148.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Update" textFill="WHITE">
                            <font>
                               <Font name="Gordita-Bold" size="12.0" />
                            </font>
                         </Button>
+                        <Button fx:id="ClearBtn" layoutX="10.0" layoutY="339.0" mnemonicParsing="false" onAction="#ClearBtnAction" prefHeight="28.0" prefWidth="148.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e" AnchorPane.bottomAnchor="8.199999999999989">
+                           <font>
+                              <Font name="Gordita-Bold" size="14.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
-                  <Button fx:id="ClearBtn" layoutX="406.0" layoutY="555.0" mnemonicParsing="false" onAction="#ClearBtnAction" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e" AnchorPane.bottomAnchor="16.0">
+                  <Button fx:id="newreqBtn" layoutX="774.0" layoutY="232.0" mnemonicParsing="false" onAction="#newreqBtnPressed" prefHeight="28.0" prefWidth="148.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Add " textFill="WHITE">
                      <font>
-                        <Font name="Gordita-Bold" size="14.0" />
+                        <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Button>
                </children>
             </AnchorPane>
          </children>
       </HBox>
-      <Button fx:id="closeBtn" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="28.0" prefWidth="24.0" stylesheets="@Java/CarePlus/src/Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="6.0">
+      <Button fx:id="closeBtn" layoutX="890.0" layoutY="1.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="28.0" prefWidth="24.0" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="6.0">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -260,7 +255,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="minimizeBtn" layoutX="881.0" layoutY="3.0" mnemonicParsing="false" onAction="#minimizeAction" stylesheets="@Java/CarePlus/src/Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="40.59">
+      <Button fx:id="minimizeBtn" layoutX="881.0" layoutY="3.0" mnemonicParsing="false" onAction="#minimizeAction" stylesheets="@../Styles/pharmacistDashboard.css" AnchorPane.rightAnchor="40.59">
          <graphic>
             <ImageView fitHeight="10.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
