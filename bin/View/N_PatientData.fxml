@@ -196,11 +196,11 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TableView fx:id="patientDataTableView" editable="true" layoutX="26.0" layoutY="227.0" prefHeight="371.0" prefWidth="736.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="266.0">
+                  <TableView fx:id="recordsTableView" editable="true" layoutX="26.0" layoutY="227.0" prefHeight="371.0" prefWidth="736.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="266.0">
                      <columns>
-                        <TableColumn fx:id="patientIdColumn" prefWidth="124.79998207092285" text="ID" />
-                        <TableColumn fx:id="patientLastNameColumn" prefWidth="272.7998962402344" text="Last Name" />
-                        <TableColumn fx:id="patientFirstNameColumn" prefWidth="343.2001647949219" text="First Name" />
+                        <TableColumn prefWidth="124.79998207092285" text="ID" />
+                        <TableColumn prefWidth="272.7998962402344" text="Last Name" />
+                        <TableColumn prefWidth="343.2001647949219" text="First Name" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
