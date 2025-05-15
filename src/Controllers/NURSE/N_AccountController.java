@@ -40,7 +40,7 @@ public class N_AccountController {
     @FXML
     private Label shifttf;
 
-     @FXML
+    @FXML
     private Label dayofftf;
 
     @FXML
