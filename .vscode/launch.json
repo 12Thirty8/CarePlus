@@ -10,6 +10,14 @@
             "request": "launch",
             "vmArgs": "--module-path \"${env:JAVA_FX_LIB}\" --add-modules javafx.controls,javafx.fxml",
             "mainClass": "App.App",
+            "projectName": "CarePlus_4678e27e"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "vmArgs": "--module-path \"${env:JAVA_FX_LIB}\" --add-modules javafx.controls,javafx.fxml",
+            "mainClass": "App.App",
             "projectName": "CarePlus-1_ba0995e7"
         },
         {

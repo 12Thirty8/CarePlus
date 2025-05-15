@@ -24,6 +24,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import util.GetCurrentEmployeeID;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,16 +38,6 @@ public class AddAccountController implements Initializable {
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
     @FXML
-    private Button DashboardBttn, LogOutBttn, AccountMenuBttn;
-    @FXML
-    private Button HamburgerMenuBttn;
-    @FXML
-    private Button PharmacyBttn;
-    @FXML
-    private Button ScheduleBttn;
-    @FXML
-    private Button ScheduleMenuBttn;
-    @FXML
     private Button addaccbtn;
     @FXML
     private DatePicker dob;
@@ -57,6 +49,7 @@ public class AddAccountController implements Initializable {
     private Scene scene;
     private Parent root;
     private Alert a = new Alert(AlertType.NONE);
+    private Runnable refreshCallback;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,10 +76,6 @@ public class AddAccountController implements Initializable {
         return email.matches(emailRegex);
     }
 
-    private boolean isValidPhoneNumber(String phone) {
-        return phone.matches("^\\d{11}$");
-    }
-
     @FXML
     void AddAccBtnPress(ActionEvent event) {
         // Validate inputs
@@ -105,11 +94,6 @@ public class AddAccountController implements Initializable {
             showAlert("Invalid Email", "Please enter a valid email address.");
             return;
         }
-        // ✅ Phone number format validation
-        if (!isValidPhoneNumber(numbertf.getText().trim())) {
-            showAlert("Invalid Phone Number", "Contact number must be exactly 11 digits.");
-            return;
-        }
 
         if (!fnametf.getText().matches("[a-zA-Z]+") || !lnametf.getText().matches("[a-zA-Z]+")) {
             showAlert("Input Error", "Names can only contain letters");
@@ -121,8 +105,10 @@ public class AddAccountController implements Initializable {
             return;
         }
 
-        if (!numbertf.getText().matches("09\\d{9}")) {
-            showAlert("Input Error", "Phone number must start with 09 and have 11 digits");
+        // Phone number must start with 09 and have exactly 11 digits
+        String phone = numbertf.getText().trim();
+        if (!phone.matches("^09\\d{9}$")) {
+            showAlert("Input Error", "Phone number must start with 09 and have exactly 11 digits.");
             return;
         }
 
@@ -163,23 +149,13 @@ public class AddAccountController implements Initializable {
             showAlert("Success", "Employee onboarded successfully.");
             clearForm();
 
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-                root = loader.load();
-
-                root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
-                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                a.setAlertType(AlertType.ERROR);
-                a.setContentText("Error loading page.");
-                a.setHeaderText("Error");
-                a.show();
+            if (refreshCallback != null) {
+                refreshCallback.run(); // Trigger the refresh
             }
+
+            // close the scene
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
 
         } catch (SQLException e) {
             showAlert("Database Error", "Failed to create account: " + e.getMessage());
@@ -236,26 +212,39 @@ public class AddAccountController implements Initializable {
             String email, String password, String dep,
             String shift, String dayoff) throws SQLException {
 
-        String query = "INSERT INTO employee (f_name, l_name, dob, contact_no, email, password_hash, " +
-                "dep_id, shift_id, dayoff_id, status) VALUES (?, ?, ?, ?, ?, ?, " +
-                "(SELECT dep_id FROM department WHERE dep_name = ?), " +
-                "(SELECT shift_id FROM shift WHERE timeslot = ?), " +
-                "(SELECT dotw_id FROM dotweek WHERE dotw_name = ?), 1)";
+        // Get the current employee ID from the session
+        int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
 
-        try (Connection conn = DatabaseConnect.connect();
-                PreparedStatement pstmt = conn.prepareStatement(query)) {
+        String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
+        String insertEmployeeQuery = "INSERT INTO employee (f_name, l_name, dob, contact_no, email, password_hash, "
+                + "dep_id, shift_id, dayoff_id, status) VALUES (?, ?, ?, ?, ?, ?, "
+                + "(SELECT dep_id FROM department WHERE dep_name = ?), "
+                + "(SELECT shift_id FROM shift WHERE timeslot = ?), "
+                + "(SELECT dotw_id FROM dotweek WHERE dotw_name = ?), 1)";
 
-            pstmt.setString(1, fname);
-            pstmt.setString(2, lname);
-            pstmt.setDate(3, dob);
-            pstmt.setString(4, number);
-            pstmt.setString(5, email);
-            pstmt.setString(6, password);
-            pstmt.setString(7, dep);
-            pstmt.setString(8, shift);
-            pstmt.setString(9, dayoff);
+        try (Connection conn = DatabaseConnect.connect()) {
 
-            pstmt.executeUpdate();
+            // 1. Set the session variable @current_employee_id
+            try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
+                setStmt.setInt(1, currentEmpId);
+                setStmt.executeUpdate();
+            }
+
+            // 2. Insert the new employee
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertEmployeeQuery)) {
+                insertStmt.setString(1, fname);
+                insertStmt.setString(2, lname);
+                insertStmt.setDate(3, dob);
+                insertStmt.setString(4, number);
+                insertStmt.setString(5, email);
+                insertStmt.setString(6, password);
+                insertStmt.setString(7, dep);
+                insertStmt.setString(8, shift);
+                insertStmt.setString(9, dayoff);
+
+                insertStmt.executeUpdate();
+            }
+
         } catch (SQLException e1) {
             a.setAlertType(AlertType.ERROR);
             a.setContentText("Error creating account: " + e1.getMessage());
@@ -282,6 +271,10 @@ public class AddAccountController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void setRefreshCallback(Runnable refreshCallback) {
+        this.refreshCallback = refreshCallback;
     }
 
     private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
@@ -320,45 +313,4 @@ public class AddAccountController implements Initializable {
         }
     }
 
-    @FXML
-    void DashboardActionBttn(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-            root = loader.load();
-
-            root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
-
-    }
-
-    @FXML
-    void HamburgerMenuActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void PharmacyActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ScheduleActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ScheduleuActionBttn(ActionEvent event) {
-
-    }
 }

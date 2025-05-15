@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="535.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_AddProductController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="535.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PHARMACIST.P_AddProductController">
    <children>
       <Pane layoutX="13.0" layoutY="14.0" prefHeight="590.0" prefWidth="509.0" style="-fx-background-color: White; -fx-background-radius: 12;">
          <children>
@@ -47,7 +47,7 @@
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <TextArea fx:id="descTextArea" layoutX="21.0" layoutY="155.0" prefHeight="200.0" prefWidth="446.0" style="-fx-background-radius: 5;" />
+                  <TextArea fx:id="descTextArea" layoutX="21.0" layoutY="155.0" prefHeight="200.0" prefWidth="446.0" style="-fx-background-radius: 5;" wrapText="true" />
                </children>
             </Pane>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="14.0" prefHeight="44.0" prefWidth="368.0" text="Add New Medicine">

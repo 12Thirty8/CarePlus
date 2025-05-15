@@ -36,8 +36,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 import Controllers.ViewState;
 import Models.EmployeeModel;
 import db.DatabaseConnect;
@@ -74,10 +72,6 @@ public class AccountManagementController implements Initializable {
     private ObservableList<EmployeeModel> EmployeeList = FXCollections.observableArrayList();
 
     private Alert a = new Alert(AlertType.NONE);
-
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -134,7 +128,6 @@ public class AccountManagementController implements Initializable {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_UpdateAccount.fxml"));
                         Parent root = loader.load();
 
-
                         // Get the controller and pass the selected employee's data
                         UpdateAccountController controller = loader.getController();
                         controller.loadEmployeeData(selectedItem.getId());
@@ -146,7 +139,6 @@ public class AccountManagementController implements Initializable {
                         popupStage.setTitle("Update Account");
                         popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
                         popupStage.initOwner(row.getScene().getWindow()); // Set owner window
-                        popupStage.initStyle(StageStyle.UNDECORATED); // Optional: set style
                         Scene scene = new Scene(root);
                         popupStage.setScene(scene);
                         popupStage.setResizable(false); // Optional: make it fixed size
@@ -260,21 +252,26 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     void AddAccountMove(ActionEvent event) {
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AddAccount.fxml"));
-            root = loader.load();
+            Parent root = loader.load();
 
-            root = FXMLLoader.load(getClass().getResource("/View/COH_AddAccount.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            AddAccountController controller = loader.getController();
+            controller.setRefreshCallback(() -> refreshEmployeeTable());
+            // Create a new pop-up stage
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Add Account");
+            popupStage.initModality(Modality.APPLICATION_MODAL); // Makes it modal
+            popupStage.initOwner(((Node) event.getSource()).getScene().getWindow()); // Set owner to current window
+            Scene scene = new Scene(root);
+            popupStage.setScene(scene);
+            popupStage.setResizable(false); 
+            popupStage.showAndWait();
 
+            
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            showAlert("Error", "Failed to open update form: " + e.getMessage());
         }
     }
 

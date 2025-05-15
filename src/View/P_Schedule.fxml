@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_ScheduleController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PHARMACIST.P_ScheduleController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
@@ -81,7 +81,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#clipboardBtnPressed" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#clipboardBtnPressed" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Account" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
@@ -92,7 +92,7 @@
                                              <children>
                                                 <ImageView fitHeight="47.0" fitWidth="30.0" layoutX="1.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@../ICONS/Calendar.png" />
+                                                      <Image url="@../ICONS/profile-user%201.png" />
                                                    </image>
                                                 </ImageView>
                                              </children>
@@ -133,9 +133,9 @@
             </AnchorPane>
             <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
-                  <StackPane layoutX="256.8" layoutY="19.0" AnchorPane.leftAnchor="256.8" AnchorPane.rightAnchor="256.8">
+                  <StackPane layoutX="257.0" layoutY="20.0" AnchorPane.leftAnchor="257.0" AnchorPane.rightAnchor="257.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule" wrappingWidth="153.58200073242188">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account" wrappingWidth="153.58200073242188">
                            <font>
                               <Font name="Gordita-Bold" size="34.0" />
                            </font>
@@ -146,12 +146,12 @@
                      <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
                            <children>
-                              <Text layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                              <Text fx:id="nameLabel" layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                                  <font>
                                     <Font name="Gordita-Regular" size="24.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
+                              <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacist">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
@@ -160,7 +160,6 @@
                         </AnchorPane>
                      </children>
                   </StackPane>
-                  <StackPane layoutX="16.0" layoutY="223.0" prefHeight="378.0" prefWidth="198.0" AnchorPane.leftAnchor="16.0" />
                </children>
             </AnchorPane>
          </children>

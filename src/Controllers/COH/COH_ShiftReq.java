@@ -30,7 +30,7 @@ public class COH_ShiftReq {
 
     @FXML
     private Button FilterBttn, LogoutBtn, accountBtn, clipboardBtn, closeBtn, crossBtn, hamburgermenuBtn, homeBtn,
-            minimizeBtn, recordsBtn;
+            minimizeBtn, recordsBtn, LeaveReqBtn, ShiftReqBtn;
 
     @FXML
     private TextField SearchButton;
@@ -108,6 +108,11 @@ public class COH_ShiftReq {
         // Get the current stage and minimize it
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.setIconified(true);
+    }
+
+    @FXML
+    private void LeaveReqBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/COH_ManageLeaveRequest.fxml");
     }
 
     @FXML

@@ -1,12 +1,20 @@
 package Controllers.COH;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 import Controllers.ViewState;
+import Models.ChangeLog;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +25,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -37,10 +47,18 @@ public class COH_ActivityReport {
     private Label nameLabel;
 
     @FXML
-    private TableView<?> StkInTableView;
+    private TableView<ChangeLog> StkInTableView;
 
     @FXML
     private AnchorPane hamburgerPane;
+
+    @FXML private TableColumn<ChangeLog, Integer> idColumn;
+    @FXML private TableColumn<ChangeLog, String> tableNameColumn;
+    @FXML private TableColumn<ChangeLog, String> actionColumn;
+    @FXML private TableColumn<ChangeLog, String> oldDataColumn;
+    @FXML private TableColumn<ChangeLog, String> newDataColumn;
+    @FXML private TableColumn<ChangeLog, String> changedByColumn;
+    @FXML private TableColumn<ChangeLog, LocalDateTime> changedAtColumn;
 
     private Alert a = new Alert(AlertType.NONE);
 
@@ -49,7 +67,45 @@ public class COH_ActivityReport {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
         String cohName = DatabaseConnect.getCOHName();
         nameLabel.setText(cohName != null ? cohName : "Name not found");
+
+        // Table column bindings
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("tableName"));
+        actionColumn.setCellValueFactory(new PropertyValueFactory<>("action"));
+        oldDataColumn.setCellValueFactory(new PropertyValueFactory<>("oldData"));
+        newDataColumn.setCellValueFactory(new PropertyValueFactory<>("newData"));
+        changedByColumn.setCellValueFactory(new PropertyValueFactory<>("changedBy"));
+        changedAtColumn.setCellValueFactory(new PropertyValueFactory<>("changedAt"));
+
+        loadChangeLogs(); // call to load logs
     }
+
+    private void loadChangeLogs() {
+    ObservableList<ChangeLog> logs = FXCollections.observableArrayList();
+
+    try (Connection conn = DatabaseConnect.connect();
+         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM change_log ORDER BY changed_at DESC");
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            logs.add(new ChangeLog(
+                rs.getInt("id"),
+                rs.getString("table_name"),
+                rs.getString("action"),
+                rs.getString("old_data"),
+                rs.getString("new_data"),
+                rs.getString("changed_by"),
+                rs.getTimestamp("changed_at").toLocalDateTime()
+            ));
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        showAlert("Database Error", "Failed to load change logs.");
+    }
+
+    StkInTableView.setItems(logs);
+}
 
     @FXML
     private void toggleHamburgerMenu() {

@@ -161,7 +161,7 @@ public class COH_Archive {
                     AccountManagmentTableView.getItems().remove(item); // Optionally remove from archived view
                     showAlert("Success", "Employee account restored successfully.");
                 } catch (SQLException e) {
-                    showAlert("Error", "Failed to restore employee: " + e.getMessage());
+                    showAlert("Error", "Failed to restore employee due to: " + e.getMessage());
                     e.printStackTrace();
                 }
             }

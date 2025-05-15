@@ -1,187 +1,321 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.TextField?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.P_DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="762.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_AddPatientRecord">
    <children>
-      <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
+      <Pane layoutX="11.0" layoutY="11.0" prefHeight="763.0" prefWidth="740.0" style="-fx-background-color: White; -fx-background-radius: 12;">
          <children>
-            <AnchorPane fx:id="hamburgerPane" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+            <Pane layoutX="14.0" layoutY="58.0" prefHeight="689.0" prefWidth="712.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
                <children>
-                  <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="26.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane prefHeight="80.0" prefWidth="107.0" style="-fx-background-color: white; -fx-background-radius: 10;">
-                           <children>
-                              <Button fx:id="hamburgermenuBtn" contentDisplay="GRAPHIC_ONLY" layoutX="28.0" layoutY="12.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="@../Styles/pharmacistDashboard.css" text="Button">
-                                 <graphic>
-                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../ICONS/Menu.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
-                           <children>
-                              <Button fx:id="homeBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="..\Styles\pharmacistDashboard.css" text="Home" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
-                                 <graphic>
-                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../ICONS/Home.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="Gordita-Bold" size="15.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
-                           <children>
-                              <Button fx:id="crossBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="17.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="52.0" stylesheets="..\Styles\pharmacistDashboard.css" text="Pharmacy" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
-                                 <graphic>
-                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../ICONS/Hospital.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="Gordita-Bold" size="15.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets left="7.0" top="4.0" />
-                                 </padding>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane prefHeight="80.0" prefWidth="107.0">
-                           <children>
-                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="45.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" stylesheets="..\Styles\pharmacistDashboard.css" text="Schedule" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
-                                 <graphic>
-                                    <ImageView fitHeight="46.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../ICONS/Clipboard.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <padding>
-                                    <Insets left="11.0" top="5.0" />
-                                 </padding>
-                                 <font>
-                                    <Font name="Gordita-Bold" size="15.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </VBox>
+                  <Label layoutX="21.0" layoutY="14.0" text="Information Sheet">
+                     <font>
+                        <Font name="Gordita-Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="48.0" text="First Name">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="firstnametf" layoutX="21.0" layoutY="69.0" prefHeight="26.0" prefWidth="211.0" promptText="First Name" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="255.0" layoutY="48.0" text="Last Name">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="lastnametf" layoutX="254.0" layoutY="69.0" prefHeight="26.0" prefWidth="211.0" promptText="Last Name" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="savebtn" layoutX="364.0" layoutY="643.0" mnemonicParsing="false" onAction="#SaveChangesAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Submit Record" textFill="WHITE">
+                     <font>
+                        <Font name="Gordita-Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="cancelbtn" layoutX="17.0" layoutY="643.0" mnemonicParsing="false" onAction="#CancelButtonAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
+                     <font>
+                        <Font name="Gordita-Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <DatePicker fx:id="birthdate" layoutX="491.0" layoutY="126.0" prefHeight="25.0" prefWidth="211.0" promptText="Date of Birth" />
+                  <Label layoutX="491.0" layoutY="48.0" text="Middle Name">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="215.0" text="Nationality">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="agetf" layoutX="21.0" layoutY="125.0" prefHeight="26.0" prefWidth="91.0" promptText="Age" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="21.0" layoutY="108.0" text="Age">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="130.0" layoutY="108.0" text="Gender">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="492.0" layoutY="108.0" text="Date of Birth">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="birthplacetf" layoutX="491.0" layoutY="183.0" prefHeight="26.0" prefWidth="211.0" promptText="Brthplace" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="16.0" layoutY="164.0" text="Complete Address">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="addresstf" layoutX="18.0" layoutY="183.0" prefHeight="26.0" prefWidth="446.0" promptText="Complete Address" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="emailaddtf" layoutX="254.0" layoutY="125.0" prefHeight="26.0" prefWidth="211.0" promptText="Email Adress" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="252.0" layoutY="108.0" text="Email Address">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="middlenametf" layoutX="491.0" layoutY="69.0" prefHeight="26.0" prefWidth="211.0" promptText="Middle Name" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="491.0" layoutY="164.0" text="Birthplace">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="nationalitytf" layoutX="20.0" layoutY="232.0" prefHeight="26.0" prefWidth="211.0" promptText="Nationality" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="religiontf" layoutX="254.0" layoutY="232.0" prefHeight="26.0" prefWidth="211.0" promptText="Religion" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="occupationtf" layoutX="491.0" layoutY="232.0" prefHeight="26.0" prefWidth="211.0" promptText="Occupation" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="252.0" layoutY="215.0" text="Religion">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="495.0" layoutY="215.0" text="Occupation">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="22.0" layoutY="266.0" text="Contact No">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="contactnotf" layoutX="21.0" layoutY="287.0" prefHeight="26.0" prefWidth="211.0" promptText="Contact Number" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="489.0" layoutY="266.0" text="Patient Category">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="23.0" layoutY="328.0" text="Father's Name">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="f_fullnametf" layoutX="19.0" layoutY="353.0" prefHeight="26.0" prefWidth="211.0" promptText="Father's Full Name" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="f_addresstf" layoutX="251.0" layoutY="353.0" prefHeight="26.0" prefWidth="211.0" promptText="Address" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="f_contactnotf" layoutX="489.0" layoutY="353.0" prefHeight="26.0" prefWidth="211.0" promptText="Contact Number" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="252.0" layoutY="328.0" text="Address">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="492.0" layoutY="328.0" text="Father's Contact No">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Line endX="355.4000244140625" layoutX="341.0" layoutY="320.0" startX="-326.1999816894531" stroke="WHITE" />
+                  <Label layoutX="20.0" layoutY="385.0" text="Mother's Name">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="m_fullnametf" layoutX="19.0" layoutY="404.0" prefHeight="26.0" prefWidth="211.0" promptText="Mother's Full Name" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="m_addresstf" layoutX="254.0" layoutY="404.0" prefHeight="26.0" prefWidth="211.0" promptText="Address" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="m_contactnotf" layoutX="489.0" layoutY="404.0" prefHeight="26.0" prefWidth="211.0" promptText="Contact Number" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="252.0" layoutY="385.0" text="Address">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="489.0" layoutY="385.0" text="Mother's Contact No">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="patcatcombobox" layoutX="489.0" layoutY="288.0" prefHeight="25.0" prefWidth="211.0" promptText="Patient Category" />
+                  <Label layoutX="19.0" layoutY="512.0" text="Allergic To:">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="allergicarea" layoutX="20.0" layoutY="534.0" prefHeight="90.0" prefWidth="211.0" />
+                  <Label layoutX="19.0" layoutY="443.0" text="Employer's Name">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="e_fullnametf" layoutX="14.0" layoutY="460.0" prefHeight="26.0" prefWidth="211.0" promptText="Employer's Full Name" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="e_addresstf" layoutX="254.0" layoutY="460.0" prefHeight="26.0" prefWidth="211.0" promptText="Address" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="e_contactnotf" layoutX="489.0" layoutY="460.0" prefHeight="26.0" prefWidth="211.0" promptText="Contact Number" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="252.0" layoutY="443.0" text="Address">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="491.0" layoutY="443.0" text="Employer's Contact No">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="255.0" layoutY="512.0" text="Emergency Contact Name">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="em_fullnametf" layoutX="255.0" layoutY="534.0" prefHeight="26.0" prefWidth="211.0" promptText="Emergency Contact Full Name" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="493.0" layoutY="512.0" text="Emergency Contact Address">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="em_addresstf" layoutX="489.0" layoutY="534.0" prefHeight="26.0" prefWidth="211.0" promptText="Emergency Contact Address" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="255.0" layoutY="571.0" text="Emergency Contact No">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="em_contacnotf" layoutX="255.0" layoutY="593.0" prefHeight="26.0" prefWidth="211.0" promptText="Emergency Contact Number" style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="493.0" layoutY="571.0" text="Relation to the Patient">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="em_relation" layoutX="489.0" layoutY="593.0" prefHeight="26.0" prefWidth="211.0" promptText="Relationship " style="-fx-background-radius: 5;">
+                     <font>
+                        <Font name="Gordita-Regular" size="12.0" />
+                     </font>
+                  </TextField>
+                  <ComboBox fx:id="gendertf" layoutX="133.0" layoutY="126.0" prefHeight="25.0" prefWidth="100.0" />
                </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="614.0" prefWidth="813.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
-               <children>
-                  <StackPane alignment="TOP_LEFT" layoutX="16.0" layoutY="41.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
-                     <children>
-                        <AnchorPane prefHeight="100.0" prefWidth="778.0" style="-fx-background-radius: 15; -fx-background-color: F3F6FF;">
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="28.0" prefHeight="44.0" prefWidth="363.0" text="Create New Record">
-                                 <font>
-                                    <Font name="Gordita-Bold" size="34.0" />
-                                 </font>
-                              </Label>
-                              <StackPane alignment="TOP_RIGHT" layoutX="562.0" layoutY="37.0" nodeOrientation="RIGHT_TO_LEFT">
-                                 <children>
-                                    <DatePicker nodeOrientation="LEFT_TO_RIGHT" promptText="MM/DD/YYYY" StackPane.alignment="TOP_RIGHT" />
-                                 </children>
-                              </StackPane>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </StackPane>
-                  <AnchorPane layoutX="17.0" layoutY="166.0" prefHeight="397.0" prefWidth="780.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 15;" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="17.0">
-                     <children>
-                        <Label layoutX="18.0" layoutY="15.0" text="Patient ID*:">
-                           <font>
-                              <Font name="Gordita-Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <StackPane layoutX="1.0999984741210938" layoutY="19.0" />
-                        <Label layoutX="14.0" layoutY="100.0" text="Doctor ID*:">
-                           <font>
-                              <Font name="Gordita-Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <StackPane layoutX="1.0999984741210938" layoutY="100.0" />
-                        <StackPane layoutX="4.099998474121094" layoutY="226.0" />
-                        <Label layoutX="18.0" layoutY="199.0" text="If patient is new, Encode data here:">
-                           <font>
-                              <Font name="Gordita-Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="259.0" layoutY="15.0" text="Diagnoses*:" AnchorPane.rightAnchor="434.0">
-                           <font>
-                              <Font name="Gordita-Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <StackPane layoutX="259.0" layoutY="43.0" AnchorPane.rightAnchor="321.0">
-                           <children>
-                              <TextArea prefHeight="237.0" prefWidth="200.0" />
-                           </children>
-                        </StackPane>
-                        <StackPane layoutX="613.0999984741211" layoutY="333.0" AnchorPane.rightAnchor="64.9000015258789">
-                           <children>
-                              <Button fx:id="EncodeBttn" mnemonicParsing="false" onAction="#EncodeActionBttn" style="-fx-background-color: #5271CE;" text="Update Record" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </StackPane>
-                        <Label layoutX="513.0" layoutY="15.0" text="Notes*:" AnchorPane.rightAnchor="211.0">
-                           <font>
-                              <Font name="Gordita-Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <StackPane layoutX="513.0" layoutY="43.0" AnchorPane.rightAnchor="67.0">
-                           <children>
-                              <TextArea prefHeight="237.0" prefWidth="200.0" />
-                           </children>
-                        </StackPane>
-                        <StackPane layoutX="12.899999618530273" layoutY="269.8999938964844" AnchorPane.leftAnchor="12.899999618530273">
-                           <children>
-                              <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="197.0" text="ENCODE PATIENT DATA" />
-                           </children>
-                        </StackPane>
-                        <StackPane layoutX="14.0" layoutY="36.0" AnchorPane.leftAnchor="14.0">
-                           <children>
-                              <TextField floatText="Patient ID" opacity="0.56" prefHeight="35.0" prefWidth="203.0" style="-fx-background-color: FFFFFF;" />
-                           </children>
-                        </StackPane>
-                        <StackPane layoutX="18.0" layoutY="125.0" AnchorPane.leftAnchor="14.0">
-                           <children>
-                              <TextField floatText="Doctor ID" opacity="0.56" prefHeight="35.0" prefWidth="203.0" style="-fx-background-color: FFFFFF;" />
-                           </children>
-                        </StackPane>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
+            </Pane>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="6.0" prefHeight="44.0" prefWidth="368.0" text="Add Patient Data">
+               <font>
+                  <Font name="Gordita-Bold" size="21.0" />
+               </font>
+            </Label>
+            <Button fx:id="BackBttn" layoutX="14.0" layoutY="3.0" mnemonicParsing="false" onAction="#BackBttnAction" prefHeight="34.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-padding: 10;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../ICONS/Back%20Arrow.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
-      </HBox>
+      </Pane>
    </children>
 </AnchorPane>
