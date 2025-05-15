@@ -2,6 +2,9 @@ package Controllers.PHARMACIST;
 
 import java.io.IOException;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
 import java.util.Optional;
 
 import Controllers.ViewState;
@@ -102,6 +105,23 @@ public class P_AccountController {
 
     @FXML
     private Text dayoff;
+
+    @FXML
+    private TableView<?> ShiftRequestView;
+
+    @FXML
+    private TableColumn<?, ?> srcol;
+    @FXML
+    private TableColumn<?, ?> statuscol;
+    @FXML
+    private TableColumn<?, ?> shiftID;
+    @FXML
+    private TableColumn<?, ?> requestdatecol;
+    @FXML
+    private TableColumn<?, ?> newshiftID;
+     @FXML
+    private TableColumn<?, ?> desccol;
+
     
     private Alert a = new Alert(AlertType.NONE);
 

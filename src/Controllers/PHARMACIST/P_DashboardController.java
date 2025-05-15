@@ -234,7 +234,6 @@ public class P_DashboardController implements Initializable {
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/P_Account.fxml");
-
     }
 
     @FXML
