@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Models.ShiftRequestModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class DatabaseConnect {
 
     private static final String url = "jdbc:mysql://localhost:3306/careplus";
@@ -121,4 +125,46 @@ public class DatabaseConnect {
         return name;
     }
 
+    public static ObservableList<ShiftRequestModel> getShiftRequests(int employeeId) {
+        ObservableList<ShiftRequestModel> shiftRequests = FXCollections.observableArrayList();
+        String query = "SELECT * FROM shiftrequest WHERE requestedby = ?";
+        try (Connection conn = connect();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, employeeId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                ShiftRequestModel shiftRequest = new ShiftRequestModel(
+                        rs.getInt("sr_id"),
+                        rs.getString("shift_id"),
+                        rs.getString("newshift"),
+                        rs.getString("description"),
+                        rs.getDate("reqdate"),
+                        rs.getBoolean("status"));
+                shiftRequests.add(shiftRequest);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return shiftRequests;
+    }
+
+    public static ObservableList<String> getAvailableShifts() {
+        ObservableList<String> shifts = FXCollections.observableArrayList();
+        String query = "SELECT timeslot FROM shift WHERE availability = 1";
+
+        try (Connection conn = connect();
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                shifts.add(rs.getString("timeslot"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return shifts;
+    }
 }
