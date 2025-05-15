@@ -15,7 +15,7 @@ public class App extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
             Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
+            primaryStage.setScene(scene); 
             primaryStage.setResizable(true);
             // primaryStage.setMaximized(true);
             primaryStage.initStyle(StageStyle.UNDECORATED);
