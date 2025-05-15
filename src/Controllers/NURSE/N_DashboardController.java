@@ -151,7 +151,8 @@ public class N_DashboardController {
             Parent root = loader.load();
             // Create a new pop-up stage
             Stage popupStage = new Stage();
-            popupStage.setTitle("Update Account");
+            popupStage.setTitle("Add Patient Data");
+
             popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
             Scene scene = new Scene(root);
             popupStage.setScene(scene);
