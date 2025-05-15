@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import Controllers.ViewState;
+import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -17,39 +18,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import util.GetCurrentEmployeeID;
 import util.SceneLoader;
 
-public class N_AccountController {
+public class N_PatientDataController {
 
     @FXML
-    private Button ChangeShiftBtn;
-
-    @FXML
-    private Label numtf;
-
-    @FXML
-    private Label shifttf;
-
-    @FXML
-    private Label dayofftf;
-
-    @FXML
-    private Label emaddtf;
-
-    @FXML
-    private Label fnametf;
-
-    @FXML
-    private Label lnametf;
+    private Button AddPatientDataBtn;
 
     @FXML
     private Button LogoutBtn;
@@ -79,103 +60,35 @@ public class N_AccountController {
     private Button minimizeBtn;
 
     @FXML
+    private Button movetoProductBtn;
+
+    @FXML
+    private Button movetoStocksBtn;
+
+    @FXML
     private Text nameLabel;
 
     @FXML
-    private Text TITLE1;
+    private TableView<?> recordsTableView;
 
-    @FXML
-    private Text TITLE2;
+    private Alert a = new Alert(AlertType.INFORMATION);
 
-    @FXML
-    private Text lname;
-
-    @FXML
-    private Text fname;
-
-    @FXML
-    private Text number;
-
-    @FXML
-    private Text emadd;
-
-    @FXML
-    private Text shift;
-
-    @FXML
-    private Text dayoff;
-
-    @FXML
-    private TableView<?> ShiftRequestView;
-
-    @FXML
-    private TableColumn<?, ?> srcol;
-    @FXML
-    private TableColumn<?, ?> statuscol;
-    @FXML
-    private TableColumn<?, ?> shiftID;
-    @FXML
-    private TableColumn<?, ?> requestdatecol;
-    @FXML
-    private TableColumn<?, ?> newshiftID;
-    @FXML
-    private TableColumn<?, ?> desccol;
-
-    private Alert a = new Alert(AlertType.NONE);
-
-    @FXML
+      @FXML
     public void initialize() {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+        int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+        String nurseName = DatabaseConnect.getNurseName(employeeId);
+        nameLabel.setText(nurseName + ", RN");
+
     }
 
     @FXML
-    void ChangeShiftBtnAction(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ChangeShift.fxml"));
-            Parent root = loader.load();
+    void AddPatientDataBtnAction(ActionEvent event) {
 
-            Stage loginStage = new Stage();
-            loginStage.setScene(new Scene(root));
-            loginStage.setResizable(false);
-            loginStage.initModality(Modality.APPLICATION_MODAL);
-            loginStage.initOwner(((Node) event.getSource()).getScene().getWindow()); // Set owner to current window
-
-            loginStage.showAndWait();
-
-            
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.show();
-        }
     }
 
-    @FXML
-    void closeAction(ActionEvent event) {
-        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
-        currentStage.close();
-    }
-
-    @FXML
-    void crossBtnAction(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_RequestMonitor.fxml");
-    }
-
-    @FXML
-    void homeBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
-    }
-
-    @FXML
-    void minimizeAction(ActionEvent event) {
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        currentStage.setIconified(true);
-    }
-
-    @FXML
-    void LogOutActionBttn(ActionEvent event) {
+   @FXML
+    void LogoutBtnAction(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Logout");
         alert.setHeaderText("Are you sure you want to log out?");
@@ -206,6 +119,34 @@ public class N_AccountController {
     }
 
     @FXML
+    void accountBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_Account.fxml");
+    }
+
+    @FXML
+    private void closeAction(ActionEvent Action) {
+        Stage currentStage = (Stage) closeBtn.getScene().getWindow();
+        currentStage.close();
+    }
+
+    @FXML
+    private void crossBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_RequestMonitor.fxml");
+    }
+
+     @FXML
+    void homeBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
+    }
+
+    @FXML
+    private void minimizeAction(ActionEvent event) {
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setIconified(true);
+    }
+
+
+    @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
         double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
@@ -219,9 +160,15 @@ public class N_AccountController {
     }
 
     @FXML
-    void clipboardBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_Account.fxml");
-
+    void movetoProductBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
     }
+
+    @FXML
+    void movetoStocksBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_PatientData.fxml");
+    }
+
+
 
 }

@@ -225,4 +225,14 @@ public class N_DashboardController {
         }
     }
 
+    @FXML
+    void movetoProductBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_PatientData.fxml");
+    }
+
+    @FXML
+    void movetoStocksBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
+    }
+
 }

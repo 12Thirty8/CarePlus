@@ -255,6 +255,9 @@ public class AccountManagementController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AddAccount.fxml"));
             Parent root = loader.load();
+
+            AddAccountController controller = loader.getController();
+            controller.setRefreshCallback(() -> refreshEmployeeTable());
             // Create a new pop-up stage
             Stage popupStage = new Stage();
             popupStage.setTitle("Add Account");
