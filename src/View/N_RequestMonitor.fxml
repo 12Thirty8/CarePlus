@@ -170,7 +170,7 @@
                         <Font name="Gordita-Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="reqTableView" layoutX="26.0" layoutY="267.2" prefHeight="266.0" prefWidth="437.0" stylesheets="@../Styles/table.css" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="307.19999999999993" AnchorPane.topAnchor="267.0">
+                  <TableView fx:id="reqTableView" layoutX="26.0" layoutY="267.2" prefHeight="266.0" prefWidth="376.0" stylesheets="@../Styles/table.css" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="370.0" AnchorPane.topAnchor="267.0">
                      <columns>
                         <TableColumn fx:id="idcol" editable="false" maxWidth="118.0" minWidth="80.0" prefWidth="118.0" text="Request ID" />
                         <TableColumn fx:id="recordcol" editable="false" maxWidth="164.80003356933594" minWidth="85.0" prefWidth="91.0" text="Record ID" />
@@ -181,7 +181,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <TableView fx:id="listTableView" layoutX="476.0" layoutY="267.0" prefHeight="266.0" prefWidth="270.0" stylesheets="@../Styles/table.css" AnchorPane.rightAnchor="16.0">
+                  <TableView fx:id="listTableView" layoutX="476.0" layoutY="267.0" prefHeight="266.0" prefWidth="328.0" stylesheets="@../Styles/table.css" AnchorPane.rightAnchor="16.0">
                      <columns>
                         <TableColumn fx:id="batchidcol" editable="false" maxWidth="118.0" minWidth="80.0" prefWidth="94.39990234375" text="Batch ID" />
                         <TableColumn fx:id="namecol" editable="false" maxWidth="183.99993896484375" minWidth="85.0" prefWidth="126.40005493164062" text="Medicine Name" />
@@ -210,24 +210,19 @@
                               <TextField fx:id="recordidtf" prefHeight="26.0" prefWidth="86.0" promptText="--None Selected--" style="-fx-background-radius: 5;" />
                            </children>
                         </VBox>
-                        <Button fx:id="newreqBtn" layoutX="23.0" layoutY="144.0" mnemonicParsing="false" onAction="#newreqBtnPressed" prefHeight="28.0" prefWidth="122.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Add " textFill="WHITE">
-                           <font>
-                              <Font name="Gordita-Bold" size="12.0" />
-                           </font>
-                        </Button>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="207.0" layoutY="548.0" prefHeight="186.0" prefWidth="183.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;" AnchorPane.bottomAnchor="16.0">
+                  <AnchorPane layoutX="409.0" layoutY="554.0" prefHeight="186.0" prefWidth="183.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;" AnchorPane.bottomAnchor="17.200000000000045">
                      <children>
                         <VBox layoutX="50.0" layoutY="-7.0" prefHeight="200.0" prefWidth="200.0" spacing="5.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="20.0">
                            <children>
-                              <Label text="Record ID:">
+                              <Label text="Batch ID:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
                               </Label>
                               <TextField fx:id="batchidtf" editable="false" prefHeight="26.0" prefWidth="65.0" promptText="--None Selected--" style="-fx-background-radius: 5;" />
-                              <Label text="Request ID:">
+                              <Label text="Quantity:">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
@@ -235,16 +230,21 @@
                               <TextField fx:id="qtytf" prefHeight="26.0" prefWidth="180.0" promptText="--None Selected--" style="-fx-background-radius: 5;" />
                            </children>
                         </VBox>
-                        <Button fx:id="newreqBtn1" layoutX="26.0" layoutY="144.0" mnemonicParsing="false" onAction="#newreqBtnPressed" prefHeight="28.0" prefWidth="122.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Update" textFill="WHITE">
-                           <font>
-                              <Font name="Gordita-Bold" size="12.0" />
-                           </font>
-                        </Button>
                      </children>
                   </AnchorPane>
-                  <Button fx:id="ClearBtn" layoutX="406.0" layoutY="555.0" mnemonicParsing="false" onAction="#ClearBtnAction" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e" AnchorPane.bottomAnchor="16.0">
+                  <Button fx:id="ClearBtn" layoutX="603.0" layoutY="682.0" mnemonicParsing="false" onAction="#ClearBtnAction" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e" AnchorPane.bottomAnchor="41.200000000000045">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="newreqBtn" layoutX="623.0" layoutY="229.0" mnemonicParsing="false" onAction="#newreqBtnPressed" prefHeight="28.0" prefWidth="122.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Add " textFill="WHITE">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="newreqBtn1" layoutX="603.0" layoutY="620.0" mnemonicParsing="false" onAction="#newreqBtnPressed" prefHeight="28.0" prefWidth="122.0" style="-fx-background-color: #41D572; -fx-background-radius: 10;" text="Update" textFill="WHITE">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Button>
                </children>
