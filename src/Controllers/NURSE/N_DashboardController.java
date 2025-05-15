@@ -30,7 +30,7 @@ import javafx.scene.control.TableColumn;
 
 public class N_DashboardController {
     @FXML
-    private Button clipboardBtn;
+    private Button accountBtn;
 
     @FXML
     private Button crossBtn;
@@ -62,7 +62,7 @@ public class N_DashboardController {
     private Text nameLabel;
 
     @FXML
-    private Button closeBtn;
+    private Button closeBtn, minimizeBtn;
 
     @FXML
     public void initialize() {
@@ -103,7 +103,6 @@ public class N_DashboardController {
             }
 
             StkInTableView.setItems(nurseModelObservableList);
-
             rs.close();
             pstmt.close();
             conn.close();
@@ -132,9 +131,14 @@ public class N_DashboardController {
 
     @FXML
     void homeBtnPressed(ActionEvent event) {
-                SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
-
+        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
     }
+
+    @FXML
+    void accountBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_Account.fxml");
+    }
+
 
      @FXML
     private void closeAction(ActionEvent Action) {

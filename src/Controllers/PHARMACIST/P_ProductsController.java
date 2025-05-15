@@ -305,7 +305,6 @@ public class P_ProductsController implements Initializable {
     @FXML
     void addstockBtnPressed(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/P_AddProduct.fxml");
-
     }
 
     @FXML
