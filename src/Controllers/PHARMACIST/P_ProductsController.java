@@ -40,6 +40,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -312,9 +313,11 @@ public class P_ProductsController implements Initializable {
             controller.setRefreshCallback(() -> refreshEmployeeTable());
 
             Stage loginStage = new Stage();
+            loginStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
             loginStage.setScene(new Scene(root));
             loginStage.setResizable(false);
-            loginStage.show();
+            loginStage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            loginStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();

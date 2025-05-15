@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -136,7 +137,12 @@ public class N_AccountController {
             Stage loginStage = new Stage();
             loginStage.setScene(new Scene(root));
             loginStage.setResizable(false);
-            loginStage.show();
+            loginStage.initModality(Modality.APPLICATION_MODAL);
+            loginStage.initOwner(((Node) event.getSource()).getScene().getWindow()); // Set owner to current window
+
+            loginStage.showAndWait();
+
+            
 
         } catch (IOException e) {
             e.printStackTrace();
