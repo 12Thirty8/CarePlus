@@ -73,7 +73,7 @@ public class N_PharmacyReq implements Initializable {
     @FXML
     private ComboBox<String> recordname;
 
-    private ObservableList<ListModel> EmployeeList = FXCollections.observableArrayList();
+    private ObservableList<ListModel> RequestList = FXCollections.observableArrayList();
 
     private ObservableList<String> allMedicineNames = FXCollections.observableArrayList();
 
@@ -208,7 +208,7 @@ public class N_PharmacyReq implements Initializable {
         dosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
         qtycol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-        listTableView.setItems(EmployeeList);
+        listTableView.setItems(RequestList);
     }
     // Fixes for record ComboBox and record name loading
 
@@ -439,7 +439,7 @@ public class N_PharmacyReq implements Initializable {
         }
 
         ListModel entry = new ListModel(medId, medName, medDosage, quantity);
-        EmployeeList.add(entry);
+        RequestList.add(entry);
 
         // Optionally clear fields after adding
         medidtf.clear();
@@ -456,7 +456,7 @@ public class N_PharmacyReq implements Initializable {
 
     @FXML
     void ClearBtnAction(ActionEvent event) {
-        EmployeeList.clear();
+        RequestList.clear();
         medidtf.clear();
         medname.setValue(null);
         dosage.setValue(null);
@@ -469,7 +469,7 @@ public class N_PharmacyReq implements Initializable {
     @FXML
     void SubmitBtnAction(ActionEvent event) {
         String recordIdStr = recordidtf.getText();
-        if (recordIdStr == null || recordIdStr.isEmpty() || EmployeeList.isEmpty()) {
+        if (recordIdStr == null || recordIdStr.isEmpty() || RequestList.isEmpty()) {
             showAlert("Error", "Please select a patient and add at least one medicine");
             return;
         }
@@ -518,7 +518,7 @@ public class N_PharmacyReq implements Initializable {
             }
 
             // 3. Process each medicine
-            for (ListModel entry : EmployeeList) {
+            for (ListModel entry : RequestList) {
                 int medId = entry.getId();
                 String medDosage = entry.getDosage();
                 int qty = entry.getQuantity();
@@ -555,7 +555,7 @@ public class N_PharmacyReq implements Initializable {
             showAlert("Success", "Pharmacy request submitted successfully");
 
             // Clear form
-            EmployeeList.clear();
+            RequestList.clear();
             medidtf.clear();
             medname.setValue(null);
             dosage.setValue(null);

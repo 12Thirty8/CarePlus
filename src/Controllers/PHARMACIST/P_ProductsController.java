@@ -268,7 +268,7 @@ public class P_ProductsController implements Initializable {
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Schedule.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/View/P_Account.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.getScene().setRoot(root);
