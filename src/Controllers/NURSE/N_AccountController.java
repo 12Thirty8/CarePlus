@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 import Controllers.ViewState;
-import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
