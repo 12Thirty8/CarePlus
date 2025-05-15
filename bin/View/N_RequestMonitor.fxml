@@ -85,7 +85,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0">
                            <children>
-                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Account" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="clipboardBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="43.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#accountBtnAction" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Account" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
@@ -170,7 +170,7 @@
                         <Font name="Gordita-Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="reqTableView" layoutX="26.0" layoutY="267.2" prefHeight="266.0" prefWidth="437.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="307.19999999999993" AnchorPane.topAnchor="267.0">
+                  <TableView fx:id="reqTableView" layoutX="26.0" layoutY="267.2" prefHeight="266.0" prefWidth="437.0" stylesheets="@../Styles/table.css" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="307.19999999999993" AnchorPane.topAnchor="267.0">
                      <columns>
                         <TableColumn fx:id="idcol" editable="false" maxWidth="118.0" minWidth="80.0" prefWidth="118.0" text="Request ID" />
                         <TableColumn fx:id="recordcol" editable="false" maxWidth="164.80003356933594" minWidth="85.0" prefWidth="91.0" text="Record ID" />
@@ -181,7 +181,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <TableView fx:id="listTableView" layoutX="476.0" layoutY="267.0" prefHeight="266.0" prefWidth="270.0" AnchorPane.rightAnchor="16.0">
+                  <TableView fx:id="listTableView" layoutX="476.0" layoutY="267.0" prefHeight="266.0" prefWidth="270.0" stylesheets="@../Styles/table.css" AnchorPane.rightAnchor="16.0">
                      <columns>
                         <TableColumn fx:id="batchidcol" editable="false" maxWidth="118.0" minWidth="80.0" prefWidth="94.39990234375" text="Batch ID" />
                         <TableColumn fx:id="namecol" editable="false" maxWidth="183.99993896484375" minWidth="85.0" prefWidth="126.40005493164062" text="Medicine Name" />
@@ -242,7 +242,7 @@
                         </Button>
                      </children>
                   </AnchorPane>
-                  <Button fx:id="ClearBtn" layoutX="406.0" layoutY="555.0" mnemonicParsing="false" onAction="#ClearBtnAction" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
+                  <Button fx:id="ClearBtn" layoutX="406.0" layoutY="555.0" mnemonicParsing="false" onAction="#ClearBtnAction" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e" AnchorPane.bottomAnchor="16.0">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
