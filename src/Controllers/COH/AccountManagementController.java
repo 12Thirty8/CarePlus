@@ -255,9 +255,12 @@ public class AccountManagementController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AddAccount.fxml"));
             Parent root = loader.load();
+
+            AddAccountController controller = loader.getController();
+            controller.setRefreshCallback(() -> refreshEmployeeTable());
             // Create a new pop-up stage
             Stage popupStage = new Stage();
-            popupStage.setTitle("Update Account");
+            popupStage.setTitle("Add Account");
             popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
             Scene scene = new Scene(root);
             popupStage.setScene(scene);

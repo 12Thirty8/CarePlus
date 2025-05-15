@@ -49,6 +49,7 @@ public class AddAccountController implements Initializable {
     private Scene scene;
     private Parent root;
     private Alert a = new Alert(AlertType.NONE);
+    private Runnable refreshCallback;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -155,23 +156,13 @@ public class AddAccountController implements Initializable {
             showAlert("Success", "Employee onboarded successfully.");
             clearForm();
 
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AccountManagement.fxml"));
-                root = loader.load();
-
-                root = FXMLLoader.load(getClass().getResource("/View/COH_AccountManagement.fxml"));
-                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                a.setAlertType(AlertType.ERROR);
-                a.setContentText("Error loading page.");
-                a.setHeaderText("Error");
-                a.show();
+            if (refreshCallback != null) {
+                refreshCallback.run(); // Trigger the refresh
             }
+
+            // close the scene
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
 
         } catch (SQLException e) {
             showAlert("Database Error", "Failed to create account: " + e.getMessage());
@@ -287,6 +278,10 @@ public class AddAccountController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void setRefreshCallback(Runnable refreshCallback) {
+        this.refreshCallback = refreshCallback;
     }
 
     private boolean isCOHDepartmentFull(int currentEmployeeId) throws SQLException {
