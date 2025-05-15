@@ -30,10 +30,14 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -165,6 +169,7 @@ public class N_RequestMonitorController implements Initializable {
 
         initializeRowSelectionListener();
         initializeRowSelectionListener2();
+        setupContextMenus();
         batchidcol.setCellValueFactory(new PropertyValueFactory<>("id"));
         namecol.setCellValueFactory(new PropertyValueFactory<>("name"));
         dosagecol.setCellValueFactory(new PropertyValueFactory<>("dosage"));
@@ -524,6 +529,224 @@ public class N_RequestMonitorController implements Initializable {
                 a.setContentText("Error loading page.");
                 a.show();
             }
+        }
+    }
+
+    private void setupContextMenus() {
+        // Context menu for request table
+        ContextMenu requestContextMenu = new ContextMenu();
+        MenuItem deleteRequestItem = new MenuItem("Delete Request");
+        deleteRequestItem.setOnAction(_ -> deleteSelectedRequest());
+        requestContextMenu.getItems().add(deleteRequestItem);
+
+        reqTableView.setContextMenu(requestContextMenu);
+        reqTableView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+                MyRequestModel selected = reqTableView.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    // Disable delete for approved requests
+                    deleteRequestItem.setDisable("1".equals(selected.getStatus()));
+                }
+                requestContextMenu.show(reqTableView, event.getScreenX(), event.getScreenY());
+            }
+        });
+
+        // Context menu for request list table
+        ContextMenu listContextMenu = new ContextMenu();
+        MenuItem deleteListItem = new MenuItem("Delete Item");
+        deleteListItem.setOnAction(_ -> deleteSelectedListItem());
+        listContextMenu.getItems().add(deleteListItem);
+
+        listTableView.setContextMenu(listContextMenu);
+        listTableView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+                MyRequestModel selectedRequest = reqTableView.getSelectionModel().getSelectedItem();
+                if (selectedRequest != null) {
+                    // Disable delete for approved requests
+                    deleteListItem.setDisable("1".equals(selectedRequest.getStatus()));
+                }
+                listContextMenu.show(listTableView, event.getScreenX(), event.getScreenY());
+            }
+        });
+    }
+
+    private void deleteSelectedRequest() {
+        MyRequestModel selectedRequest = reqTableView.getSelectionModel().getSelectedItem();
+        if (selectedRequest == null) {
+            showAlert("Error", "No request selected");
+            return;
+        }
+
+        // Check if request is approved (status = 1)
+        if ("1".equals(selectedRequest.getStatus())) {
+            showAlert("Error", "Cannot delete an approved request.\nThe pharmacy has already prepared the medicine.");
+            return;
+        }
+
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Confirm Deletion");
+        confirmAlert.setHeaderText("Delete Request");
+        confirmAlert.setContentText("Are you sure you want to delete this request?");
+
+        Optional<ButtonType> result = confirmAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                // First delete the request list items
+                deleteRequestListItems(selectedRequest.getReqid());
+
+                // Then delete the request itself
+                Connection conn = DatabaseConnect.connect();
+                String query = "DELETE FROM request WHERE request_id = ?";
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setInt(1, selectedRequest.getReqid());
+
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    showAlert("Success", "Request deleted successfully");
+                    refreshEmployeeTable();
+                    ClearBtnAction(new ActionEvent());
+                }
+
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showAlert("Error", "Failed to delete request: " + e.getMessage());
+            }
+        }
+    }
+
+    private void deleteRequestListItems(int requestId) throws SQLException {
+        Connection conn = DatabaseConnect.connect();
+        String query = "DELETE FROM requestlist WHERE req_id = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setInt(1, requestId);
+        pstmt.executeUpdate();
+        pstmt.close();
+        conn.close();
+    }
+
+    private void deleteSelectedListItem() {
+        MyRequestModel selectedRequest = reqTableView.getSelectionModel().getSelectedItem();
+        if (selectedRequest == null) {
+            showAlert("Error", "No request selected");
+            return;
+        }
+
+        // Check if request is approved (status = 1)
+        if ("1".equals(selectedRequest.getStatus())) {
+            showAlert("Error", "Cannot modify an approved request.\nThe pharmacy has already prepared the medicine.");
+            return;
+        }
+
+        ListModel selectedItem = listTableView.getSelectionModel().getSelectedItem();
+        if (selectedItem == null) {
+            showAlert("Error", "No item selected");
+            return;
+        }
+
+        String requestIdText = reqidtf.getText();
+        if (requestIdText.isEmpty()) {
+            showAlert("Error", "No request selected");
+            return;
+        }
+
+        try {
+            int requestId = Integer.parseInt(requestIdText);
+
+            // Check how many items are in this request
+            int itemCount = getRequestListItemCount(requestId);
+            if (itemCount <= 1) {
+                showAlert("Error",
+                        "Cannot delete the last item in a request.\nPlease delete the entire request instead.");
+                return;
+            }
+
+            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmAlert.setTitle("Confirm Deletion");
+            confirmAlert.setHeaderText("Delete Item");
+            confirmAlert.setContentText("Are you sure you want to delete this item from the request?");
+
+            Optional<ButtonType> result = confirmAlert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Connection conn = DatabaseConnect.connect();
+                String query = "DELETE FROM requestlist WHERE req_id = ? AND batch_id = ?";
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setInt(1, requestId);
+                pstmt.setInt(2, selectedItem.getId());
+
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    showAlert("Success", "Item deleted successfully");
+                    // Refresh the list view
+                    refreshRequestListItems(requestId);
+                }
+
+                pstmt.close();
+                conn.close();
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Error", "Invalid request ID");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to delete item: " + e.getMessage());
+        }
+    }
+
+    private int getRequestListItemCount(int requestId) throws SQLException {
+        Connection conn = DatabaseConnect.connect();
+        String query = "SELECT COUNT(*) AS item_count FROM requestlist WHERE req_id = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setInt(1, requestId);
+        ResultSet rs = pstmt.executeQuery();
+
+        int count = 0;
+        if (rs.next()) {
+            count = rs.getInt("item_count");
+        }
+
+        rs.close();
+        pstmt.close();
+        conn.close();
+
+        return count;
+    }
+
+    private void refreshRequestListItems(int requestId) {
+        ObservableList<ListModel> listItems = FXCollections.observableArrayList();
+        try {
+            Connection conn = DatabaseConnect.connect();
+            String query = """
+                    SELECT
+                        l.batch_id,
+                        m.med_name AS name,
+                        b.batch_dosage,
+                        l.qty
+                    FROM
+                        requestlist l
+                    JOIN
+                        batch b ON l.batch_id = b.batch_id
+                    LEFT JOIN
+                        medicine m ON b.med_id = m.med_id
+                    WHERE
+                        l.req_id = ?
+                    """;
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, requestId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                listItems.add(new ListModel(
+                        rs.getInt("batch_id"),
+                        rs.getString("name"),
+                        rs.getString("batch_dosage"),
+                        rs.getInt("qty")));
+            }
+            listTableView.setItems(listItems);
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
