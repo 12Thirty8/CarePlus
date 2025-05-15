@@ -1,6 +1,10 @@
 package Controllers.PHARMACIST;
 
 import java.io.IOException;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
 import java.util.Optional;
 
 import Controllers.ViewState;
@@ -17,8 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,6 +33,24 @@ public class P_AccountController {
 
     @FXML
     private Button ChangeShiftBtn;
+    
+    @FXML
+    private Label numtf;
+
+    @FXML
+    private Label shifttf;
+
+     @FXML
+    private Label dayofftf;
+
+    @FXML
+    private Label emaddtf;
+
+    @FXML
+    private Label fnametf;
+
+    @FXML
+    private Label lnametf;
 
     @FXML
     private Button LogoutBtn;
@@ -44,15 +65,6 @@ public class P_AccountController {
     private Button crossBtn;
 
     @FXML
-    private TextField dayofftf;
-
-    @FXML
-    private TextField emaddtf;
-
-    @FXML
-    private TextField fnametf;
-
-    @FXML
     private AnchorPane hamburgerPane;
 
     @FXML
@@ -60,9 +72,6 @@ public class P_AccountController {
 
     @FXML
     private Button homeBtn;
-
-    @FXML
-    private TextField lnametf;
 
     @FXML
     private AnchorPane mainPane;
@@ -74,41 +83,46 @@ public class P_AccountController {
     private Text nameLabel;
 
     @FXML
-    private Text nameLabel1;
+    private Text TITLE1;
 
     @FXML
-    private Text nameLabel11;
+    private Text TITLE2;
 
     @FXML
-    private Text nameLabel111;
+    private Text lname;
 
     @FXML
-    private Text nameLabel1111;
+    private Text fname;
 
     @FXML
-    private Text nameLabel11111;
+    private Text number;
 
     @FXML
-    private Text nameLabel111111;
+    private Text emadd;
 
     @FXML
-    private Text nameLabel1111111;
+    private Text shift;
 
     @FXML
-    private Text nameLabel1112;
+    private Text dayoff;
 
     @FXML
-    private Text nameLabel11121;
+    private TableView<?> ShiftRequestView;
 
     @FXML
-    private TextField numtf;
-
+    private TableColumn<?, ?> srcol;
     @FXML
-    private PasswordField passtf;
-
+    private TableColumn<?, ?> statuscol;
     @FXML
-    private TextField shifttf;
+    private TableColumn<?, ?> shiftID;
+    @FXML
+    private TableColumn<?, ?> requestdatecol;
+    @FXML
+    private TableColumn<?, ?> newshiftID;
+     @FXML
+    private TableColumn<?, ?> desccol;
 
+    
     private Alert a = new Alert(AlertType.NONE);
 
      @FXML

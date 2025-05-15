@@ -12,8 +12,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import util.GetCurrentEmployeeID;
-import util.SceneLoader;
 
 public class P_AddProductController {
 
@@ -41,7 +41,8 @@ public class P_AddProductController {
 
     @FXML
     void BackBttnAction(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Products.fxml");
+        Stage currentStage = (Stage) BackBttn.getScene().getWindow();
+        currentStage.close();
     }
 
     @FXML
@@ -53,7 +54,7 @@ public class P_AddProductController {
             a.show();
         } else {
             addMedicine(mednametf.getText(), medcattf.getText(), descTextArea.getText());
-            SceneLoader.loadScene(event, "/View/P_Products.fxml");
+
         }
     }
 
@@ -94,6 +95,13 @@ public class P_AddProductController {
                     a.setContentText("Product added successfully.");
                     a.setHeaderText("Success");
                     a.showAndWait();
+
+                    if (refreshCallback != null) {
+                        refreshCallback.run(); // Trigger the refresh
+                    }
+                    // Close the current stage
+                    Stage currentStage = (Stage) addmedBtn.getScene().getWindow();
+                    currentStage.close();
                 } else {
                     a.setAlertType(AlertType.ERROR);
                     a.setContentText("Failed to add product.");

@@ -1,10 +1,12 @@
 package Controllers.NURSE;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import Controllers.ViewState;
 import Models.NurseModel;
@@ -16,13 +18,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
 import util.SceneLoader;
@@ -45,6 +55,9 @@ public class N_DashboardController {
     private Button homeBtn;
 
     @FXML
+    private Button LogoutBtn;
+
+    @FXML
     private TableView<NurseModel> StkInTableView;
 
     @FXML
@@ -62,7 +75,9 @@ public class N_DashboardController {
     private Text nameLabel;
 
     @FXML
-    private Button closeBtn, minimizeBtn;
+    private Button closeBtn, minimizeBtn, AddPatientDataBtn;
+
+    private Alert a = new Alert(AlertType.INFORMATION);
 
     @FXML
     public void initialize() {
@@ -111,7 +126,7 @@ public class N_DashboardController {
         }
     }
 
-     @FXML
+    @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
         double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
@@ -130,6 +145,33 @@ public class N_DashboardController {
     }
 
     @FXML
+    private void AddPatientDataBtnAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_CreateNewRecord.fxml"));
+            Parent root = loader.load();
+            // Create a new pop-up stage
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Update Account");
+            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+            Scene scene = new Scene(root);
+            popupStage.setScene(scene);
+            popupStage.setResizable(false); // Optional: make it fixed size
+            popupStage.showAndWait(); // Wait until this window is closed (optional)
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open update form: " + e.getMessage());
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @FXML
     void homeBtnPressed(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
     }
@@ -139,19 +181,57 @@ public class N_DashboardController {
         SceneLoader.loadScene(event, "/View/N_Account.fxml");
     }
 
-
-     @FXML
+    @FXML
     private void closeAction(ActionEvent Action) {
         Stage currentStage = (Stage) closeBtn.getScene().getWindow();
         currentStage.close();
     }
 
-      @FXML
+    @FXML
     private void minimizeAction(ActionEvent event) {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.setIconified(true);
     }
 
-    
+    @FXML
+    void LogoutBtnAction(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Logout");
+        alert.setHeaderText("Are you sure you want to log out?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoginPage.fxml"));
+                Parent root = loader.load();
+
+                Stage loginStage = new Stage();
+                loginStage.setScene(new Scene(root));
+                loginStage.initStyle(StageStyle.UNDECORATED);
+                loginStage.setResizable(false);
+                loginStage.show();
+
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading page.");
+                a.show();
+            }
+        }
+    }
+
+    @FXML
+    void movetoProductBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_PatientData.fxml");
+    }
+
+    @FXML
+    void movetoStocksBtnPressed(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
+    }
 
 }

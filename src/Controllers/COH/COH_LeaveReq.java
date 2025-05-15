@@ -34,7 +34,7 @@ public class COH_LeaveReq {
 
     @FXML
     private Button FilterBttn, LogoutBtn, StkOutBttn, accountBtn, clipboardBtn, closeBtn, crossBtn,
-            hamburgermenuBtn, homeBtn, minimizeBtn, recordsBtn, ShiftReqBtn;
+            hamburgermenuBtn, homeBtn, minimizeBtn, recordsBtn, ShiftReqBtn, LeaveReqBtn;
 
     @FXML
     private TextField SearchButton;

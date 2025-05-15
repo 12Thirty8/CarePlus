@@ -94,7 +94,7 @@
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="addstkBtn" mnemonicParsing="false" onAction="#addstkBtnPressed" prefHeight="34.0" prefWidth="265.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Save Changes" textFill="WHITE">
+                  <Button fx:id="addstkBtn" mnemonicParsing="false" onAction="#addstkBtnPressed" prefHeight="34.0" prefWidth="265.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Add Stock" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>

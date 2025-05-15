@@ -406,7 +406,7 @@ public class P_StocksController implements Initializable {
 
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Schedule.fxml");
+        SceneLoader.loadScene(event, "/View/P_Account.fxml");
     }
 
     @FXML
@@ -518,6 +518,13 @@ public class P_StocksController implements Initializable {
 
     @FXML
     private void updatebtnPressed(ActionEvent event) {
+        // Check if a row is selected
+        StocksModel selectedRow = StockTable.getSelectionModel().getSelectedItem();
+        if (selectedRow == null) {
+            showAlert("Error", "Please select a row to update.");
+            return;
+        }
+
         String batchId = batchidtf.getText();
         String medId = medidtf.getText();
         String quantity = qtytf.getText();

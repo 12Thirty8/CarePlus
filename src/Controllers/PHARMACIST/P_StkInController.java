@@ -71,7 +71,6 @@ public class P_StkInController implements Initializable {
 
     private Alert a = new Alert(AlertType.NONE);
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         sintf.setText(String.valueOf(employeeId));
@@ -85,19 +84,34 @@ public class P_StkInController implements Initializable {
     }
 
     @FXML
-    void addstkBtnPressed(ActionEvent event) throws NumberFormatException, SQLException {
+    void addstkBtnPressed(ActionEvent event) {
         String medId = medidtf.getText();
-        Integer quantity = Integer.parseInt(qtytf.getText());
+        String qtyText = qtytf.getText();
         String dose = dosetf.getText();
         String expDate = expdate.getValue() != null ? expdate.getValue().toString() : null;
         String stockinDate = java.time.LocalDate.now().toString();
 
-        if (medId.isEmpty() || dose.isEmpty() || quantity <= 0 || expDate == null) {
-            showAlert("Error", "Please fill in all fields correctly.");
+        if (nametf.getValue() == null || medId == null || medId.isEmpty() || dose == null || dose.isEmpty()
+                || qtyText == null || qtyText.isEmpty() || expDate == null) {
+            showAlert("Error", "Please fill in all fields.");
             return;
         }
-        addStock(Integer.parseInt(medId), quantity, dose, expDate, employeeId,
-                stockinDate, 7);
+
+        int quantity;
+        int medIdInt;
+        try {
+            medIdInt = Integer.parseInt(medId);
+            quantity = Integer.parseInt(qtyText);
+            if (quantity <= 0) {
+                showAlert("Error", "Quantity must be greater than zero.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Error", "Quantity must be valid numbers.");
+            return;
+        }
+
+        addStock(medIdInt, quantity, dose, expDate, employeeId, stockinDate, 7);
     }
 
     private void loadMedicineNames() {
