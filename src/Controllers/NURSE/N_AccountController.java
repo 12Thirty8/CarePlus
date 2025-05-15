@@ -112,29 +112,28 @@ public class N_AccountController {
 
     private Alert a = new Alert(AlertType.NONE);
 
-     @FXML
+    @FXML
     public void initialize() {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
     }
 
-
     @FXML
     void ChangeShiftBtnAction(ActionEvent event) {
         try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ChangeShift.fxml"));
-                Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ChangeShift.fxml"));
+            Parent root = loader.load();
 
-                Stage loginStage = new Stage();
-                loginStage.setScene(new Scene(root));
-                loginStage.setResizable(false);
-                loginStage.show();
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.setResizable(false);
+            loginStage.show();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                a.setAlertType(AlertType.ERROR);
-                a.setContentText("Error loading page.");
-                a.show();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
+        }
     }
 
     @FXML
@@ -158,6 +157,7 @@ public class N_AccountController {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.setIconified(true);
     }
+
     @FXML
     void LogOutActionBttn(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -188,6 +188,7 @@ public class N_AccountController {
             }
         }
     }
+
     @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
