@@ -304,7 +304,22 @@ public class P_ProductsController implements Initializable {
 
     @FXML
     void addstockBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_AddProduct.fxml");
+        try{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_AddProduct.fxml"));
+                Parent root = loader.load();
+
+                Stage loginStage = new Stage();
+                loginStage.setScene(new Scene(root));
+                loginStage.setResizable(false);
+                loginStage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                a.setAlertType(AlertType.ERROR);
+                a.setContentText("Error loading page.");
+                a.show();
+            }
+
     }
 
     @FXML
