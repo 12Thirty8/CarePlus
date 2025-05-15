@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="762.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_AddPatientRecord">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="762.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_UpdateData">
    <children>
       <Pane layoutX="11.0" layoutY="11.0" prefHeight="763.0" prefWidth="740.0" style="-fx-background-color: White; -fx-background-radius: 12;">
          <children>
@@ -44,7 +44,7 @@
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="savebtn" layoutX="364.0" layoutY="643.0" mnemonicParsing="false" onAction="#SaveChangesAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Submit Record" textFill="WHITE">
+                  <Button fx:id="Updatebtn" layoutX="364.0" layoutY="643.0" mnemonicParsing="false" onAction="#UpdatebtnAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Update Record" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
@@ -301,7 +301,7 @@
                   <ComboBox fx:id="gendertf" layoutX="133.0" layoutY="126.0" prefHeight="25.0" prefWidth="100.0" />
                </children>
             </Pane>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="6.0" prefHeight="44.0" prefWidth="368.0" text="Add Patient Data">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="6.0" prefHeight="44.0" prefWidth="368.0" text="Edit Patient Data">
                <font>
                   <Font name="Gordita-Bold" size="21.0" />
                </font>

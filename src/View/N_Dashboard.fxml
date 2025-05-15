@@ -109,7 +109,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="80.0" prefWidth="107.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button fx:id="LogoutBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Log Out" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
+                              <Button fx:id="LogoutBtn" alignment="TOP_LEFT" ellipsisString="" graphicTextGap="44.0" layoutX="28.0" layoutY="13.0" minHeight="54.0" minWidth="52.0" mnemonicParsing="false" onAction="#LogoutBtnAction" prefHeight="54.0" prefWidth="175.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Log Out" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0">
                                  <font>
                                     <Font name="Gordita-Bold" size="15.0" />
                                  </font>
@@ -137,7 +137,12 @@
             </AnchorPane>
             <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
-                  <StackPane layoutX="158.0" layoutY="5.0" prefHeight="86.0" prefWidth="406.0" AnchorPane.leftAnchor="158.0" AnchorPane.rightAnchor="130.79999999999995">
+                  <Button layoutX="531.0" layoutY="232.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Update" textFill="WHITE" AnchorPane.rightAnchor="93.8">
+                     <font>
+                        <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <StackPane layoutX="256.8" layoutY="19.0" AnchorPane.leftAnchor="256.8" AnchorPane.rightAnchor="256.8">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Records" wrappingWidth="265.5820007324219">
                            <font>
@@ -185,12 +190,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </TableView>
-                  <Button layoutX="607.0" layoutY="232.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Archive" textFill="WHITE">
+                  <Button layoutX="607.0" layoutY="232.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Archive" textFill="WHITE" AnchorPane.rightAnchor="17.799999999999955">
                      <font>
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button layoutX="531.0" layoutY="232.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Update" textFill="WHITE">
+                  <Button fx:id="AddPatientDataBtn" layoutX="456.0" layoutY="232.0" mnemonicParsing="false" onAction="#AddPatientDataBtnAction" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Add" textFill="WHITE" AnchorPane.rightAnchor="168.8">
                      <font>
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
