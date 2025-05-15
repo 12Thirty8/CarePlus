@@ -1,11 +1,19 @@
 package Controllers.COH;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import Controllers.ViewState;
+import Models.ChiefDashboardModel;
+import Models.ProductsModel;
 import db.DatabaseConnect;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import util.SceneLoader;
 
 import javafx.event.ActionEvent;
@@ -19,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -28,9 +37,30 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.util.Duration;
 
 public class COH_DashboardController {
+
+    @FXML
+    private TableView<ChiefDashboardModel> ChiefDashboardTableView;
+
+    @FXML
+    private TableColumn<ChiefDashboardModel, Integer> idcol;
+
+    @FXML
+    private TableColumn<ChiefDashboardModel, Integer> recordcol;
+    @FXML
+    private TableColumn<ChiefDashboardModel, Integer> listcol;
+    @FXML
+    private TableColumn<ChiefDashboardModel, String> encbycol;
+    @FXML
+    private TableColumn<ChiefDashboardModel, Date> reqcol;
+    @FXML
+    private TableColumn<ChiefDashboardModel, Integer> statcol;
+
+    ObservableList<ChiefDashboardModel> rows = FXCollections.observableArrayList();
 
     @FXML
     private AnchorPane hamburgerPane;
@@ -40,10 +70,7 @@ public class COH_DashboardController {
             ScheduleBttn, ScheduleMenuBttn, LogOutBttn, closeBtn;
 
     @FXML
-    private TableView<?> StkInTableView;
-
-    @FXML
-    private Label TitleText;
+    private Label TitleText, requestCounter;
 
     @FXML
     private Text nameLabel;
@@ -61,15 +88,104 @@ public class COH_DashboardController {
 
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
 
+        setupTableColumns();
+        refreshChiefDashboardTable();
+        setTotalRequestCounter();
+
         fadeInNode(TitleText, 0);
         fadeInNode(NamePanel, 200);
         fadeInNode(TotalRequestPanel, 200);
         fadeInNode(AreaChartPanel, 300);
-        fadeInNode(StkInTableView, 400);
+        fadeInNode(ChiefDashboardTableView, 400);
 
         String COHName = DatabaseConnect.getCOHName();
         nameLabel.setText(COHName != null ? COHName : "Name not found");
 
+    }
+
+    private void setupTableColumns() {
+        idcol.setCellValueFactory(new PropertyValueFactory<>("requestId"));
+        recordcol.setCellValueFactory(new PropertyValueFactory<>("recordId"));
+        listcol.setCellValueFactory(new PropertyValueFactory<>("listId"));
+        encbycol.setCellValueFactory(new PropertyValueFactory<>("encodedBy"));
+        reqcol.setCellValueFactory(new PropertyValueFactory<>("requestDate"));
+        statcol.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+    }
+
+    private void refreshChiefDashboardTable() {
+        rows.clear();
+        String sql = """
+                SELECT
+                  r.request_id,
+                  r.record_id,
+                  rl.reqlist_id           AS list_id,
+                  CONCAT(COALESCE(e.f_name, ''), ' ', COALESCE(e.l_name, '')) AS encoded_by,
+                  r.request_date,
+                  r.status
+                FROM request r
+                JOIN requestlist rl
+                  ON r.request_id = rl.req_id
+                JOIN employee e
+                  ON r.encoded_by = e.employee_id
+                ORDER BY r.request_date DESC
+                """;
+
+        try (Connection conn = DatabaseConnect.connect();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+            // DEBUG: see if there's any rows at all
+            if (!rs.isBeforeFirst()) {
+                System.out.println("[DEBUG] No rows returned from SQL!");
+            } else {
+                System.out.println("[DEBUG] Rows present!");
+            }
+
+            while (rs.next()) {
+                rows.add(new ChiefDashboardModel(
+                        rs.getInt("request_id"),
+                        rs.getInt("record_id"),
+                        rs.getInt("list_id"),
+                        rs.getString("encoded_by"),
+                        rs.getDate("request_date"),
+                        rs.getInt("status")));
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading rows.");
+            a.show();
+        }
+
+        ChiefDashboardTableView.setItems(rows);
+    }
+
+    private void setTotalRequestCounter() {
+        String sql = """
+                SELECT COUNT(DISTINCT request_id) AS total_request
+                FROM request;
+                """;
+
+        try (Connection conn = DatabaseConnect.connect();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                int total = rs.getInt("total_request");
+                // assuming requestCounter is a Label
+                requestCounter.setText(Integer.toString(total));
+            } else {
+                requestCounter.setText("0");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error setting total request count:\n" + ex.getMessage());
+            a.show();
+        }
     }
 
     @FXML

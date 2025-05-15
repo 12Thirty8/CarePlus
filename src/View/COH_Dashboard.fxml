@@ -205,7 +205,7 @@
                         </AnchorPane>
                      </children>
                   </StackPane>
-                  <TableView fx:id="StkInTableView" layoutX="24.0" layoutY="218.0" prefHeight="388.0" prefWidth="666.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="218.0">
+                  <TableView fx:id="ChiefDashboardTableView" layoutX="24.0" layoutY="218.0" prefHeight="388.0" prefWidth="666.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="218.0">
                      <columns>
                         <TableColumn fx:id="idcol" editable="false" maxWidth="80.0" minWidth="80.0" text="Request ID" />
                         <TableColumn fx:id="recordcol" editable="false" maxWidth="164.80003356933594" minWidth="85.0" prefWidth="151.1999969482422" text="Record ID" />
@@ -232,7 +232,7 @@
                         <AnchorPane fx:id="TotalRequestPanel" prefHeight="115.0" prefWidth="150.0" style="-fx-background-radius: 15; -fx-background-color: EFEFEF;">
                            <children>
                               <StackPane layoutX="20.0" layoutY="30.0" />
-                              <Label alignment="CENTER" layoutX="32.0" layoutY="58.0" prefHeight="44.0" prefWidth="70.0" text="0">
+                              <Label fx:id="requestCounter" alignment="CENTER" layoutX="32.0" layoutY="58.0" prefHeight="44.0" prefWidth="70.0" text="0">
                                  <font>
                                     <Font name="Gordita-Bold" size="20.0" />
                                  </font>
