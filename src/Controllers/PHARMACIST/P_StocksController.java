@@ -518,6 +518,13 @@ public class P_StocksController implements Initializable {
 
     @FXML
     private void updatebtnPressed(ActionEvent event) {
+        // Check if a row is selected
+        StocksModel selectedRow = StockTable.getSelectionModel().getSelectedItem();
+        if (selectedRow == null) {
+            showAlert("Error", "Please select a row to update.");
+            return;
+        }
+
         String batchId = batchidtf.getText();
         String medId = medidtf.getText();
         String quantity = qtytf.getText();
