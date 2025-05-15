@@ -406,7 +406,7 @@ public class P_StocksController implements Initializable {
 
     @FXML
     void clipboardBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/P_Schedule.fxml");
+        SceneLoader.loadScene(event, "/View/P_Account.fxml");
     }
 
     @FXML
