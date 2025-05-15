@@ -30,7 +30,7 @@ public class COH_ShiftReq {
 
     @FXML
     private Button FilterBttn, LogoutBtn, accountBtn, clipboardBtn, closeBtn, crossBtn, hamburgermenuBtn, homeBtn,
-            minimizeBtn, recordsBtn, LeaveReqBtn;
+            minimizeBtn, recordsBtn, LeaveReqBtn, ShiftReqBtn;
 
     @FXML
     private TextField SearchButton;

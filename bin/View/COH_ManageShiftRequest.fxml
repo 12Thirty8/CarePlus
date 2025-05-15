@@ -221,11 +221,6 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Button fx:id="LeaveReqBtn" layoutX="525.0" layoutY="207.0" mnemonicParsing="false" onAction="#LeaveReqBtnAction" prefHeight="26.0" prefWidth="128.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Leave Request" textFill="WHITE" AnchorPane.rightAnchor="37.39999999999998">
-                     <font>
-                        <Font name="Gordita-Bold" size="12.0" />
-                     </font>
-                  </Button>
                </children>
             </AnchorPane>
          </children>
@@ -248,5 +243,23 @@
             </ImageView>
          </graphic>
       </Button>
+      <AnchorPane layoutX="261.0" layoutY="11.0" prefHeight="36.0" prefWidth="121.0" style="-fx-background-color: white; -fx-background-radius: 10;" AnchorPane.leftAnchor="261.0">
+         <children>
+            <Button fx:id="ShiftReqBtn" layoutX="37.0" layoutY="2.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="71.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Shift Request" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+               <font>
+                  <Font name="Gordita-Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="390.0" layoutY="18.0" prefHeight="36.0" prefWidth="128.0" style="-fx-background-color: white; -fx-background-radius: 10;" AnchorPane.leftAnchor="390.0">
+         <children>
+            <Button fx:id="LeaveReqBtn" layoutX="37.0" layoutY="2.0" mnemonicParsing="false" onAction="#LeaveReqBtnAction" prefHeight="28.0" prefWidth="71.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Leave Request" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+               <font>
+                  <Font name="Gordita-Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
