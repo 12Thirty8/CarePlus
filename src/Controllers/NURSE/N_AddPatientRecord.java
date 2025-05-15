@@ -1,23 +1,37 @@
-    package Controllers.NURSE;
+package Controllers.NURSE;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+import db.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import util.GetCurrentEmployeeID;
 
 public class N_AddPatientRecord {
 
     @FXML
-    private Button BackBttn;
+    private Button BackBttn, cancelbtn, savebtn;
 
     @FXML
-    private TextField addresstf;
-
-    @FXML
-    private TextField agetf;
+    private TextField addresstf, agetf, birthplacetf, contactnotf, e_addresstf, e_contactnotf,
+            e_fullnametf, em_addresstf, em_contacnotf, em_fullnametf, em_relation, emailaddtf,
+            f_addresstf, f_contactnotf, f_fullnametf, firstnametf, gendertf, lastnametf,
+            m_addresstf, m_contactnotf, m_fullnametf, middlenametf, nationalitytf, occupationtf,
+            religiontf;
 
     @FXML
     private TextArea allergicarea;
@@ -26,96 +40,151 @@ public class N_AddPatientRecord {
     private DatePicker birthdate;
 
     @FXML
-    private TextField birthplacetf;
+    private ComboBox<String> patcatcombobox;
+
+    private Map<String, Integer> patientCategoryMap = new HashMap<>();
 
     @FXML
-    private Button cancelbtn;
+    public void initialize() {
+        loadPatientCategories();
+    }
 
-    @FXML
-    private TextField contactnotf;
+    private void loadPatientCategories() {
+        try (Connection conn = DatabaseConnect.connect()) {
+            String sql = "SELECT patient_category_id, category_name FROM patient_category";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
 
-    @FXML
-    private TextField e_addresstf;
+            while (rs.next()) {
+                int id = rs.getInt("patient_category_id");
+                String name = rs.getString("category_name");
 
-    @FXML
-    private TextField e_contactnotf;
+                patientCategoryMap.put(name, id);
+                patcatcombobox.getItems().add(name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-    @FXML
-    private TextField e_fullnametf;
+    private void clearForm() {
+        firstnametf.clear();
+        lastnametf.clear();
+        middlenametf.clear();
+        agetf.clear();
+        gendertf.clear();
+        emailaddtf.clear();
+        birthdate.setValue(null);
+        addresstf.clear();
+        birthplacetf.clear();
+        nationalitytf.clear();
+        religiontf.clear();
+        occupationtf.clear();
+        contactnotf.clear();
 
-    @FXML
-    private TextField em_addresstf;
+        f_fullnametf.clear();
+        f_addresstf.clear();
+        f_contactnotf.clear();
 
-    @FXML
-    private TextField em_contacnotf;
+        m_fullnametf.clear();
+        m_addresstf.clear();
+        m_contactnotf.clear();
 
-    @FXML
-    private TextField em_fullnametf;
+        em_fullnametf.clear();
+        em_addresstf.clear();
+        em_contacnotf.clear();
 
-    @FXML
-    private TextField em_relation;
+        allergicarea.clear();
+        e_fullnametf.clear();
+        e_contactnotf.clear();
+        e_addresstf.clear();
+        em_relation.clear();
 
-    @FXML
-    private TextField emailaddtf;
-
-    @FXML
-    private TextField f_addresstf;
-
-    @FXML
-    private TextField f_contactnotf;
-
-    @FXML
-    private TextField f_fullnametf;
-
-    @FXML
-    private TextField firstnametf;
-
-    @FXML
-    private TextField gendertf;
-
-    @FXML
-    private TextField lastnametf;
-
-    @FXML
-    private TextField m_addresstf;
-
-    @FXML
-    private TextField m_contactnotf;
-
-    @FXML
-    private TextField m_fullnametf;
-
-    @FXML
-    private TextField middlenametf;
-
-    @FXML
-    private TextField nationalitytf;
-
-    @FXML
-    private TextField occupationtf;
-
-    @FXML
-    private ComboBox<?> patcatcombobox;
-
-    @FXML
-    private TextField religiontf;
-
-    @FXML
-    private Button savebtn;
+        patcatcombobox.getSelectionModel().clearSelection();
+    }
 
     @FXML
     void BackBttnAction(ActionEvent event) {
-
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     void CancelButtonAction(ActionEvent event) {
-
+        clearForm();
     }
 
     @FXML
     void SaveChangesAction(ActionEvent event) {
+        try (Connection conn = DatabaseConnect.connect()) {
+            String sql = """
+                        INSERT INTO patient (
+                            f_name, l_name, m_name, age, gender, email, dob, complete_address, birthplace,
+                            nationality, religion, occupation, contact_no, patient_category,
+                            father_name, father_address, father_contact_no,
+                            mother_name, mother_address, mother_contact_no,
+                            employer_name, employer_address, employer_contact_no,
+                            allergic_to, emergency_contact_name, emergency_contact_no,
+                            emergency_contact_address, relation_to_the_patient,
+                            encoded_by
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """;
 
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, firstnametf.getText());
+            stmt.setString(2, lastnametf.getText());
+            stmt.setString(3, middlenametf.getText());
+            stmt.setInt(4, Integer.parseInt(agetf.getText()));
+            stmt.setString(5, gendertf.getText());
+            stmt.setString(6, emailaddtf.getText());
+            stmt.setDate(7, Date.valueOf(birthdate.getValue()));
+            stmt.setString(8, addresstf.getText());
+            stmt.setString(9, birthplacetf.getText());
+            stmt.setString(10, nationalitytf.getText());
+            stmt.setString(11, religiontf.getText());
+            stmt.setString(12, occupationtf.getText());
+            stmt.setString(13, contactnotf.getText());
+            stmt.setString(14, patcatcombobox.getValue().toString());
+
+            stmt.setString(15, f_fullnametf.getText());
+            stmt.setString(16, f_addresstf.getText());
+            stmt.setString(17, f_contactnotf.getText());
+
+            stmt.setString(18, m_fullnametf.getText());
+            stmt.setString(19, m_addresstf.getText());
+            stmt.setString(20, m_contactnotf.getText());
+
+            stmt.setString(21, em_fullnametf.getText());
+            stmt.setString(22, em_addresstf.getText());
+            stmt.setString(23, em_contacnotf.getText());
+
+            stmt.setString(24, allergicarea.getText());
+            stmt.setString(25, e_fullnametf.getText());
+            stmt.setString(26, e_contactnotf.getText());
+            stmt.setString(27, e_addresstf.getText());
+            stmt.setString(28, em_relation.getText());
+
+            // Get employee ID of currently logged-in user
+            int currentEmployeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+            stmt.setInt(29, currentEmployeeId);
+
+            stmt.executeUpdate();
+            showAlert("Success", "Patient added successfully.");
+            clearForm();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Database error: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 }

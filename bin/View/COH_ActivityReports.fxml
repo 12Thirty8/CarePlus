@@ -210,10 +210,13 @@
                   </Button>
                   <TableView fx:id="StkInTableView" editable="true" layoutX="17.0" layoutY="250.0" prefHeight="324.0" prefWidth="778.0" stylesheets="@../Styles/table.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="17.000000000000114" AnchorPane.rightAnchor="18.40000000000009" AnchorPane.topAnchor="250.0">
                      <columns>
-                        <TableColumn prefWidth="100.7999866604805" text="Record ID" />
-                        <TableColumn prefWidth="280.00000762939453" text="Activity" />
-                        <TableColumn minWidth="8.79998779296875" prefWidth="151.99993896484375" text="Emmployee ID" />
-                        <TableColumn prefWidth="170.40008544921875" text="Date &amp; Time" />
+                        <TableColumn fx:id="idColumn" prefWidth="70.40001940727234" text="Act ID" />
+                        <TableColumn fx:id="actionColumn" prefWidth="98.39995574951172" text="Action" />
+                        <TableColumn fx:id="tableNameColumn" minWidth="8.79998779296875" prefWidth="103.20011901855469" text="Table" />
+                        <TableColumn fx:id="oldDataColumn" prefWidth="154.40000915527344" text="Old data" />
+                        <TableColumn fx:id="newDataColumn" prefWidth="168.80001831054688" text="New Data" />
+                        <TableColumn fx:id="changedByColumn" prefWidth="85.5999755859375" text="Changed By" />
+                        <TableColumn fx:id="changedAtColumn" prefWidth="97.599853515625" text="Date &amp; Time" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
