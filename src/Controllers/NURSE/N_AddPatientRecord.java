@@ -127,7 +127,7 @@ public class N_AddPatientRecord {
                             allergic_to, emergency_contact_name, emergency_contact_no,
                             emergency_contact_address, relation_to_the_patient,
                             encoded_by
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """;
 
             PreparedStatement stmt = conn.prepareStatement(sql);
