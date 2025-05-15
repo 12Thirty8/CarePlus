@@ -18,8 +18,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -38,7 +38,7 @@ public class N_AccountController {
     @FXML
     private Label shifttf;
 
-     @FXML
+    @FXML
     private Label dayofftf;
 
     @FXML
@@ -104,7 +104,21 @@ public class N_AccountController {
     @FXML
     private Text dayoff;
 
+    @FXML
+    private TableView<?> ShiftRequestView;
 
+    @FXML
+    private TableColumn<?, ?> srcol;
+    @FXML
+    private TableColumn<?, ?> statuscol;
+    @FXML
+    private TableColumn<?, ?> shiftID;
+    @FXML
+    private TableColumn<?, ?> requestdatecol;
+    @FXML
+    private TableColumn<?, ?> newshiftID;
+    @FXML
+    private TableColumn<?, ?> desccol;
 
     private Alert a = new Alert(AlertType.NONE);
 
