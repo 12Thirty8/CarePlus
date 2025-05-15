@@ -1,5 +1,6 @@
 package Controllers.NURSE;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,12 +17,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
@@ -62,7 +68,7 @@ public class N_DashboardController {
     private Text nameLabel;
 
     @FXML
-    private Button closeBtn, minimizeBtn;
+    private Button closeBtn, minimizeBtn, AddPatientDataBtn;
 
     @FXML
     public void initialize() {
@@ -127,6 +133,33 @@ public class N_DashboardController {
     @FXML
     private void crossBtnAction(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/N_RequestMonitor.fxml");
+    }
+
+    @FXML
+    private void AddPatientDataBtnAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_CreateNewRecord.fxml"));
+            Parent root = loader.load();
+            // Create a new pop-up stage
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Update Account");
+            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+            Scene scene = new Scene(root);
+            popupStage.setScene(scene);
+            popupStage.setResizable(false); // Optional: make it fixed size
+            popupStage.showAndWait(); // Wait until this window is closed (optional)
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open update form: " + e.getMessage());
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
