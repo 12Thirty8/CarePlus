@@ -180,7 +180,7 @@ public class P_ProductsController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Delete");
         alert.setHeaderText("Delete this account?");
-        alert.setContentText("Are you sure you want to delete: " + item + "?");
+        alert.setContentText("Are you sure you want to delete: " + item.getName() + " (ID: " + item.getId() + ")?");
 
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
@@ -189,8 +189,8 @@ public class P_ProductsController implements Initializable {
                     ProductTable.getItems().remove(item); // Remove from TableView
                     showAlert("Success", "Product deleted successfully.");
                 } catch (SQLException e) {
-                    showAlert("Error", "Failed to delete item: " + e.getMessage());
-                    e.printStackTrace();
+                    showAlert("Error",
+                            "This product is used in a transaction and cannot be removed or its name be modified.");
                 }
             }
         });
@@ -304,21 +304,24 @@ public class P_ProductsController implements Initializable {
 
     @FXML
     void addstockBtnPressed(ActionEvent event) {
-        try{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_AddProduct.fxml"));
-                Parent root = loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_AddProduct.fxml"));
+            Parent root = loader.load();
 
-                Stage loginStage = new Stage();
-                loginStage.setScene(new Scene(root));
-                loginStage.setResizable(false);
-                loginStage.show();
+            P_AddProductController controller = loader.getController();
+            controller.setRefreshCallback(() -> refreshEmployeeTable());
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                a.setAlertType(AlertType.ERROR);
-                a.setContentText("Error loading page.");
-                a.show();
-            }
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.setResizable(false);
+            loginStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
+        }
 
     }
 
@@ -388,44 +391,68 @@ public class P_ProductsController implements Initializable {
     @FXML
     void updateBtnPressed(ActionEvent event) {
         ProductsModel selectedItem = ProductTable.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            String name = nametf.getValue();
-            String category = cattf.getText();
-            String description = descta.getText();
+        String name = nametf.getValue();
+        String category = cattf.getText();
+        String description = descta.getText();
 
-            // Get the current employee ID from the session
-            int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+        // Field validation
+        // Only validate selection if fields are empty (i.e., user hasn't edited fields
+        // yet)
+        if ((name == null || name.trim().isEmpty()) &&
+                (category == null || category.trim().isEmpty()) &&
+                (description == null || description.trim().isEmpty())) {
 
-            String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
-            String updateMedicineQuery = "UPDATE medicine SET med_name = ?, med_cat = ?, med_desc = ? WHERE med_id = ?";
-            try (Connection conn = DatabaseConnect.connect()) {
-
-                // 1. Set the session variable @current_employee_id
-                try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
-                    setStmt.setInt(1, currentEmpId);
-                    setStmt.executeUpdate();
-                }
-
-                try (PreparedStatement pstmt = conn.prepareStatement(updateMedicineQuery)) {
-                    pstmt.setString(1, name);
-                    pstmt.setString(2, category);
-                    pstmt.setString(3, description);
-                    pstmt.setInt(4, selectedItem.getId());
-                    pstmt.executeUpdate();
-
-                    showAlert("Success", "Product updated successfully.");
-                    refreshEmployeeTable();
-
-                    pstmt.close();
-                    conn.close();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                showAlert("Error", "Failed to update product: " + e.getMessage());
-            }
-        } else {
             showAlert("Error", "Please select a product to update.");
+            return;
+        }
+        if (name == null || name.trim().isEmpty()) {
+            showAlert("Error", "Product name cannot be empty.");
+            return;
+        }
+        if (category == null || category.trim().isEmpty()) {
+            showAlert("Error", "Category cannot be empty.");
+            return;
+        }
+        if (description == null || description.trim().isEmpty()) {
+            showAlert("Error", "Description cannot be empty.");
+            return;
+        }
+
+        // Get the current employee ID from the session
+        int currentEmpId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
+
+        String setEmployeeIdQuery = "SET @current_employee_id = ?"; // Set session variable
+        String updateMedicineQuery = "UPDATE medicine SET med_name = ?, med_cat = ?, med_desc = ? WHERE med_id = ?";
+        try (Connection conn = DatabaseConnect.connect()) {
+
+            // 1. Set the session variable @current_employee_id
+            try (PreparedStatement setStmt = conn.prepareStatement(setEmployeeIdQuery)) {
+                setStmt.setInt(1, currentEmpId);
+                setStmt.executeUpdate();
+            }
+
+            try (PreparedStatement pstmt = conn.prepareStatement(updateMedicineQuery)) {
+                pstmt.setString(1, name);
+                pstmt.setString(2, category);
+                pstmt.setString(3, description);
+                pstmt.setInt(4, selectedItem.getId());
+                pstmt.executeUpdate();
+
+                showAlert("Success", "Product details updated successfully.");
+                refreshEmployeeTable();
+                // Clear the input fields after update
+                nametf.getSelectionModel().clearSelection();
+                medidtf.clear();
+                cattf.clear();
+                descta.clear();
+
+                pstmt.close();
+                conn.close();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to update product: " + e.getMessage());
         }
     }
 }
