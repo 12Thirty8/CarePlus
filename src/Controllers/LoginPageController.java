@@ -25,7 +25,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-//import javafx.stage.StageStyle;
 
 public class LoginPageController {
     public static int dep_id;
