@@ -145,7 +145,15 @@ public class N_AddPatientRecord {
             stmt.setString(11, religiontf.getText());
             stmt.setString(12, occupationtf.getText());
             stmt.setString(13, contactnotf.getText());
-            stmt.setString(14, patcatcombobox.getValue().toString());
+            String selectedCategoryName = patcatcombobox.getValue();
+            Integer selectedCategoryId = patientCategoryMap.get(selectedCategoryName);
+                if (selectedCategoryId != null) {
+                    stmt.setInt(14, selectedCategoryId);
+            } else {
+                    showAlert("Error", "Invalid patient category selected.");
+                    return;
+            }
+
 
             stmt.setString(15, f_fullnametf.getText());
             stmt.setString(16, f_addresstf.getText());
