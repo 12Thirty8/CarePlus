@@ -136,4 +136,30 @@
    -fx-background-color: rgb(198, 198, 198); 
 }
 
+#LeaveReqBtn {
+   -fx-border-color:  white;
+   -fx-background-color:  white;
+   -fx-border-radius: 10;
+   -fx-background-radius: 10;
+    
+}
 
+
+#LeaveReqBtn:hover {
+   -fx-border-color:  rgb(198, 198, 198); 
+   -fx-background-color: rgb(198, 198, 198); 
+}
+
+#ShiftReqBtn {
+   -fx-border-color:  white;
+   -fx-background-color:  white;
+   -fx-border-radius: 10;
+   -fx-background-radius: 10;
+    
+}
+
+
+#ShiftReqBtn:hover {
+   -fx-border-color:  rgb(198, 198, 198); 
+   -fx-background-color: rgb(198, 198, 198); 
+}
