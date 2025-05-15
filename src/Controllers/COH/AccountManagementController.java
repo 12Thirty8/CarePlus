@@ -259,22 +259,21 @@ public class AccountManagementController implements Initializable {
 
     @FXML
     void AddAccountMove(ActionEvent event) {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AddAccount.fxml"));
-            root = loader.load();
-
-            root = FXMLLoader.load(getClass().getResource("/View/COH_AddAccount.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error loading page.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        try{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_AddAccount.fxml"));
+                        Parent root = loader.load();
+                        // Create a new pop-up stage
+                        Stage popupStage = new Stage();
+                        popupStage.setTitle("Update Account");
+                        popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+                        Scene scene = new Scene(root);
+                        popupStage.setScene(scene);
+                        popupStage.setResizable(false); // Optional: make it fixed size
+                        popupStage.showAndWait(); // Wait until this window is closed (optional)
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        showAlert("Error", "Failed to open update form: " + e.getMessage());
+                    }
     }
 
     @FXML
