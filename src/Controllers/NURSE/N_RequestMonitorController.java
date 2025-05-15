@@ -125,6 +125,7 @@ public class N_RequestMonitorController implements Initializable {
 
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+        hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
         setupTableColumns();
         refreshEmployeeTable();
         String nurseName = DatabaseConnect.getNurseName(employeeId);
@@ -317,9 +318,9 @@ public class N_RequestMonitorController implements Initializable {
         ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
     }
 
+    
     @FXML
-    void clipboardBtnPressed(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_Schedule.fxml");
-
+    void accountBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_Account.fxml");
     }
 }
