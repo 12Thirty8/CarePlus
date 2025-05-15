@@ -477,7 +477,7 @@ public class N_PharmacyReq implements Initializable {
     void SubmitBtnAction(ActionEvent event) {
         String recordIdStr = recordidtf.getText();
         if (recordIdStr == null || recordIdStr.isEmpty() || RequestList.isEmpty()) {
-            showAlert("Error", "Please select a patient and add at least one medicine", AlertType.ERROR);
+            showAlert("Error", "Please add at least one medicine", AlertType.ERROR);
             return;
         }
 
