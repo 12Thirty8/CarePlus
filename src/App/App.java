@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.  stage.StageStyle;
+import javafx.stage.StageStyle;
 
 public class App extends Application {
     public void start(Stage primaryStage) {
@@ -15,7 +15,7 @@ public class App extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
             Scene scene = new Scene(root);
-            primaryStage.setScene(scene); 
+            primaryStage.setScene(scene);
             primaryStage.setResizable(true);
             // primaryStage.setMaximized(true);
             primaryStage.initStyle(StageStyle.UNDECORATED);
