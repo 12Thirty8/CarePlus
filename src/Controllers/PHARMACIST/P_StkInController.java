@@ -107,7 +107,7 @@ public class P_StkInController implements Initializable {
                 return;
             }
         } catch (NumberFormatException e) {
-            showAlert("Error", "Medicine ID and Quantity must be valid numbers.");
+            showAlert("Error", "Quantity must be valid numbers.");
             return;
         }
 
