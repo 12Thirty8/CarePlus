@@ -1,13 +1,23 @@
 package Controllers.NURSE;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import Controllers.ViewState;
+import Models.NurseModel;
+import Models.PatientModel;
+import Models.RequestModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,9 +28,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -30,64 +46,171 @@ import util.SceneLoader;
 public class N_PatientDataController {
 
     @FXML
-    private Button AddPatientDataBtn;
-
-    @FXML
-    private Button LogoutBtn;
-
-    @FXML
-    private Button clipboardBtn;
-
-    @FXML
-    private Button closeBtn;
-
-    @FXML
-    private Button crossBtn;
+    private Button AddPatientDataBtn,
+            LogoutBtn,
+            clipboardBtn,
+            closeBtn,
+            crossBtn,
+            hamburgermenuBtn,
+            homeBtn,
+            minimizeBtn,
+            movetoProductBtn,
+            movetoStocksBtn;
 
     @FXML
     private AnchorPane hamburgerPane;
 
     @FXML
-    private Button hamburgermenuBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
     private AnchorPane mainPane;
-
-    @FXML
-    private Button minimizeBtn;
-
-    @FXML
-    private Button movetoProductBtn;
-
-    @FXML
-    private Button movetoStocksBtn;
 
     @FXML
     private Text nameLabel;
 
     @FXML
-    private TableView<?> recordsTableView;
+    private TableColumn<PatientModel, Integer> patientIdColumn;
+
+    @FXML
+    private TableColumn<PatientModel, String> patientLastNameColumn;
+
+    @FXML
+    private TableColumn<PatientModel, String> patientFirstNameColumn;
+
+    @FXML
+    private TableView<PatientModel> patientDataTableView;
+
+    private ObservableList<PatientModel> patientModelObservableList = FXCollections.observableArrayList();
 
     private Alert a = new Alert(AlertType.INFORMATION);
 
-      @FXML
+    @FXML
     public void initialize() {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
+        setupTableColumns();
+        loadPatientData();
+        setupRowContextMenu();
         int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
         String nurseName = DatabaseConnect.getNurseName(employeeId);
         nameLabel.setText(nurseName + ", RN");
 
     }
 
-    @FXML
-    void AddPatientDataBtnAction(ActionEvent event) {
-
+    private void setupTableColumns() {
+        patientIdColumn.setCellValueFactory(new PropertyValueFactory<>("patient_id"));
+        patientLastNameColumn.setCellValueFactory(new PropertyValueFactory<>("last_name"));
+        patientFirstNameColumn.setCellValueFactory(new PropertyValueFactory<>("first_name"));
     }
 
-   @FXML
+    private void loadPatientData() {
+        patientModelObservableList.clear();
+        try {
+            Connection conn = DatabaseConnect.connect();
+            String query = """
+                    SELECT
+                        p.patient_id, p.l_name, p.f_name
+                    FROM patient p
+                    """;
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                patientModelObservableList.add(new PatientModel(
+                        rs.getInt("patient_id"),
+                        rs.getString("l_name"),
+                        rs.getString("f_name")));
+
+            }
+            patientDataTableView.setItems(patientModelObservableList);
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Attaches a right-click context menu to each non-empty row in the patient
+     * table.
+     * The menu has one item: “View Patient Data”, which opens the N_ViewPatientData
+     * popup.
+     */
+    private void setupRowContextMenu() {
+        patientDataTableView.setRowFactory(_ -> {
+            TableRow<PatientModel> row = new TableRow<>();
+            ContextMenu menu = new ContextMenu();
+
+            MenuItem viewItem = new MenuItem("View Patient Data");
+            viewItem.setOnAction(_ -> {
+                PatientModel selected = row.getItem();
+                if (selected != null) {
+                    openViewPatientPopup(selected);
+                }
+            });
+
+            menu.getItems().add(viewItem);
+
+            // only show on non-empty rows
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(menu));
+
+            return row;
+        });
+    }
+
+    private void openViewPatientPopup(PatientModel patient) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_ViewPatientData.fxml"));
+            Parent root = loader.load();
+
+            // grab the controller and pass the selected patient to it
+            N_ViewPatientData ctrl = loader.getController();
+            ctrl.setPatient(patient);
+
+            Stage popup = new Stage(StageStyle.UTILITY);
+            popup.initModality(Modality.WINDOW_MODAL);
+            popup.initOwner(patientDataTableView.getScene().getWindow());
+            popup.setTitle("Patient Details");
+            popup.setScene(new Scene(root));
+            popup.setResizable(false);
+            popup.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Could not open patient view: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void AddPatientDataBtnAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_CreateNewRecord.fxml"));
+            Parent root = loader.load();
+            // Create a new pop-up stage
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Add Patient Data");
+            popupStage.initModality(Modality.WINDOW_MODAL); // Makes it modal
+            Scene scene = new Scene(root);
+            popupStage.setScene(scene);
+            popupStage.setResizable(false); // Optional: make it fixed size
+            popupStage.initOwner(((Node) event.getSource()).getScene().getWindow()); // Set owner to current window
+            popupStage.showAndWait(); // Wait until this window is closed (optional)
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open update form: " + e.getMessage());
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @FXML
     void LogoutBtnAction(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Logout");
@@ -134,7 +257,7 @@ public class N_PatientDataController {
         SceneLoader.loadScene(event, "/View/N_RequestMonitor.fxml");
     }
 
-     @FXML
+    @FXML
     void homeBtnPressed(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
     }
@@ -144,7 +267,6 @@ public class N_PatientDataController {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.setIconified(true);
     }
-
 
     @FXML
     private void toggleHamburgerMenu() {
@@ -168,7 +290,5 @@ public class N_PatientDataController {
     void movetoStocksBtnPressed(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/N_PatientData.fxml");
     }
-
-
 
 }
