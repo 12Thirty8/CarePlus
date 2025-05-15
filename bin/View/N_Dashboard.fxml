@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="941.0" prefHeight="670.0" prefWidth="941.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_DashboardController">
    <children>
       <HBox layoutY="36.0" spacing="7.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="36.0">
          <children>
@@ -137,9 +137,9 @@
             </AnchorPane>
             <AnchorPane fx:id="mainPane" style="-fx-background-color: FFFFFF; -fx-background-radius: 10;" HBox.hgrow="ALWAYS">
                <children>
-                  <StackPane layoutX="256.8" layoutY="19.0" AnchorPane.leftAnchor="256.8" AnchorPane.rightAnchor="256.8">
+                  <StackPane layoutX="158.0" layoutY="5.0" prefHeight="86.0" prefWidth="406.0" AnchorPane.leftAnchor="158.0" AnchorPane.rightAnchor="130.79999999999995">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" wrappingWidth="177.58200073242188">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Records" wrappingWidth="265.5820007324219">
                            <font>
                               <Font name="Gordita-Bold" size="34.0" />
                            </font>
@@ -193,6 +193,20 @@
                   <Button layoutX="531.0" layoutY="232.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Update" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <AnchorPane layoutX="16.0" layoutY="-13.0" prefHeight="29.0" prefWidth="97.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                     <children>
+                        <Button fx:id="movetoStocksBtn" layoutX="37.0" layoutY="2.0" mnemonicParsing="false" onAction="#movetoStocksBtnPressed" prefHeight="28.0" prefWidth="125.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Records" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+                           <font>
+                              <Font name="Gordita-Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <Button fx:id="movetoProductBtn" layoutX="121.0" layoutY="-13.0" mnemonicParsing="false" onAction="#movetoProductBtnPressed" prefHeight="30.0" prefWidth="91.0" stylesheets="@../Styles/pharmacistDashboard.css" text="Data">
+                     <font>
+                        <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
                </children>
