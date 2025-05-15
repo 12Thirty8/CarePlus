@@ -1,7 +1,6 @@
 package Controllers.NURSE;
 
 import Controllers.ViewState;
-import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -13,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import util.GetCurrentEmployeeID;
 
 public class N_PatientRecordsName {
 
@@ -70,7 +68,7 @@ public class N_PatientRecordsName {
 
     }
 
-     @FXML
+    @FXML
     private void toggleHamburgerMenu() {
         Timeline timeline = new Timeline();
         double targetWidth = ViewState.isHamburgerPaneExtended ? 107 : 230;
