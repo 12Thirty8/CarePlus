@@ -51,6 +51,9 @@ public class N_RequestMonitorController implements Initializable {
     private Button newreqBtn;
 
     @FXML
+    private Button updateBtn;
+
+    @FXML
     private Button clipboardBtn;
 
     @FXML
@@ -319,9 +322,13 @@ public class N_RequestMonitorController implements Initializable {
         ViewState.isHamburgerPaneExtended = !ViewState.isHamburgerPaneExtended;
     }
 
-    
     @FXML
     void accountBtnAction(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/N_Account.fxml");
+    }
+
+    @FXML
+    void updateBtnPressed(ActionEvent event) {
+
     }
 }
