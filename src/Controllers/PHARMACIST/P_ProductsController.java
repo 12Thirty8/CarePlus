@@ -304,21 +304,24 @@ public class P_ProductsController implements Initializable {
 
     @FXML
     void addstockBtnPressed(ActionEvent event) {
-        try{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_AddProduct.fxml"));
-                Parent root = loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/P_AddProduct.fxml"));
+            Parent root = loader.load();
 
-                Stage loginStage = new Stage();
-                loginStage.setScene(new Scene(root));
-                loginStage.setResizable(false);
-                loginStage.show();
+            P_AddProductController controller = loader.getController();
+            controller.setRefreshCallback(() -> refreshEmployeeTable());
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                a.setAlertType(AlertType.ERROR);
-                a.setContentText("Error loading page.");
-                a.show();
-            }
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.setResizable(false);
+            loginStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            a.setAlertType(AlertType.ERROR);
+            a.setContentText("Error loading page.");
+            a.show();
+        }
 
     }
 
