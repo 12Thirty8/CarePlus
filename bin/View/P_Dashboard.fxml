@@ -148,12 +148,12 @@
                      <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F3F6FF; -fx-background-radius: 10;">
                            <children>
-                              <Text fx:id="nameLabel" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                              <Text fx:id="nameLabel" layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                                  <font>
                                     <Font name="Gordita-Regular" size="24.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="14.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacist">
+                              <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacist">
                                  <font>
                                     <Font name="Gordita-Regular" size="12.0" />
                                  </font>
