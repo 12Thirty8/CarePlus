@@ -22,6 +22,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -37,6 +39,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -132,9 +135,6 @@ public class P_DashboardController implements Initializable {
         reqdatecol.setCellValueFactory(new PropertyValueFactory<>("requestDate"));
         statcol.setCellValueFactory(new PropertyValueFactory<>("status"));
         enccol.setCellValueFactory(new PropertyValueFactory<>("nurseName"));
-    }
-
-    private void setupRowContextMenu() {
     }
 
     private void refreshEmployeeTable() {
@@ -300,8 +300,100 @@ public class P_DashboardController implements Initializable {
 
     }
 
-    @FXML
-    void approvereqBtnPressed(ActionEvent event) {
-
+    private ObservableList<ListModel> getBatchListForRequest(int requestId) {
+        ObservableList<ListModel> listItems = FXCollections.observableArrayList();
+        try (Connection conn = DatabaseConnect.connect()) {
+            String query = """
+                        SELECT l.batch_id, m.med_name AS name, b.batch_dosage, l.qty
+                        FROM requestlist l
+                        JOIN batch b ON l.batch_id = b.batch_id
+                        LEFT JOIN medicine m ON b.med_id = m.med_id
+                        WHERE l.req_id = ?
+                    """;
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, requestId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                listItems.add(new ListModel(
+                        rs.getInt("batch_id"),
+                        rs.getString("name"),
+                        rs.getString("batch_dosage"),
+                        rs.getInt("qty")));
+            }
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listItems;
     }
+
+    private void approveRequest(RequestModel request) {
+        int requestId = request.getReqid();
+        ObservableList<ListModel> items = getBatchListForRequest(requestId);
+
+        try (Connection conn = DatabaseConnect.connect()) {
+            conn.setAutoCommit(false); // For transaction safety
+
+            // Update each batch's stock
+            for (ListModel item : items) {
+                String updateQuery = "UPDATE batch SET batch_stock = batch_stock - ? WHERE batch_id = ?";
+                PreparedStatement pstmt = conn.prepareStatement(updateQuery);
+                pstmt.setInt(1, item.getQuantity());
+                pstmt.setInt(2, item.getId());
+                pstmt.executeUpdate();
+                pstmt.close();
+            }
+
+            // Mark request as approved
+            String statusUpdate = "UPDATE request SET status = 1 WHERE request_id = ?";
+            PreparedStatement statusStmt = conn.prepareStatement(statusUpdate);
+            statusStmt.setInt(1, requestId);
+            statusStmt.executeUpdate();
+            statusStmt.close();
+
+            conn.commit(); // Commit all changes
+            showAlert("Success", "Request approved and stock updated.");
+            refreshEmployeeTable();
+            listTableView.getItems().clear();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to approve request.");
+        }
+    }
+
+    private void setupRowContextMenu() {
+        reqTableView.setRowFactory(_ -> {
+            TableRow<RequestModel> row = new TableRow<>();
+            ContextMenu contextMenu = new ContextMenu();
+
+            MenuItem approveItem = new MenuItem("Approve");
+            approveItem.setOnAction(_ -> {
+                RequestModel selectedRequest = row.getItem();
+                if (!selectedRequest.getStatus()) { // Only approve if not yet approved
+                    approveRequest(selectedRequest);
+                } else {
+                    showAlert("Info", "This request is already approved.");
+                }
+            });
+
+            contextMenu.getItems().add(approveItem);
+
+            row.setOnContextMenuRequested(event -> {
+                if (!row.isEmpty()) {
+                    contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                }
+            });
+
+            // Hide context menu when not on a valid row
+            row.setOnMouseClicked(_ -> {
+                if (contextMenu.isShowing()) {
+                    contextMenu.hide();
+                }
+            });
+
+            return row;
+        });
+    }
+
 }
