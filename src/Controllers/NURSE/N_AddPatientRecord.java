@@ -48,6 +48,8 @@ public class N_AddPatientRecord {
     public void initialize() {
         loadPatientCategories();
         gendertf.getItems().addAll("Male", "Female");
+        gendertf.getSelectionModel().selectFirst();
+        patcatcombobox.getSelectionModel().selectFirst();
     }
 
     private void loadPatientCategories() {
@@ -62,6 +64,7 @@ public class N_AddPatientRecord {
 
                 patientCategoryMap.put(name, id);
                 patcatcombobox.getItems().add(name);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,7 +103,7 @@ public class N_AddPatientRecord {
         e_addresstf.clear();
         em_relation.clear();
 
-        patcatcombobox.getSelectionModel().clearSelection();
+        patcatcombobox.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -147,13 +150,12 @@ public class N_AddPatientRecord {
             stmt.setString(13, contactnotf.getText());
             String selectedCategoryName = patcatcombobox.getValue();
             Integer selectedCategoryId = patientCategoryMap.get(selectedCategoryName);
-                if (selectedCategoryId != null) {
-                    stmt.setInt(14, selectedCategoryId);
+            if (selectedCategoryId != null) {
+                stmt.setInt(14, selectedCategoryId);
             } else {
-                    showAlert("Error", "Invalid patient category selected.");
-                    return;
+                showAlert("Error", "Invalid patient category selected.");
+                return;
             }
-
 
             stmt.setString(15, f_fullnametf.getText());
             stmt.setString(16, f_addresstf.getText());
