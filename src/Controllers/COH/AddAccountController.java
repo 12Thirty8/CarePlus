@@ -38,16 +38,6 @@ public class AddAccountController implements Initializable {
     @FXML
     private ComboBox<String> dayoffcb, depcb, shiftcb;
     @FXML
-    private Button DashboardBttn, LogOutBttn, AccountMenuBttn;
-    @FXML
-    private Button HamburgerMenuBttn;
-    @FXML
-    private Button PharmacyBttn;
-    @FXML
-    private Button ScheduleBttn;
-    @FXML
-    private Button ScheduleMenuBttn;
-    @FXML
     private Button addaccbtn;
     @FXML
     private DatePicker dob;
@@ -335,45 +325,4 @@ public class AddAccountController implements Initializable {
         }
     }
 
-    @FXML
-    void DashboardActionBttn(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/COH_Dashboard.fxml"));
-            root = loader.load();
-
-            root = FXMLLoader.load(getClass().getResource("/View/COH_Dashboard.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            a.setAlertType(AlertType.ERROR);
-            a.setContentText("Error loading page.");
-            a.setHeaderText("Error");
-            a.show();
-        }
-
-    }
-
-    @FXML
-    void HamburgerMenuActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void PharmacyActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ScheduleActionBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ScheduleuActionBttn(ActionEvent event) {
-
-    }
 }

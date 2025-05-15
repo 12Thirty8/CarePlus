@@ -13,11 +13,11 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="762.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_AddPatientRecord">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="733.0" prefWidth="762.0" style="-fx-background-color: #0B69B9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_ViewPatientData">
    <children>
-      <Pane layoutX="11.0" layoutY="11.0" prefHeight="763.0" prefWidth="740.0" style="-fx-background-color: White; -fx-background-radius: 12;">
+      <Pane layoutX="11.0" layoutY="11.0" prefHeight="712.0" prefWidth="740.0" style="-fx-background-color: White; -fx-background-radius: 12;">
          <children>
-            <Pane layoutX="14.0" layoutY="58.0" prefHeight="689.0" prefWidth="712.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
+            <Pane layoutX="14.0" layoutY="58.0" prefHeight="635.0" prefWidth="712.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
                <children>
                   <Label layoutX="21.0" layoutY="14.0" text="Information Sheet">
                      <font>
@@ -44,16 +44,6 @@
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="savebtn" layoutX="364.0" layoutY="643.0" mnemonicParsing="false" onAction="#SaveChangesAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Submit Record" textFill="WHITE">
-                     <font>
-                        <Font name="Gordita-Bold" size="14.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="cancelbtn" layoutX="17.0" layoutY="643.0" mnemonicParsing="false" onAction="#CancelButtonAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
-                     <font>
-                        <Font name="Gordita-Bold" size="14.0" />
-                     </font>
-                  </Button>
                   <DatePicker fx:id="birthdate" layoutX="491.0" layoutY="126.0" prefHeight="25.0" prefWidth="211.0" promptText="Date of Birth" />
                   <Label layoutX="491.0" layoutY="48.0" text="Middle Name">
                      <font>
@@ -298,10 +288,10 @@
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <ComboBox fx:id="gendertf" layoutX="133.0" layoutY="126.0" prefHeight="25.0" prefWidth="100.0" />
+                  <ComboBox fx:id="gendertf" layoutX="128.0" layoutY="126.0" prefHeight="25.0" prefWidth="100.0" />
                </children>
             </Pane>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="6.0" prefHeight="44.0" prefWidth="368.0" text="Add Patient Data">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="6.0" prefHeight="44.0" prefWidth="368.0" text="View Patient Data">
                <font>
                   <Font name="Gordita-Bold" size="21.0" />
                </font>

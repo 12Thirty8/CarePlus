@@ -25,7 +25,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-//import javafx.stage.StageStyle;
 
 public class LoginPageController {
     public static int dep_id;
@@ -75,12 +74,11 @@ public class LoginPageController {
         String username = empIDTf.getText().trim();
         String password = new String(psfield.getText());
 
-        // Check if the username length is between 6 and 16 characters
         if (username.length() < 1 || username.length() > 6) {
             a.setAlertType(AlertType.ERROR);
             a.setTitle("Error");
             a.setHeaderText("Login Error");
-            a.setContentText("Username must be between 1 and 6 characters.");
+            a.setContentText("User ID must be between 1 and 6 characters.");
             a.show();
             return;
         }
@@ -89,12 +87,11 @@ public class LoginPageController {
             a.setAlertType(AlertType.ERROR);
             a.setTitle("Error");
             a.setHeaderText("Login Error");
-            a.setContentText("Invalid username format.");
+            a.setContentText("Invalid USER ID format.");
             a.show();
             return;
         }
 
-        // Check if the password length is between 8 and 40 characters
         if (password.length() < 6 || password.length() > 20) {
             a.setAlertType(AlertType.ERROR);
             a.setTitle("Error");
@@ -113,14 +110,12 @@ public class LoginPageController {
             ResultSet rs = stm.executeQuery(sql);
 
             if (rs.next()) {
-                // Added by JC. Used to get the current user's employee_id.
                 int loggedId = rs.getInt("employee_id");
                 System.out.println("Successfully logged in with ID: " + loggedId);
                 GetCurrentEmployeeID.getInstance().setEmployeeId(loggedId);
-                //
+
                 dep_id = rs.getInt("dep_id");
 
-                // Load the loading page scene first
                 Parent loadingPageRoot = FXMLLoader.load(getClass().getResource("/View/LoadingPage.fxml"));
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene loadingScene = new Scene(loadingPageRoot);
@@ -128,15 +123,12 @@ public class LoginPageController {
                 currentStage.setMaximized(true);
                 currentStage.show();
 
-                // Create a fade transition for the loading page
                 FadeTransition fadeOut = new FadeTransition(Duration.seconds(5), loadingPageRoot);
                 fadeOut.setFromValue(1.0);
                 fadeOut.setToValue(1.0);
 
-                // Set the action after the fade-out transition completes
                 fadeOut.setOnFinished(_ -> {
                     try {
-                        // Load the appropriate dashboard scene based on the department
                         Parent root = null;
                         switch (dep_id) {
                             case 1:
@@ -163,13 +155,12 @@ public class LoginPageController {
                     }
                 });
 
-                // Start the fade transition
                 fadeOut.play();
             } else {
                 a.setAlertType(AlertType.ERROR);
                 a.setTitle("Error");
                 a.setHeaderText("Login Error");
-                a.setContentText("Invalid username or password.");
+                a.setContentText("Invalid User ID or Password.");
                 a.show();
                 empIDTf.setText("");
                 psfield.setText("");
