@@ -80,11 +80,6 @@
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="gendertf" layoutX="131.0" layoutY="125.0" prefHeight="26.0" prefWidth="103.0" promptText="Gender" style="-fx-background-radius: 5;">
-                     <font>
-                        <Font name="Gordita-Regular" size="12.0" />
-                     </font>
-                  </TextField>
                   <Label layoutX="492.0" layoutY="108.0" text="Date of Birth">
                      <font>
                         <Font name="Gordita-Bold" size="12.0" />
@@ -303,6 +298,7 @@
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
+                  <ComboBox fx:id="gendertf" layoutX="133.0" layoutY="126.0" prefHeight="25.0" prefWidth="100.0" />
                </children>
             </Pane>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="6.0" prefHeight="44.0" prefWidth="368.0" text="Add Patient Data">

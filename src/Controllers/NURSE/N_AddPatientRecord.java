@@ -29,7 +29,7 @@ public class N_AddPatientRecord {
     @FXML
     private TextField addresstf, agetf, birthplacetf, contactnotf, e_addresstf, e_contactnotf,
             e_fullnametf, em_addresstf, em_contacnotf, em_fullnametf, em_relation, emailaddtf,
-            f_addresstf, f_contactnotf, f_fullnametf, firstnametf, gendertf, lastnametf,
+            f_addresstf, f_contactnotf, f_fullnametf, firstnametf, lastnametf,
             m_addresstf, m_contactnotf, m_fullnametf, middlenametf, nationalitytf, occupationtf,
             religiontf;
 
@@ -40,13 +40,14 @@ public class N_AddPatientRecord {
     private DatePicker birthdate;
 
     @FXML
-    private ComboBox<String> patcatcombobox;
+    private ComboBox<String> patcatcombobox, gendertf;
 
     private Map<String, Integer> patientCategoryMap = new HashMap<>();
 
     @FXML
     public void initialize() {
         loadPatientCategories();
+        gendertf.getItems().addAll("Male", "Female");
     }
 
     private void loadPatientCategories() {
@@ -72,7 +73,6 @@ public class N_AddPatientRecord {
         lastnametf.clear();
         middlenametf.clear();
         agetf.clear();
-        gendertf.clear();
         emailaddtf.clear();
         birthdate.setValue(null);
         addresstf.clear();
@@ -136,7 +136,7 @@ public class N_AddPatientRecord {
             stmt.setString(2, lastnametf.getText());
             stmt.setString(3, middlenametf.getText());
             stmt.setInt(4, Integer.parseInt(agetf.getText()));
-            stmt.setString(5, gendertf.getText());
+            stmt.setString(5, gendertf.getValue());
             stmt.setString(6, emailaddtf.getText());
             stmt.setDate(7, Date.valueOf(birthdate.getValue()));
             stmt.setString(8, addresstf.getText());
