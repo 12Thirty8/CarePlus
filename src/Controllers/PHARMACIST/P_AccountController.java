@@ -24,6 +24,7 @@ import javafx.scene.control.ButtonType;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -137,10 +138,15 @@ public class P_AccountController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ChangeShift.fxml"));
                 Parent root = loader.load();
 
-                Stage loginStage = new Stage();
-                loginStage.setScene(new Scene(root));
-                loginStage.setResizable(false);
-                loginStage.show();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setResizable(false);
+                stage.show();
+
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initOwner(((Node) event.getSource()).getScene().getWindow()); // Set owner to current window
+
+                stage.showAndWait();
 
             } catch (IOException e) {
                 e.printStackTrace();
