@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -418,7 +419,21 @@ public class N_PharmacyReq implements Initializable {
                 medName == null || medName.isEmpty() ||
                 medDosage == null || medDosage.isEmpty() ||
                 qtyStr == null || qtyStr.isEmpty()) {
-            // Optionally show an error message to the user
+            showAlert("Validation Error", "Please fill in all medicine fields (ID, Name, Dosage, Quantity)",
+                    AlertType.ERROR);
+            return;
+        }
+
+        // Validate that quantity is a number
+        int quantity;
+        try {
+            quantity = Integer.parseInt(qtyStr);
+            if (quantity <= 0) {
+                showAlert("Validation Error", "Quantity must be a positive number", AlertType.ERROR);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Validation Error", "Quantity must be a valid number", AlertType.ERROR);
             return;
         }
 
@@ -426,15 +441,7 @@ public class N_PharmacyReq implements Initializable {
         try {
             medId = Integer.parseInt(medidtf.getText());
         } catch (NumberFormatException e) {
-            // Optionally show an error message to the user
-            return;
-        }
-
-        int quantity;
-        try {
-            quantity = Integer.parseInt(qtyStr);
-        } catch (NumberFormatException e) {
-            // Optionally show an error message to the user
+            showAlert("Validation Error", "Medicine ID must be a valid number", AlertType.ERROR);
             return;
         }
 
@@ -470,7 +477,7 @@ public class N_PharmacyReq implements Initializable {
     void SubmitBtnAction(ActionEvent event) {
         String recordIdStr = recordidtf.getText();
         if (recordIdStr == null || recordIdStr.isEmpty() || RequestList.isEmpty()) {
-            showAlert("Error", "Please select a patient and add at least one medicine");
+            showAlert("Error", "Please add at least one medicine", AlertType.ERROR);
             return;
         }
 
@@ -478,7 +485,7 @@ public class N_PharmacyReq implements Initializable {
         try {
             recordId = Integer.parseInt(recordIdStr);
         } catch (NumberFormatException e) {
-            showAlert("Error", "Invalid patient record ID");
+            showAlert("Error", "Invalid patient record ID", AlertType.ERROR);
             return;
         }
 
@@ -492,7 +499,7 @@ public class N_PharmacyReq implements Initializable {
                 checkStmt.setInt(1, recordId);
                 ResultSet checkRs = checkStmt.executeQuery();
                 if (!checkRs.next()) {
-                    showAlert("Error", "Patient record not found");
+                    showAlert("Error", "Patient record not found", AlertType.ERROR);
                     conn.setAutoCommit(true);
                     conn.close();
                     return;
@@ -544,7 +551,8 @@ public class N_PharmacyReq implements Initializable {
                             }
                         } else {
                             conn.rollback();
-                            showAlert("Error", "Insufficient stock for " + entry.getName() + " (" + medDosage + ")");
+                            showAlert("Error", "Insufficient stock for " + entry.getName() + " (" + medDosage + ")",
+                                    AlertType.ERROR);
                             return;
                         }
                     }
@@ -552,7 +560,7 @@ public class N_PharmacyReq implements Initializable {
             }
 
             conn.commit();
-            showAlert("Success", "Pharmacy request submitted successfully");
+            showAlert("Success", "Pharmacy request submitted successfully", AlertType.INFORMATION);
 
             // Clear form
             RequestList.clear();
@@ -565,13 +573,13 @@ public class N_PharmacyReq implements Initializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Error", "Database error: " + e.getMessage());
+            showAlert("Error", "Database error: " + e.getMessage(), AlertType.ERROR);
         }
     }
 
     @FXML
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private void showAlert(String title, String message, AlertType alertType) {
+        Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

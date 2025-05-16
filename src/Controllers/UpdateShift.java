@@ -19,29 +19,62 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.GetCurrentEmployeeID;
 
-public class ChangeShift {
+public class UpdateShift {
     @FXML
     private Button BackBttn;
     @FXML
-    private TextField CurrentShifttf; // Changed to TextField
+    private TextField CurrentShifttf;
     @FXML
     private ComboBox<String> NewShiftCB;
     @FXML
     private TextArea ReasonArea;
     @FXML
-    private Button savebtn;
+    private Button updateBtn;
 
     private Alert a = new Alert(AlertType.NONE);
     private Runnable refreshCallback;
     private int employeeId;
+    private int requestId; // Added to store the request ID being updated
 
     public void initialize() {
         employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
         loadCurrentShift();
         loadAvailableShifts();
-
-        // Make the current shift field non-editable
         CurrentShifttf.setEditable(false);
+    }
+
+    // Method to set the request ID being updated
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+        loadExistingRequestData();
+    }
+
+    private void loadExistingRequestData() {
+        try {
+            Connection conn = DatabaseConnect.connect();
+            String query = """
+                    SELECT sr.newshift, sr.description, s.timeslot
+                    FROM shiftrequest sr
+                    JOIN shift s ON sr.newshift = s.shift_id
+                    WHERE sr.sr_id = ?
+                    """;
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, requestId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Set the existing values in the form
+                NewShiftCB.setValue(rs.getString("timeslot"));
+                ReasonArea.setText(rs.getString("description"));
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load request data");
+        }
     }
 
     private void loadCurrentShift() {
@@ -94,7 +127,7 @@ public class ChangeShift {
     }
 
     @FXML
-    void SaveChangesAction(ActionEvent event) {
+    void updateAction(ActionEvent event) {
         String newShift = NewShiftCB.getValue();
         String reason = ReasonArea.getText();
 
@@ -119,28 +152,27 @@ public class ChangeShift {
             if (shiftRs.next()) {
                 int newShiftId = shiftRs.getInt("shift_id");
 
-                // Insert the shift change request
-                String insertQuery = """
-                        INSERT INTO shiftrequest
-                        (shift_id, newshift, description, status, reqdate, requestedby)
-                        VALUES (?, ?, ?, 0, CURRENT_DATE, ?)
+                // Update the existing shift change request
+                String updateQuery = """
+                        UPDATE shiftrequest
+                        SET newshift = ?, description = ?, reqdate = CURRENT_DATE
+                        WHERE sr_id = ?
                         """;
-                PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
-                insertStmt.setInt(1, getCurrentShiftId()); // Current shift ID
-                insertStmt.setInt(2, newShiftId); // New shift ID
-                insertStmt.setString(3, reason);
-                insertStmt.setInt(4, employeeId);
+                PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+                updateStmt.setInt(1, newShiftId);
+                updateStmt.setString(2, reason);
+                updateStmt.setInt(3, requestId);
 
-                int rowsAffected = insertStmt.executeUpdate();
+                int rowsAffected = updateStmt.executeUpdate();
                 if (rowsAffected > 0) {
-                    showAlert("Success", "Shift change request submitted successfully");
+                    showAlert("Success", "Shift change request updated successfully");
                     if (refreshCallback != null) {
                         refreshCallback.run();
                     }
                     closeWindow();
                 }
 
-                insertStmt.close();
+                updateStmt.close();
             }
 
             shiftRs.close();
@@ -148,34 +180,8 @@ public class ChangeShift {
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Error", "Failed to submit shift change request");
+            showAlert("Error", "Failed to update shift change request");
         }
-    }
-
-    private int getCurrentShiftId() throws SQLException {
-        Connection conn = DatabaseConnect.connect();
-        String query = "SELECT shift_id FROM employee WHERE employee_id = ?";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setInt(1, employeeId);
-        ResultSet rs = pstmt.executeQuery();
-
-        int shiftId = -1;
-        if (rs.next()) {
-            shiftId = rs.getInt("shift_id");
-        }
-
-        rs.close();
-        pstmt.close();
-        conn.close();
-        return shiftId;
-    }
-
-    private void showAlert(String title, String message) {
-        a.setAlertType(AlertType.INFORMATION);
-        a.setTitle(title);
-        a.setHeaderText(null);
-        a.setContentText(message);
-        a.showAndWait();
     }
 
     @FXML
@@ -190,5 +196,13 @@ public class ChangeShift {
 
     public void setRefreshCallback(Runnable refreshCallback) {
         this.refreshCallback = refreshCallback;
+    }
+
+    private void showAlert(String title, String message) {
+        a.setAlertType(AlertType.INFORMATION);
+        a.setTitle(title);
+        a.setHeaderText(null);
+        a.setContentText(message);
+        a.showAndWait();
     }
 }
