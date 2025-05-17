@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import Controllers.ViewState;
-import Models.NurseModel;
+
+import Models.RecordsModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -58,18 +59,27 @@ public class N_DashboardController {
     private Button LogoutBtn;
 
     @FXML
-    private TableView<NurseModel> StkInTableView;
+    private TableView<RecordsModel> StkInTableView;
 
     @FXML
-    private TableColumn<NurseModel, String> takenFrColumn;
+    private TableColumn<RecordsModel, String> patientColumn;
 
     @FXML
-    private TableColumn<NurseModel, String> activityColumn;
+    private TableColumn<RecordsModel, String> patientIdColumn;
 
     @FXML
-    private TableColumn<NurseModel, LocalDateTime> dateTimeColumn;
+    private TableColumn<RecordsModel, String> doctorColumn;
 
-    private ObservableList<NurseModel> nurseModelObservableList = FXCollections.observableArrayList();
+    @FXML
+    private TableColumn<RecordsModel, String> diagnosisColumn;
+
+    @FXML
+    private TableColumn<RecordsModel, String> dispositionColumn;
+
+    @FXML
+    private TableColumn<RecordsModel, String> statusColumn;
+
+    private ObservableList<RecordsModel> recordsModelObservableList = FXCollections.observableArrayList();
 
     @FXML
     private Text nameLabel;
@@ -83,7 +93,7 @@ public class N_DashboardController {
     public void initialize() {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
         setupTableColumns();
-        refreshEmployeeTable();
+        refreshRecordsTable();
         int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
         String nurseName = DatabaseConnect.getNurseName(employeeId);
         nameLabel.setText(nurseName + ", RN");
@@ -91,33 +101,45 @@ public class N_DashboardController {
     }
 
     private void setupTableColumns() {
-        takenFrColumn.setCellValueFactory(new PropertyValueFactory<>("takenFrom"));
-        activityColumn.setCellValueFactory(new PropertyValueFactory<>("activity"));
-        dateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
+        patientColumn.setCellValueFactory(new PropertyValueFactory<>("patientName"));
+        patientIdColumn.setCellValueFactory(new PropertyValueFactory<>("patientId"));
+        doctorColumn.setCellValueFactory(new PropertyValueFactory<>("doctorName"));
+        diagnosisColumn.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
+        dispositionColumn.setCellValueFactory(new PropertyValueFactory<>("disposition"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
     }
 
-    private void refreshEmployeeTable() {
-        nurseModelObservableList.clear();
+    private void refreshRecordsTable() {
+        recordsModelObservableList.clear();
         try {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        n.taken_from, n.activity, n.datetime_logged
-                    FROM nurse_activity_log n
-                    LEFT JOIN employee e ON n.employee_id = e.employee_id
+                        CONCAT(COALESCE(r.f_name, ''), ' ', COALESCE(r.l_name, '')) AS patientName,
+                        r.patient_id,
+                        r.doctor_name,
+                        r.diagnosis,
+                        r.disposition,
+                        r.status
+                    FROM records r
+                    LEFT JOIN patient p ON r.patient_id = p.patient_id
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                nurseModelObservableList.add(new NurseModel(
-                        rs.getString("taken_from"),
-                        rs.getString("activity"),
-                        rs.getTimestamp("datetime_logged").toLocalDateTime()));
+                recordsModelObservableList.add(new RecordsModel(
+                        rs.getString("patientName"),
+                        rs.getInt("patient_id"),
+                        rs.getString("doctor_name"),
+                        rs.getString("diagnosis"),
+                        rs.getString("disposition"),
+                        rs.getInt("status")));
 
             }
 
-            StkInTableView.setItems(nurseModelObservableList);
+            StkInTableView.setItems(recordsModelObservableList);
             rs.close();
             pstmt.close();
             conn.close();
