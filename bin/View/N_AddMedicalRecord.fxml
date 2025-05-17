@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -25,11 +26,6 @@
                   <Font name="Gordita-Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="patientIDtf" layoutX="21.0" layoutY="81.0" prefHeight="26.0" prefWidth="197.0" promptText="Ex. 101239" style="-fx-background-radius: 5;">
-               <font>
-                  <Font name="Gordita-Regular" size="12.0" />
-               </font>
-            </TextField>
             <Label layoutX="271.0" layoutY="56.0" text="Doctor ID:">
                <font>
                   <Font name="Gordita-Bold" size="12.0" />
@@ -100,6 +96,7 @@
                   <Font name="Gordita-Regular" size="12.0" />
                </font>
             </TextField>
+            <ComboBox fx:id="patientIDtf" layoutX="24.0" layoutY="82.0" prefHeight="25.0" prefWidth="197.0" />
          </children>
       </Pane>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="14.0" prefHeight="44.0" prefWidth="368.0" text="Add Medical Record">
