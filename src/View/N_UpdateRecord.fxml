@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="669.0" prefWidth="510.0" style="-fx-background-color: White; -fx-background-radius: 12;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_UpdateRecord">
+<Pane prefHeight="669.0" prefWidth="510.0" style="-fx-background-color: White; -fx-background-radius: 12;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NURSE.N_UpdateMedicalRecord">
    <children>
       <Pane layoutX="13.0" layoutY="67.0" prefHeight="584.0" prefWidth="483.0" style="-fx-background-color: #EFF1FF; -fx-background-radius: 9;">
          <children>
@@ -60,8 +60,8 @@
                   <Font name="Gordita-Bold" size="12.0" />
                </font>
             </Label>
-            <TextArea fx:id="DiagnosisArea" layoutX="22.0" layoutY="282.0" prefHeight="92.0" prefWidth="200.0" />
-            <TextArea fx:id="NotesArea" layoutX="270.0" layoutY="282.0" prefHeight="92.0" prefWidth="200.0" />
+            <TextArea fx:id="complaintArea" layoutX="22.0" layoutY="282.0" prefHeight="92.0" prefWidth="200.0" />
+            <TextArea fx:id="diagnosisArea" layoutX="270.0" layoutY="282.0" prefHeight="92.0" prefWidth="200.0" />
             <DatePicker fx:id="CheckupDate" layoutX="21.0" layoutY="221.0" prefHeight="25.0" prefWidth="197.0" />
             <Label layoutX="21.0" layoutY="194.0" text="Checkup Date:">
                <font>
@@ -73,14 +73,14 @@
                   <Font name="Gordita-Bold" size="12.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="StausBox" layoutX="270.0" layoutY="221.0" prefHeight="25.0" prefWidth="197.0" />
+            <ChoiceBox fx:id="statusBox" layoutX="270.0" layoutY="221.0" prefHeight="25.0" prefWidth="197.0" />
             <Label layoutX="18.0" layoutY="402.0" text="Disposition:">
                <font>
                   <Font name="Gordita-Bold" size="12.0" />
                </font>
             </Label>
-            <TextArea fx:id="DiagnosisArea1" layoutX="19.0" layoutY="417.0" prefHeight="92.0" prefWidth="446.0" />
-            <TextField fx:id="patientIDtf1" layoutX="21.0" layoutY="150.0" prefHeight="26.0" prefWidth="197.0" promptText="First Name" style="-fx-background-radius: 5;">
+            <TextArea fx:id="dispositionArea" layoutX="19.0" layoutY="417.0" prefHeight="92.0" prefWidth="446.0" />
+            <TextField fx:id="fNameTf" layoutX="21.0" layoutY="150.0" prefHeight="26.0" prefWidth="197.0" promptText="First Name" style="-fx-background-radius: 5;">
                <font>
                   <Font name="Gordita-Regular" size="12.0" />
                </font>
@@ -95,7 +95,7 @@
                   <Font name="Gordita-Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="patientIDtf11" layoutX="270.0" layoutY="150.0" prefHeight="26.0" prefWidth="197.0" promptText="Last Name" style="-fx-background-radius: 5;">
+            <TextField fx:id="lNameTf" layoutX="270.0" layoutY="150.0" prefHeight="26.0" prefWidth="197.0" promptText="Last Name" style="-fx-background-radius: 5;">
                <font>
                   <Font name="Gordita-Regular" size="12.0" />
                </font>

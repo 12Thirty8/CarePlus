@@ -195,44 +195,50 @@ public class N_DashboardController {
     private void setupRowContextMenu() {
         StkInTableView.setRowFactory(_ -> {
             TableRow<RecordsModel> row = new TableRow<>();
-            ContextMenu menu = new ContextMenu();
+            ContextMenu contextMenu = new ContextMenu();
 
-            MenuItem viewItem = new MenuItem("Update");
-            viewItem.setOnAction(_ -> {
-                RecordsModel selected = row.getItem();
-                if (selected != null) {
-                    openViewPatientPopup(selected);
+            MenuItem updateItem = new MenuItem("Update");
+            updateItem.setOnAction(_ -> {
+                RecordsModel selectedRecord = row.getItem();
+                if (selectedRecord != null) {
+                    openUpdateMedicalRecordWindow(selectedRecord);
                 }
             });
 
-            menu.getItems().add(viewItem);
+            contextMenu.getItems().add(updateItem);
 
-            // only show on non-empty rows
+            // Set context menu only for non-empty rows
             row.contextMenuProperty().bind(
                     Bindings.when(row.emptyProperty())
                             .then((ContextMenu) null)
-                            .otherwise(menu));
+                            .otherwise(contextMenu));
 
             return row;
         });
     }
 
-    private void openViewPatientPopup(RecordsModel records) {
+    private void openUpdateMedicalRecordWindow(RecordsModel record) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_UpdateRecord.fxml"));
             Parent root = loader.load();
 
-            Stage popup = new Stage(StageStyle.UTILITY);
-            popup.initModality(Modality.WINDOW_MODAL);
-            popup.initOwner(StkInTableView.getScene().getWindow());
-            popup.setTitle("Update Medical Record");
-            popup.setScene(new Scene(root));
-            popup.setResizable(false);
-            popup.showAndWait();
+            // Pass the selected record to the controller
+            N_UpdateMedicalRecord controller = loader.getController();
+            controller.setRecordData(record); // This method must be defined in N_UpdateMedicalRecord.java
+
+            Stage stage = new Stage();
+            stage.setTitle("Update Medical Record");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setScene(new Scene(root));
+            stage.showAndWait(); // Wait for the update to finish
+
+            // Refresh table after closing update window
+            refreshRecordsTable();
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error", "Could not open view for updating medical records: " + e.getMessage());
+            new Alert(Alert.AlertType.ERROR, "Failed to open update window.").showAndWait();
         }
     }
 
