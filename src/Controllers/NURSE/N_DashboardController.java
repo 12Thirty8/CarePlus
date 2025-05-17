@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+
 import java.util.Optional;
 
 import Controllers.ViewState;
@@ -15,6 +15,7 @@ import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +28,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -38,6 +41,7 @@ import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
 import util.SceneLoader;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 
 public class N_DashboardController {
     @FXML
@@ -94,6 +98,7 @@ public class N_DashboardController {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
         setupTableColumns();
         refreshRecordsTable();
+        setupRowContextMenu();
         int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
         String nurseName = DatabaseConnect.getNurseName(employeeId);
         nameLabel.setText(nurseName + ", RN");
@@ -184,6 +189,50 @@ public class N_DashboardController {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to open update form: " + e.getMessage());
+        }
+    }
+
+    private void setupRowContextMenu() {
+        StkInTableView.setRowFactory(_ -> {
+            TableRow<RecordsModel> row = new TableRow<>();
+            ContextMenu menu = new ContextMenu();
+
+            MenuItem viewItem = new MenuItem("Update");
+            viewItem.setOnAction(_ -> {
+                RecordsModel selected = row.getItem();
+                if (selected != null) {
+                    openViewPatientPopup(selected);
+                }
+            });
+
+            menu.getItems().add(viewItem);
+
+            // only show on non-empty rows
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(menu));
+
+            return row;
+        });
+    }
+
+    private void openViewPatientPopup(RecordsModel records) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_UpdateRecord.fxml"));
+            Parent root = loader.load();
+
+            Stage popup = new Stage(StageStyle.UTILITY);
+            popup.initModality(Modality.WINDOW_MODAL);
+            popup.initOwner(StkInTableView.getScene().getWindow());
+            popup.setTitle("Update Medical Record");
+            popup.setScene(new Scene(root));
+            popup.setResizable(false);
+            popup.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Could not open view for updating medical records: " + e.getMessage());
         }
     }
 

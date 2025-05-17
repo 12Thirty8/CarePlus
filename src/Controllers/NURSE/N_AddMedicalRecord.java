@@ -71,7 +71,7 @@ public class N_AddMedicalRecord implements Initializable {
         lNameTf.setEditable(false);
 
         // 3) when a patient is chosen, load their names
-        patientIdCombo.getSelectionModel().selectedItemProperty().addListener((obs, oldId, newId) -> {
+        patientIdCombo.getSelectionModel().selectedItemProperty().addListener((_, _, newId) -> {
             if (newId != null) {
                 loadPatientName(newId);
             } else {
