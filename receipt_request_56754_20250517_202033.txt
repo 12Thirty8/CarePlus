@@ -1,0 +1,14 @@
+MEDICAL SUPPLY REQUEST RECEIPT
+--------------------------------
+Request ID: 56754
+Record ID: 13
+Request Date: 2025-05-16
+Approval Date: 2025-05-17 20:20:33
+Approved by: Kim Jung Budiao
+--------------------------------
+ITEMS:
+--------------------------------
+Batch ID   Medicine Name        Dosage          Qty  
+10001      Biogesic             500mg           15   
+--------------------------------
+END OF RECEIPT

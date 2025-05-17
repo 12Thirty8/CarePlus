@@ -1,11 +1,15 @@
 package Controllers.PHARMACIST;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -352,12 +356,123 @@ public class P_DashboardController implements Initializable {
             statusStmt.close();
 
             conn.commit(); // Commit all changes
-            showAlert("Success", "Request approved and stock updated.");
+
+            // Generate receipt after successful approval
+            generateReceipt(request, items);
+
+            showAlert("Success", "Request approved and stock updated. Receipt generated.");
             refreshEmployeeTable();
             listTableView.getItems().clear();
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to approve request.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to generate receipt file.");
+        }
+    }
+
+    private void generateReceipt(RequestModel request, ObservableList<ListModel> items) throws IOException {
+        // Create filename with timestamp
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String timestamp = dateFormat.format(new java.util.Date());
+        String fileName = "receipt_request_" + request.getReqid() + "_" + timestamp + ".txt";
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
+            // Get dates
+            String currentDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+            String requestDate = (request.getRequestDate() != null)
+                    ? new SimpleDateFormat("yyyy-MM-dd").format(request.getRequestDate())
+                    : "Date not available";
+
+            // Calculate line count for window sizing
+            int lineCount = 9 + items.size(); // Header lines + items
+
+            // Write receipt
+            writer.println("MEDICAL SUPPLY REQUEST RECEIPT");
+            writer.println("--------------------------------");
+            writer.printf("Request ID: %d%n", request.getReqid());
+            writer.printf("Record ID: %d%n", request.getRecId());
+            writer.printf("Request Date: %s%n", requestDate);
+            writer.printf("Approval Date: %s%n", currentDateTime);
+            writer.printf("Approved by: %s%n", nameLabel.getText());
+            writer.println("--------------------------------");
+            writer.println("ITEMS:");
+            writer.println("--------------------------------");
+            writer.printf("%-10s %-20s %-15s %-5s%n", "Batch ID", "Medicine Name", "Dosage", "Qty");
+
+            for (ListModel item : items) {
+                writer.printf("%-10d %-20s %-15s %-5d%n",
+                        item.getId(),
+                        item.getName() != null ? item.getName() : "N/A",
+                        item.getDosage() != null ? item.getDosage() : "N/A",
+                        item.getQuantity());
+            }
+
+            writer.println("--------------------------------");
+            writer.println("END OF RECEIPT");
+
+            // Launch Notepad with calculated window size
+            launchNotepadWithSize(fileName, lineCount);
+        }
+    }
+
+    private void launchNotepadWithSize(String fileName, int lineCount) {
+        try {
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                // Windows: Try to open with Notepad in maximized window
+                String[] cmd = {
+                        "cmd.exe", "/c", "start",
+                        "/max", // This maximizes the window (closest we can get to sizing)
+                        "notepad",
+                        fileName
+                };
+
+                ProcessBuilder pb = new ProcessBuilder(cmd);
+                pb.start();
+
+                // Alternative approach that might work better:
+                // Create a shortcut with window size properties
+                createNotepadShortcut(fileName);
+            } else {
+                // Non-Windows: Open with default text editor
+                if (java.awt.Desktop.isDesktopSupported()) {
+                    java.awt.Desktop.getDesktop().open(new File(fileName));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Couldn't open receipt: " + fileName);
+        }
+    }
+
+    // Alternative method for Windows that creates a shortcut with window size
+    private void createNotepadShortcut(String fileName) {
+        try {
+            // Create a VBS script that creates a shortcut with window size
+            String vbsScript = String.format(
+                    "Set ws = CreateObject(\"WScript.Shell\")%n" +
+                            "Set shortcut = ws.CreateShortcut(\"%s\\receipt.lnk\")%n" +
+                            "shortcut.TargetPath = \"notepad.exe\"%n" +
+                            "shortcut.Arguments = \"%s\"%n" +
+                            "shortcut.WindowStyle = 3%n" + // 3 = Maximized window
+                            "shortcut.Save()%n" +
+                            "ws.Run \"\"\"\" & shortcut.FullName & \"\"\"\", 1, False%n" +
+                            "WScript.Sleep 1000%n" +
+                            "Set fso = CreateObject(\"Scripting.FileSystemObject\")%n" +
+                            "fso.DeleteFile shortcut.FullName%n",
+                    System.getProperty("java.io.tmpdir"),
+                    fileName.replace("\"", "\"\""));
+
+            File vbsFile = new File(System.getProperty("java.io.tmpdir"), "create_shortcut.vbs");
+            try (PrintWriter writer = new PrintWriter(vbsFile)) {
+                writer.println(vbsScript);
+            }
+
+            // Execute the VBS script
+            new ProcessBuilder("wscript", vbsFile.getAbsolutePath()).start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
