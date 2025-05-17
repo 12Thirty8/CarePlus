@@ -147,7 +147,7 @@ public class N_DashboardController {
     @FXML
     private void AddPatientDataBtnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_CreateNewRecord.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_AddMedicalRecord.fxml"));
             Parent root = loader.load();
             // Create a new pop-up stage
             Stage popupStage = new Stage();
