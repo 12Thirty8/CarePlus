@@ -113,8 +113,8 @@ public class N_PatientDataController {
             while (rs.next()) {
                 patientModelObservableList.add(new PatientModel(
                         rs.getInt("patient_id"),
-                        rs.getString("l_name"),
-                        rs.getString("f_name")));
+                        rs.getString("f_name"),
+                        rs.getString("l_name")));
 
             }
             patientDataTableView.setItems(patientModelObservableList);

@@ -5,15 +5,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+
 import java.util.Optional;
 
 import Controllers.ViewState;
-import Models.NurseModel;
+
+import Models.RecordsModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +28,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -37,6 +41,7 @@ import javafx.util.Duration;
 import util.GetCurrentEmployeeID;
 import util.SceneLoader;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 
 public class N_DashboardController {
     @FXML
@@ -58,18 +63,27 @@ public class N_DashboardController {
     private Button LogoutBtn;
 
     @FXML
-    private TableView<NurseModel> StkInTableView;
+    private TableView<RecordsModel> StkInTableView;
 
     @FXML
-    private TableColumn<NurseModel, String> takenFrColumn;
+    private TableColumn<RecordsModel, String> patientColumn;
 
     @FXML
-    private TableColumn<NurseModel, String> activityColumn;
+    private TableColumn<RecordsModel, String> patientIdColumn;
 
     @FXML
-    private TableColumn<NurseModel, LocalDateTime> dateTimeColumn;
+    private TableColumn<RecordsModel, String> doctorColumn;
 
-    private ObservableList<NurseModel> nurseModelObservableList = FXCollections.observableArrayList();
+    @FXML
+    private TableColumn<RecordsModel, String> diagnosisColumn;
+
+    @FXML
+    private TableColumn<RecordsModel, String> dispositionColumn;
+
+    @FXML
+    private TableColumn<RecordsModel, String> statusColumn;
+
+    private ObservableList<RecordsModel> recordsModelObservableList = FXCollections.observableArrayList();
 
     @FXML
     private Text nameLabel;
@@ -83,7 +97,8 @@ public class N_DashboardController {
     public void initialize() {
         hamburgerPane.setPrefWidth(ViewState.isHamburgerPaneExtended ? 230 : 107);
         setupTableColumns();
-        refreshEmployeeTable();
+        refreshRecordsTable();
+        setupRowContextMenu();
         int employeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
         String nurseName = DatabaseConnect.getNurseName(employeeId);
         nameLabel.setText(nurseName + ", RN");
@@ -91,33 +106,45 @@ public class N_DashboardController {
     }
 
     private void setupTableColumns() {
-        takenFrColumn.setCellValueFactory(new PropertyValueFactory<>("takenFrom"));
-        activityColumn.setCellValueFactory(new PropertyValueFactory<>("activity"));
-        dateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
+        patientColumn.setCellValueFactory(new PropertyValueFactory<>("patientName"));
+        patientIdColumn.setCellValueFactory(new PropertyValueFactory<>("patientId"));
+        doctorColumn.setCellValueFactory(new PropertyValueFactory<>("doctorName"));
+        diagnosisColumn.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
+        dispositionColumn.setCellValueFactory(new PropertyValueFactory<>("disposition"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
     }
 
-    private void refreshEmployeeTable() {
-        nurseModelObservableList.clear();
+    private void refreshRecordsTable() {
+        recordsModelObservableList.clear();
         try {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
-                        n.taken_from, n.activity, n.datetime_logged
-                    FROM nurse_activity_log n
-                    LEFT JOIN employee e ON n.employee_id = e.employee_id
+                        CONCAT(COALESCE(r.f_name, ''), ' ', COALESCE(r.l_name, '')) AS patientName,
+                        r.patient_id,
+                        r.doctor_name,
+                        r.diagnosis,
+                        r.disposition,
+                        r.status
+                    FROM records r
+                    LEFT JOIN patient p ON r.patient_id = p.patient_id
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                nurseModelObservableList.add(new NurseModel(
-                        rs.getString("taken_from"),
-                        rs.getString("activity"),
-                        rs.getTimestamp("datetime_logged").toLocalDateTime()));
+                recordsModelObservableList.add(new RecordsModel(
+                        rs.getString("patientName"),
+                        rs.getInt("patient_id"),
+                        rs.getString("doctor_name"),
+                        rs.getString("diagnosis"),
+                        rs.getString("disposition"),
+                        rs.getInt("status")));
 
             }
 
-            StkInTableView.setItems(nurseModelObservableList);
+            StkInTableView.setItems(recordsModelObservableList);
             rs.close();
             pstmt.close();
             conn.close();
@@ -162,6 +189,56 @@ public class N_DashboardController {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to open update form: " + e.getMessage());
+        }
+    }
+
+    private void setupRowContextMenu() {
+        StkInTableView.setRowFactory(_ -> {
+            TableRow<RecordsModel> row = new TableRow<>();
+            ContextMenu contextMenu = new ContextMenu();
+
+            MenuItem updateItem = new MenuItem("Update");
+            updateItem.setOnAction(_ -> {
+                RecordsModel selectedRecord = row.getItem();
+                if (selectedRecord != null) {
+                    openUpdateMedicalRecordWindow(selectedRecord);
+                }
+            });
+
+            contextMenu.getItems().add(updateItem);
+
+            // Set context menu only for non-empty rows
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(contextMenu));
+
+            return row;
+        });
+    }
+
+    private void openUpdateMedicalRecordWindow(RecordsModel record) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_UpdateRecord.fxml"));
+            Parent root = loader.load();
+
+            // Pass the selected record to the controller
+            N_UpdateMedicalRecord controller = loader.getController();
+            controller.setRecordData(record); // This method must be defined in N_UpdateMedicalRecord.java
+
+            Stage stage = new Stage();
+            stage.setTitle("Update Medical Record");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setScene(new Scene(root));
+            stage.showAndWait(); // Wait for the update to finish
+
+            // Refresh table after closing update window
+            refreshRecordsTable();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to open update window.").showAndWait();
         }
     }
 
