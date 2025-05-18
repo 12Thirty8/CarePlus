@@ -61,6 +61,8 @@ public class N_UpdateMedicalRecord {
     @FXML
     private Button savebtn;
 
+    private int currentRecordId; // <-- Add this field
+
     private static class PatientStatus {
         final int id;
         final String name;
@@ -217,7 +219,7 @@ public class N_UpdateMedicalRecord {
                 "f_name = ?, l_name = ?, " +
                 "chief_complaint = ?, diagnosis = ?, disposition = ?, " +
                 "status = ?, record_date = ? " +
-                "WHERE patient_id = ?"; // or use record id if available
+                "WHERE patient_id = ? AND record_id = ?"; // or use record id if available
 
         try (java.sql.Connection conn = DatabaseConnect.connect();
                 java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -232,10 +234,12 @@ public class N_UpdateMedicalRecord {
             pstmt.setInt(8, selectedStatus.getId());
             pstmt.setDate(9, checkupDate);
             pstmt.setInt(10, patientId); // condition for WHERE clause
+            pstmt.setInt(11, currentRecordId);
 
             int updated = pstmt.executeUpdate();
             if (updated > 0) {
                 new Alert(Alert.AlertType.INFORMATION, "Record updated successfully!").showAndWait();
+                System.out.println("Updating record with patient_id: " + patientId + ", record_id: " + currentRecordId);
 
                 // Close this window after successful update
                 Stage stage = (Stage) savebtn.getScene().getWindow();
@@ -272,6 +276,7 @@ public class N_UpdateMedicalRecord {
     }
 
     public void setRecordData(RecordsModel record) {
+        currentRecordId = record.getRecordId();
 
         patientIDtf.setText(String.valueOf(record.getPatientId()));
 

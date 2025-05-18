@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.*;
-import java.time.LocalDate;
+
 import java.util.ResourceBundle;
 
 public class N_AddMedicalRecord implements Initializable {

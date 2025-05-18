@@ -186,12 +186,7 @@
                         <TextField promptText="Search" style="-fx-background-radius: 20;" />
                      </children>
                   </StackPane>
-                  <Button layoutX="684.0" layoutY="233.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Update" textFill="WHITE" AnchorPane.rightAnchor="16.0">
-                     <font>
-                        <Font name="Gordita-Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="AddPatientDataBtn" layoutX="684.0" layoutY="233.0" mnemonicParsing="false" onAction="#AddPatientDataBtnAction" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Add" textFill="WHITE" AnchorPane.rightAnchor="94.39999999999998">
+                  <Button fx:id="AddPatientDataBtn" layoutX="704.0" layoutY="233.0" mnemonicParsing="false" onAction="#AddPatientDataBtnAction" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: #4749D9; -fx-background-radius: 5;" text="Add" textFill="WHITE" AnchorPane.rightAnchor="17.0">
                      <font>
                         <Font name="Gordita-Bold" size="12.0" />
                      </font>
