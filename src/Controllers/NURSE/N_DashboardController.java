@@ -130,6 +130,7 @@ public class N_DashboardController {
                         r.status
                     FROM records r
                     LEFT JOIN patient p ON r.patient_id = p.patient_id
+                    WHERE r.archive_status = 1
                     """;
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
