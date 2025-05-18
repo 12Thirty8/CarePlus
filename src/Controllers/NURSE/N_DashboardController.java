@@ -208,7 +208,15 @@ public class N_DashboardController {
                 }
             });
 
-            contextMenu.getItems().add(updateItem);
+            MenuItem archiveItem = new MenuItem("Archive");
+            archiveItem.setOnAction(_ -> {
+                RecordsModel selectedRecord = row.getItem();
+                if (selectedRecord != null) {
+                    archiveRecord(selectedRecord);
+                }
+            });
+
+            contextMenu.getItems().addAll(updateItem, archiveItem);
 
             // Set context menu only for non-empty rows
             row.contextMenuProperty().bind(
@@ -218,6 +226,37 @@ public class N_DashboardController {
 
             return row;
         });
+    }
+
+    private void archiveRecord(RecordsModel record) {
+        Alert confirmation = new Alert(AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirm Archive");
+        confirmation.setHeaderText("Archive this record?");
+        confirmation.setContentText("Are you sure you want to archive this record?");
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                Connection conn = DatabaseConnect.connect();
+                String query = "UPDATE records SET archive_status = 0 WHERE record_id = ?";
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setInt(1, record.getRecordId());
+
+                int affectedRows = pstmt.executeUpdate();
+                if (affectedRows > 0) {
+                    showAlert("Success", "Record archived successfully.");
+                    refreshRecordsTable(); // Refresh the table to show changes
+                } else {
+                    showAlert("Error", "Failed to archive record.");
+                }
+
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showAlert("Database Error", "An error occurred while archiving the record.");
+            }
+        }
     }
 
     private void openUpdateMedicalRecordWindow(RecordsModel record) {
@@ -319,13 +358,11 @@ public class N_DashboardController {
     @FXML
     void GenerateReportBtnAction(ActionEvent event) {
         // NO FUNCTIONALITY YET
-
-        
     }
-    
+
     @FXML
     void ArchiveBtnAction(ActionEvent event) {
-        SceneLoader.loadScene(event, "/View/N_ArchiveReports.fxml");
+        SceneLoader.loadScene(event, "/View/N_ArchiveRecords.fxml");
     }
 
 }
