@@ -28,9 +28,10 @@ public class RecordsModel {
     public RecordsModel() {
     }
 
-    public RecordsModel(String patientName, int patientId,
+    public RecordsModel(int recordId, String patientName, int patientId,
             String doctorName, String diagnosis,
             String disposition, int status) {
+        this.recordId.set(recordId);
         // Split patientName into fName and lName
         String[] names = patientName.trim().split(" ", 2);
         this.fName.set(names.length > 0 ? names[0] : "");
@@ -51,6 +52,23 @@ public class RecordsModel {
         this.fName.set(names.length > 0 ? names[0] : "");
         this.lName.set(names.length > 1 ? names[1] : "");
         this.patientId.set(patientId);
+        this.doctorName.set(doctorName);
+        this.diagnosis.set(diagnosis);
+        this.disposition.set(disposition);
+        this.status.set(status);
+        this.recordDate.set(recordDate);
+
+    }
+
+    public RecordsModel(int recordId, String patientName, int patientId,
+            String doctorName, String diagnosis,
+            String disposition, int status, LocalDate recordDate) {
+        // Split patientName into fName and lName
+        String[] names = patientName.trim().split(" ", 2);
+        this.fName.set(names.length > 0 ? names[0] : "");
+        this.lName.set(names.length > 1 ? names[1] : "");
+        this.patientId.set(patientId);
+        this.recordId.set(recordId);
         this.doctorName.set(doctorName);
         this.diagnosis.set(diagnosis);
         this.disposition.set(disposition);

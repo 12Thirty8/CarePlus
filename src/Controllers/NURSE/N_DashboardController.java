@@ -121,6 +121,7 @@ public class N_DashboardController {
             Connection conn = DatabaseConnect.connect();
             String query = """
                     SELECT
+                        record_id,
                         CONCAT(COALESCE(r.f_name, ''), ' ', COALESCE(r.l_name, '')) AS patientName,
                         r.patient_id,
                         r.doctor_name,
@@ -135,6 +136,7 @@ public class N_DashboardController {
 
             while (rs.next()) {
                 recordsModelObservableList.add(new RecordsModel(
+                        rs.getInt("record_id"), // add this
                         rs.getString("patientName"),
                         rs.getInt("patient_id"),
                         rs.getString("doctor_name"),
