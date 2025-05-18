@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -254,42 +253,6 @@ public class N_UpdateMedicalRecord {
             ex.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Database error occurred: " + ex.getMessage()).showAndWait();
         }
-
-          // Generate report
-
-        String reportContent = String.format(
-            "Patient ID   : %d%n" +
-            "Doctor       : %s%n" +
-            "First Name   : %s%n" +
-            "Last Name    : %s%n" +
-            "Complaint    : %s%n" +
-            "Diagnosis    : %s%n" +
-            "Disposition  : %s%n" +
-            "Status       : %s%n" +
-            "Date         : %s",
-            Integer.parseInt(patientIDtf.getText().trim()),
-            doctorIDtf.getText().trim(),
-            fNameTf.getText().trim(),
-            lNameTf.getText().trim(),
-            complaintArea.getText().trim(),
-            diagnosisArea.getText().trim(),
-            dispositionArea.getText().trim(),
-            selectedStatus.name,
-            checkupDate.toString()
-        );
-
-        // Create reports folder if it doesn't exist
-        new File("reports").mkdirs();
-
-        // Generate timestamped file name
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-        String timestamp = now.format(formatter);
-
-        String filePath = "reports/Medical_Record_Report_" +
-            Integer.parseInt(patientIDtf.getText().trim()) + "_" + timestamp + ".txt";
-
-        TextReportGenerator.generateMedicalRecordReport(filePath, "Medical Record Report", reportContent);
 
     }
 
