@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import Controllers.ViewState;
 import Models.PatientModel;
+import Models.RecordsModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -145,9 +146,19 @@ public class N_PatientDataController {
                 }
             });
 
-            menu.getItems().add(viewItem);
+            MenuItem updateItem = new MenuItem("Update");
+            updateItem.setOnAction(_ -> {
+                PatientModel selectedRecord = row.getItem();
+                if (selectedRecord != null) {
+                    openUpdatePatientData(selectedRecord);
+                }
+            });
 
             // only show on non-empty rows
+            // Add both items to the menu
+            menu.getItems().addAll(viewItem, updateItem);
+
+            // Only show on non-empty rows
             row.contextMenuProperty().bind(
                     Bindings.when(row.emptyProperty())
                             .then((ContextMenu) null)
@@ -155,6 +166,31 @@ public class N_PatientDataController {
 
             return row;
         });
+    }
+
+    private void openUpdatePatientData(PatientModel patient) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/N_UpdateData.fxml"));
+            Parent root = loader.load();
+
+            // Pass the selected patient to the update form controller
+            N_UpdateData controller = loader.getController();
+            controller.setPatientData(patient); // <--- Important line
+
+            Stage stage = new Stage();
+            stage.setTitle("Update Medical Record");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setScene(new Scene(root));
+            stage.showAndWait(); // Wait for the update to finish
+
+            // 🔁 Refresh the table after the window is closed
+            loadPatientData();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to open update window.").showAndWait();
+        }
     }
 
     private void openViewPatientPopup(PatientModel patient) {

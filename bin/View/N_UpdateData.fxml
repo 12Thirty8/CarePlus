@@ -44,12 +44,12 @@
                         <Font name="Gordita-Regular" size="12.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="Updatebtn" layoutX="364.0" layoutY="643.0" mnemonicParsing="false" onAction="#UpdatebtnAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Update Record" textFill="WHITE">
+                  <Button fx:id="updateBtn" layoutX="364.0" layoutY="643.0" mnemonicParsing="false" onAction="#updateBtnAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: #4749D9; -fx-background-radius: 10;" text="Update Record" textFill="WHITE">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="cancelbtn" layoutX="17.0" layoutY="643.0" mnemonicParsing="false" onAction="#CancelButtonAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
+                  <Button fx:id="clearBtn" layoutX="17.0" layoutY="643.0" mnemonicParsing="false" onAction="#clearBtnAction" prefHeight="34.0" prefWidth="331.0" style="-fx-background-color: D9D9D9; -fx-background-radius: 10;" text="Clear" textFill="#2e2e2e">
                      <font>
                         <Font name="Gordita-Bold" size="14.0" />
                      </font>
@@ -306,7 +306,7 @@
                   <Font name="Gordita-Bold" size="21.0" />
                </font>
             </Label>
-            <Button fx:id="BackBttn" layoutX="14.0" layoutY="3.0" mnemonicParsing="false" onAction="#BackBttnAction" prefHeight="34.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-padding: 10;">
+            <Button fx:id="backBtn" layoutX="14.0" layoutY="3.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="34.0" prefWidth="48.0" style="-fx-background-color: transparent; -fx-padding: 10;">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
