@@ -6,11 +6,10 @@ public class PatientStatus {
 
     public PatientStatus(int id, String label) {
         this.id = id;
-        this.name = name;
     }
 
     @Override
     public String toString() {
-        return name; // Ensures label shows in ChoiceBox
+        return String.valueOf(id); // Ensures ID shows in ChoiceBox
     }
 }

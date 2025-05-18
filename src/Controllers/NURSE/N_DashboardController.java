@@ -5,9 +5,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+// Required imports for PDFBox
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import Controllers.ViewState;
 
 import Models.RecordsModel;
@@ -357,12 +365,182 @@ public class N_DashboardController {
 
     @FXML
     void GenerateReportBtnAction(ActionEvent event) {
-        // NO FUNCTIONALITY YET
+        try (Connection conn = DatabaseConnect.connect();
+                PreparedStatement pstmt = conn.prepareStatement(
+                        "SELECT * FROM change_log WHERE table_name = 'employee' ORDER BY changed_at DESC");
+                ResultSet rs = pstmt.executeQuery()) {
+
+            // Create PDF document in landscape orientation
+            PDDocument document = new PDDocument();
+            PDPage page = new PDPage(new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth())); // Landscape
+            document.addPage(page);
+
+            PDType1Font fontBold = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
+            PDType1Font fontRegular = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
+
+            String[] headers = { "ID", "Employee", "Action", "Old Value", "New Value", "Date" };
+            float[] colWidths = { 50, 100, 80, 150, 150, 150 }; // More balanced widths
+
+            float margin = 40;
+            float yStart = page.getMediaBox().getHeight() - margin;
+            float tableWidth = 0;
+            for (float width : colWidths) {
+                tableWidth += width;
+            }
+            float yPosition = yStart;
+            float rowHeight = 20;
+            float cellMargin = 4;
+
+            PDPageContentStream contentStream = null;
+            try {
+                contentStream = new PDPageContentStream(document, page);
+                // Title
+                contentStream.setFont(fontBold, 16);
+                contentStream.beginText();
+                contentStream.newLineAtOffset(margin, yPosition);
+                contentStream.showText("Employee Change Log Report");
+                contentStream.endText();
+                yPosition -= rowHeight * 1.5;
+
+                // Generation date
+                contentStream.setFont(fontRegular, 12);
+                contentStream.beginText();
+                contentStream.newLineAtOffset(margin, yPosition);
+                contentStream.showText("Generated on: " +
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                contentStream.endText();
+                yPosition -= rowHeight * 2;
+
+                // Draw table header background
+                contentStream.setNonStrokingColor(220f / 255f, 220f / 255f, 220f / 255f);
+                contentStream.addRect(margin, yPosition, tableWidth, rowHeight);
+                contentStream.fill();
+                contentStream.setNonStrokingColor(0f, 0f, 0f);
+
+                // Draw table headers
+                float x = margin;
+                contentStream.setFont(fontBold, 11);
+                for (int i = 0; i < headers.length; i++) {
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(x + cellMargin, yPosition + 5);
+                    contentStream.showText(headers[i]);
+                    contentStream.endText();
+                    x += colWidths[i];
+                }
+                yPosition -= rowHeight;
+
+                // Draw table rows
+                contentStream.setFont(fontRegular, 10);
+                while (rs.next()) {
+                    // Check for page break
+                    if (yPosition < margin + rowHeight) {
+                        contentStream.close();
+                        page = new PDPage(new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth()));
+                        document.addPage(page);
+                        yPosition = yStart;
+
+                        // Start a new content stream for the new page
+                        contentStream = new PDPageContentStream(document, page);
+
+                        // Draw header background
+                        contentStream.setNonStrokingColor(220f / 255f, 220f / 255f, 220f / 255f);
+                        contentStream.addRect(margin, yPosition, tableWidth, rowHeight);
+                        contentStream.fill();
+                        contentStream.setNonStrokingColor(0f, 0f, 0f);
+
+                        // Draw headers
+                        float xh = margin;
+                        contentStream.setFont(fontBold, 11);
+                        for (int i = 0; i < headers.length; i++) {
+                            contentStream.beginText();
+                            contentStream.newLineAtOffset(xh + cellMargin, yPosition + 5);
+                            contentStream.showText(headers[i]);
+                            contentStream.endText();
+                            xh += colWidths[i];
+                        }
+                        yPosition -= rowHeight;
+                        contentStream.setFont(fontRegular, 10);
+                    }
+
+                    // Draw row background (alternating color)
+                    if (rs.getRow() % 2 == 0) {
+                        contentStream.setNonStrokingColor(245f / 255f, 245f / 255f, 245f / 255f);
+                        contentStream.addRect(margin, yPosition, tableWidth, rowHeight);
+                        contentStream.fill();
+                        contentStream.setNonStrokingColor(0f, 0f, 0f);
+                    }
+
+                    // Draw cell text
+                    float xc = margin;
+                    String[] values = {
+                            truncateString(rs.getString("id"), 8),
+                            truncateString(rs.getString("changed_by"), 20),
+                            truncateString(rs.getString("action"), 15),
+                            truncateString(rs.getString("old_data"), 25),
+                            truncateString(rs.getString("new_data"), 25),
+                            truncateString(rs.getString("changed_at"), 25)
+                    };
+                    for (int i = 0; i < values.length; i++) {
+                        contentStream.beginText();
+                        contentStream.newLineAtOffset(xc + cellMargin, yPosition + 5);
+                        contentStream.showText(values[i] != null ? values[i] : "");
+                        contentStream.endText();
+                        xc += colWidths[i];
+                    }
+                    yPosition -= rowHeight;
+                }
+
+                // Draw table grid lines
+                float tableBottom = yPosition;
+                float xLine = margin;
+                for (int i = 0; i <= headers.length; i++) {
+                    contentStream.moveTo(xLine, yStart);
+                    contentStream.lineTo(xLine, tableBottom);
+                    contentStream.stroke();
+                    if (i < headers.length)
+                        xLine += colWidths[i];
+                }
+                float yLine = yStart;
+                while (yLine >= tableBottom) {
+                    contentStream.moveTo(margin, yLine);
+                    contentStream.lineTo(margin + tableWidth, yLine);
+                    contentStream.stroke();
+                    yLine -= rowHeight;
+                }
+            } finally {
+                if (contentStream != null) {
+                    contentStream.close();
+                }
+            }
+
+            // Save to downloads folder
+            String filePath = System.getProperty("user.home") + "/Downloads/Employee_Report_"
+                    + System.currentTimeMillis() + ".pdf";
+            document.save(filePath);
+            document.close();
+
+            showAlert("Success", "PDF report generated at:\n" + filePath);
+
+        } catch (Exception e) {
+            showAlert("Error", "Failed to generate PDF: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void ArchiveBtnAction(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/N_ArchiveRecords.fxml");
+    }
+
+    // Enhanced helper method to clean and truncate strings for PDF
+    private String truncateString(String value, int maxLength) {
+        if (value == null)
+            return "";
+        // Replace problematic characters
+        value = value.replace("\"", "'") // Replace double quotes
+                .replace("\n", " ") // Avoid newlines inside cells
+                .replace("\r", " "); // Carriage return cleanup
+        return value.length() > maxLength ? value.substring(0, maxLength) + "..." : value;
     }
 
 }

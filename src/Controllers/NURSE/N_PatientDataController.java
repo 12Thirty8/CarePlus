@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import Controllers.ViewState;
 import Models.PatientModel;
-import Models.RecordsModel;
 import db.DatabaseConnect;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
