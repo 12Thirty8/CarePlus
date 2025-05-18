@@ -9,10 +9,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import util.TextReportGenerator;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class N_AddMedicalRecord implements Initializable {
@@ -180,6 +184,44 @@ public class N_AddMedicalRecord implements Initializable {
             ex.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Database error:\n" + ex.getMessage()).showAndWait();
         }
+
+
+    // Generate report
+    PatientStatus selectedStatus = statusBox.getValue();
+    LocalDate checkupDate = CheckupDate.getValue();
+
+    String reportContent = String.format(
+        "Patient ID   : %d%n" +
+        "Doctor       : %s%n" +
+        "First Name   : %s%n" +
+        "Last Name    : %s%n" +
+        "Complaint    : %s%n" +
+        "Diagnosis    : %s%n" +
+        "Disposition  : %s%n" +
+        "Status       : %s%n" +
+        "Date         : %s",
+        patientIdCombo.getValue(),
+        doctorIDtf.getText().trim(),
+        fNameTf.getText().trim(),
+        lNameTf.getText().trim(),
+        complaintArea.getText().trim(),
+        DiagnosisArea.getText().trim(),
+        dispositionArea.getText().trim(),
+        selectedStatus.name,
+        checkupDate.toString()
+    );
+
+    // Create reports folder if it doesn't exist
+    new File("reports").mkdirs();
+
+    // Generate timestamped file name
+    LocalDateTime now = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+    String timestamp = now.format(formatter);
+
+    String filePath = "reports/Medical_Record_Report_" + patientIdCombo.getValue() + "_" + timestamp + ".txt";
+
+    TextReportGenerator.generateMedicalRecordReport(filePath, "Medical Record Report", reportContent);
     }
 
     private boolean validateForm() {
