@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import Models.RecordsModel;
 import db.DatabaseConnect;
@@ -252,6 +254,7 @@ public class N_UpdateMedicalRecord {
             ex.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Database error occurred: " + ex.getMessage()).showAndWait();
         }
+
     }
 
     private void loadPatientName(int patientId) {

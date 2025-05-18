@@ -57,7 +57,7 @@ public class N_DashboardController {
     private Button hamburgermenuBtn;
 
     @FXML
-    private Button homeBtn;
+    private Button homeBtn, GenerateReportBtn, ArchiveBtn;
 
     @FXML
     private Button LogoutBtn;
@@ -314,6 +314,18 @@ public class N_DashboardController {
     @FXML
     void movetoStocksBtnPressed(ActionEvent event) {
         SceneLoader.loadScene(event, "/View/N_Dashboard.fxml");
+    }
+
+    @FXML
+    void GenerateReportBtnAction(ActionEvent event) {
+        // NO FUNCTIONALITY YET
+
+        
+    }
+    
+    @FXML
+    void ArchiveBtnAction(ActionEvent event) {
+        SceneLoader.loadScene(event, "/View/N_ArchiveReports.fxml");
     }
 
 }
