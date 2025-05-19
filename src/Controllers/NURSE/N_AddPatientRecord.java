@@ -119,6 +119,75 @@ public class N_AddPatientRecord {
 
     @FXML
     void SaveChangesAction(ActionEvent event) {
+        // Validate required fields
+        if (firstnametf.getText().trim().isEmpty() ||
+                lastnametf.getText().trim().isEmpty() ||
+                middlenametf.getText().trim().isEmpty() ||
+                agetf.getText().trim().isEmpty() ||
+                gendertf.getValue() == null ||
+                emailaddtf.getText().trim().isEmpty() ||
+                birthdate.getValue() == null ||
+                addresstf.getText().trim().isEmpty() ||
+                birthplacetf.getText().trim().isEmpty() ||
+                nationalitytf.getText().trim().isEmpty() ||
+                religiontf.getText().trim().isEmpty() ||
+                occupationtf.getText().trim().isEmpty() ||
+                contactnotf.getText().trim().isEmpty() ||
+                patcatcombobox.getValue() == null ||
+                f_fullnametf.getText().trim().isEmpty() ||
+                f_addresstf.getText().trim().isEmpty() ||
+                f_contactnotf.getText().trim().isEmpty() ||
+                m_fullnametf.getText().trim().isEmpty() ||
+                m_addresstf.getText().trim().isEmpty() ||
+                m_contactnotf.getText().trim().isEmpty() ||
+                em_fullnametf.getText().trim().isEmpty() ||
+                em_addresstf.getText().trim().isEmpty() ||
+                em_contacnotf.getText().trim().isEmpty() ||
+                allergicarea.getText().trim().isEmpty() ||
+                e_fullnametf.getText().trim().isEmpty() ||
+                e_contactnotf.getText().trim().isEmpty() ||
+                e_addresstf.getText().trim().isEmpty() ||
+                em_relation.getText().trim().isEmpty()) {
+            showAlert("Validation Error", "All fields are required.");
+            return;
+        }
+
+        // Validate age
+        String ageText = agetf.getText();
+        int age;
+        try {
+            age = Integer.parseInt(ageText.trim());
+            if (age < 0 || age > 150) {
+                showAlert("Validation Error", "Age must be between 0 and 150.");
+                return;
+            }
+        } catch (NumberFormatException nfe) {
+            showAlert("Validation Error", "Age must be a valid number.");
+            return;
+        }
+
+        // Validate email format (simple regex)
+        String email = emailaddtf.getText().trim();
+        if (!email.matches("^[\\w-.]+@[\\w-]+\\.[a-zA-Z]{2,}$")) {
+            showAlert("Validation Error", "Invalid email address.");
+            return;
+        }
+
+        // Validate contact numbers (basic: digits only, length 7-15)
+        String[] contactFields = {
+                contactnotf.getText().trim(),
+                f_contactnotf.getText().trim(),
+                m_contactnotf.getText().trim(),
+                em_contacnotf.getText().trim(),
+                e_contactnotf.getText().trim()
+        };
+        for (String contact : contactFields) {
+            if (!contact.matches("\\d{7,15}")) {
+                showAlert("Validation Error", "Contact numbers must be 7-15 digits.");
+                return;
+            }
+        }
+
         try (Connection conn = DatabaseConnect.connect()) {
             String sql = """
                         INSERT INTO patient (
@@ -135,19 +204,21 @@ public class N_AddPatientRecord {
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setString(1, firstnametf.getText());
-            stmt.setString(2, lastnametf.getText());
-            stmt.setString(3, middlenametf.getText());
-            stmt.setInt(4, Integer.parseInt(agetf.getText()));
-            stmt.setString(5, gendertf.getValue());
-            stmt.setString(6, emailaddtf.getText());
+            stmt.setString(1, firstnametf.getText().trim());
+            stmt.setString(2, lastnametf.getText().trim());
+            stmt.setString(3, middlenametf.getText().trim());
+            stmt.setInt(4, age);
+            String genderValue = gendertf.getValue();
+            String genderShort = genderValue.equalsIgnoreCase("Male") ? "M" : "F";
+            stmt.setString(5, genderShort);
+            stmt.setString(6, email);
             stmt.setDate(7, Date.valueOf(birthdate.getValue()));
-            stmt.setString(8, addresstf.getText());
-            stmt.setString(9, birthplacetf.getText());
-            stmt.setString(10, nationalitytf.getText());
-            stmt.setString(11, religiontf.getText());
-            stmt.setString(12, occupationtf.getText());
-            stmt.setString(13, contactnotf.getText());
+            stmt.setString(8, addresstf.getText().trim());
+            stmt.setString(9, birthplacetf.getText().trim());
+            stmt.setString(10, nationalitytf.getText().trim());
+            stmt.setString(11, religiontf.getText().trim());
+            stmt.setString(12, occupationtf.getText().trim());
+            stmt.setString(13, contactnotf.getText().trim());
             String selectedCategoryName = patcatcombobox.getValue();
             Integer selectedCategoryId = patientCategoryMap.get(selectedCategoryName);
             if (selectedCategoryId != null) {
@@ -157,25 +228,24 @@ public class N_AddPatientRecord {
                 return;
             }
 
-            stmt.setString(15, f_fullnametf.getText());
-            stmt.setString(16, f_addresstf.getText());
-            stmt.setString(17, f_contactnotf.getText());
+            stmt.setString(15, f_fullnametf.getText().trim());
+            stmt.setString(16, f_addresstf.getText().trim());
+            stmt.setString(17, f_contactnotf.getText().trim());
 
-            stmt.setString(18, m_fullnametf.getText());
-            stmt.setString(19, m_addresstf.getText());
-            stmt.setString(20, m_contactnotf.getText());
+            stmt.setString(18, m_fullnametf.getText().trim());
+            stmt.setString(19, m_addresstf.getText().trim());
+            stmt.setString(20, m_contactnotf.getText().trim());
 
-            stmt.setString(21, em_fullnametf.getText());
-            stmt.setString(22, em_addresstf.getText());
-            stmt.setString(23, em_contacnotf.getText());
+            stmt.setString(21, em_fullnametf.getText().trim());
+            stmt.setString(22, em_addresstf.getText().trim());
+            stmt.setString(23, em_contacnotf.getText().trim());
 
-            stmt.setString(24, allergicarea.getText());
-            stmt.setString(25, e_fullnametf.getText());
-            stmt.setString(26, e_contactnotf.getText());
-            stmt.setString(27, e_addresstf.getText());
-            stmt.setString(28, em_relation.getText());
+            stmt.setString(24, allergicarea.getText().trim());
+            stmt.setString(25, e_fullnametf.getText().trim());
+            stmt.setString(26, e_contactnotf.getText().trim());
+            stmt.setString(27, e_addresstf.getText().trim());
+            stmt.setString(28, em_relation.getText().trim());
 
-            // Get employee ID of currently logged-in user
             int currentEmployeeId = GetCurrentEmployeeID.fetchEmployeeIdFromSession();
             stmt.setInt(29, currentEmployeeId);
 

@@ -148,8 +148,8 @@ public class N_AddMedicalRecord implements Initializable {
         }
 
         String insertSql = "INSERT INTO records "
-                + "(patient_id, doctor_name, f_name, l_name, record_date, status, chief_complaint, diagnosis, disposition) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "(patient_id, doctor_name, f_name, l_name, record_date, status, chief_complaint, diagnosis, disposition, archive_status) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
 
         try (Connection conn = DatabaseConnect.connect();
                 PreparedStatement ps = conn.prepareStatement(insertSql)) {

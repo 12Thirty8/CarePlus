@@ -409,7 +409,7 @@ public class N_DashboardController {
                 contentStream.showText("Generated on: " +
                         LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 contentStream.endText();
-                yPosition -= rowHeight * 2;
+                yPosition -= rowHeight * 1.5;
 
                 // Draw table header background
                 contentStream.setNonStrokingColor(220f / 255f, 220f / 255f, 220f / 255f);
